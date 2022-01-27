@@ -1,32 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="icon" href="/img/index.png" type="image/x-icon" />
     <title>Moph : MeetingRoom</title>
-  </head>
-  <body>
-    <div class="jumbotron">
-      <div class="container">
-        <center>
-          <h1>Meeting Room</h1>
-        </center>
-       
-        <div class="form-group">
-          <div class="from-input">
-            <input type="button" class="btn btn-success" value="submit"/> 
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/style/styleindex.css" />
+</head>
 
+<body class="body_index">
+    <div class="content-wrapper">
+        
+            <div class="col-md-4 position-absolute top-50 start-50 translate-middle">
+                <div class="card shadow">
+                    <div class="card-header text-center card-head">
+                        <img src="/img/index.png" alt="Logo" class="rounded" width="20%">
+                        <span class="h2">Meeting Room</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-12">
+                            <!-- Form -->
+                            <form method="post" id="loginForm">
+                                <div class="  form-floating mb-3 mt-3">
+                                    <input type="text" name="username" id="username" class="form-control"
+                                        autocomplete="off" placeholder="Username or Email">
+                                    <label for="floatingInputValue"> <small>Username</small></label>
+                                </div>
+                                <div class=" form-floating mb-3 mt-3">
+                                    <input type="password" name="password" id="password" class="form-control"
+                                        id="floatingInputValue" placeholder="Password">
+                                    </i><label for="floatingInputValue"><small>password</small></label>
+                                </div>
+                                <center>
+                                    <div class="col-12 mt-4 mb-0">
+                                        <button type="submit" name="login" id="login"
+                                            class="login-btn btn-block">เข้าสู่ระบบ</button>
+                                    </div>
+                                </center>
+                                <!-- /.col -->
+                            </form>
+                            <!-- /.Form -->
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/js/jquery.min.js" ></script>
-    <script src="/js/bootstrap.min.js" ></script>
-  </body>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
 </html>
