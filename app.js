@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
-const path = require('path');
+const path = require("path");
 const mongoose = require("mongoose");
 const depart = require("./models/department");
 const room = require("./models/product");
 const style = require("./models/roomstyle");
+
+
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/db_demo";
 const PORT = process.env.PORT || 4500;
@@ -17,28 +19,12 @@ mongoose.connection.on("error", (err) => {
 
 app.use(express.json());
 
-app.use(
-  "/css",
-  express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
-);
-app.use(
-  "/js",
-  express.static(path.join(__dirname, "node_modules/bootstrap/dist/js"))
-);
-app.use(
-  "/js",
-  express.static(path.join(__dirname, "node_modules/jquery/dist"))
-);
-app.use("/style", express.static(path.join(__dirname, "public/styles")));
-app.use("/img", express.static(path.join(__dirname, "public/images")));
-
-
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/index.html'))
+  res.sendFile(path.join(__dirname, "views/index.html"));
 });
- app.get("/user",(req, res)=>{
-     res.sendFile(path.join(__dirname,'views/users.html'))
- })
+app.get("/user", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/users.html"));
+});
 app.get("/room", async (req, res) => {
   const products = await room.find({});
   res.json(products);
