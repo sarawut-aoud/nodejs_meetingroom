@@ -66,10 +66,10 @@ app.get("/manage", (req, res) => {
 });
 
 // ! database
-app.get("/room", async (req, res) => {
-  const products = await room.find({});
-  res.json(products);
-});
+// app.get("/room", async (req, res) => {
+//   const products = await room.find({});
+//   res.json(products);
+// });
 app.get("/style", async (req, res) => {
   const products = await style.find({});
   res.json(products);
