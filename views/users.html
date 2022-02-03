@@ -15,10 +15,10 @@
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
     <!-- Select2 -->
     <link rel="stylesheet" href="css/select2.min.css">
     <link rel="stylesheet" href="css/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="css/daterangepicker.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="style/adminlte.min.css">
     <!-- Toastr -->
@@ -39,7 +39,7 @@
                     <a href="index3.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Dashboard v1</a>
+                    <a href="#" class="nav-link">Dashboard</a>
                 </li>
             </ul>
 
@@ -77,7 +77,7 @@
                             <a href="" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>
-                                    Dashboard
+                                    ยื่นคำขอจองห้องประชุม
                                 </p>
                             </a>
                         </li>
@@ -88,51 +88,79 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper" style="background-color: #00912b;">
+        <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
             <!-- Content Header (Page header) -->
             <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row ">
-                        <div class="col-xl-5 col-md-12 col-sm-12">
+                <div class="container-fluid p-4">
+                    <div class="row">
+                        <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
-                            <div class="card ">
+                            <div class="card shadow">
+                                <div class="card-header text-white " style="background-color: #1e9600;">
+                                    <div class="text-center">
+                                        <h1>เลือกห้องประชุม เพื่อทำการจอง</h1>
+                                    </div>
+                                </div>
                                 <!-- form start -->
                                 <form method="POST">
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-sm-3 col-form-label">ห้องประชุม : </label>
-                                                <div class="col-md">
-                                                    <select class="form-control select2" id="room" name="room" />
+                                                <label class="col-md-2 col-form-label">ชื่อโครงการ :</label>
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control " id="title" name="title" />
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">วันที่ :</label>
+                                                <div class="col-md-10">
+                                                    <input type="datetime-local" class="form-control" id="title"
+                                                        name="title" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">ห้องประชุม : </label>
+                                                <div class="col-md-10">
+                                                    <select class="form-control select2" id="room" name="room" />
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-sm-3 col-form-label">รูปแบบห้อง : </label>
+                                                <label class="col-md-2 col-form-label">จำนวนคน : </label>
                                                 <div class="col-md">
-                                                    <input class="form-control " id="style" name="style" readonly />
-
+                                                    <input class="form-control " id="people" name="people" readonly />
+                                                </div>
+                                                <label class="col-md-2 col-form-label">บริเวณ : </label>
+                                                <div class="col-md">
+                                                    <input class="form-control " id="detail" name="detail" readonly />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-sm-3 col-form-label">จำนวนคน : </label>
+                                                <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                                                 <div class="col-md">
-                                                    <input class="form-control " id="people" name="people" readonly />
-
+                                                    <select class="form-control select2" id="style" name="style" />
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
-
-                                    <div class="card-footer text-right">
-                                        <button type="submit" id="submit" name="submit"
-                                            class="btn btn-success col-4">ลงทะเบียนการจอง</button>
+                                    <div class="card-footer ">
+                                        <div class="d-flex justify-content-between">
+                                            <button type="reset" class="btn btn-secondary col-md-4 ">ยกเลิก</button>
+                                            <button type="submit" id="submit" name="submit"
+                                                class="btn btn-success col-md-4 ">ลงทะเบียนการจอง</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -157,6 +185,9 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="js/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <!-- daterangepicker -->
+    <script src="js/moment.min.js"></script>
+    <script src="js/daterangepicker.js"></script>
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
@@ -169,19 +200,23 @@
             $(function () {
                 $('.select2').select2()
             });
+
+
+
+
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "/depart",
+                url: "/style",
                 success: function (result) {
                     //  const json = JSON.stringify(response);
-                    var user = '<option value="" selected disabled>-แผนก/หน่วยงาน-</option>';
+                    var user = '<option value="" selected disabled>-รูปแบบห้อง-</option>';
                     for (ii in result) {
-                        user += '<option value="' + result[ii].de_id + '">' + result[ii].de_name +
+                        user += '<option value="' + result[ii].st_id + '">' + result[ii].st_name +
                             '</option>';
                     }
                     // a simple user
-                    $('#department').html(user);
+                    $('#style').html(user);
 
                 }
             });
@@ -190,29 +225,35 @@
                 dataType: "json",
                 url: "/room",
                 success: function (result) {
-                    var user = '<option value="" selected disabled>-ห้องไง-</option>';
+                    var user = '<option value="" selected disabled>-ห้องประชุม-</option>';
                     for (ii in result) {
                         user += '<option value="' + result[ii].ro_id + '">' + result[ii].ro_name +
                             '</option>';
                     }
                     $('#room').html(user);
+
                 }
             });
             $("#room").change(function () {
                 var ro_id = $(this).val();
-
                 $.ajax({
                     type: "get",
                     dataType: "json",
                     url: "/room",
                     data: {
-                        id: ro_id,
+                        ro_id: ro_id,
                     },
-                    success: function (data) {
-                        for (ii in data) {
-                            
-
+                    success: function (result) {
+                        var user = '';
+                        for (ii in result) {
+                            user += result[ii].ro_id;
+                            if (result[ii].ro_id === ro_id) {
+                                var people = result[ii].ro_people;
+                                var detail = result[ii].ro_detail;
+                            }
                         }
+                        $('#people').val(people);
+                        $('#detail').val(detail);
                     }
                 });
             });
