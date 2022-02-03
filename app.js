@@ -66,63 +66,63 @@ app.get("/manage", (req, res) => {
 });
 
 // ! database
-// app.get("/room", async (req, res) => {
-//   const products = await room.find({});
-//   res.json(products);
-// });
-// app.get("/style", async (req, res) => {
-//   const products = await style.find({});
-//   res.json(products);
-// });
-// app.get("/depart", async (req, res) => {
-//   const products = await depart.find({});
-//   res.json(products);
-// });
+app.get("/room", async (req, res) => {
+  const products = await room.find({});
+  res.json(products);
+});
+app.get("/style", async (req, res) => {
+  const products = await style.find({});
+  res.json(products);
+});
+app.get("/depart", async (req, res) => {
+  const products = await depart.find({});
+  res.json(products);
+});
 
-// app.get("/api/:id", async (req, res) => {
-//   const { id } = req.params;
+app.get("/api/:id", async (req, res) => {
+  const { id } = req.params;
 
-//   try {
-//     const product = await depart.findById(id);
-//     res.json(product);
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// });
+  try {
+    const product = await depart.findById(id);
+    res.json(product);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
-// app.post("/api", async (req, res) => {
-//   const payload = req.body;
-//   try {
-//     const product = new depart(payload);
-//     await product.save();
-//     res.status(201).end();
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// });
+app.post("/api", async (req, res) => {
+  const payload = req.body;
+  try {
+    const product = new depart(payload);
+    await product.save();
+    res.status(201).end();
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
-// app.put("/api/:id", async (req, res) => {
-//   const payload = req.body;
-//   const { id } = req.params;
+app.put("/api/:id", async (req, res) => {
+  const payload = req.body;
+  const { id } = req.params;
 
-//   try {
-//     const product = await depart.findByIdAndUpdate(id, { $set: payload });
-//     res.json(product);
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// });
+  try {
+    const product = await depart.findByIdAndUpdate(id, { $set: payload });
+    res.json(product);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
-// app.delete("/api/:id", async (req, res) => {
-//   const { id } = req.params;
+app.delete("/api/:id", async (req, res) => {
+  const { id } = req.params;
 
-//   try {
-//     await depart.findByIdAndDelete(id);
-//     res.status(204).end();
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// });
+  try {
+    await depart.findByIdAndDelete(id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Application is running on port ${PORT}`);
