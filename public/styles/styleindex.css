@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Mitr&display=swap');
 
 * {
     margin: 0;
-    font-family: 'Prompt', sans-serif;
-    font-size: 18px;
+    font-family: 'Itim', cursive;
+    font-family: 'Mitr', sans-serif;
+    font-size: 16px;
     padding: 0;
 }
 
@@ -45,4 +46,9 @@ button.login-btn:hover {
 .bt:active,
 .bt:hover {
     background-color: rgb(0, 155, 207);
+}
+
+.card-head {
+    background: rgb(32, 159, 0);
+    background: linear-gradient(180deg, rgba(32, 159, 0, 1) 25%, rgba(2, 50, 8, 1) 84%);
 }

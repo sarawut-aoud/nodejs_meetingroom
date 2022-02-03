@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/style/index.png" type="image/x-icon" />
+<title>Moph : MeetingRoom</title>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/style/index.png" type="image/x-icon" />
-    <title>Moph : MeetingRoom</title>
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="css/select2.min.css">
-    <link rel="stylesheet" href="css/select2-bootstrap4.min.css">
-    <link rel="stylesheet" href="css/daterangepicker.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="style/adminlte.min.css">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="css/toastr.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="css/select2.min.css">
+<link rel="stylesheet" href="css/select2-bootstrap4.min.css">
+<link rel="stylesheet" href="css/daterangepicker.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="style/adminlte.min.css">
+<!-- Toastr -->
+<link rel="stylesheet" href="css/toastr.min.css">
+<link rel="stylesheet" href="style/styleindex.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -68,7 +66,7 @@
             <div class="sidebar mt-3 ">
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
+                <nav class="mt-2 ">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
@@ -76,8 +74,7 @@
                         <li class="nav-item ">
                             <a href="" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
-                                <p>
-                                    ยื่นคำขอจองห้องประชุม
+                                <p>ยื่นคำขอจองห้องประชุม
                                 </p>
                             </a>
                         </li>
@@ -96,7 +93,7 @@
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white " style="background-color: #1e9600;">
+                                <div class="card-header text-white card-head ">
                                     <div class="text-center">
                                         <h1>เลือกห้องประชุม เพื่อทำการจอง</h1>
                                     </div>
@@ -117,17 +114,22 @@
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-10">
-                                                    <input type="datetime-local" class="form-control" id="title"
-                                                        name="title" />
-
+                                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ห้องประชุม : </label>
                                                 <div class="col-md-10">
-                                                    <select class="form-control select2" id="room" name="room" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="room"
+                                                        name="room" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -148,7 +150,7 @@
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                                                 <div class="col-md">
-                                                    <select class="form-control select2" id="style" name="style" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="style" name="style" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -196,13 +198,10 @@
     <!-- AdminLTE App -->
     <script src="style/adminlte.js"></script>
     <script>
+        $(function () {
+            $('.select2').select2()
+        });
         $(document).ready(function () {
-            $(function () {
-                $('.select2').select2()
-            });
-
-
-
 
             $.ajax({
                 type: "get",
@@ -212,7 +211,8 @@
                     //  const json = JSON.stringify(response);
                     var user = '<option value="" selected disabled>-รูปแบบห้อง-</option>';
                     for (ii in result) {
-                        user += '<option value="' + result[ii].st_id + '">' + result[ii].st_name +
+                        user += '<option value="' + result[ii].st_id + '">' + result[ii]
+                            .st_name +
                             '</option>';
                     }
                     // a simple user
@@ -227,7 +227,8 @@
                 success: function (result) {
                     var user = '<option value="" selected disabled>-ห้องประชุม-</option>';
                     for (ii in result) {
-                        user += '<option value="' + result[ii].ro_id + '">' + result[ii].ro_name +
+                        user += '<option value="' + result[ii].ro_id + '">' + result[ii]
+                            .ro_name +
                             '</option>';
                     }
                     $('#room').html(user);

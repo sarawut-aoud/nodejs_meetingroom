@@ -41,10 +41,7 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
 }
 
-*{
-    font-family: 'Itim', cursive;
-    font-family: 'Mitr', sans-serif;
-}
+
 *, ::after, ::before {
     box-sizing: border-box
 }
