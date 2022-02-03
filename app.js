@@ -53,9 +53,6 @@ app.use(
   express.static(path.join(__dirname, "public/images"))
 );
 
-
-
-
 app.use(express.json());
 
 app.get("/", (req, res) => {
