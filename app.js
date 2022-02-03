@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const depart = require("./models/department");
 const room = require("./models/product");
 const style = require("./models/roomstyle");
+const { url } = require("inspector");
 
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/db_demo";
@@ -16,6 +17,7 @@ mongoose.connection.on("error", (err) => {
   console.error("MongoDB error", err);
 });
 
+//! เรียกใช้ /"path" 
 app.use(
   "/css",
   express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")),
@@ -55,6 +57,8 @@ app.use(
 
 app.use(express.json());
 
+
+//!  เรียกดูไฟล์ บน url
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views/index.html"));
 });
