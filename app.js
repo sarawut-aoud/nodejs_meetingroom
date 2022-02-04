@@ -31,6 +31,10 @@ app.use(
   express.static(path.join(__dirname, "plugins/summernote")),
   express.static(path.join(__dirname, "plugins/sweetalert2-theme-bootstrap-4")),
   express.static(path.join(__dirname, "plugins/toastr")),
+  express.static(path.join(__dirname, "plugins/datatables-bs4/css")),
+  express.static(path.join(__dirname, "plugins/datatables-responsive/css")),
+  express.static(path.join(__dirname, "plugins/datatables-buttons/css")),
+
 );
 app.use(
   "/js",
@@ -44,8 +48,15 @@ app.use(
   express.static(path.join(__dirname, "plugins/tempusdominus-bootstrap-4/js")),
   express.static(path.join(__dirname, "plugins/summernote")),
   express.static(path.join(__dirname, "plugins/overlayScrollbars/js")),
+  express.static(path.join(__dirname, "plugins/bootstrap-switch/js")),
+  express.static(path.join(__dirname, "plugins/inputmask")),
   express.static(path.join(__dirname, "plugins/sweetalert2")),
   express.static(path.join(__dirname, "plugins/toastr")),
+  express.static(path.join(__dirname, "plugins/datatables")),
+  express.static(path.join(__dirname, "plugins/datatables-bs4/js")),
+  express.static(path.join(__dirname, "plugins/datatables-responsive/js")),
+  express.static(path.join(__dirname, "plugins/datatables-buttons/js")),
+
 
 );
 app.use(
@@ -62,12 +73,29 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views/index.html"));
 });
+
+//todo => User ผู้ใช้
 app.get("/user", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/users.html"));
+  res.sendFile(path.join(__dirname, "views/users/users.html"));
 });
+//todo => User ผู้ใช้
+app.get("/user-status", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/users/user_status.html"));
+});
+
+//todo => Staff ธุรการ
+app.get("/staff", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/staff/staff.html"));
+});
+app.get("/request", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/staff/request.html"));
+});
+
+//todo => Manager หัวหน้า
 app.get("/manage", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/manager.html"));
+  res.sendFile(path.join(__dirname, "views/manager/manager.html"));
 });
+
 
 // ! database
  app.get("/room", async (req, res) => {

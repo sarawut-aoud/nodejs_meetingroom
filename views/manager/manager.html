@@ -6,14 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/style/index.png" type="image/x-icon" />
   <title>Moph : MeetingRoom</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-  <!-- Ionicons -->
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="css/daterangepicker.css">
+   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="css/tempusdominus-bootstrap-4.min.css">
@@ -60,35 +58,45 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-light-white elevation-4" style="background-color: #008622;">
+    <aside class="main-sidebar sidebar-light-white elevation-4 " style="background-color: #008622;">
 
       <!-- Brand Logo -->
       <a href="" class="brand-link">
-        <img src="/style/logo.png" alt="Logo" class="w-75" style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
+          <img src="/style/logo.png" alt="Logo" class="w-75" style="opacity: .8">
+          <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
       </a>
 
       <!-- Sidebar -->
       <div class="sidebar mt-3 ">
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-             with font-awesome or any other icon font library -->
-            <li class="nav-item ">
-              <a href="" class="nav-link active">
-                <i class="nav-icon fas fa-columns"></i>
-                <p>
-                  Dashboard
-                </p>
-              </a>
-            </li>
-          </ul>
-        </nav>
+          <!-- Sidebar Menu -->
+          <nav class="mt-2 position-relative">
+
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                  data-accordion="false">
+                  <!-- Add icons to the links using the .nav-icon class
+       with font-awesome or any other icon font library -->
+                  <li class="nav-item ">
+                      <a href="" class="nav-link active">
+                          <i class="nav-icon fas fa-columns"></i>
+                          <p>ยื่นคำขอจองห้องประชุม
+                          </p>
+                      </a>
+                  </li>
+                 
+                  <li class="nav-item mt-2 " >
+                      <a href="" class="nav-link active">
+                          <i class="nav-icon fas fa-columns"></i>
+                          <p>รายการคำขอยื่นจอง</p>
+                      </a>
+                  </li>
+              </ul>  
+          </nav>
       </div>
+
       <!-- /.sidebar -->
-    </aside>
+  </aside>
+  
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="background-color: #00912b;">
@@ -201,9 +209,8 @@
   <!-- ./wrapper -->
 
   <!-- jQuery -->
-
-  <script src="/js/bootstrap.min.js"></script>
   <script src="js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
   <!-- Select2 -->
   <script src="js/select2.full.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -213,16 +220,15 @@
     $.widget.bridge('uibutton', $.ui.button)
   </script>
   <!-- Bootstrap 4 -->
-  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
   <!-- daterangepicker -->
-  <script src="js/moment.min.js"></script>
   <script src="js/daterangepicker.js"></script>
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="js/tempusdominus-bootstrap-4.min.js"></script>
+   <!-- Switch bootstrap -->
+   <script src="js/bootstrap-switch.min.js"></script>
   <!-- Summernote -->
   <script src="js/summernote-bs4.min.js"></script>
-  <!-- overlayScrollbars -->
-  <script src="js/jquery.overlayScrollbars.min.js"></script>
   <!-- Toastr -->
   <script src="js/toastr.min.js"></script>
   <!-- AdminLTE App -->

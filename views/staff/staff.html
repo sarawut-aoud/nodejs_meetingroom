@@ -4,22 +4,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="/style/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
-
-<!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<!-- daterange picker -->
+<link rel="stylesheet" href="css/daterangepicker.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="css/icheck-bootstrap.min.css">
 <!-- Select2 -->
 <link rel="stylesheet" href="css/select2.min.css">
 <link rel="stylesheet" href="css/select2-bootstrap4.min.css">
-<link rel="stylesheet" href="css/daterangepicker.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="style/adminlte.min.css">
+
 <!-- Toastr -->
 <link rel="stylesheet" href="css/toastr.min.css">
+<!-- index Style -->
 <link rel="stylesheet" href="style/styleindex.css">
 </head>
 
@@ -34,10 +38,10 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
+                    <a  class="nav-link active" >Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Dashboard</a>
+                    <a href="#" class="nav-link">จะไปหน้าไหน</a>
                 </li>
             </ul>
 
@@ -54,7 +58,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-light-white elevation-4" style="background-color: #008622;">
+        <aside class="main-sidebar sidebar-light-white  elevation-4 " style="background-color: #008622;">
 
             <!-- Brand Logo -->
             <a href="" class="brand-link">
@@ -66,11 +70,10 @@
             <div class="sidebar mt-3 ">
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2 ">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                <nav class="mt-2 position-relative">
+
+                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-             with font-awesome or any other icon font library -->
                         <li class="nav-item ">
                             <a href="" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
@@ -78,18 +81,69 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item mt-3 ">
+                            <a href="" class="nav-link active">
+                                <i class="nav-icon fas fa-bell-exclamation"></i>
+                                <p>สถานะการจอง</p>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3 ">
+                            <a href="/request" class="nav-link active">
+                                <i class="nav-icon fas fa-list-ol"></i>
+                                <p>รายการคำขอยื่นจอง</p>
+                            </a>
+                        </li>
+                        <hr class="mt-5 mb-5">
+                        <li class="nav-item ">
+                            <a href="/" class="btn btn-block btn-moph ">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
+                            </a>
+                        </li>
                     </ul>
+
                 </nav>
             </div>
+
             <!-- /.sidebar -->
         </aside>
+
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid p-4">
-                    <div class="row">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 ">
+                            <div class="card shadow">
+                                <div class="card-body mb-0">
+                                    <div class="form-group row">
+                                        <div class="input-group">
+                                            <label class=" col-form-label">คำนำหน้า </label>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                    readonly />
+                                            </div>
+                                            <label class=" col-form-label">ชื่อ :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                    readonly />
+                                            </div>
+                                            <label class=" col-form-label">นามสกุล :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
@@ -101,34 +155,81 @@
                                 <!-- form start -->
                                 <form method="POST">
                                     <div class="card-body">
+                                        <!--? Title Name -->
                                         <div class="form-group row">
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ชื่อโครงการ :</label>
                                                 <div class="col-md-10">
                                                     <input type="text" class="form-control " id="title" name="title" />
-
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--? /.Title Name -->
+                                        <!--? Input Time -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">เวลา :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker1"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#datetimepicker1" />
+                                                        <div class="input-group-append" data-target="#datetimepicker1"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-md-2 col-form-label">ถึงเวลา :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker2"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#datetimepicker2" />
+                                                        <div class="input-group-append" data-target="#datetimepicker2"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /.Input Time -->
+                                        <!--? InputDate -->
                                         <div class="form-group row">
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
-                                                <div class="col-md-10">
-                                                    <div class="input-group date" id="reservationdatetime"
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker3"
                                                         data-target-input="nearest">
                                                         <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#reservationdatetime" />
-                                                        <div class="input-group-append"
-                                                            data-target="#reservationdatetime"
+                                                            data-target="#datetimepicker3" />
+                                                        <div class="input-group-append" data-target="#datetimepicker3"
                                                             data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker4"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#datetimepicker4" />
+                                                        <div class="input-group-append" data-target="#datetimepicker4"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--? /.InputDate -->
+                                        <!--? Room  -->
                                         <div class="form-group row">
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ห้องประชุม : </label>
@@ -152,6 +253,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--? /. Room  -->
+                                        <!--? Style  -->
                                         <div class="form-group row">
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
@@ -163,13 +266,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--?/. Style  -->
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer ">
                                         <div class="d-flex justify-content-between">
                                             <button type="reset" class="btn btn-secondary col-md-4 ">ยกเลิก</button>
                                             <button type="submit" id="submit" name="submit"
-                                                class="btn btn-success col-md-4 ">ลงทะเบียนการจอง</button>
+                                                class="btn  btn-success col-md-4 ">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -187,87 +291,54 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-
-    <script src="/js/bootstrap.min.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <!-- Select2 -->
     <script src="js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="js/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <!-- daterangepicker -->
-    <script src="js/moment.min.js"></script>
-    <script src="js/daterangepicker.js"></script>
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    <!-- InputMask -->
+    <script src="js/moment.min.js"></script>
+    <script src="js/inputmask.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <!-- date-range-picker -->
+    <script src="js/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Switch bootstrap -->
+    <script src="js/bootstrap-switch.min.js"></script>
+    <!-- Summernote -->
+    <script src="js/summernote-bs4.min.js"></script>
     <!-- Toastr -->
     <script src="js/toastr.min.js"></script>
     <!-- AdminLTE App -->
     <script src="style/adminlte.js"></script>
     <script>
         $(function () {
-            $('.select2').select2()
-        });
-
-        $(document).ready(function () {
-            //Datemask dd/mm/yyyy
-            $('#datemask').inputmask('dd/mm/yyyy', {
-                'placeholder': 'dd/mm/yyyy'
-            })
-            //Datemask2 mm/dd/yyyy
-            $('#datemask2').inputmask('mm/dd/yyyy', {
-                'placeholder': 'mm/dd/yyyy'
-            })
-            //Money Euro
-            $('[data-mask]').inputmask()
-
-            //Date picker
-            $('#reservationdate').datetimepicker({
+            moment.locale(); // th
+            //Initialize Select2 Elements
+            $('.select2').select2();
+            //timepicker
+            $('#datetimepicker1').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker3').datetimepicker({
                 format: 'L'
             });
-
-            //Date and time picker
-            $('#reservationdatetime').datetimepicker({
-                icons: {
-                    time: 'far fa-clock'
-                }
+            $('#datetimepicker4').datetimepicker({
+                format: 'L'
             });
-
-            //Date range picker
-            $('#reservation').daterangepicker()
-            //Date range picker with time picker
-            $('#reservationtime').daterangepicker({
-                timePicker: true,
-                timePickerIncrement: 30,
-                locale: {
-                    format: 'MM/DD/YYYY hh:mm A'
-                }
-            });
-            //Date range as a button
-            $('#daterange-btn').daterangepicker({
-                    ranges: {
-                        'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
-                            'month').endOf('month')]
-                    },
-                    startDate: moment().subtract(29, 'days'),
-                    endDate: moment()
-                },
-                function (start, end) {
-                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format(
-                        'MMMM D, YYYY'))
-                }
-            );
-
-            //Timepicker
-            $('#timepicker').datetimepicker({
-                format: 'LT'
-            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -288,7 +359,7 @@
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "/room",
+                url: "https://sarawut-pcru.github.io/Data/tbl_rooms.json",
                 success: function (result) {
                     var user = '<option value="" selected disabled>-ห้องประชุม-</option>';
                     for (ii in result) {
@@ -305,7 +376,7 @@
                 $.ajax({
                     type: "get",
                     dataType: "json",
-                    url: "/room",
+                    url: "https://sarawut-pcru.github.io/Data/tbl_rooms.json",
                     data: {
                         ro_id: ro_id,
                     },
