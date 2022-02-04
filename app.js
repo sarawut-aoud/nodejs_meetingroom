@@ -34,6 +34,11 @@ app.use(
   express.static(path.join(__dirname, "plugins/datatables-bs4/css")),
   express.static(path.join(__dirname, "plugins/datatables-responsive/css")),
   express.static(path.join(__dirname, "plugins/datatables-buttons/css")),
+  express.static(path.join(__dirname, "plugins/fullcalendar")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-interactions")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-daygrid")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-timegrid")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap")),
 
 );
 app.use(
@@ -56,7 +61,11 @@ app.use(
   express.static(path.join(__dirname, "plugins/datatables-bs4/js")),
   express.static(path.join(__dirname, "plugins/datatables-responsive/js")),
   express.static(path.join(__dirname, "plugins/datatables-buttons/js")),
-
+  express.static(path.join(__dirname, "plugins/fullcalendar")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-daygrid")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-timegrid")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-interaction")),
+  express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap")),
 
 );
 app.use(
