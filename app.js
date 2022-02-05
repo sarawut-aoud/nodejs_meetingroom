@@ -6,7 +6,6 @@ const depart = require("./models/department");
 const room = require("./models/product");
 const style = require("./models/roomstyle");
 
-
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/db_demo";
 const PORT = process.env.PORT || 4500;
@@ -16,7 +15,6 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 mongoose.connection.on("error", (err) => {
   console.error("MongoDB error", err);
 });
-
 
 //! เรียกใช้ /"path"
 app.use(
@@ -74,7 +72,10 @@ app.use(
   express.static(path.join(__dirname, "public/images")),
 );
 
-//!  เรียกดูไฟล์ บน url
+app.use(express.json());
+
+
+//!  เรียกดูไฟล์ บน url 127.0.0.1:4500/
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views/index.html"));
 });
