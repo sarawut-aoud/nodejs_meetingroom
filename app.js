@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const depart = require("./models/department");
 const room = require("./models/product");
 const style = require("./models/roomstyle");
-const { url } = require("inspector");
 
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/db_demo";
