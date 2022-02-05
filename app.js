@@ -77,7 +77,7 @@ app.use(
 app.use(express.json());
 
 
-//!  เรียกดูไฟล์ บน url
+//!  เรียกดูไฟล์ บน url 127.0.0.1:4500/
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views/index.html"));
 });
