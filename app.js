@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const depart = require("./models/department");
 const room = require("./models/product");
 const style = require("./models/roomstyle");
-const { url } = require("inspector");
+
 
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/db_demo";
@@ -17,7 +17,8 @@ mongoose.connection.on("error", (err) => {
   console.error("MongoDB error", err);
 });
 
-//! เรียกใช้ /"path" 
+
+//! เรียกใช้ /"path"
 app.use(
   "/css",
   express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")),
@@ -38,8 +39,7 @@ app.use(
   express.static(path.join(__dirname, "plugins/fullcalendar-interactions")),
   express.static(path.join(__dirname, "plugins/fullcalendar-daygrid")),
   express.static(path.join(__dirname, "plugins/fullcalendar-timegrid")),
-  express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap")),
-
+  express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap"))
 );
 app.use(
   "/js",
@@ -65,18 +65,14 @@ app.use(
   express.static(path.join(__dirname, "plugins/fullcalendar-daygrid")),
   express.static(path.join(__dirname, "plugins/fullcalendar-timegrid")),
   express.static(path.join(__dirname, "plugins/fullcalendar-interaction")),
-  express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap")),
-
+  express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap"))
 );
 app.use(
   "/style",
   express.static(path.join(__dirname, "public/styles")),
   express.static(path.join(__dirname, "public/javascript")),
-  express.static(path.join(__dirname, "public/images"))
+  express.static(path.join(__dirname, "public/images")),
 );
-
-app.use(express.json());
-
 
 //!  เรียกดูไฟล์ บน url
 app.get("/", (req, res) => {
@@ -105,27 +101,26 @@ app.get("/manage", (req, res) => {
   res.sendFile(path.join(__dirname, "views/manager/manager.html"));
 });
 
-
 // ! database
- app.get("/room", async (req, res) => {
-   const products = await room.find({});
-   res.json(products);
- });
+app.get("/room", async (req, res) => {
+  const data = await room.find({});
+  res.json(data);
+});
 app.get("/style", async (req, res) => {
-  const products = await style.find({});
-  res.json(products);
+  const data = await style.find({});
+  res.json(data);
 });
 app.get("/depart", async (req, res) => {
-  const products = await depart.find({});
-  res.json(products);
+  const data = await depart.find({});
+  res.json(data);
 });
 
 app.get("/api/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = await depart.findById(id);
-    res.json(product);
+    const data = await depart.findById(id);
+    res.json(data);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -134,8 +129,8 @@ app.get("/api/:id", async (req, res) => {
 app.post("/api", async (req, res) => {
   const payload = req.body;
   try {
-    const product = new depart(payload);
-    await product.save();
+    const data = new depart(payload);
+    await data.save();
     res.status(201).end();
   } catch (error) {
     res.status(400).json(error);
@@ -147,8 +142,8 @@ app.put("/api/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = await depart.findByIdAndUpdate(id, { $set: payload });
-    res.json(product);
+    const data = await depart.findByIdAndUpdate(id, { $set: payload });
+    res.json(data);
   } catch (error) {
     res.status(400).json(error);
   }

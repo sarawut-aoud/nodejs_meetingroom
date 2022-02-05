@@ -18,16 +18,12 @@
 <!-- Select2 -->
 <link rel="stylesheet" href="css/select2.min.css">
 <link rel="stylesheet" href="css/select2-bootstrap4.min.css">
+<!-- Toastr -->
+<link rel="stylesheet" href="css/toastr.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="style/adminlte.min.css">
 <!-- fullCalendar -->
-<link rel="stylesheet" href="css/main.min.css">
-<link rel="stylesheet" href="css/main.min.css">
-<link rel="stylesheet" href="css/main.min.css">
-<link rel="stylesheet" href="css/main.min.css">
-<link rel="stylesheet" href="css/main.min.css">
-<!-- Toastr -->
-<link rel="stylesheet" href="css/toastr.min.css">
+<link rel="stylesheet" href="style/calendar.css">
 <!-- index Style -->
 <link rel="stylesheet" href="style/styleindex.css">
 </head>
@@ -79,7 +75,7 @@
 
                     <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item ">
+                        <li class="nav-item mt-3">
                             <a href="/user" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>ยื่นคำขอจองห้องประชุม
@@ -93,7 +89,7 @@
                             </a>
                         </li>
 
-                        <hr class="mt-5 mb-5">
+                        <hr class="mt-5 mb-5" style="background-color: #FFF;">
                         <li class="nav-item ">
                             <a href="/" class="btn btn-block btn-moph ">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
@@ -287,7 +283,8 @@
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
+                                            <button type="submit"
+                                                class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -307,6 +304,7 @@
                         </div>
                         <!-- /.col -->
                     </div>
+                    
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -343,15 +341,13 @@
     <!-- AdminLTE App -->
     <script src="style/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
-    <script src="js/moment.min.js"></script>
-    <script src="js/main.min.js"></script>
-    <script src="js/main.min.js"></script>
-    <script src="js/main.min.js"></script>
-    <script src="js/main.min.js"></script>
-    <script src="js/main.min.js"></script>
+
+    <script src="style/maincalendar.js"></script>
+    <script src='style/calendar.js'></script>
+
     <script>
         $(function () {
-          
+
             //Initialize Select2 Elements
             $('.select2').select2();
             //timepicker
