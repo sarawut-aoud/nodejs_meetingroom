@@ -139,16 +139,7 @@ app.get("/data_staff", async (req, res) => {
 //   }
 // });
 
-// {
-//   "username": "manager4",
-//   "password": "1234",
-//    "prefix": "นาย",
-//    "fname": "ศราวุธ4",
-//    "lname": "อวดกล้า4",
-//    "phone": "0979284920",
-//    "person_id": "1160400251822",
-//    "level": "1"
-// }
+
 
 app.post("/data_user", async (req, res) => {
   const payload = req.body;

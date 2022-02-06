@@ -11,6 +11,7 @@ const productSchema = new Schema(
       lname: String,    //นามสกุล
       phone: String,    
       person_id: String,    //เลขบัตรประชาชน
+      de_id : Number,
       level: Number,    // ระดับผู้ใช้งาน 3
     },
   ],
