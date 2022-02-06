@@ -112,7 +112,7 @@ app.get("/data_manager", async (req, res) => {
   res.json(data);
 });
 app.get("/data_user", async (req, res) => {
-  const data = await manager.find({});
+  const data = await datauser.find({});
   res.json(data);
 });
 app.get("/data_staff", async (req, res) => {
