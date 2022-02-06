@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema(
   [
     {
+      uid: String,
       username: String,
       password: String,
       prefix: String,   //คำนำหน้า

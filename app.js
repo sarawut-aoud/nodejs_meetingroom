@@ -111,22 +111,7 @@ app.get("/data_manager", async (req, res) => {
   const data = await manager.find({});
   res.json(data);
 });
-app.get("/data_user", async (req, res) => {
-  const data = await datauser.find({});
-  res.json(data);
-});
-app.get("/data_staff", async (req, res) => {
-  const data = await staff.find({});
-  res.json(data);
-});
-// app.get("/style", async (req, res) => {
-//   const data = await style.find({});
-//   res.json(data);
-// });
-// app.get("/depart", async (req, res) => {
-//   const data = await depart.find({});
-//   res.json(data);
-// });
+
 
 // app.get("/api/:id", async (req, res) => {
 //   const { id } = req.params;
@@ -141,36 +126,17 @@ app.get("/data_staff", async (req, res) => {
 
 
 
-app.post("/data_user", async (req, res) => {
-  const payload = req.body;
-  try {
-    const data = new datauser(payload);
-    await data.save();
-    res.status(201).end();
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-app.post("/data_staff", async (req, res) => {
-  const payload = req.body;
-  try {
-    const data = new staff(payload);
-    await data.save();
-    res.status(201).end();
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-app.post("/data_manager", async (req, res) => {
-  const payload = req.body;
-  try {
-    const data = new manager(payload);
-    await data.save();
-    res.status(201).end();
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
+// app.post("/data_user", async (req, res) => {
+//   const payload = req.body;
+//   try {
+//     const data = new datauser(payload);
+//     await data.save();
+//     res.status(201).end();
+//   } catch (error) {
+//     res.status(400).json(error);
+//   }
+// });
+
 
 // app.put("/api/:id", async (req, res) => {
 //   const payload = req.body;

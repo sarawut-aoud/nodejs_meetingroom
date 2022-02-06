@@ -109,45 +109,43 @@
             <div class="content-header">
                 <div class="container-fluid ">
                     <div class="row justify-content-center">
-                        <div class="col-md-8 ">
+                        <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
                                 <div class="card-body mb-0">
                                     <div class="form-group row">
                                         <div class="input-group">
-                                            <label class=" col-form-label">คำนำหน้า </label>
+                                            <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                <input type="text" class="form-control " id="prefix" name="prefix"
                                                     readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                <input type="text" class="form-control " id="fname" name="fname"
                                                     readonly />
                                             </div>
                                             <label class=" col-form-label">นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                <input type="text" class="form-control " id="lname" name="lname"
                                                     readonly />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <div class="input-group">
-                                            <label class=" col-form-label">ตำแหน่ง </label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
-                                                    readonly />
-                                            </div>
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
+
+                                                <input type="text" class="form-control " id="de_name" name="de_name"
                                                     readonly />
                                             </div>
-
+                                            <label class=" col-form-label">ตำแหน่ง :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="level" name="level"
+                                                    readonly />
+                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
 
@@ -291,7 +289,7 @@
                             <!-- /.card -->
                         </div>
                         <!-- ./col -->
-                        <div class="col-md-6">
+                        <div class="col-xl-6 col-md-12 ">
                             <div class="card card-primary">
                                 <div class="card-body p-0">
                                     <!-- THE CALENDAR -->
@@ -303,7 +301,7 @@
                         </div>
                         <!-- /.col -->
                     </div>
-                    
+
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -346,7 +344,7 @@
 
     <script>
         $(function () {
-            $('#calendar').html('ปฏิทิน');
+
             //Initialize Select2 Elements
             $('.select2').select2();
             //timepicker
@@ -366,6 +364,66 @@
     </script>
     <script>
         $(document).ready(function () {
+            var uid = '4';
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "https://sarawut-pcru.github.io/Data/tbl_managers.json",
+                data: {
+                    uid: uid,
+                },
+                success: function (result) {
+                    var user = '';
+                    for (ii in result) {
+                        user += result[ii].uid;
+                        if (result[ii].uid === uid) {
+                            var prefix = result[ii].prefix;
+                            var fname = result[ii].fname;
+                            var lname = result[ii].lname;
+                            var de_id = result[ii].de_id;
+                            var level = result[ii].level;
+                            if (level == 1) {
+                                var lv = 'หัวหน้าแผนก';
+                            } else if (level == 2) {
+                                var lv = 'ธุรการ';
+                            } else {
+                                var lv = 'ผู้ปฏิบัติงาน';
+                            }
+                        }
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: "https://sarawut-pcru.github.io/Data/tbl_departments.json",
+                            data: {
+                                de_id: de_id,
+                            },
+                            success: function (data) {
+                                var depart = '';
+                                for (ii in data) {
+                                    depart += data[ii].de_id;
+                                    if (data[ii].de_id === de_id) {
+                                        var de_name = data[ii].de_name;
+
+                                    }
+
+                                }
+                                $('#de_name').val(de_name);
+                            }
+                        });
+                    }
+                    $('#prefix').val(prefix);
+                    $('#fname').val(fname);
+                    $('#lname').val(lname);
+                    $('#level').val(lv);
+
+                }
+
+            });
+
+
+
+
+
             $.ajax({
                 type: "get",
                 dataType: "json",

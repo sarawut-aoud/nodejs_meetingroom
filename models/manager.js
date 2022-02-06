@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema(
   [
     {
+      uid: String,
       username: String,
       password: String,
       prefix: String, //คำนำหน้า
@@ -11,6 +12,7 @@ const productSchema = new Schema(
       lname: String, //นามสกุล
       phone: String,
       person_id: String, //เลขบัตรประชาชน
+      de_id : Number,
       level: Number, // ระดับผู้ใช้งาน 1
     },
   ],
