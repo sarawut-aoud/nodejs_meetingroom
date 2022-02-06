@@ -107,10 +107,18 @@ app.get("/manage", (req, res) => {
 });
 
 // ! database
-// app.get("/room", async (req, res) => {
-//   const data = await room.find({});
-//   res.json(data);
-// });
+app.get("/data_manager", async (req, res) => {
+  const data = await manager.find({});
+  res.json(data);
+});
+app.get("/data_user", async (req, res) => {
+  const data = await manager.find({});
+  res.json(data);
+});
+app.get("/data_staff", async (req, res) => {
+  const data = await manager.find({});
+  res.json(data);
+});
 // app.get("/style", async (req, res) => {
 //   const data = await style.find({});
 //   res.json(data);
@@ -130,6 +138,17 @@ app.get("/manage", (req, res) => {
 //     res.status(400).json(error);
 //   }
 // });
+
+// {
+//   "username": "manager4",
+//   "password": "1234",
+//    "prefix": "นาย",
+//    "fname": "ศราวุธ4",
+//    "lname": "อวดกล้า4",
+//    "phone": "0979284920",
+//    "person_id": "1160400251822",
+//    "level": "1"
+// }
 
 app.post("/data_user", async (req, res) => {
   const payload = req.body;
