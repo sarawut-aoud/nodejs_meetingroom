@@ -116,7 +116,7 @@ app.get("/data_user", async (req, res) => {
   res.json(data);
 });
 app.get("/data_staff", async (req, res) => {
-  const data = await manager.find({});
+  const data = await staff.find({});
   res.json(data);
 });
 // app.get("/style", async (req, res) => {

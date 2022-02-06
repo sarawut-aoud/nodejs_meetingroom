@@ -1,0 +1,73 @@
+[{
+  "_id": {
+    "$oid": "61ffe0bc14e5c3078bc2abec"
+  },
+  "username": "staff1",
+  "password": "1234",
+  "prefix": "นาย",
+  "fname": "มาริน1",
+  "lname": "มาริน1",
+  "phone": "0979284921",
+  "person_id": "1160400251801",
+  "level": 2,
+  "createdAt": {
+    "$date": "2022-02-06T14:52:44.182Z"
+  },
+  "updatedAt": {
+    "$date": "2022-02-06T14:52:44.182Z"
+  }
+},{
+  "_id": {
+    "$oid": "61ffe13814e5c3078bc2abef"
+  },
+  "username": "staff2",
+  "password": "1234",
+  "prefix": "นาย",
+  "fname": "มาริน2",
+  "lname": "มาริน2",
+  "phone": "0979284922",
+  "person_id": "1160400251802",
+  "level": 2,
+  "createdAt": {
+    "$date": "2022-02-06T14:54:48.645Z"
+  },
+  "updatedAt": {
+    "$date": "2022-02-06T14:54:48.645Z"
+  }
+},{
+  "_id": {
+    "$oid": "61ffe14914e5c3078bc2abf1"
+  },
+  "username": "staff3",
+  "password": "1234",
+  "prefix": "นาย",
+  "fname": "มาริน3",
+  "lname": "มาริน3",
+  "phone": "0979284923",
+  "person_id": "1160400251803",
+  "level": 2,
+  "createdAt": {
+    "$date": "2022-02-06T14:55:05.210Z"
+  },
+  "updatedAt": {
+    "$date": "2022-02-06T14:55:05.210Z"
+  }
+},{
+  "_id": {
+    "$oid": "61ffe15614e5c3078bc2abf3"
+  },
+  "username": "staff4",
+  "password": "1234",
+  "prefix": "นาย",
+  "fname": "มาริน4",
+  "lname": "มาริน4",
+  "phone": "0979284924",
+  "person_id": "1160400251804",
+  "level": 2,
+  "createdAt": {
+    "$date": "2022-02-06T14:55:18.163Z"
+  },
+  "updatedAt": {
+    "$date": "2022-02-06T14:55:18.163Z"
+  }
+}]
