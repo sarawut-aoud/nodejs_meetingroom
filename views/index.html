@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <div class="col-12">
                         <!-- Form -->
-                        <form method="post" id="loginForm">
+                        <form method="post" id="loginForm" action="/api/profile">
                             <div class="  form-floating mb-3 mt-3">
                                 <input type="text" name="username" id="username" class="form-control" autocomplete="off"
                                     placeholder="Username" />
@@ -57,42 +57,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <script>
         // https://sarawut-pcru.github.io/Data/tbl_users.json
-        var username, pass;
-        $("#submit").click(function () {
-            username = $("#username").val();
-            password = $("#password").val();
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "https://sarawut-pcru.github.io/Data/tbl_users.json",
-                data: {
-                    username: username,
-                    password: password,
-                },
-                success: function (result) {
-                    var user = '';
-                    for (ii in result) {
-                        user += result[ii].uid;
-                        if (result[ii].username == username && result[ii].password == password) {
-                            var username = result[ii].username;
-                            var pass = result[ii].password;
-                            var level = result[ii].level;
-                        }
-                    }
-                    if (level == 3) {
-                        window.location = "/user";
-                    } else if (level == 2) {
-                        window.location = "/staff";
-                    } else if (level == 1) {
-                        window.location = "/manager";
-                    } else {
-                        window.location.reload;
-                    }
-
-                }
-
-            });
-        });
+      
     </script>
 </body>
 

@@ -194,8 +194,10 @@ app.get("/api/profile", auth, function (req, res) {
   res.json({
     isAuth: true,
     id: req.user._id,
-    email: req.user.email,
-    name: req.user.firstname + req.user.lastname,
+    username: req.user.username,
+    name: req.user.fname +' '+ req.user.lname,
+    level: req.user.level,
+    de_id: req.user.de_id, 
   });
 });
 // ! database
