@@ -1,24 +1,34 @@
 const express = require("express");
-const app = express();
+const bodyparser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const path = require("path");
 const mongoose = require("mongoose");
+const { auth } = require("./middlewares/auth");
+
 const depart = require("./models/department");
 const room = require("./models/product");
 const style = require("./models/roomstyle");
 const staff = require("./models/staff");
 const manager = require("./models/manager");
-const datauser =require("./models/users");
+const datauser = require("./models/users");
 
+const app = express();
+//app use
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
+app.use(cookieParser());
 
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/db_demo";
-const PORT = process.env.PORT || 4500;
-
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-
-mongoose.connection.on("error", (err) => {
-  console.error("MongoDB error", err);
-});
+const db = require("./config/config").get(process.env.NODE_ENV);
+// database connection
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  db.DATABASE,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  function (err) {
+    if (err) console.log(err);
+    console.log("database is connected");
+  }
+);
 
 //! เรียกใช้ /"path"
 app.use(
@@ -73,45 +83,126 @@ app.use(
   "/style",
   express.static(path.join(__dirname, "public/styles")),
   express.static(path.join(__dirname, "public/javascript")),
-  express.static(path.join(__dirname, "public/images")),
+  express.static(path.join(__dirname, "public/images"))
 );
 
 app.use(express.json());
 
-
 //!  เรียกดูไฟล์ บน url 127.0.0.1:4500/
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/index.html"));
+  res.status(200).sendFile(path.join(__dirname, "views/index.html"));
 });
 
 //todo => User ผู้ใช้
 app.get("/user", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/users/users.html"));
+  res.status(200).sendFile(path.join(__dirname, "views/users/users.html"));
 });
 //todo => User ผู้ใช้
 app.get("/user-status", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/users/user_status.html"));
+  res
+    .status(200)
+    .sendFile(path.join(__dirname, "views/users/user_status.html"));
 });
 
 //todo => Staff ธุรการ
 app.get("/staff", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/staff/staff.html"));
+  res.status(200).sendFile(path.join(__dirname, "views/staff/staff.html"));
 });
 app.get("/request", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/staff/request.html"));
+  res.status(200).sendFile(path.join(__dirname, "views/staff/request.html"));
 });
 
 //todo => Manager หัวหน้า
 app.get("/manage", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/manager/manager.html"));
+  res.status(200).sendFile(path.join(__dirname, "views/manager/manager.html"));
+});
+require("./routers/routes")(app);
+
+// adding new user (sign-up route)
+app.post("/api/register", function (req, res) {
+  // taking a user
+  const newuser = new datauser(req.body);
+  console.log(newuser);
+
+  if (newuser.password != newuser.password2)
+    return res.status(400).json({ message: "password not match" });
+
+  datauser.findOne({ username: newuser.username }, function (err, user) {
+    if (user)
+      return res.status(400).json({ auth: false, message: "username exits" });
+
+    newuser.save((err, doc) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ success: false });
+      }
+      res.status(200).json({
+        succes: true,
+        user: doc,
+      });
+    });
+  });
+});
+// login user
+app.post("/api/login", function (req, res) {
+  let token = req.cookies.auth;
+  datauser.findByToken(token, (err, user) => {
+    if (err) return res(err);
+    if (user)
+      return res.status(400).json({
+        error: true,
+        message: "You are already logged in",
+      });
+    else {
+      datauser.findOne({ username: req.body.username }, function (err, user) {
+        if (!user)
+          return res.json({
+            isAuth: false,
+            message: " Auth failed ,email not found",
+          });
+
+        user.comparepassword(req.body.password, (err, isMatch) => {
+          if (!isMatch)
+            return res.json({
+              isAuth: false,
+              message: "password doesn't match",
+            });
+
+          user.generateToken((err, user) => {
+            if (err) return res.status(400).send(err);
+            res.cookie("auth", user.token).json({
+              isAuth: true,
+              id: user._id,
+              username: user.username,
+            });
+          });
+        });
+      });
+    }
+  });
 });
 
+//logout user
+app.get("/api/logout", auth, function (req, res) {
+  req.user.deleteToken(req.token, (err, user) => {
+    if (err) return res.status(400).send(err);
+    res.sendStatus(200).sendFile(path.join(__dirname, "views/index.html"));
+  });
+});
+// get logged in user
+app.get("/api/profile", auth, function (req, res) {
+  res.json({
+    isAuth: true,
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.firstname + req.user.lastname,
+  });
+});
 // ! database
-app.get("/data_manager", async (req, res) => {
-  const data = await manager.find({});
-  res.json(data);
-});
-
+// app.get("/data_manager", async (req, res) => {
+//   const data = await manager.find({});
+//   res.json(data);
+// });
 
 // app.get("/api/:id", async (req, res) => {
 //   const { id } = req.params;
@@ -124,8 +215,6 @@ app.get("/data_manager", async (req, res) => {
 //   }
 // });
 
-
-
 // app.post("/data_user", async (req, res) => {
 //   const payload = req.body;
 //   try {
@@ -136,7 +225,6 @@ app.get("/data_manager", async (req, res) => {
 //     res.status(400).json(error);
 //   }
 // });
-
 
 // app.put("/api/:id", async (req, res) => {
 //   const payload = req.body;
@@ -161,6 +249,7 @@ app.get("/data_manager", async (req, res) => {
 //   }
 // });
 
+const PORT = process.env.PORT || 4500;
 app.listen(PORT, () => {
   console.log(`Application is running on port ${PORT}`);
 });
