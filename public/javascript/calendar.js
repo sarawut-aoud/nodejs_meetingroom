@@ -72,11 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         title: "Meeting",
         start: "2022-02-12T10:30:00",
-        end: "2022-02-12T12:30:00",
+        end: "2022-02-12T12:00:10",
       },
       {
         title: "Lunch",
-        start: "2022-02-12T12:00:00",
+        start: "2022-02-12T12:01:00",
       },
       {
         title: "Meeting",

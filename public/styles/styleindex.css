@@ -9,7 +9,7 @@
 }
 
 .body_index {
-    background-color: #056f00;
+    background-color: #086b02;
 }
 
 .card-head {
@@ -20,19 +20,18 @@
 
 .login-btn {
     color: white;
-    background-color: green;
+    background-color: rgb(83, 163, 15);
     width: 200px;
     border-radius: 20px;
-    border-width: none;
+     border-width: 3px; 
+     border-color: rgb(224, 250, 165);
     height: 45px;
 }
 
 button.login-btn:active,
 button.login-btn:hover {
-    background-color: rgb(5, 161, 5);
-    border-color: yellowgreen;
-
-
+    background-color: rgba(0, 129, 34, 1);
+     border-color: yellowgreen; 
 }
 
 .btn-moph {
