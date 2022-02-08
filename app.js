@@ -1,6 +1,6 @@
 const express = require("express");
-const path = require('path');
-const bodyParser = require('body-parser');
+const path = require("path");
+const bodyParser = require("body-parser");
 // const fs = require("fs");
 // const https = require('https');
 const cors = require("cors");
@@ -97,7 +97,6 @@ const login = require("./login/login");
 // var employee_signature = require('./employee/employee_signature');
 // var leave_heading = require('./hr/leave_heading');
 
-
 // var kpi_heading = require('./kpi/kpi_heading');
 // var kpi_sub_heading = require('./kpi/kpi_sub_heading');
 // var kpi_subdetails_heading = require('./kpi/kpi_subdetails_heading');
@@ -107,7 +106,6 @@ const login = require("./login/login");
 // var kip_d_heading = require('./kpi/kip_d_heading');
 // var kpi_gheading = require('./kpi/kpi_gheading');
 // var kpi_rate = require('./kpi/kpi_rate');
-
 
 ///////////////////////end////////////////////
 
@@ -196,18 +194,18 @@ app.use("/login", login);
 ///////////////////////may////////////////////
 
 // app.use('/academic',academic);
-// app.use('/senior',senior); 
-// app.use('/prefix',prefix); 
-// app.use('/degree',degree); 
-// app.use('/blood',blood); 
+// app.use('/senior',senior);
+// app.use('/prefix',prefix);
+// app.use('/degree',degree);
+// app.use('/blood',blood);
 // app.use('/leave_status',leave_status);
-// app.use('/cult',cult); 
-// app.use('/state',state); 
-// app.use('/typeposition',typeposition); 
-// app.use('/typeacademic',typeacademic); 
-// app.use('/positions',positions); 
-// app.use('/money',money); 
-// app.use('/state_work',state_work); 
+// app.use('/cult',cult);
+// app.use('/state',state);
+// app.use('/typeposition',typeposition);
+// app.use('/typeacademic',typeacademic);
+// app.use('/positions',positions);
+// app.use('/money',money);
+// app.use('/state_work',state_work);
 // app.use('/faction',faction);
 // app.use('/depart',depart);
 // app.use('/ward',ward);
@@ -239,7 +237,6 @@ app.use("/login", login);
 // app.use('/leave_heading',leave_heading);
 // app.use('/cancel_leave',cancel_leave);
 
-
 // app.use('/kpi_heading',kpi_heading);
 // app.use('/kpi_sub_heading',kpi_sub_heading);
 // app.use('/kpi_subdetails_heading',kpi_subdetails_heading);
@@ -254,12 +251,16 @@ app.use("/login", login);
 // app.use('/restday',restday);
 
 ///////////////////////end////////////////////
-
+const router = require("./routers/routes");
 // const server = https.createServer(options, app);
-
+app.use(router);
+app.use(
+  "/index",
+  express.static(path.join(__dirname, "/views/index.html"))
+);
 // server.listen(port, () => {
 //     console.log("ERP server starting on port : " + port)
 // });
 app.listen(port, () => {
-    console.log('ERP Running as port '+port);
-})
+  console.log("ERP Running as port " + port);
+});

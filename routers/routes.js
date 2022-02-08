@@ -1,5 +1,19 @@
+const express = require("express");
+
+const router = express.Router();
+const path = require("path");
 
 
+ router.get("/css", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/plugins/bootstrap/bootstrap.min.css"));
+});
+router.get("/test/:id",(req,res)=>{
+    const param = req.params.id
+  
+    if(param ==="user"){
+        res.sendFile(path.join(__dirname, "../views/users/users.html"));
+    }
+})
 // router.use(
 //   "/css",
 //   express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")),
@@ -56,3 +70,4 @@
 // );
 // };
 
+module.exports = router;
