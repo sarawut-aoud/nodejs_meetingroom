@@ -8,41 +8,42 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   res.send({ status: "1", message: "ยินดีต้อนรับเข้าสู่ระบบ" });
-  
 });
 
 router.post("/login", async (req, res) => {
-  const q = req.body; 
+  const q = req.body;
 
-   const sql= "SELECT * FROM hr_personal WHERE person_username=? AND person_password=? ";
+  console.log(q.inputUsername);
   // const sql =
-  //   "SELECT ps.person_username, " +
-  //   //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
-  //   "ps.person_id," +
-  //   "ps.person_firstname, " +
-  //   "ps.person_lastname, " +
-  //   "ps.person_right, " +
-  //   "ps.person_page, " +
-  //   "ps.person_token " +
-  //   // "po.position_id, " +
-  //   // "po.position_name, " +
-  //   // "s.sign_id, " +
-  //   // "s.sign_pic, " +
-  //   // "a.ac_id, " +
-  //   // "a.ac_name " +
-  //   "FROM hr_personal AS ps  " +
-  //   // "LEFT JOIN hr_position AS po " +
-  //   // "ON (ps.position_id = po.position_id) " +
-  //   // "LEFT JOIN hr_sign AS s " +
-  //   // "ON (ps.person_id = s.sign_cid AND s.sign_active = '1')" +
-  //   // "LEFT JOIN hr_academic AS a " +
-  //   // "ON (ps.ac_id = a.ac_id) " +
-  //   // "JOIN hr_state_work AS sw " +
-  //   // "ON (ps.person_state = sw.person_state) " +
-  //   "WHERE ps.person_username = ? " +
-  //   "AND ps.person_password = ? " ;
-  //   // "AND sw.sw_action = 'Y' " +
-  //   // "ORDER BY s.sign_id DESC LIMIT 1 ";
+  //   "SELECT * FROM hr_personal WHERE person_username = ? person_password = ?";
+  const sql =
+    "SELECT ps.person_username, " +
+    //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
+    "ps.person_id," +
+    "ps.person_firstname, " +
+    "ps.person_lastname, " +
+    "ps.person_right, " +
+    "ps.person_page, " +
+    "ps.person_token " +
+    // "po.position_id, " +
+    // "po.position_name, " +
+    // "s.sign_id, " +
+    // "s.sign_pic, " +
+    // "a.ac_id, " +
+    // "a.ac_name " +
+    "FROM hr_personal AS ps  " +
+    // "LEFT JOIN hr_position AS po " +
+    // "ON (ps.position_id = po.position_id) " +
+    // "LEFT JOIN hr_sign AS s " +
+    // "ON (ps.person_id = s.sign_cid AND s.sign_active = '1')" +
+    // "LEFT JOIN hr_academic AS a " +
+    // "ON (ps.ac_id = a.ac_id) " +
+    // "JOIN hr_state_work AS sw " +
+    // "ON (ps.person_state = sw.person_state) " +
+    "WHERE ps.person_username = ? " +
+    "AND ps.person_password = ? " ;
+    // "AND sw.sw_action = 'Y' " +
+    // "ORDER BY s.sign_id DESC LIMIT 1 ";
   const params = [q.inputUsername, q.inputPassword];
   con.query(sql, params, (err, rows) => {
     if (err) {
@@ -104,7 +105,7 @@ router.post("/level", async (req, res) => {
     "ON (l.depart_id = p.depart_id) " +
     "LEFT JOIN hr_ward AS w " +
     "ON (l.ward_id = w.ward_id) " +
-    "WHERE l.person_id =  ?";//AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
+    "WHERE l.person_id =  ?"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
   const params = [q.id];
   con.query(sql, params, (err, rows) => {
     if (err) {

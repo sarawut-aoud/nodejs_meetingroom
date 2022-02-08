@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 
 const con = mysql.createConnection({
-    host: '127.0.0.1', 
+    host: '127.0.0.1', //192.168.9.7
     user: 'root', //erp
     password: '', //Erp@PhetchabunHospital
     database: 'db_asset', 

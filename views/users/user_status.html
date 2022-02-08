@@ -2,7 +2,7 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/style/index.png" type="image/x-icon" />
+<link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -10,16 +10,15 @@
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="style/adminlte.min.css">
+<link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <!-- DataTables -->
-<link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="css/buttons.bootstrap4.min.css">
-
+<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 <!-- Toastr -->
-<link rel="stylesheet" href="css/toastr.min.css">
+<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 <!-- index Style -->
-<link rel="stylesheet" href="style/styleindex.css">
+<link rel="stylesheet" href="../public/styles/styleindex.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -33,7 +32,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/user" class="nav-link">Home</a>
+                    <a href="./users.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a  class="nav-link  active">สถานะการจอง</a>
@@ -57,7 +56,7 @@
 
             <!-- Brand Logo -->
             <a href="" class="brand-link">
-                <img src="/style/logo.png" alt="Logo" class="w-75" style="opacity: .8">
+                <img src="../public/images/logo.png" alt="Logo" class="w-75" style="opacity: .8">
                 <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
             </a>
 
@@ -70,14 +69,14 @@
                     <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item mt-3">
-                            <a href="/user" class="nav-link active">
+                            <a href="./users.html" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>ยื่นคำขอจองห้องประชุม
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item mt-3 ">
-                            <a href="/user-status" class="nav-link active">
+                            <a href="./user_status.html" class="nav-link active">
                                 <i class="nav-icon fas fa-bell-exclamation"></i>
                                 <p>สถานะการจอง</p>
                             </a>
@@ -85,7 +84,7 @@
 
                         <hr class="mt-5 mb-5" style="background-color: #FFF;">
                         <li class="nav-item ">
-                            <a href="/api/logout" class="btn btn-block btn-moph ">
+                            <a href="" class="btn btn-block btn-moph ">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
                             </a>
                         </li>
@@ -168,31 +167,29 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+	<script src="../plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- jQuery UI 1.11.4 -->
-    <script src="js/jquery-ui.min.js"></script>
+    <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-    <!-- InputMask -->
-
+  
     <!-- Switch bootstrap -->
-    <script src="js/bootstrap-switch.min.js"></script>
+    <script src="../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <!-- DataTables  & Plugins -->
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.bootstrap4.min.js"></script>
-    <script src="js/dataTables.responsive.min.js"></script>
-    <script src="js/responsive.bootstrap4.min.js"></script>
-    <script src="js/dataTables.buttons.min.js"></script>
-    <script src="js/buttons.bootstrap4.min.js"></script>
-
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
     <!-- Toastr -->
-    <script src="js/toastr.min.js"></script>
+    <script src="../plugins/toastr/toastr.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="style/adminlte.js"></script>
+    <script src="../public/javascript/adminlte.js"></script>
 
     <script>
         $("input[data-bootstrap-switch]").each(function () {
@@ -215,7 +212,7 @@
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "/style",
+                url: "https://sarawut-pcru.github.io/Data/tbl_styles.json",
                 success: function (result) {
                     //  const json = JSON.stringify(response);
                     var user = '<option value="" selected disabled>-รูปแบบห้อง-</option>';
