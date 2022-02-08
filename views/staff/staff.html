@@ -2,29 +2,29 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/style/index.png" type="image/x-icon" />
+<link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <!-- daterange picker -->
-<link rel="stylesheet" href="css/daterangepicker.css">
+<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet" href="css/tempusdominus-bootstrap-4.min.css">
+<link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
-<link rel="stylesheet" href="css/icheck-bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.css">
 <!-- Select2 -->
-<link rel="stylesheet" href="css/select2.min.css">
-<link rel="stylesheet" href="css/select2-bootstrap4.min.css">
-<!-- Theme style -->
-<link rel="stylesheet" href="style/adminlte.min.css">
-
+<link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- Toastr -->
-<link rel="stylesheet" href="css/toastr.min.css">
-<!-- index Style -->
-<link rel="stylesheet" href="style/styleindex.css">
+<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+<!-- fullCalendar Style -->
+<link rel="stylesheet" href="../public/styles/calendar.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="../public/styles/adminlte.min.css">
+<link rel="stylesheet" href="../public/styles/styleindex.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -38,13 +38,9 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a  class="nav-link active" >Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">จะไปหน้าไหน</a>
+                    <a class="nav-link active">Home</a>
                 </li>
             </ul>
-
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
@@ -62,7 +58,7 @@
 
             <!-- Brand Logo -->
             <a href="" class="brand-link">
-                <img src="/style/logo.png" alt="Logo" class="w-75" style="opacity: .8">
+                <img src="../public/images/logo.png" alt="Logo" class="w-75" style="opacity: .8">
                 <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
             </a>
 
@@ -70,32 +66,27 @@
             <div class="sidebar mt-3 ">
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2 position-relative">
+                <nav class="mt-4 position-relative">
 
                     <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item ">
-                            <a href="" class="nav-link active">
+                        <li class="nav-item mt-3">
+                            <a href="./users.html" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>ยื่นคำขอจองห้องประชุม
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item mt-3 ">
-                            <a href="" class="nav-link active">
+                            <a href="./user_status.html" class="nav-link active">
                                 <i class="nav-icon fas fa-bell-exclamation"></i>
                                 <p>สถานะการจอง</p>
                             </a>
                         </li>
-                        <li class="nav-item mt-3 ">
-                            <a href="/request" class="nav-link active">
-                                <i class="nav-icon fas fa-list-ol"></i>
-                                <p>รายการคำขอยื่นจอง</p>
-                            </a>
-                        </li>
-                        <hr class="mt-5 mb-5">
+
+                        <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="/" class="btn btn-block btn-moph ">
+                            <a href="" class="btn btn-block btn-moph ">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
                             </a>
                         </li>
@@ -112,32 +103,45 @@
         <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
             <!-- Content Header (Page header) -->
             <div class="content-header">
-                <div class="container-fluid p-4">
+                <div class="container-fluid ">
                     <div class="row justify-content-center">
-                        <div class="col-md-8 ">
+                        <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
                                 <div class="card-body mb-0">
                                     <div class="form-group row">
                                         <div class="input-group">
-                                            <label class=" col-form-label">คำนำหน้า </label>
+                                            <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                <input type="text" class="form-control " id="prefix" name="prefix"
                                                     readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                <input type="text" class="form-control " id="fname" name="fname"
                                                     readonly />
                                             </div>
                                             <label class=" col-form-label">นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="perfix" name="perfix"
+                                                <input type="text" class="form-control " id="lname" name="lname"
                                                     readonly />
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group row ">
+                                        <div class="input-group">
+                                            <label class=" col-form-label">แผนก :</label>
+                                            <div class="col-md">
 
-
+                                                <input type="text" class="form-control " id="de_name" name="de_name"
+                                                    readonly />
+                                            </div>
+                                            <label class=" col-form-label">ตำแหน่ง :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="level" name="level"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -270,10 +274,10 @@
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer ">
-                                        <div class="d-flex justify-content-between">
-                                            <button type="reset" class="btn btn-secondary col-md-4 ">ยกเลิก</button>
-                                            <button type="submit" id="submit" name="submit"
-                                                class="btn  btn-success col-md-4 ">ลงทะเบียนการจอง</button>
+                                        <div class="row justify-content-between ">
+                                            <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
+                                            <button type="submit"
+                                                class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -281,7 +285,19 @@
                             <!-- /.card -->
                         </div>
                         <!-- ./col -->
+                        <div class="col-xl-6 col-md-12 ">
+                            <div class="card card-primary">
+                                <div class="card-body p-0">
+                                    <!-- THE CALENDAR -->
+                                    <div id="calendar"></div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
                     </div>
+
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -291,35 +307,38 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+	<script src="../plugins/bootstrap/js/bootstrap.js"></script>
     <!-- Select2 -->
-    <script src="js/select2.full.min.js"></script>
+    <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="js/jquery-ui.min.js"></script>
+    <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- InputMask -->
-    <script src="js/moment.min.js"></script>
-    <script src="js/inputmask.min.js"></script>
+    <script src="../plugins/moment/moment.min.js"></script>
+    <script src="../plugins/inputmask/inputmask.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
     <!-- date-range-picker -->
-    <script src="js/daterangepicker.js"></script>
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- Switch bootstrap -->
-    <script src="js/bootstrap-switch.min.js"></script>
+    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  
     <!-- Summernote -->
-    <script src="js/summernote-bs4.min.js"></script>
-    <!-- Toastr -->
-    <script src="js/toastr.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="style/adminlte.js"></script>
+    <script src="../plugins/summernote/summernote-bs4.min.js"></script>
+      <!-- Toastr -->
+      <script src="../plugins/toastr/toastr.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../public/javascript/adminlte.js"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <script src="../public/javascript/maincalendar.js"></script>
+    <script src='../public/javascript/calendar.js'></script>
+
     <script>
         $(function () {
-            moment.locale(); // th
+
             //Initialize Select2 Elements
             $('.select2').select2();
             //timepicker
@@ -339,6 +358,69 @@
     </script>
     <script>
         $(document).ready(function () {
+            var uid = '4';
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "https://sarawut-pcru.github.io/Data/tbl_managers.json",
+                data: {
+                    uid: uid,
+                },
+                success: function (result) {
+                    var user = '';
+                    for (ii in result) {
+                        user += result[ii].uid;
+                        if (result[ii].uid === uid) {
+                            var prefix = result[ii].prefix;
+                            var fname = result[ii].fname;
+                            var lname = result[ii].lname;
+                            var de_id = result[ii].de_id;
+                            var level = result[ii].level;
+                            if (level == 1) {
+                                var lv = 'หัวหน้าแผนก';
+                            } else if (level == 2) {
+                                var lv = 'ธุรการ';
+                            } else {
+                                var lv = 'ผู้ปฏิบัติงาน';
+                            }
+                            break;
+                        }
+
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: "https://sarawut-pcru.github.io/Data/tbl_departments.json",
+                            data: {
+                                de_id: de_id,
+                            },
+                            success: function (data) {
+                                var depart = '';
+                                for (kk in data) {
+                                    // depart += data[kk].de_id;
+                                    if (data[kk].de_id === de_id) {
+                                        var de_name = data[kk].de_name;
+                                        break;
+                                    }
+                                }
+                                $('#de_name').val(de_name);
+                            }
+                        });
+
+                    }
+
+                    $('#prefix').val(prefix);
+                    $('#fname').val(fname);
+                    $('#lname').val(lname);
+                    $('#level').val(lv);
+
+                }
+
+            });
+
+
+
+
+
             $.ajax({
                 type: "get",
                 dataType: "json",

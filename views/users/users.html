@@ -2,30 +2,29 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/style/index.png" type="image/x-icon" />
+<link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <!-- daterange picker -->
-<link rel="stylesheet" href="css/daterangepicker.css">
+<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet" href="css/tempusdominus-bootstrap-4.min.css">
+<link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
-<link rel="stylesheet" href="css/icheck-bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.css">
 <!-- Select2 -->
-<link rel="stylesheet" href="css/select2.min.css">
-<link rel="stylesheet" href="css/select2-bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- Toastr -->
-<link rel="stylesheet" href="css/toastr.min.css">
+<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+<!-- fullCalendar Style -->
+<link rel="stylesheet" href="../public/styles/calendar.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="style/adminlte.min.css">
-<!-- fullCalendar -->
-<link rel="stylesheet" href="style/calendar.css">
-<!-- index Style -->
-<link rel="stylesheet" href="style/styleindex.css">
+<link rel="stylesheet" href="../public/styles/adminlte.min.css">
+<link rel="stylesheet" href="../public/styles/styleindex.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -59,7 +58,7 @@
 
             <!-- Brand Logo -->
             <a href="" class="brand-link">
-                <img src="/style/logo.png" alt="Logo" class="w-75" style="opacity: .8">
+                <img src="../public/images/logo.png" alt="Logo" class="w-75" style="opacity: .8">
                 <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
             </a>
 
@@ -72,14 +71,14 @@
                     <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item mt-3">
-                            <a href="/user" class="nav-link active">
+                            <a href="./users.html" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>ยื่นคำขอจองห้องประชุม
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item mt-3 ">
-                            <a href="/user-status" class="nav-link active">
+                            <a href="./user_status.html" class="nav-link active">
                                 <i class="nav-icon fas fa-bell-exclamation"></i>
                                 <p>สถานะการจอง</p>
                             </a>
@@ -87,7 +86,7 @@
 
                         <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="/api/logout" class="btn btn-block btn-moph ">
+                            <a href="" class="btn btn-block btn-moph ">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
                             </a>
                         </li>
@@ -308,36 +307,34 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+	<script src="../plugins/bootstrap/js/bootstrap.js"></script>
     <!-- Select2 -->
-    <script src="js/select2.full.min.js"></script>
+    <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="js/jquery-ui.min.js"></script>
+    <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- InputMask -->
-    <script src="js/moment.min.js"></script>
-    <script src="js/inputmask.min.js"></script>
+    <script src="../plugins/moment/moment.min.js"></script>
+    <script src="../plugins/inputmask/inputmask.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
     <!-- date-range-picker -->
-    <script src="js/daterangepicker.js"></script>
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- Switch bootstrap -->
-    <script src="js/bootstrap-switch.min.js"></script>
+    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  
     <!-- Summernote -->
-    <script src="js/summernote-bs4.min.js"></script>
-    <!-- Toastr -->
-    <script src="js/toastr.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="style/adminlte.js"></script>
+    <script src="../plugins/summernote/summernote-bs4.min.js"></script>
+      <!-- Toastr -->
+      <script src="../plugins/toastr/toastr.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
-
-    <script src="style/maincalendar.js"></script>
-    <script src='style/calendar.js'></script>
+    <script src="../public/javascript/maincalendar.js"></script>
+    <script src='../public/javascript/calendar.js'></script>
 
     <script>
         $(function () {
