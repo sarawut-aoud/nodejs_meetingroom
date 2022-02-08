@@ -251,13 +251,16 @@ app.use("/login", login);
 // app.use('/restday',restday);
 
 ///////////////////////end////////////////////
+////! TAR /////
 const router = require("./routers/routes");
-// const server = https.createServer(options, app);
+const logout = require("./routers/logout");
+
 app.use(router);
-app.use(
-  "/index",
-  express.static(path.join(__dirname, "/views/index.html"))
-);
+app.use(logout);
+////! END ////
+
+// const server = https.createServer(options, app);
+
 // server.listen(port, () => {
 //     console.log("ERP server starting on port : " + port)
 // });

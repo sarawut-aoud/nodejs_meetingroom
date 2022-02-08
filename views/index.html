@@ -5,11 +5,9 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
 	<link rel="icon" href="public/images/index.png" type="image/x-icon" />
 	<title>Moph : MeetingRoom</title>
 	<!-- Bootstrap CSS -->
-	<!-- <link rel="stylesheet" href="/css" /> -->
 	<link rel="stylesheet" href="plugins/bootstrap5/css/bootstrap.min.css" />
 	<!-- Style Create -->
 	<link rel="stylesheet" href="public/styles/adminlte.min.css" />
@@ -69,9 +67,7 @@
 	<script type="text/javascript">
 		$(function () {
 			var path = 'http://127.0.0.1:4500';
-			var token = 'Enterprise Resource Planning';
-			 $('#loginAlert').addClass('none');
-
+			
 			$("#btnLogin").click(function (e) {
 				e.preventDefault();
 
@@ -84,7 +80,7 @@
 
 						//*  login error นะะ
 						$("#btnLogin").attr("disabled", "disabled");
-						 $("#btnLogin").html("<img alt='loading' class='rounded w-25' src='../views/public/images/load.gif'>");
+						// $("#btnLogin").html("<img alt='loading' class='alert alert-danger' src='../views/public/images/load.gif'>");
 					},
 					timeout: 20000,
 					error: function (jqXHR, exception) {
@@ -124,8 +120,6 @@
 								page = result.person_page,
 								right = result.person_right,
 								line = result.person_token;
-
-							//alert(user+" "+id+" "+name+" "+sign_id+" "+sign_name+" "+po_id+" "+po_name+" "+page+" "+right+" "+line);
 							$.ajax({
 								type: "POST",
 								url: path + "/login/level",
@@ -190,28 +184,7 @@
 													result[key].ward_name + '">' +
 													result[key].duty_name +
 													depart + '</option>');
-											}
-
-											$('#blockModal').modal('show');
-
-											$('#btnSave').on('click', function (e) {
-												e.preventDefault();
-
-												var office = $('#office')
-													.val(),
-													office = office.split(
-														':');
-
-												login(user, id, name, sign_id,
-													sign_name, office[0],
-													office[1], office[2],
-													office[3], office[4],
-													office[5], office[6],
-													office[7], office[8],
-													po_id, po_name, ac_id,
-													ac_name, page, right,
-													line);
-											});
+											}											
 										}
 									}
 								}
@@ -220,15 +193,6 @@
 					}
 				});
 			});
-
-			// $('#btnClose').on('click', function(e) {
-			// 	e.preventDefault();
-
-			// 	$("#btnLogin").removeAttr("disabled");
-			// 	$("#btnLogin").html("เข้าสู่ระบบ");
-			// 	$("#frmLogin")[0].reset();
-			// 	$("#frmLevel")[0].reset();
-			// });
 
 			function login(user, id, name, sign_id, sign_name, level_id, duty_id, duty_name, faction_id, faction_name,
 				depart_id, depart_name, office_id, office_name, po_id, po_name, ac_id, ac_name, page, right, line) {
@@ -257,8 +221,8 @@
 						'line': line
 					},
 					function () {
-						//console.log('1');
-						//! login -> success -> go to page ?
+			
+						/* ! login -> success -> go to page ? */
 						location.href = '../views/users/users.html';
 					}
 				);
@@ -267,7 +231,7 @@
 			function clearData(msg) {
 				$("#btnLogin").html("เข้าสู่ระบบ");
 				$("#btnLogin").removeAttr("disabled");
-				 $("#loginAlert").show(0).html("<div align='center'>" + msg + "</div>").delay(2500).fadeOut('fast');
+				$("#loginAlert").show(0).html("<div align='center'>" + msg + "</div>").delay(2500).fadeOut('fast');
 				$("#frmLogin")[0].reset();
 				// $("#frmLevel")[0].reset();
 				$("#inputUsername").focus();

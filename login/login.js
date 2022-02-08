@@ -9,13 +9,12 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   res.send({ status: "1", message: "ยินดีต้อนรับเข้าสู่ระบบ" });
 });
-
+//todo : login
 router.post("/login", async (req, res) => {
   const q = req.body;
 
-  console.log(q.inputUsername);
-  // const sql =
-  //   "SELECT * FROM hr_personal WHERE person_username = ? person_password = ?";
+  console.log(q.inputUsername+'  '+q.inputPassword);
+  // sql select
   const sql =
     "SELECT ps.person_username, " +
     //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
@@ -83,7 +82,7 @@ router.post("/login", async (req, res) => {
     }
   });
 });
-
+//todo : check Level
 router.post("/level", async (req, res) => {
   const q = req.body;
   const sql =
