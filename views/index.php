@@ -69,12 +69,13 @@
 			//  if (token == 'Enterprise Resource Planning') {
 
 			//  } else {
+			
 			$("#btnLogin").click(function(e) {
 				e.preventDefault();
 
 				$.ajax({
 					type: "POST",
-					url: path + "login/login",
+					url: path + "/login/login",
 					data: $("#frmLogin").serialize(),
 					dataType: "json",
 					beforeSend: function() {
