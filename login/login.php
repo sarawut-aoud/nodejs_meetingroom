@@ -23,4 +23,18 @@
     // $_SESSION['erp_right'] = $_POST['right'];
     // $_SESSION['erp_line'] = $_POST['line'];
     // $_SESSION['erp_token'] = 'Enterprise Resource Planning';
+
+    //! -Meeting- ///
+
+    $_SESSION['mt_id'] = $_POST['id'];
+    $_SESSION['mt_user'] = $_POST['user'];
+    $_SESSION['mt_person_id'] = $_POST['person_id'];
+    $_SESSION['mt_prefix'] = $_POST['prefix'];
+    $_SESSION['mt_name'] = $_POST['name']; // fname + lname
+    $_SESSION['mt_position'] = $_POST['position'];
+    $_SESSION['mt_phone'] = $_POST['phone'];
+    $_SESSION['mt_de_id'] = $_POST['de_id'];
+    $_SESSION['mt_lv_id'] = $_POST['lv_id'];
+
+    
 ?>

@@ -252,11 +252,9 @@ app.use("/login", login);
 
 ///////////////////////end////////////////////
 ////! TAR /////
-const router = require("./routers/routes");
-const logout = require("./routers/logout");
+// const sql = require("./routers/routes");
 
-app.use(router);
-app.use(logout);
+
 ////! END ////
 
 // const server = https.createServer(options, app);

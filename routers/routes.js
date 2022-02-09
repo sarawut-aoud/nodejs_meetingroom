@@ -1,63 +1,144 @@
 const express = require("express");
-const router = express.Router();
 const path = require("path");
 
+const app = express();
+const bodyParser = require("body-parser");
 
+const cors = require("cors");
+const con = require("../config/config");
 
-// router.use(
-//   "/css",
-//   express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")),
-//   express.static(path.join(__dirname, "plugins/fontawesome-free/css")),
-//   express.static(path.join(__dirname, "plugins/select2/css")),
-//   express.static(path.join(__dirname, "plugins/select2-bootstrap4-theme")),
-//   express.static(path.join(__dirname, "plugins/tempusdominus-bootstrap-4/css")),
-//   express.static(path.join(__dirname, "plugins/overlayScrollbars/css")),
-//   express.static(path.join(__dirname, "plugins/icheck-bootstrap")),
-//   express.static(path.join(__dirname, "plugins/daterangepicker")),
-//   express.static(path.join(__dirname, "plugins/summernote")),
-//   express.static(path.join(__dirname, "plugins/sweetalert2-theme-bootstrap-4")),
-//   express.static(path.join(__dirname, "plugins/toastr")),
-//   express.static(path.join(__dirname, "plugins/datatables-bs4/css")),
-//   express.static(path.join(__dirname, "plugins/datatables-responsive/css")),
-//   express.static(path.join(__dirname, "plugins/datatables-buttons/css")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-interactions")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-daygrid")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-timegrid")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap"))
-// );
-// router.use(
-//   "/js",
-//   express.static(path.join(__dirname, "node_modules/jquery/dist")),
-//   express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")),
-//   express.static(path.join(__dirname, "plugins/jquery-ui")),
-//   express.static(path.join(__dirname, "plugins/bootstrap/js")),
-//   express.static(path.join(__dirname, "plugins/select2/js")),
-//   express.static(path.join(__dirname, "plugins/moment")),
-//   express.static(path.join(__dirname, "plugins/daterangepicker")),
-//   express.static(path.join(__dirname, "plugins/tempusdominus-bootstrap-4/js")),
-//   express.static(path.join(__dirname, "plugins/summernote")),
-//   express.static(path.join(__dirname, "plugins/overlayScrollbars/js")),
-//   express.static(path.join(__dirname, "plugins/bootstrap-switch/js")),
-//   express.static(path.join(__dirname, "plugins/inputmask")),
-//   express.static(path.join(__dirname, "plugins/sweetalert2")),
-//   express.static(path.join(__dirname, "plugins/toastr")),
-//   express.static(path.join(__dirname, "plugins/datatables")),
-//   express.static(path.join(__dirname, "plugins/datatables-bs4/js")),
-//   express.static(path.join(__dirname, "plugins/datatables-responsive/js")),
-//   express.static(path.join(__dirname, "plugins/datatables-buttons/js")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-daygrid")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-timegrid")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-interaction")),
-//   express.static(path.join(__dirname, "plugins/fullcalendar-bootstrap"))
-// );
-// router.use(
-//   "/style",
-//   express.static(path.join(__dirname, "public/styles")),
-//   express.static(path.join(__dirname, "public/javascript")),
-//   express.static(path.join(__dirname, "public/images"))
-// );
-// };
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-module.exports = router;
+var sql = express.mysql();
+
+//?  SELECT Data
+sql.get("/", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  let show = query01.show;
+  let ac_id = query01.id;
+  let status = query01.status;
+
+  if (show === "ture" && status != "check") {
+    con.query(
+      "SELECT o.ac_id,o.ac_name ,p.typeac_id ,o.ac_pubilc ,p.typeac_name " +
+        " FROM hr_academic AS o " +
+        " INNER JOIN hr_typeacademic as p ON o.typeac_id=p.typeac_id where o.ac_id = ? ",
+      "" + ac_id + "" + " ORDER BY o.ac_name ",
+      (error, results, fields) => {
+        if (error) throw error;
+
+        res.json(results);
+      }
+    );
+  } else {
+    con.query(
+      "SELECT o.ac_id, o.ac_name ,p.typeac_id  ,o.ac_pubilc ,p.typeac_name " +
+        " FROM hr_academic AS o " +
+        " INNER JOIN hr_typeacademic as p ON o.typeac_id=p.typeac_id" +
+        " ORDER BY o.ac_name ",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.json(results);
+      }
+    );
+  }
+});
+
+//? Insert Data
+sql.post("/", async (req, res) => {
+  var ac_name = req.body.ac_name;
+  var ac_pubilc = req.body.ac_pubilc;
+  var typeac_id = req.body.typeac_id;
+
+  //? validation
+  if (!ac_name || !ac_pubilc || !typeac_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+  } else {
+    con.query(
+      "INSERT INTO hr_academic (ac_name, ac_pubilc,typeac_id) VALUES(?, ?, ?)",
+      [ac_name, ac_pubilc, typeac_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.send({
+          error: false,
+          status: "0",
+          message: "บันทึกข้อมูลแล้ว",
+        });
+      }
+    );
+  }
+});
+
+//? Update Data
+sql.put("/", async (req, res) => {
+  let ac_name = req.body.ac_name;
+  let ac_pubilc = req.body.ac_pubilc;
+  let typeac_id = req.body.typeac_id;
+  let ac_id = req.body.ac_id;
+  // validation
+
+  if (!ac_name || !ac_pubilc || !typeac_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+  } else {
+    con.query(
+      "UPDATE hr_academic SET ac_name = ?, ac_pubilc = ? , typeac_id = ? WHERE ac_id = ?",
+      [ac_name, ac_pubilc, typeac_id, ac_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.send({
+          error: false,
+          status: "0",
+          message: "แก้ไขข้อมูลแล้ว",
+        });
+      }
+    );
+  }
+});
+
+//? delete data
+sql.delete("/", async (req, res) => {
+  let ac_id = req.body.id;
+
+  if (!ac_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+  } else {
+    con.query(
+      "SELECT count(ac_id) as ac_id   FROM hr_personal   WHERE ac_id = ?",
+      [ac_id],
+      (error, results, fields) => {
+        if (error) throw error;
+
+        if (results[0].ac_id > 0) {
+          return res.send({
+            error: false,
+            status: "1",
+            message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
+          });
+        } else {
+          con.query(
+            "DELETE FROM hr_academic WHERE ac_id = ?",
+            [ac_id],
+            (error, results, fields) => {
+              if (error) throw error;
+              return res.send({
+                error: false,
+                status: "0",
+                message: "ลบข้อมูลแล้ว",
+              });
+            }
+          );
+        }
+      }
+    );
+  }
+});
+
+module.exports = sql;

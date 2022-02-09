@@ -1,7 +1,7 @@
-const con = require('../config/config_tar');
+const con = require('../config/config');
 const mysql = require('mysql');
-const ip = require('ip');
-const hostname = require('hostname');
+// const ip = require('ip');
+// const hostname = require('hostname');
 const fs = require('fs');
 const path = require('path');
 //const { response } = require('express');
