@@ -15,7 +15,12 @@ router.post("/login", async (req, res) => {
   console.log(q.inputUsername + "  " + q.inputPassword);
 
   const sql =
-    "SELECT * " +
+  "SELECT  "+
+  "user.id , user.username ,user.person_id,user.prefix , user.firstname , user.lastname , user.password,"+
+  "user.position , user.phone , user.de_id ,user.lv_id "+
+  "FROM tbl_user AS user "+
+  "WHERE user.username = ? AND user.password = ?";
+    // "SELECT * " +
     // "SELECT ps.person_username, " +
     // //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
     // "ps.person_id," +
@@ -30,7 +35,7 @@ router.post("/login", async (req, res) => {
     // "s.sign_pic, " +
     // "a.ac_id, " +
     // "a.ac_name " +
-    "FROM tbl_user AS user  " +
+    // "FROM tbl_user AS user  " +
     // "LEFT JOIN hr_position AS po " +
     // "ON (ps.position_id = po.position_id) " +
     // "LEFT JOIN hr_sign AS s " +
@@ -39,12 +44,13 @@ router.post("/login", async (req, res) => {
     // "ON (ps.ac_id = a.ac_id) " +
     // "JOIN hr_state_work AS sw " +
     // "ON (ps.person_state = sw.person_state) " +
-    "WHERE username = ? " +
-    "AND password = ? ";
+    // "WHERE username = ? " +
+    // "AND password = ? ";
   // "AND sw.sw_action = 'Y' " +
   // "ORDER BY s.sign_id DESC LIMIT 1 ";
   const params = [q.inputUsername, q.inputPassword];
   con.query(sql, params, (err, rows) => {
+    
     if (err) {
       console.log(err);
       return res.json({
@@ -82,11 +88,13 @@ router.post("/login", async (req, res) => {
 //todo : check Level 
 router.post("/level", async (req, res) => {
   const q = req.body;
-  console.log(q.id);
+   console.log(q.id);
   const sql =
-    "SELECT  lv.lv_id , lv.level  "+
+    "SELECT  lv.lv_id , lv.level ,"+
+    "user.username ,user.person_id,user.prefix , user.firstname , user.lastname ,"+
+    "user.position , user.phone , user.de_id ,user.lv_id "+
     "FROM tbl_user AS user "+
-    "INNER JOIN tbl_level AS lv"+
+    "LEFT JOIN tbl_level AS lv"+
     "ON (user.lv_id = lv.lv_id)"+
     "WHERE user.id = ?";
   // "SELECT l.level_id, " +
@@ -110,8 +118,9 @@ router.post("/level", async (req, res) => {
   //   "WHERE l.person_id =  ?"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
   const params = [q.id];
   con.query(sql, params, (err, rows) => {
+    
     if (err) {
-      //console.log(err);
+      
       return res.json({
         status: "0",
         message: "ไม่สามารถเชื่อมต่อฐานข้อมูลระดับปฏิบัติงานได้",

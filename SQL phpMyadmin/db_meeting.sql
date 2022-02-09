@@ -212,7 +212,7 @@ CREATE TABLE `tbl_user` (
   `username` varchar(50) NOT NULL COMMENT 'username',
   `password` varchar(20) NOT NULL COMMENT 'password',
   `person_id` varchar(20) NOT NULL COMMENT 'National_ID',
-  `perfix` varchar(10) NOT NULL COMMENT 'คำนำหน้า',
+  `prefix` varchar(10) NOT NULL COMMENT 'คำนำหน้า',
   `firstname` varchar(250) NOT NULL,
   `lastname` varchar(250) NOT NULL,
   `position` varchar(250) NOT NULL COMMENT 'ตำแหน่ง',
@@ -225,7 +225,7 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id`, `username`, `password`, `perfix`, `firstname`, `lastname`, `position`, `phone`, `de_id`, `lv_id`) VALUES
+INSERT INTO `tbl_user` (`id`, `username`, `password`,`person_id`, `perfix`, `firstname`, `lastname`, `position`, `phone`, `de_id`, `lv_id`) VALUES
 (1, 'sarawut', '123456', '1160400251822','นาย', 'ศราวุธ', 'อวดกล้า', 'Developer', '0979284920', 1, 1),
 (2, 'mrfapman', '123456', '1160400251822','นาย', 'สหัสวรรษ', 'แซ่เตีย', 'Developer', '', 2, 1),
 (3, 'basejako', '123456', '1160400251822','นาย', 'เอกสิทธิ์', 'ต๊ะสิงห์', 'depveloper', '', 4, 1),
