@@ -67,71 +67,69 @@ sql.post("/", async (req, res) => {
   }
 });
 //? update
-// sql.put("/", async (req, res) => {
-//   let ac_name = req.body.ac_name;
-//   let ac_pubilc = req.body.ac_pubilc;
-//   let typeac_id = req.body.typeac_id;
-//   let ac_id = req.body.ac_id;
-//   // validation
+sql.put("/", async (req, res) => {
+  let st_name = req.body.ac_name;
+  let st_id = req.body.st_id;
+  // validation
 
-//   if (!ac_name || !ac_pubilc || !typeac_id) {
-//     return res
-//       .status(400)
-//       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-//   } else {
-//     con.query(
-//       "UPDATE hr_academic SET ac_name = ?, ac_pubilc = ? , typeac_id = ? WHERE ac_id = ?",
-//       [ac_name, ac_pubilc, typeac_id, ac_id],
-//       (error, results, fields) => {
-//         if (error) throw error;
-//         return res.send({
-//           error: false,
-//           status: "0",
-//           message: "แก้ไขข้อมูลแล้ว",
-//         });
-//       }
-//     );
-//   }
-// });
+  if (!st_name) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+  } else {
+    con.query(
+      "UPDATE tbl_style SET st_name = ? WHERE st_id = ?",
+      [st_name,st_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.send({
+          error: false,
+          status: "0",
+          message: "แก้ไขข้อมูลแล้ว",
+        });
+      }
+    );
+  }
+});
 
 // //? delete data
-// sql.delete("/", async (req, res) => {
-//   let ac_id = req.body.id;
+sql.delete("/", async (req, res) => {
+  let st_id = req.body.st_id;
 
-//   if (!ac_id) {
-//     return res
-//       .status(400)
-//       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-//   } else {
-//     con.query(
-//       "SELECT count(ac_id) as ac_id   FROM hr_personal   WHERE ac_id = ?",
-//       [ac_id],
-//       (error, results, fields) => {
-//         if (error) throw error;
+  if (!st_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+  } else {
+    con.query(
+      "SELECT count(st_id) as st_id   FROM tbl_event   WHERE st_id = ?",
+      [st_id],
+      (error, results, fields) => {
+        if (error) throw error;
 
-//         if (results[0].ac_id > 0) {
-//           return res.send({
-//             error: false,
-//             status: "1",
-//             message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
-//           });
-//         } else {
-//           con.query(
-//             "DELETE FROM hr_academic WHERE ac_id = ?",
-//             [ac_id],
-//             (error, results, fields) => {
-//               if (error) throw error;
-//               return res.send({
-//                 error: false,
-//                 status: "0",
-//                 message: "ลบข้อมูลแล้ว",
-//               });
-//             }
-//           );
-//         }
-//       }
-//     );
-//   }
-// });
+        if (results[0].ac_id > 0) {
+          return res.send({
+            error: false,
+            status: "1",
+            message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
+          });
+        } else {
+          con.query(
+            "DELETE FROM tbl_style WHERE st_id = ?",
+            [st_id],
+            (error, results, fields) => {
+              if (error) throw error;
+              return res.send({
+                error: false,
+                status: "0",
+                message: "ลบข้อมูลแล้ว",
+              });
+            }
+          );
+        }
+      }
+    );
+  }
+});
 
 module.exports = sql;
