@@ -28,7 +28,7 @@
 						<!-- Form -->
 						<form method="POST" id="frmLogin" name="frmLogin" id="frmLogin" action="">
 
-							<div  role="alert" id="loginAlert"></div>
+							<div role="alert" id="loginAlert"></div>
 
 
 							<div class="  form-floating mb-3 mt-3">
@@ -124,75 +124,77 @@
 
 							// login(id, user, person_id, prefix, name, position, phone, de_id,
 							// 	lv_id);
-							$.ajax({
-								type: "POST",
-								url: path + "/login/level",
-								data: {
-									id: id
-								},
-								dataType: "json",
-								success: function (result) {
-									if (result.status == 0) {
-										$("#btnLogin").html("เข้าสู่ระบบ");
-										$("#btnLogin").removeAttr("disabled");
-										$("#loginAlert").show(0).html(
-												"<div align='center' class='alert alert-danger' >" +
-												result.message + "</div>").delay(2500)
-											.fadeOut('fast');
-										$("#frmLogin")[0].reset();
-										$("#inputUsername").focus();
+							// $.ajax({
+							// 	type: "POST",
+							// 	url: path + "/login/level",
+							// 	data: {
+							// 		id: id
+							// 	},
+							// 	dataType: "json",
+							// 	success: function (result) {
+							// 		if (result.status == 0) {
+							// 			$("#btnLogin").html("เข้าสู่ระบบ");
+							// 			$("#btnLogin").removeAttr("disabled");
+							// 			$("#loginAlert").show(0).html(
+							// 					"<div align='center' class='alert alert-danger' >" +
+							// 					result.message + "</div>").delay(2500)
+							// 				.fadeOut('fast');
+							// 			$("#frmLogin")[0].reset();
+							// 			$("#inputUsername").focus();
 
-									} else {
-										console.log('1')
-										if (result.length == 1) {
-											login(id, user, person_id, prefix, name,
-												position, phone, de_id, lv_id)
-										}
-										// } else {
-										// 	var depart = '';
+							// 		} else {
+							// 			console.log('1')
+							// 			if (result.length == 1) {
+							// 				login(id, user, person_id, prefix, name,
+							// 					position, phone, de_id, lv_id)
+							// 			}
+							// } else {
+							// 	var depart = '';
 
-										// 	$('.item_office').html('');
-										// 	$('.item_office').select2({
-										// 		width: '100%'
-										// 	});
+							// 	$('.item_office').html('');
+							// 	$('.item_office').select2({
+							// 		width: '100%'
+							// 	});
 
-										// 	for (key in result) {
-										// 		if (result[key].ward_id != 0) {
-										// 			depart = ' : ' + result[key]
-										// 				.ward_name;
-										// 		} else if (result[key].depart_id !=
-										// 			0 && result[key].ward_id == 0) {
-										// 			depart = ' : ' + result[key]
-										// 				.depart_name;
-										// 		} else if (result[key].faction_id !=
-										// 			0 && result[key].depart_id == 0 &&
-										// 			result[key].ward_id == 0) {
-										// 			depart = ' : ' + result[key]
-										// 				.faction_name;
-										// 		} else {
-										// 			depart = '';
-										// 		}
+							// 	for (key in result) {
+							// 		if (result[key].ward_id != 0) {
+							// 			depart = ' : ' + result[key]
+							// 				.ward_name;
+							// 		} else if (result[key].depart_id !=
+							// 			0 && result[key].ward_id == 0) {
+							// 			depart = ' : ' + result[key]
+							// 				.depart_name;
+							// 		} else if (result[key].faction_id !=
+							// 			0 && result[key].depart_id == 0 &&
+							// 			result[key].ward_id == 0) {
+							// 			depart = ' : ' + result[key]
+							// 				.faction_name;
+							// 		} else {
+							// 			depart = '';
+							// 		}
 
-										// 		$('.item_office').append(
-										// 			'<option value="' + result[
-										// 				key].level_id + ':' +
-										// 			result[key].duty_id + ':' +
-										// 			result[key].duty_name + ':' +
-										// 			result[key].faction_id + ':' +
-										// 			result[key].faction_name +
-										// 			':' + result[key].depart_id +
-										// 			':' + result[key]
-										// 			.depart_name + ':' + result[
-										// 				key].ward_id + ':' +
-										// 			result[key].ward_name + '">' +
-										// 			result[key].duty_name +
-										// 			depart + '</option>');
-										// 	}
-										// }
-									}
-								}
-							});
+							// 		$('.item_office').append(
+							// 			'<option value="' + result[
+							// 				key].level_id + ':' +
+							// 			result[key].duty_id + ':' +
+							// 			result[key].duty_name + ':' +
+							// 			result[key].faction_id + ':' +
+							// 			result[key].faction_name +
+							// 			':' + result[key].depart_id +
+							// 			':' + result[key]
+							// 			.depart_name + ':' + result[
+							// 				key].ward_id + ':' +
+							// 			result[key].ward_name + '">' +
+							// 			result[key].duty_name +
+							// 			depart + '</option>');
+							// 	}
+							// }
+							// 		}
+							// 	}
+							// });
 						}
+						login(id, user, person_id, prefix, name, position, phone, de_id,
+							lv_id);
 					}
 				});
 			});
@@ -214,16 +216,19 @@
 						'lv_id': lv_id,
 					},
 					function () {
-						if (lv_id == 1 || lv_id == 4) {
-							location.href = '../views/manager/manager.php';
+						if (lv_id == 1) {
+							location.href = '../views/admin/admintemplate.php';
 						} else if (lv_id == 3) {
 							location.href = '../views/staff/staff.php';
 						} else if (lv_id == 2) {
 							location.href = '../views/users/users.php';
+						} else if (lv_id == 4) {
+							location.href = '../views/users/manager.php';
+
 						} else {
 							$("#loginAlert").show(0).html(
 									"<div align='center' class='alert alert-danger'>ไม่มีสิทธ์เข้าถึงการใช้งาน</div>"
-									)
+								)
 								.delay(2500).fadeOut('fast');
 						}
 					}

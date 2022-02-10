@@ -1,3 +1,6 @@
+<?php
+require_once "../../login/check_session.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="utf-8">

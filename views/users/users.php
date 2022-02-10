@@ -1,5 +1,5 @@
-<?php 
-    session_start();
+<?php
+require_once "../../login/check_session.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

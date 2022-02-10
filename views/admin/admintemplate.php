@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "../../login/check_session.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -301,8 +301,8 @@ session_start();
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="../plugins/jquery/jquery.min.js"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -356,12 +356,13 @@ session_start();
                     type: "POST",
                     url: path + "/rooms",
                     dataType: "json",
-                    data: {
-                        ro_name: ro_name,
-                        ro_people: ro_people,
-                        ro_color: ro_color,
-                        ro_detail: ro_detail,
-                    },
+                    data: $('#frmRoom').serialize(),
+                    // data: {
+                    //     ro_name: ro_name,
+                    //     ro_people: ro_people,
+                    //     ro_color: ro_color,
+                    //     ro_detail: ro_detail,
+                    // },
                     success: function(result) {
                         toastr.success(
                             result.message, {
@@ -380,9 +381,17 @@ session_start();
                                 fadeOut: 1000,
                             }
                         );
-                        clearData(msg);
+                        clear_room(msg);
                     }
+
                 })
+
+                function clear_room(msg) {
+                    $("#frmRoom")[0].reset();
+                    $("#ro_name")[0].focus();
+                    // $("#ro_people")[0].reset();
+                    // $("#ro_detail")[0].reset();
+                }
             });
             /// Tools
             $('#btnTools').click(function(e) {
@@ -410,20 +419,19 @@ session_start();
                                 fadeOut: 1000,
                             }
                         );
-                        clearData(msg);
+                        clear_tools(msg);
                     }
                 })
+
+                function clear_tools(msg) {
+                    $("#frmTools")[0].reset();
+                    // $("#de_id")[0].reset();
+                    $("#to_name")[0].focus();
+                }
+
             });
 
-            function clearData_Tool(msg) {
-                $("#frmTools")[0].reset();
-                $("#de_id")[0].reset();
-                $("#to_name").focus();
-                $("#frmRoom")[0].reset();
-                $("#ro_name")[0].reset();
-                $("#ro_people")[0].reset();
-                $("#ro_detail")[0].reset();
-            }
+
             /// Style
             $('#btnStyle').click(function(e) {
                 e.preventDefault();
@@ -448,22 +456,16 @@ session_start();
                                 fadeOut: 1000,
                             }
                         );
-                        clearData(msg);
+                        clear_Style(msg);
                     }
                 })
+
+                function clear_Style(msg) {
+                    $("#frmStyleRoom")[0].reset();
+                    $("#st_name")[0].focus();
+                }
             });
 
-            function clearData_Tool(msg) {
-                $("#frmTools")[0].reset();
-                $("#de_id")[0].reset();
-                $("#to_name").focus();
-                $("#frmRoom")[0].reset();
-                $("#ro_name")[0].reset();
-                $("#ro_people")[0].reset();
-                $("#ro_detail")[0].reset();
-                $("#frmStyleRoom")[0].reset();
-                $("#st_name")[0].reset();
-            }
 
         });
     </script>
