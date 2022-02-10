@@ -4,7 +4,7 @@ if (isset($_SESSION["mt_id"]) && isset($_SESSION["mt_user"]) && isset($_SESSION[
 } else {
     echo "<script>
             window.setTimeout(function() {
-                window.location = '../views/index.html';
-             }, 5000);
+                window.location = '../page-404.html';
+             }, 0);
         </script>";
 }
