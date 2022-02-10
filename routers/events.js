@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var sql = express.mysql();
+const sql = express.Router();
 
 //?  SELECT Data
 sql.get("/", async (req, res) => {
@@ -28,7 +28,6 @@ sql.get("/", async (req, res) => {
       "" + ac_id + "" + " ORDER BY o.ac_name ",
       (error, results, fields) => {
         if (error) throw error;
-
         res.json(results);
       }
     );
@@ -48,12 +47,19 @@ sql.get("/", async (req, res) => {
 
 //? Insert Data
 sql.post("/", async (req, res) => {
-  var ac_name = req.body.ac_name;
-  var ac_pubilc = req.body.ac_pubilc;
-  var typeac_id = req.body.typeac_id;
+  var ev_title = req.body.ac_name; //todo : req -> Form .... data -> body
+  var ev_startdate = req.body.ac_pubilc;
+  var ev_enddate = req.body.ac_pubilc;
+  var ev_starttime = req.body.typeac_id;
+  var ev_endtime = req.body.ac_pubilc;
+  var ev_people = req.body.ev_people;
+  // var ev_staut = req.body.ev_status;  เริ่มการจอง status == 1 -> ส่งคำขอ , 2== รอการินุมัติจากหัวหน้า ,3 == อนุมัติคำขอ
+  var st_id = req.body.st_id; // id_style
+  var id = req.body.id ;  // id_users
+  var ro_id = req.body.ro_id ; // id_rooms 
 
   //? validation
-  if (!ac_name || !ac_pubilc || !typeac_id) {
+  if (!ev_title || !ac_pubilc || !typeac_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });

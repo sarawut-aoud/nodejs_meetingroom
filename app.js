@@ -252,9 +252,17 @@ app.use("/login", login);
 
 ///////////////////////end////////////////////
 ////! TAR /////
-// const sql = require("./routers/routes");
+const meeting = require("./routers/events");
+const depart = require("./routers/depart");
+const tools = require("./routers/tools");
+const rooms = require("./routers/room");
+const style = require("./routers/roomstyle");
 
-
+app.use("/depart", depart);
+app.use("/meeting", meeting);
+app.use("/tools", tools);
+app.use("/rooms", rooms);
+app.use("/style", style);
 ////! END ////
 
 // const server = https.createServer(options, app);

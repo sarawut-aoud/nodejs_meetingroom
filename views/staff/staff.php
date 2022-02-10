@@ -136,7 +136,7 @@
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="level" name="level"
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo $_SESSION['mt_position'] ; ?> "
                                                     readonly />
                                             </div>
                                         </div>
