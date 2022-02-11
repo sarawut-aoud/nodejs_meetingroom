@@ -76,7 +76,7 @@ require_once "../../login/check_session.php";
                             </a>
                         </li>
                         <li class="nav-item mt-3 ">
-                            <a href="./admindata.php" class="nav-link active">
+                            <a href="./adminCre_data.php" class="nav-link active">
                                 <i class="nav-icon fas fa-ballot"></i>
                                 <p>ดูข้อมูล</p>
                             </a>
@@ -124,11 +124,11 @@ require_once "../../login/check_session.php";
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name"  value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -215,7 +215,7 @@ require_once "../../login/check_session.php";
                                 <!-- form start -->
                                 <form method="POST" action="" id="frmTools">
                                     <div class="card-body">
-                                        <!--//? /.Room Name -->
+                                        <!--//? /.Tool Name -->
                                         <div class="form-group row">
                                             <div class="input-group">
                                                 <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
@@ -224,7 +224,7 @@ require_once "../../login/check_session.php";
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--//? /.Room Name -->
+                                        <!--//? /.Tool Name -->
                                         <!-- //? Input People -->
                                         <div class="form-group row">
                                             <div class="input-group">
@@ -356,22 +356,21 @@ require_once "../../login/check_session.php";
                     type: "POST",
                     url: path + "/rooms",
                     dataType: "json",
-                    data: $('#frmRoom').serialize(),
-                    // data: {
-                    //     ro_name: ro_name,
-                    //     ro_people: ro_people,
-                    //     ro_color: ro_color,
-                    //     ro_detail: ro_detail,
-                    // },
+                    data: {
+                        ro_name: ro_name,
+                        ro_people: ro_people,
+                        ro_color: ro_color,
+                        ro_detail: ro_detail,
+                    },
                     success: function(result) {
                         toastr.success(
                             result.message, {
                                 timeOut: 1000,
                                 fadeOut: 1000,
                             }
-
                         );
-
+                        $("#frmRoom")[0].reset();
+                        $("#ro_name")[0].focus();
                     },
                     error: function(data) {
                         var msg = '';
@@ -402,7 +401,10 @@ require_once "../../login/check_session.php";
                     type: "POST",
                     url: path + "/tools",
                     dataType: "json",
-                    data: $('#frmTools').serialize(),
+                    data: {
+                        to_name: to_name,
+                        de_id: de_id,
+                    },
                     success: function(result) {
                         toastr.success(
                             result.message, {
@@ -410,6 +412,8 @@ require_once "../../login/check_session.php";
                                 fadeOut: 1000,
                             }
                         );
+                        $("#frmTools")[0].reset();
+                        $("#to_name")[0].focus();
                     },
                     error: function(data) {
                         var msg = '';
@@ -421,11 +425,10 @@ require_once "../../login/check_session.php";
                         );
                         clear_tools(msg);
                     }
-                })
+                });
 
                 function clear_tools(msg) {
                     $("#frmTools")[0].reset();
-                    // $("#de_id")[0].reset();
                     $("#to_name")[0].focus();
                 }
 
@@ -447,6 +450,8 @@ require_once "../../login/check_session.php";
                                 fadeOut: 1000,
                             }
                         );
+                        $("#frmStyleRoom")[0].reset();
+                        $("#st_name")[0].focus();
                     },
                     error: function(data) {
                         var msg = '';
@@ -469,7 +474,6 @@ require_once "../../login/check_session.php";
 
         });
     </script>
-
 
 </body>
 

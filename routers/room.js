@@ -16,7 +16,7 @@ const sql = express.Router();
 //?  SELECT Data
 sql.get("/", async (req, res) => {
   con.query(
-    "SELECT ro_name ,ro_people,ro_detail FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
+    "SELECT ro_id,ro_name ,ro_people,ro_detail FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
     (error, results, fields) => {
       if (error) throw error;
       res.status(200);

@@ -8,8 +8,7 @@ require_once "../../login/check_session.php";
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
@@ -71,8 +70,7 @@ require_once "../../login/check_session.php";
                 <!-- Sidebar Menu -->
                 <nav class="mt-4 position-relative">
 
-                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item mt-3">
                             <a href="./staff.php" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
@@ -115,15 +113,13 @@ require_once "../../login/check_session.php";
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix'] ; ?> "
-                                                    readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name'] ; ?> "
-                                                    readonly />
+                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
                                             </div>
-                                         
+
                                         </div>
                                     </div>
                                     <div class="form-group row ">
@@ -131,13 +127,11 @@ require_once "../../login/check_session.php";
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name"
-                                                    readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="level" name="level"
-                                                    readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -173,12 +167,9 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker1"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker1" />
-                                                        <div class="input-group-append" data-target="#datetimepicker1"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
                                                         </div>
@@ -186,12 +177,9 @@ require_once "../../login/check_session.php";
                                                 </div>
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker2"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker2" />
-                                                        <div class="input-group-append" data-target="#datetimepicker2"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
+                                                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
                                                         </div>
@@ -205,12 +193,9 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker3"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker3" />
-                                                        <div class="input-group-append" data-target="#datetimepicker3"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" />
+                                                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
                                                         </div>
@@ -218,12 +203,9 @@ require_once "../../login/check_session.php";
                                                 </div>
                                                 <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker4"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker4" />
-                                                        <div class="input-group-append" data-target="#datetimepicker4"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" />
+                                                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
                                                         </div>
@@ -237,9 +219,7 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ห้องประชุม : </label>
                                                 <div class="col-md-10">
-                                                    <select class="form-control select2 select2-success"
-                                                        data-dropdown-css-class="select2-success" id="room"
-                                                        name="room" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="room" name="room" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -262,9 +242,7 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                                                 <div class="col-md">
-                                                    <select class="form-control select2 select2-success"
-                                                        data-dropdown-css-class="select2-success" id="style"
-                                                        name="style" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="style" name="style" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -275,8 +253,7 @@ require_once "../../login/check_session.php";
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit"
-                                                class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
+                                            <button type="submit" class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -307,7 +284,7 @@ require_once "../../login/check_session.php";
 
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
-	<script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -324,19 +301,19 @@ require_once "../../login/check_session.php";
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  
+
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
-      <!-- Toastr -->
-      <script src="../plugins/toastr/toastr.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="../public/javascript/adminlte.js"></script>
+    <!-- Toastr -->
+    <script src="../plugins/toastr/toastr.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
 
     <script>
-        $(function () {
+        $(function() {
 
             //Initialize Select2 Elements
             $('.select2').select2();

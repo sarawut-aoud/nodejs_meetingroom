@@ -10,17 +10,23 @@ require_once "../../login/check_session.php";
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<!-- daterange picker -->
+<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- Theme style -->
-<link rel="stylesheet" href="../public/styles/adminlte.min.css">
-<!-- DataTables -->
-<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- Toastr -->
 <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
-<!-- index Style -->
+<!-- fullCalendar Style -->
+<link rel="stylesheet" href="../public/styles/calendar.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">
 </head>
 
@@ -35,13 +41,9 @@ require_once "../../login/check_session.php";
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./users.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a  class="nav-link  active">สถานะการจอง</a>
+                    <a class="nav-link active">Home</a>
                 </li>
             </ul>
-
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
@@ -67,7 +69,7 @@ require_once "../../login/check_session.php";
             <div class="sidebar mt-3 ">
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2 position-relative">
+                <nav class="mt-4 position-relative">
 
                     <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
@@ -85,9 +87,9 @@ require_once "../../login/check_session.php";
                             </a>
                         </li>
 
-                        <hr class="mt-5 mb-5" style="background-color: #FFF;">
+                        <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="" class="btn btn-block btn-moph ">
+                            <a href="../../login/logout.php" class="btn btn-block btn-moph ">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
                             </a>
                         </li>
@@ -104,63 +106,193 @@ require_once "../../login/check_session.php";
         <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
             <!-- Content Header (Page header) -->
             <div class="content-header">
-                <div class="container-fluid p-4">
+                <div class="container-fluid ">
+                <div class="row justify-content-center">
+                        <div class="col-xl-8 col-md-12 ">
+                            <div class="card shadow">
+                                <div class="card-body mb-0">
+                                    <div class="form-group row">
+                                        <div class="input-group">
+                                            <label class=" col-form-label">คำนำหน้า :</label>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
+                                            </div>
+                                            <label class=" col-form-label">ชื่อ - นามสกุล :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="input-group">
+                                            <label class=" col-form-label">แผนก :</label>
+                                            <div class="col-md">
+
+                                                <input type="text" class="form-control " id="de_name" name="de_name"  value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                            </div>
+                                            <label class=" col-form-label">ตำแหน่ง :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name']."/".$_SESSION['mt_position']; ?> " readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <div class="row mt-3">
-                        <div class="col-xl-12 col-md-12 col-sm-12">
+                        <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header card-head">
-                                    <h3 class="text-center">รายการคำขอยื่นจองห้องประชุม</h3>
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h1>เลือกห้องประชุม เพื่อทำการจอง</h1>
+                                    </div>
                                 </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table id="example2" class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>โครงการ</th>
-                                                <th>ห้อง</th>
-                                                <th>จำนวนคนเข้าประชุม</th>
-                                                <th>ผู้จอง</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Misc</td>
-                                                <td>PSP browser</td>
-                                                <td>PSP</td>
-                                                <td>-</td>
-                                                <td align="center"><a class="btn badge-success"><i class="fas fa-check-circle"></i></a>
-                                                    <a class="btn badge-info"><i class="fas fa-exclamation-triangle"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Other browsers</td>
-                                                <td>All others</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td align="center"><a class="btn badge-success"><i class="fas fa-check-circle"></i></a>
-                                                    <a class="btn badge-warning" title="รอการยืนยัน"><i class="fas fa-exclamation-triangle"></i></a>
-                                                </td>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>โครงการ</th>
-                                                <th>ห้อง</th>
-                                                <th>จำนวนคนเข้าประชุม</th>
-                                                <th>ผู้จอง</th>
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                <!-- form start -->
+                                <form method="POST">
+                                    <div class="card-body">
+                                        <!--? Title Name -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">ชื่อโครงการ :</label>
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control " id="title" name="title" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /.Title Name -->
+                                        <!--? Input Time -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">เวลา :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker1"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#datetimepicker1" />
+                                                        <div class="input-group-append" data-target="#datetimepicker1"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-md-2 col-form-label">ถึงเวลา :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker2"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#datetimepicker2" />
+                                                        <div class="input-group-append" data-target="#datetimepicker2"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /.Input Time -->
+                                        <!--? InputDate -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">วันที่ :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker3"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#datetimepicker3" />
+                                                        <div class="input-group-append" data-target="#datetimepicker3"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker4"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#datetimepicker4" />
+                                                        <div class="input-group-append" data-target="#datetimepicker4"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /.InputDate -->
+                                        <!--? Room  -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">ห้องประชุม : </label>
+                                                <div class="col-md-10">
+                                                    <select class="form-control select2 select2-success"
+                                                        data-dropdown-css-class="select2-success" id="room"
+                                                        name="room" />
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">จำนวนคน : </label>
+                                                <div class="col-md">
+                                                    <input class="form-control " id="people" name="people" readonly />
+                                                </div>
+                                                <label class="col-md-2 col-form-label">บริเวณ : </label>
+                                                <div class="col-md">
+                                                    <input class="form-control " id="detail" name="detail" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /. Room  -->
+                                        <!--? Style  -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
+                                                <div class="col-md">
+                                                    <select class="form-control select2 select2-success"
+                                                        data-dropdown-css-class="select2-success" id="style"
+                                                        name="style" />
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--?/. Style  -->
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer ">
+                                        <div class="row justify-content-between ">
+                                            <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
+                                            <button type="submit"
+                                                class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-xl-6 col-md-12 ">
+                            <div class="card card-primary">
+                                <div class="card-body p-0">
+                                    <!-- THE CALENDAR -->
+                                    <div id="calendar"></div>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
                         </div>
-                        <!-- ./col -->
+                        <!-- /.col -->
                     </div>
+
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -172,46 +304,113 @@ require_once "../../login/check_session.php";
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
 	<script src="../plugins/bootstrap/js/bootstrap.js"></script>
-
+    <!-- Select2 -->
+    <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    <!-- InputMask -->
+    <script src="../plugins/moment/moment.min.js"></script>
+    <script src="../plugins/inputmask/inputmask.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <!-- date-range-picker -->
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
   
-    <!-- Switch bootstrap -->
-    <script src="../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-    <!-- DataTables  & Plugins -->
-    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <!-- Toastr -->
-    <script src="../plugins/toastr/toastr.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../public/javascript/adminlte.js"></script>
+    <!-- Summernote -->
+    <script src="../plugins/summernote/summernote-bs4.min.js"></script>
+      <!-- Toastr -->
+      <script src="../plugins/toastr/toastr.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../public/javascript/adminlte.js"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <script src="../public/javascript/maincalendar.js"></script>
+    <script src='../public/javascript/calendar.js'></script>
 
     <script>
-        $("input[data-bootstrap-switch]").each(function () {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        })
-
         $(function () {
 
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
+            //Initialize Select2 Elements
+            $('.select2').select2();
+            //timepicker
+            $('#datetimepicker1').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker3').datetimepicker({
+                format: 'L'
+            });
+            $('#datetimepicker4').datetimepicker({
+                format: 'L'
             });
         });
+    </script>
+    <!-- <script>
         $(document).ready(function () {
+            var uid = '4';
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "",
+                data: {
+                    uid: uid,
+                },
+                success: function (result) {
+                    var user = '';
+                    for (ii in result) {
+                        user += result[ii].uid;
+                        if (result[ii].uid === uid) {
+                            var prefix = result[ii].prefix;
+                            var fname = result[ii].fname;
+                            var lname = result[ii].lname;
+                            var de_id = result[ii].de_id;
+                            var level = result[ii].level;
+                            if (level == 1) {
+                                var lv = 'หัวหน้าแผนก';
+                            } else if (level == 2) {
+                                var lv = 'ธุรการ';
+                            } else {
+                                var lv = 'ผู้ปฏิบัติงาน';
+                            }
+                            break;
+                        }
+
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: "https://sarawut-pcru.github.io/Data/tbl_departments.json",
+                            data: {
+                                de_id: de_id,
+                            },
+                            success: function (data) {
+                                var depart = '';
+                                for (kk in data) {
+                                    // depart += data[kk].de_id;
+                                    if (data[kk].de_id === de_id) {
+                                        var de_name = data[kk].de_name;
+                                        break;
+                                    }
+                                }
+                                $('#de_name').val(de_name);
+                            }
+                        });
+
+                    }
+
+                    $('#prefix').val(prefix);
+                    $('#fname').val(fname);
+                    $('#lname').val(lname);
+                    $('#level').val(lv);
+
+                }
+
+            });
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -269,7 +468,7 @@ require_once "../../login/check_session.php";
             });
 
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

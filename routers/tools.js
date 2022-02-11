@@ -15,14 +15,34 @@ const sql = express.Router();
 
 // //?  SELECT Data
 sql.get("/", async (req, res) => {
-  con.query(
-    "SELECT to_name  FROM tbl_tools  ORDER BY tbl_tools.to_id ASC",
-    (error, results, fields) => {
-      if (error) throw error;
-      res.status(200);
-      res.json(results);
-    }
-  );
+  let to_id = req.body.to_id;
+
+  if (!to_id) {
+    con.query(
+      "SELECT t.to_id ,t.to_name ,de.de_name " +
+        "FROM tbl_tools AS t " +
+        "INNER JOIN tbl_department AS de ON t.de_id = de.de_id " +
+        "ORDER BY t.to_id ASC; ",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  } else {
+    con.query(
+      "SELECT t.to_id ,t.to_name ,de.de_name " +
+        "FROM tbl_tools AS t " +
+        "INNER JOIN tbl_department AS de ON t.de_id = de.de_id " +
+        "WHERE t.to_id = " + to_id + "" +
+        "ORDER BY t.to_id ASC; ",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  }
 });
 
 // //? Insert Data
@@ -79,41 +99,64 @@ sql.put("/", async (req, res) => {
   }
 });
 
+// // //? delete data
+// sql.delete("/", async (req, res) => {
+//   let to_id = req.body.to_id;
+
+//   if (!to_id) {
+//     return res
+//       .status(400)
+//       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+//   } else {
+//     con.query(
+//       "SELECT count(to_id) as to_id   FROM  seting   WHERE to_id = ?", //? FROM seting or setdevice
+//       [to_id],
+//       (error, results, fields) => {
+//         if (error) throw error;
+
+//         if (results[0].ac_id > 0) {
+//           return res.send({
+//             error: false,
+//             status: "1",
+//             message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
+//           });
+//         } else {
+//           con.query(
+//             "DELETE FROM tbl_tools WHERE to_id = ?",
+//             [to_id],
+//             (error, results, fields) => {
+//               if (error) throw error;
+//               return res.send({
+//                 error: false,
+//                 status: "0",
+//                 message: "ลบข้อมูลแล้ว",
+//               });
+//             }
+//           );
+//         }
+//       }
+//     );
+//   }
+// });
 // //? delete data
 sql.delete("/", async (req, res) => {
-  let st_id = req.body.st_id;
+  let to_id = req.body.to_id;
 
-  if (!st_id) {
+  if (!to_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "SELECT count(to_id) as to_id   FROM     WHERE to_id = ?", //? FROM seting or setdevice
-      [st_id],
+      "DELETE FROM tbl_tools WHERE to_id = ?",
+      [to_id],
       (error, results, fields) => {
         if (error) throw error;
-
-        if (results[0].ac_id > 0) {
-          return res.send({
-            error: false,
-            status: "1",
-            message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
-          });
-        } else {
-          con.query(
-            "DELETE FROM tbl_tools WHERE to_id = ?",
-            [st_id],
-            (error, results, fields) => {
-              if (error) throw error;
-              return res.send({
-                error: false,
-                status: "0",
-                message: "ลบข้อมูลแล้ว",
-              });
-            }
-          );
-        }
+        return res.send({
+          error: false,
+          status: "0",
+          message: "ลบข้อมูลแล้ว",
+        });
       }
     );
   }

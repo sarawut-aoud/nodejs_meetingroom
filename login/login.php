@@ -35,6 +35,8 @@
     $_SESSION['mt_phone'] = $_POST['phone'];
     $_SESSION['mt_de_id'] = $_POST['de_id'];
     $_SESSION['mt_lv_id'] = $_POST['lv_id'];
+    $_SESSION['mt_lv_name'] = $_POST['lv_name'];
+    $_SESSION['mt_de_name'] = $_POST['de_name'];
 
     
 ?>

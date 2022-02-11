@@ -11,9 +11,14 @@ require_once "../../login/check_session.php";
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- bt5 -->
+<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Toastr -->
+<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">
@@ -114,11 +119,11 @@ require_once "../../login/check_session.php";
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name"  value="<?php echo $_SESSION['mt_de_name']; ?> "readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -137,48 +142,19 @@ require_once "../../login/check_session.php";
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="POST" action="" id="frmRoom">
-                                    <div class="card-body">
-                                        <!--//? /.Room Name -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">ชื่อห้องประชุม :</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="ro_name" name="ro_name" />
-                                                </div>
-                                            </div>
+                                <form method="" action="" id="">
+                                    <div class="card-body table-responsive p-0">
+                                        <!--//? tableRoom -->
+                                        <div id="tableRooms">
                                         </div>
-                                        <!--//? /.Room Name -->
-                                        <!-- //? Input People -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">จำห้องคนที่บรรจุ :</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="ro_people" name="ro_people" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- //? Input People -->
-                                        <!-- //? Input Detail -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">รายละเอียดห้อง :</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="ro_detail" name="ro_detail" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- //? Input Detail -->
-
+                                        <!--//? tableRoom -->
                                     </div>
                                     <!-- /.card-body -->
-                                    
                                 </form>
                             </div>
                             <!-- /.card -->
                         </div>
                         <!-- ./col -->
-
                     </div>
                     <!-- ./row form -->
                     <div class="row justify-content-center">
@@ -192,27 +168,23 @@ require_once "../../login/check_session.php";
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="POST" action="" id="frmStyleRoom">
-                                    <div class="card-body">
-                                        <!--//? /.StyleRoom Name -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">รูปแบบห้องประชุม :</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="st_name" name="st_name" />
-                                                </div>
-                                            </div>
+                                <form method="" action="" id="">
+                                    <div class="card-body table-responsive p-0">
+                                        <!--//? tableStyle -->
+                                        <div id="tableStyle">
                                         </div>
-                                        <!--//? /.StyleRoom Name -->
+                                        <!--//? tableStyle -->
                                     </div>
                                     <!-- /.card-body -->
-                                  
                                 </form>
+                                <!--  //? ./From StyleRoom -->
+
+
+
                             </div>
                             <!-- /.card -->
                         </div>
                         <!-- ./col -->
-                        <!--  //? ./From Department -->
                     </div>
                     <div class="row justify-content-center">
                         <!-- //? Form Tools -->
@@ -225,33 +197,14 @@ require_once "../../login/check_session.php";
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="POST" action="" id="frmTools">
-                                    <div class="card-body">
-                                        <!--//? /.Room Name -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="to_name" name="to_name" />
-                                                </div>
-                                            </div>
+                                <form method="" action="" id="">
+                                    <div class="card-body table-responsive p-0">
+                                        <!--//? tableTools -->
+                                        <div id="tableTools">
                                         </div>
-                                        <!--//? /.Room Name -->
-                                        <!-- //? Input People -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="de_id">
-                                                        
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- //? Input People -->
+                                        <!--//? tableTools -->
                                     </div>
                                     <!-- /.card-body -->
-                                    
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -259,6 +212,48 @@ require_once "../../login/check_session.php";
                         <!-- ./col -->
                         <!-- //? Form Tools -->
                     </div>
+                    <form action="" id="">
+                        <!-- Modal -->
+                        <div class="modal fade" id="ModalTool" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel"> Form EDit </h4>
+                                    </div>
+                                    <div class="modal-body" id="ModaldataTool" style="overflow-x: scroll;">
+                                        <!--//? /.Tool Name -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control " id="modalto_name" name="modalto_name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--//? /.Tool Name -->
+                                        <!-- //? Input People -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="modalde_id">
+                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- //? Input People -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                    </form>
 
                 </div><!-- /.container-fluid -->
             </div>
@@ -269,8 +264,8 @@ require_once "../../login/check_session.php";
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="../plugins/jquery/jquery.min.js"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -279,6 +274,8 @@ require_once "../../login/check_session.php";
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    <!-- Toastr -->
+    <script src="../plugins/toastr/toastr.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <script>
@@ -289,13 +286,13 @@ require_once "../../login/check_session.php";
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var path = 'http://127.0.0.1:4500'
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: path+"/depart",
-                success: function (result) {
+                url: path + "/depart",
+                success: function(result) {
                     var depart = '<option value="" selected disabled>-- เลือกแผนกที่ดูแล --</option>';
                     for (ii in result) {
                         depart += '<option value="' + result[ii].de_id + '">' + result[ii]
@@ -306,32 +303,131 @@ require_once "../../login/check_session.php";
 
                 }
             });
-            $("#room").change(function () {
-                var ro_id = $(this).val();
-                $.ajax({
-                    type: "get",
-                    dataType: "json",
-                    url: "https://sarawut-pcru.github.io/Data/tbl_rooms.json",
-                    data: {
-                        ro_id: ro_id,
-                    },
-                    success: function (result) {
-                        var user = '';
-                        for (ii in result) {
-                            user += result[ii].ro_id;
-                            if (result[ii].ro_id === ro_id) {
-                                var people = result[ii].ro_people;
-                                var detail = result[ii].ro_detail;
-                            }
-                        }
-                        $('#people').val(people);
-                        $('#detail').val(detail);
-                    }
-                });
+            // var table = $('#tb_Rooms');
+
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(data) {
+                    var i = 0;
+                    var table = '<table with="100%" class="table table-hover text-nowrap">' +
+                        '<thead><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
+                    $.each(data, function(idx, cell) {
+                        table += ('<tr>');
+                        table += ('<td>' + cell.ro_id + '</td>');
+                        table += ('<td>' + cell.ro_name + '</td>');
+                        // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
+                        table += ('<td>' + cell.ro_people + '</td>');
+                        table += ('<td>' + cell.ro_detail + '</td>');
+                        table += ('<td width="20%"><a id="" class="btn btn-info"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('</tr>');
+                    });
+                    table += '</table>';
+                    $("#tableRooms").html(table);
+                }
             });
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: path + "/style",
+                success: function(data) {
+                    var i = 0;
+                    var table = '<table with="100%"class="table table-hover text-nowrap">' +
+                        '<thead><tr><th>ID</th><th>รูปแบบห้อง</th><th></th></thead></tr>';
+                    $.each(data, function(idx, cell) {
+                        table += ('<tr>');
+                        table += ('<td width="20%">' + cell.st_id + '</td>');
+                        table += ('<td width="60%">' + cell.st_name + '</td>');
+                        // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
+                        table += ('<td width="20%"><a id="" class="btn btn-info"><i class="fas fa-edit"></i></a> ' +
+                            '<a id="" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('</tr>');
+                    });
+                    table += '</table>';
+                    $("#tableStyle").html(table);
+                }
+            });
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: path + "/tools",
+                success: function(data) {
+                    var i = 0;
+                    var table = '<table  with="100%" class="table table-hover text-nowrap">' +
+                        '<thead><tr><th>ID</th><th>อุปกรณ์</th><th>แผนกที่ดูแลอุปกรณ์</th><th></th></tr></thead>';
+
+                    $.each(data, function(idx, cell) {
+                        table += ('<tr>');
+                        table += ('<td width="20%">' + cell.to_id + '</td>');
+                        table += ('<td width="30%">' + cell.to_name + '</td>');
+                        // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
+                        table += ('<td width="30%">' + cell.de_name + '</td>');
+                        table += ('<td width="20%"><a id="' + cell.to_id + '"  class="btn btn-info btnToolEdit"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"><i class="fa fa-trash " ></i></a></td>');
+                        table += ('</tr>');
+                    });
+                    table += '</table>';
+                    $("#tableTools").html(table);
+                    // var to_id = $(this).attr('id');
+
+                    $(".btnToolEdit").click(function(e) {
+                        e.preventDefault();
+                        var to_id = $(this).attr('id');
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: path + "/tools",
+                            data: {
+                                to_id: to_id
+                            },
+                            success: function(result) {
+
+                            }
+                        });
+                    });
+                    $(".btnToolDels").click(function(e) {
+                        e.preventDefault();
+
+                        var to_id = $(this).attr('id');
+                        var _row = $(this).parent();
+                        // console.log(to_id);
+                        $.ajax({
+                            type: "DELETE",
+                            url: path + "/tools",
+                            data: {
+                                to_id: to_id
+                            },
+                            dataType: "json",
+                            success: function(result) {
+                                _row.closest('tr').remove();;
+                                toastr.success(
+                                    result.message, {
+                                        timeOut: 1000,
+                                        fadeOut: 1000,
+                                    }
+                                );
+                            },
+                            error: function(resq) {
+                                toastr.warning(
+                                    result.message, {
+                                        timeOut: 1000,
+                                        fadeOut: 1000,
+                                    }
+                                );
+                            }
+                        });
+                    });
+                }
+
+            });
+
 
         });
     </script>
+
+
 </body>
 
 </html>

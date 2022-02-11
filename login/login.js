@@ -15,42 +15,46 @@ router.post("/login", async (req, res) => {
   console.log(q.inputUsername + "  " + q.inputPassword);
 
   const sql =
-  "SELECT  "+
-  "user.id , user.username ,user.person_id,user.prefix , user.firstname , user.lastname , user.password,"+
-  "user.position , user.phone , user.de_id ,user.lv_id "+
-  "FROM tbl_user AS user "+
-  "WHERE user.username = ? AND user.password = ?";
-    // "SELECT * " +
-    // "SELECT ps.person_username, " +
-    // //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
-    // "ps.person_id," +
-    // "ps.person_firstname, " +
-    // "ps.person_lastname, " +
-    // "ps.person_right, " +
-    // "ps.person_page, " +
-    // "ps.person_token " +
-    // "po.position_id, " +
-    // "po.position_name, " +
-    // "s.sign_id, " +
-    // "s.sign_pic, " +
-    // "a.ac_id, " +
-    // "a.ac_name " +
-    // "FROM tbl_user AS user  " +
-    // "LEFT JOIN hr_position AS po " +
-    // "ON (ps.position_id = po.position_id) " +
-    // "LEFT JOIN hr_sign AS s " +
-    // "ON (ps.person_id = s.sign_cid AND s.sign_active = '1')" +
-    // "LEFT JOIN hr_academic AS a " +
-    // "ON (ps.ac_id = a.ac_id) " +
-    // "JOIN hr_state_work AS sw " +
-    // "ON (ps.person_state = sw.person_state) " +
-    // "WHERE username = ? " +
-    // "AND password = ? ";
+    "SELECT  " +
+    " u.id , u.username ,u.person_id,u.prefix , u.firstname ,u.lastname ," +
+    " u.password , u.position , u.phone , u.de_id , u.lv_id  ," +
+    " lv.level  , de.de_name " +
+    "FROM tbl_user AS u " +
+    "INNER JOIN tbl_level AS lv " +
+    "ON( u.lv_id = lv.lv_id ) " +
+    "INNER JOIN tbl_department AS de " +
+    "ON (u.de_id = de.de_id ) " +
+    "WHERE u.username = ? AND u.password = ?;";
+  // "SELECT * " +
+  // "SELECT ps.person_username, " +
+  // //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
+  // "ps.person_id," +
+  // "ps.person_firstname, " +
+  // "ps.person_lastname, " +
+  // "ps.person_right, " +
+  // "ps.person_page, " +
+  // "ps.person_token " +
+  // "po.position_id, " +
+  // "po.position_name, " +
+  // "s.sign_id, " +
+  // "s.sign_pic, " +
+  // "a.ac_id, " +
+  // "a.ac_name " +
+  // "FROM tbl_user AS user  " +
+  // "LEFT JOIN hr_position AS po " +
+  // "ON (ps.position_id = po.position_id) " +
+  // "LEFT JOIN hr_sign AS s " +
+  // "ON (ps.person_id = s.sign_cid AND s.sign_active = '1')" +
+  // "LEFT JOIN hr_academic AS a " +
+  // "ON (ps.ac_id = a.ac_id) " +
+  // "JOIN hr_state_work AS sw " +
+  // "ON (ps.person_state = sw.person_state) " +
+  // "WHERE username = ? " +
+  // "AND password = ? ";
   // "AND sw.sw_action = 'Y' " +
   // "ORDER BY s.sign_id DESC LIMIT 1 ";
   const params = [q.inputUsername, q.inputPassword];
   con.query(sql, params, (err, rows) => {
-    
     if (err) {
       console.log(err);
       return res.json({
@@ -64,16 +68,18 @@ router.post("/login", async (req, res) => {
         // fn.dataLog('LOGIN', '', sql, q.inputUsername);
         //console.log(ip.getClientIp(req));
         return res.json({
-          id:rows[0].id,
+          id: rows[0].id,
           username: rows[0].username,
           person_id: rows[0].person_id,
           prefix: rows[0].prefix,
           firstname: rows[0].firstname,
           lastname: rows[0].lastname,
           position: rows[0].position,
-          phone:rows[0].phone,
+          phone: rows[0].phone,
           de_id: rows[0].de_id,
           lv_id: rows[0].lv_id,
+          lv_name: rows[0].level,
+          de_name: rows[0].de_name,
         });
       } else {
         return res.json({
@@ -85,17 +91,17 @@ router.post("/login", async (req, res) => {
     }
   });
 });
-//todo : check Level 
+//todo : check Level
 router.post("/level", async (req, res) => {
   const q = req.body;
-   console.log(q.id);
+  console.log(q.id);
   const sql =
-    "SELECT  lv.lv_id , lv.level ,"+
-    "user.username ,user.person_id,user.prefix , user.firstname , user.lastname ,"+
-    "user.position , user.phone , user.de_id ,user.lv_id "+
-    "FROM tbl_user AS user "+
-    "LEFT JOIN tbl_level AS lv"+
-    "ON (user.lv_id = lv.lv_id)"+
+    "SELECT  lv.lv_id , lv.level ," +
+    "user.username ,user.person_id,user.prefix , user.firstname , user.lastname ," +
+    "user.position , user.phone , user.de_id ,user.lv_id " +
+    "FROM tbl_user AS user " +
+    "LEFT JOIN tbl_level AS lv" +
+    "ON (user.lv_id = lv.lv_id)" +
     "WHERE user.id = ?";
   // "SELECT l.level_id, " +
   //   "IF (d.duty_lv IS NULL, 0, d.duty_lv) AS duty_id, " +
@@ -118,9 +124,7 @@ router.post("/level", async (req, res) => {
   //   "WHERE l.person_id =  ?"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
   const params = [q.id];
   con.query(sql, params, (err, rows) => {
-    
     if (err) {
-      
       return res.json({
         status: "0",
         message: "ไม่สามารถเชื่อมต่อฐานข้อมูลระดับปฏิบัติงานได้",
