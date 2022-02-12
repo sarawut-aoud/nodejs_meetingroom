@@ -8,16 +8,16 @@ require_once "../../login/check_session.php";
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-<!-- bt5 -->
+<link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
+<!-- bt -->
 <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-
-<link rel="stylesheet" href="../plugins/colorpicker/colorpicker.min.css">
+<!-- colorpic -->
+<link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
 <!-- Toastr -->
 <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
 <!-- Theme style -->
@@ -76,7 +76,7 @@ require_once "../../login/check_session.php";
                             </a>
                         </li>
                         <li class="nav-item mt-3 ">
-                            <a href="./adminCre_data.php" class="nav-link active">
+                            <a href="./admindata.php" class="nav-link active">
                                 <i class="nav-icon fas fa-ballot"></i>
                                 <p>ดูข้อมูล</p>
                             </a>
@@ -124,7 +124,7 @@ require_once "../../login/check_session.php";
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name"  value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
@@ -214,7 +214,7 @@ require_once "../../login/check_session.php";
                                 </div>
                                 <!-- form start -->
                                 <form method="POST" action="" id="frmTools">
-                                    <div class="card-body">
+                                    <div class="card-body shadow">
                                         <!--//? /.Tool Name -->
                                         <div class="form-group row">
                                             <div class="input-group">
@@ -303,6 +303,8 @@ require_once "../../login/check_session.php";
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Font Awesome 6 -->
+    <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -313,7 +315,7 @@ require_once "../../login/check_session.php";
     </script>
 
     <!-- color picker -->
-    <script src="../plugins/colorpicker/colorpic.min.js"></script>
+    <script src="../plugins/colorpicker/colorpic.js"></script>
     <!-- Toastr -->
     <script src="../plugins/toastr/toastr.min.js"></script>
     <!-- AdminLTE App -->
@@ -324,9 +326,6 @@ require_once "../../login/check_session.php";
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker()
             $('.select2').select2();
-            $('.my-colorpicker1').on('colorpickerChange', function(event) {
-                $('.my-colorpicker1 .fa-square').css('color', event.color.toString());
-            })
 
 
             var path = 'http://127.0.0.1:4500'
@@ -371,6 +370,8 @@ require_once "../../login/check_session.php";
                         );
                         $("#frmRoom")[0].reset();
                         $("#ro_name")[0].focus();
+                        $("#ro_people")[0].reset();
+                        $("#ro_detail")[0].reset();
                     },
                     error: function(data) {
                         var msg = '';
@@ -388,8 +389,8 @@ require_once "../../login/check_session.php";
                 function clear_room(msg) {
                     $("#frmRoom")[0].reset();
                     $("#ro_name")[0].focus();
-                    // $("#ro_people")[0].reset();
-                    // $("#ro_detail")[0].reset();
+                    $("#ro_people")[0].reset();
+                    $("#ro_detail")[0].reset();
                 }
             });
             /// Tools

@@ -11,14 +11,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const sql = express.Router();
 //?  SELECT Data
 sql.get("/", async (req, res) => {
-  con.query(
-    "SELECT st_id,st_name  FROM tbl_style ORDER BY tbl_style.st_id ASC",
-    (error, results, fields) => {
-      if (error) throw error;
-      res.status(200);
-      res.json(results);
-    }
-  );
+  let st_id = req.body.st_id;
+  if (!st_id) {
+    con.query(
+      "SELECT st_id,st_name  FROM tbl_style ORDER BY tbl_style.st_id ASC",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  } else {
+    con.query(
+      "SELECT st_id,st_name  FROM tbl_style WHERE st_id = "+ st_id + "" +
+      " ORDER BY tbl_style.st_id ASC",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  }
 });
 // sql.get("/", async (req, res) => {
 //   var query01 = require("url").parse(req.url, true).query;

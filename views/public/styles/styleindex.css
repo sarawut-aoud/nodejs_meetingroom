@@ -12,6 +12,11 @@
     background-color: #086b02;
 }
 
+.edit-head {
+    background: rgb(0, 193, 33);
+    background: linear-gradient(180deg, rgba(0, 193, 33, 1) 0%, rgba(14, 74, 0, 1) 100%);
+}
+
 .card-head {
     background: rgb(83, 163, 15);
     background: linear-gradient(0deg, rgba(83, 163, 15, 1) 14%, rgba(0, 129, 34, 1) 100%);
@@ -23,15 +28,15 @@
     background-color: rgb(83, 163, 15);
     width: 200px;
     border-radius: 20px;
-     border-width: 3px; 
-     border-color: rgb(224, 250, 165);
+    border-width: 3px;
+    border-color: rgb(224, 250, 165);
     height: 45px;
 }
 
 button.login-btn:active,
 button.login-btn:hover {
     background-color: rgba(0, 129, 34, 1);
-     border-color: yellowgreen; 
+    border-color: yellowgreen;
 }
 
 .btn-moph {
@@ -46,7 +51,7 @@ button.login-btn:hover {
 .btn-moph:active,
 .btn-moph:hover {
     background-color: rgb(0, 139, 19);
- 
+
 }
 
 .card-head {

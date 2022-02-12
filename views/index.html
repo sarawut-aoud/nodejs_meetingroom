@@ -80,8 +80,6 @@
 					data: $("#frmLogin").serialize(),
 					dataType: "json",
 					beforeSend: function () {
-
-						//*  login error นะะ
 						$("#btnLogin").attr("disabled", "disabled");
 						// $("#btnLogin").html("<img alt='loading' class='alert alert-danger' src='../views/public/images/load.gif'>");
 					},
@@ -196,14 +194,12 @@
 							// });
 						}
 						login(id, user, person_id, prefix, name, position, phone, de_id,
-							lv_id,lv_name,de_name);
+							lv_id, lv_name, de_name);
 					}
 				});
 			});
 
-			// function login( id,user, name, sign_id, sign_name, lv_id, duty_id, duty_name, faction_id, faction_name,
-			// 	depart_id, depart_name, office_id, office_name, po_id, po_name, ac_id, ac_name, page, right, line) {
-			function login(id, user, person_id, prefix, name, position, phone, de_id, lv_id,lv_name,de_name) {
+			function login(id, user, person_id, prefix, name, position, phone, de_id, lv_id, lv_name, de_name) {
 				$.post(
 					'../login/login.php', {
 
@@ -217,7 +213,7 @@
 						'de_id': de_id,
 						'lv_id': lv_id,
 						'lv_name': lv_name,
-						'de_name':de_name,
+						'de_name': de_name,
 					},
 					function () {
 						if (lv_id == 1) {

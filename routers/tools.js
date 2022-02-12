@@ -16,7 +16,7 @@ const sql = express.Router();
 // //?  SELECT Data
 sql.get("/", async (req, res) => {
   let to_id = req.body.to_id;
-
+  
   if (!to_id) {
     con.query(
       "SELECT t.to_id ,t.to_name ,de.de_name " +
@@ -40,8 +40,10 @@ sql.get("/", async (req, res) => {
         if (error) throw error;
         res.status(200);
         res.json(results);
+       
       }
     );
+    // console.log(results);
   }
 });
 
@@ -49,7 +51,7 @@ sql.get("/", async (req, res) => {
 sql.post("/", async (req, res) => {
   var to_name = req.body.to_name; //todo : req -> Form .... data -> body
   var de_id = req.body.de_id;
-  console.log(to_name, de_id);
+  
   //! validation -> ไม่มีข้อมูลนั้นแหละ
   if (!to_name || !de_id) {
     return res
