@@ -75,9 +75,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
             <!-- Sidebar -->
             <div class="sidebar mt-3 ">
                 <!-- Sidebar Menu -->
-                <nav class="mt-4 position-relative">
+                <nav class=" position-relative">
+
                     <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item mt-3">
+                        <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
+                        <li class="nav-item ">
                             <a href="./admintemplate.php" class="nav-link active">
                                 <i class="nav-icon fas fa-plus-circle"></i>
                                 <p>เพิ่มข้อมูล</p>
@@ -85,18 +87,60 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         </li>
                         <li class="nav-item mt-3 ">
                             <a href="./admindata.php" class="nav-link active">
-                                <i class="nav-icon fas fa-ballot"></i>
+                                <i class="nav-icon  fa-solid fa-table"></i>
                                 <p>ดูข้อมูล</p>
                             </a>
                         </li>
+                        <hr class="mt-3 mb-3" style="background-color:#fff">
+                        <li class="mb-2 nav-header text-white"> จองห้องประชุม</li>
 
+                        <li class="nav-item ">
+                            <a href="./adminroom.php" class="nav-link active">
+                                <i class="nav-icon  fa-solid fa-calendar-check"></i>
+                                <p>จองห้องประชุม</p>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3 ">
+                            <a href="./admindata.php" class="nav-link active">
+                                <i class="nav-icon fas fa-ballot"></i>
+                                <p>รายการจอง</p>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3 ">
+                            <a href="./admindata.php" class="nav-link active">
+                                <i class="nav-icon fas fa-ballot"></i>
+                                <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
+                            </a>
+                        </li>
+                        <hr class="mt-3 mb-3" style="background-color:#fff">
+
+                        <li class="mb-2 nav-header text-white"> ข้อมูล</li>
+                        <li class="nav-item ">
+                            <a href="" class="nav-link active">
+                                <i class="nav-icon  fa-solid fa-award"></i>
+                                <p>ระดับสิทธิ์</p>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3 ">
+                            <a href="" class="nav-link active">
+                                <i class="nav-icon fas fa-ballot"></i>
+                                <p>รายการที่ต้องอนุมัติ</p>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3 ">
+                            <a href="" class="nav-link active">
+                                <i class="nav-icon fas fa-ballot"></i>
+                                <p>รายการจองทั้งหมด</p>
+                            </a>
+                        </li>
                         <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white">
+                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
                                 <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                             </a>
                         </li>
                     </ul>
+
                 </nav>
             </div>
             <!-- /.sidebar -->

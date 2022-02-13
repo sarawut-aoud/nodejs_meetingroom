@@ -18,7 +18,7 @@ sql.get("/", async (req, res) => {
   let ro_id = req.body.ro_id;
   if (!ro_id) {
     con.query(
-      "SELECT ro_id,ro_name ,ro_people,ro_detail FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
+      "SELECT ro_id,ro_name ,ro_people,ro_color,ro_detail FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -27,7 +27,7 @@ sql.get("/", async (req, res) => {
     );
   } else {
     con.query(
-      "SELECT ro_id,ro_name ,ro_people,ro_detail FROM tbl_rooms WHERE ro_id = " + ro_id + "  ORDER BY tbl_rooms.ro_id ASC",
+      "SELECT ro_id,ro_name ,ro_people,ro_color,ro_detail FROM tbl_rooms WHERE ro_id = " + ro_id + "  ORDER BY tbl_rooms.ro_id ASC",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
