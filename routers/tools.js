@@ -16,7 +16,7 @@ const sql = express.Router();
 // //?  SELECT Data
 sql.get("/", async (req, res) => {
   let to_id = req.body.to_id;
-  
+
   if (!to_id) {
     con.query(
       "SELECT t.to_id ,t.to_name ,de.de_name " +
@@ -34,13 +34,14 @@ sql.get("/", async (req, res) => {
       "SELECT t.to_id ,t.to_name ,de.de_name " +
         "FROM tbl_tools AS t " +
         "INNER JOIN tbl_department AS de ON t.de_id = de.de_id " +
-        "WHERE t.to_id = " + to_id + "" +
+        "WHERE t.to_id = " +
+        to_id +
+        "" +
         "ORDER BY t.to_id ASC; ",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
         res.json(results);
-       
       }
     );
     // console.log(results);
@@ -51,7 +52,7 @@ sql.get("/", async (req, res) => {
 sql.post("/", async (req, res) => {
   var to_name = req.body.to_name; //todo : req -> Form .... data -> body
   var de_id = req.body.de_id;
-  
+
   //! validation -> ไม่มีข้อมูลนั้นแหละ
   if (!to_name || !de_id) {
     return res
@@ -87,7 +88,7 @@ sql.put("/", async (req, res) => {
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "UPDATE tbl_tools SET to_name = ?,de_id = ? WHERE to_id = ?",
+      "UPDATE tbl_tools SET to_name = ?, de_id = ? WHERE to_id = ?",
       [to_name, de_id, to_id],
       (error, results, fields) => {
         if (error) throw error;

@@ -1,5 +1,14 @@
 <?php
 require_once "../../login/check_session.php";
+if ($_SESSION['mt_lv_id'] == 2) {
+} else {
+
+    echo "<script>
+            window.setTimeout(function() {
+                window.location = '../page-404.html';
+            }, 0);
+        </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +17,9 @@ require_once "../../login/check_session.php";
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.css" />
+<!-- bt5 -->
+<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
@@ -41,7 +51,7 @@ require_once "../../login/check_session.php";
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">Home</a>
+                    <a class="nav-link active">ยื่นคำขอจองห้องประชุม</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -49,7 +59,7 @@ require_once "../../login/check_session.php";
                 <!-- Navbar Search -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <i class="fas fa-expand-arrows"></i>
                     </a>
                 </li>
             </ul>
@@ -71,17 +81,16 @@ require_once "../../login/check_session.php";
                 <!-- Sidebar Menu -->
                 <nav class="mt-4 position-relative">
 
-                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item mt-3">
-                            <a href="./users.html" class="nav-link active">
+                            <a href="./users.php" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>ยื่นคำขอจองห้องประชุม
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item mt-3 ">
-                            <a href="./user_status.html" class="nav-link active">
+                            <a href="./user_status.php" class="nav-link active">
                                 <i class="nav-icon fas fa-bell-exclamation"></i>
                                 <p>สถานะการจอง</p>
                             </a>
@@ -89,8 +98,8 @@ require_once "../../login/check_session.php";
 
                         <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph ">
-                                <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
+                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
+                                <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                             </a>
                         </li>
                     </ul>
@@ -107,7 +116,7 @@ require_once "../../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                <div class="row justify-content-center">
+                    <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
                                 <div class="card-body mb-0">
@@ -129,11 +138,11 @@ require_once "../../login/check_session.php";
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name"  value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name']."/".$_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -169,12 +178,9 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker1"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker1" />
-                                                        <div class="input-group-append" data-target="#datetimepicker1"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00"/>
+                                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
                                                         </div>
@@ -182,12 +188,9 @@ require_once "../../login/check_session.php";
                                                 </div>
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker2"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker2" />
-                                                        <div class="input-group-append" data-target="#datetimepicker2"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00"/>
+                                                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
                                                         </div>
@@ -201,12 +204,9 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker3"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker3" />
-                                                        <div class="input-group-append" data-target="#datetimepicker3"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000"/>
+                                                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
                                                         </div>
@@ -214,12 +214,9 @@ require_once "../../login/check_session.php";
                                                 </div>
                                                 <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
                                                 <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker4"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker4" />
-                                                        <div class="input-group-append" data-target="#datetimepicker4"
-                                                            data-toggle="datetimepicker">
+                                                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" />
+                                                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
                                                         </div>
@@ -233,9 +230,7 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ห้องประชุม : </label>
                                                 <div class="col-md-10">
-                                                    <select class="form-control select2 select2-success"
-                                                        data-dropdown-css-class="select2-success" id="room"
-                                                        name="room" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="ro_name" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -244,35 +239,65 @@ require_once "../../login/check_session.php";
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">จำนวนคน : </label>
                                                 <div class="col-md">
-                                                    <input class="form-control " id="people" name="people" readonly />
+                                                    <input class="form-control " id="ro_people" name="ro_people" readonly />
                                                 </div>
                                                 <label class="col-md-2 col-form-label">บริเวณ : </label>
                                                 <div class="col-md">
-                                                    <input class="form-control " id="detail" name="detail" readonly />
+                                                    <input class="form-control " id="ro_detail" name="ro_detail" readonly />
                                                 </div>
                                             </div>
                                         </div>
                                         <!--? /. Room  -->
-                                        <!--? Style  -->
+                                        <!--? Style /  ผู้เข้าร่วม-->
                                         <div class="form-group row">
                                             <div class="input-group">
+                                                <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
+                                                <div class="col-md">
+                                                <!-- <input class="form-control " id="people" name="people"  /> -->
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="people" disabled="disabled" />
+                                                    </select>
+                                                </div>
                                                 <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                                                 <div class="col-md">
-                                                    <select class="form-control select2 select2-success"
-                                                        data-dropdown-css-class="select2-success" id="style"
-                                                        name="style" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="style" name="style" />
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--?/. Style  -->
+                                        <!--? Style /  ผู้เข้าร่วม-->
+                                        <!--? Tool -->
+                                        <div class="form-group row ">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">อุปกรณ์ :</label>
+                                                <div class="col-md-4  d-flex ">
+                                                    <div class="icheck-success ">
+                                                        <input type="radio" id="checktool1" name="r1" checked>
+                                                        <label for="checktool1"> ไม่ต้องการ
+                                                        </label>
+
+                                                    </div>
+                                                    <div class="icheck-success ml-3">
+                                                        <input type="radio" id="checktool" name="r1">
+                                                        <label for="checktool"> ต้องการ
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="tool" disabled />
+                                                    <option value="" selected disabled>--เพิ่มเติม--</option>
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!--? Tool -->
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit"
-                                                class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
+                                            <button type="submit" class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -302,8 +327,9 @@ require_once "../../login/check_session.php";
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="../plugins/jquery/jquery.min.js"></script>
-	<script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -320,19 +346,19 @@ require_once "../../login/check_session.php";
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  
+
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
-      <!-- Toastr -->
-      <script src="../plugins/toastr/toastr.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="../public/javascript/adminlte.js"></script>
+    <!-- Toastr -->
+    <script src="../plugins/toastr/toastr.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
 
     <script>
-        $(function () {
+        $(function() {
 
             //Initialize Select2 Elements
             $('.select2').select2();
@@ -351,124 +377,91 @@ require_once "../../login/check_session.php";
             });
         });
     </script>
-    <!-- <script>
-        $(document).ready(function () {
-            var uid = '4';
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "",
-                data: {
-                    uid: uid,
-                },
-                success: function (result) {
-                    var user = '';
-                    for (ii in result) {
-                        user += result[ii].uid;
-                        if (result[ii].uid === uid) {
-                            var prefix = result[ii].prefix;
-                            var fname = result[ii].fname;
-                            var lname = result[ii].lname;
-                            var de_id = result[ii].de_id;
-                            var level = result[ii].level;
-                            if (level == 1) {
-                                var lv = 'หัวหน้าแผนก';
-                            } else if (level == 2) {
-                                var lv = 'ธุรการ';
-                            } else {
-                                var lv = 'ผู้ปฏิบัติงาน';
-                            }
-                            break;
-                        }
+    <script>
+        $(document).ready(function() {
+            var path = 'http://127.0.0.1:4500';
 
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + '</option>';
+                    }
+                    $('#ro_name').html(data);
+
+                    $("#ro_name").change(function() {
+                        $('#people').prop('disabled', false);
+                        var ro_id = $(this).val();
                         $.ajax({
-                            type: "get",
+                            type: "GET",
                             dataType: "json",
-                            url: "https://sarawut-pcru.github.io/Data/tbl_departments.json",
+                            url: path + "/rooms",
                             data: {
-                                de_id: de_id,
+                                ro_id: ro_id,
                             },
-                            success: function (data) {
-                                var depart = '';
-                                for (kk in data) {
-                                    // depart += data[kk].de_id;
-                                    if (data[kk].de_id === de_id) {
-                                        var de_name = data[kk].de_name;
-                                        break;
+                            success: function(result) {
+                                 var row = '';
+                                for (ii in result) {
+                                    if (result[ii].ro_id == ro_id) {
+                                        var people = result[ii].ro_people;
+                                        var detail = result[ii].ro_detail;
+                                        for (x = 1; x <= people; x++) {
+                                            row += '<option value="' + x + '" > ' + x + '</option>';
+                                        }
                                     }
                                 }
-                                $('#de_name').val(de_name);
+                                $('#ro_people').val(people);
+                                $('#ro_detail').val(detail);
+                                 $('#people').html(row);
                             }
                         });
-
-                    }
-
-                    $('#prefix').val(prefix);
-                    $('#fname').val(fname);
-                    $('#lname').val(lname);
-                    $('#level').val(lv);
-
+                    });
                 }
-
             });
+
             $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "https://sarawut-pcru.github.io/Data/tbl_styles.json",
-                success: function (result) {
-                    //  const json = JSON.stringify(response);
-                    var user = '<option value="" selected disabled>-รูปแบบห้อง-</option>';
-                    for (ii in result) {
-                        user += '<option value="' + result[ii].st_id + '">' + result[ii]
-                            .st_name +
-                            '</option>';
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/style",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
                     }
-                    // a simple user
-                    $('#style').html(user);
-
+                    $('#style').html(data);
                 }
             });
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "https://sarawut-pcru.github.io/Data/tbl_rooms.json",
-                success: function (result) {
-                    var user = '<option value="" selected disabled>-ห้องประชุม-</option>';
-                    for (ii in result) {
-                        user += '<option value="' + result[ii].ro_id + '">' + result[ii]
-                            .ro_name +
-                            '</option>';
-                    }
-                    $('#room').html(user);
 
-                }
-            });
-            $("#room").change(function () {
-                var ro_id = $(this).val();
+            $("#checktool").change(function() {
+
+                $("#checktool1").change(function() {
+                    $('#tool').prop('disabled', true);
+                });
+
+                $('#tool').prop('disabled', false);
                 $.ajax({
                     type: "get",
                     dataType: "json",
-                    url: "https://sarawut-pcru.github.io/Data/tbl_rooms.json",
-                    data: {
-                        ro_id: ro_id,
-                    },
-                    success: function (result) {
-                        var user = '';
-                        for (ii in result) {
-                            user += result[ii].ro_id;
-                            if (result[ii].ro_id === ro_id) {
-                                var people = result[ii].ro_people;
-                                var detail = result[ii].ro_detail;
-                            }
+                    url: path + "/tools",
+                    success: function(result) {
+                        var data = '<option value="" selected disabled>--เพิ่มเติม--</option>';
+                        for (i in result) {
+                            data += '<option value="' + result[i].to_id + '" > ' + result[i].to_name + '</option>';
                         }
-                        $('#people').val(people);
-                        $('#detail').val(detail);
+                        $('#tool').html(data);
                     }
                 });
             });
 
+
+
+
         });
-    </script> -->
+    </script>
 </body>
 
 </html>

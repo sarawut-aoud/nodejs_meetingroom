@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         title: "Long Event",
         start: "2022-02-07",
-        end: "2020-09-10",
+        end: "2022-02-10",
       },
       {
         groupId: 999,
@@ -62,12 +62,12 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         groupId: 999,
         title: "Repeating Event",
-        start: "2020-09-16T16:00:00",
+        start: "2022-02-16T16:00:00",
       },
       {
         title: "Conference",
-        start: "2020-09-11",
-        end: "2020-09-13",
+        start: "2022-02-09-11",
+        end: "2022-02-13",
       },
       {
         title: "Meeting",
@@ -78,22 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         title: "Lunch",
         start: "2022-02-12T12:01:00",
       },
-      {
-        title: "Meeting",
-        start: "2020-02-12T14:30:00",
-      },
-      {
-        title: "Happy Hour",
-        start: "2020-09-12T17:30:00",
-      },
-      {
-        title: "Dinner",
-        start: "2020-09-12T20:00:00",
-      },
-      {
-        title: "Birthday Party",
-        start: "2020-09-13T07:00:00",
-      },
+      
     ],
   });
 

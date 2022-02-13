@@ -15,14 +15,26 @@ const sql = express.Router();
 
 //?  SELECT Data
 sql.get("/", async (req, res) => {
-  con.query(
-    "SELECT ro_id,ro_name ,ro_people,ro_detail FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
-    (error, results, fields) => {
-      if (error) throw error;
-      res.status(200);
-      res.json(results);
-    }
-  );
+  let ro_id = req.body.ro_id;
+  if (!ro_id) {
+    con.query(
+      "SELECT ro_id,ro_name ,ro_people,ro_detail FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  } else {
+    con.query(
+      "SELECT ro_id,ro_name ,ro_people,ro_detail FROM tbl_rooms WHERE ro_id = " + ro_id + "  ORDER BY tbl_rooms.ro_id ASC",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  }
 });
 // sql.get("/", async (req, res) => {
 //   var query01 = require("url").parse(req.url, true).query;

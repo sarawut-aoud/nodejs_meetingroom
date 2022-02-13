@@ -23,8 +23,10 @@ sql.get("/", async (req, res) => {
     );
   } else {
     con.query(
-      "SELECT st_id,st_name  FROM tbl_style WHERE st_id = "+ st_id + "" +
-      " ORDER BY tbl_style.st_id ASC",
+      "SELECT st_id,st_name  FROM tbl_style WHERE st_id = " +
+        st_id +
+        "" +
+        " ORDER BY tbl_style.st_id ASC",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);

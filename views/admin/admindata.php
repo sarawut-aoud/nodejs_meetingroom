@@ -1,5 +1,14 @@
 <?php
 require_once "../../login/check_session.php";
+if ($_SESSION['mt_lv_id'] == 1) {
+} else {
+
+    echo "<script>
+            window.setTimeout(function() {
+                window.location = '../page-404.html';
+            }, 0);
+        </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +57,7 @@ require_once "../../login/check_session.php";
                 <!-- Navbar Search -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <i class="fas fa-expand-arrows"></i>
                     </a>
                 </li>
             </ul>
@@ -83,8 +92,8 @@ require_once "../../login/check_session.php";
 
                         <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph ">
-                                <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
+                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white">
+                                <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                             </a>
                         </li>
                     </ul>
@@ -312,6 +321,7 @@ require_once "../../login/check_session.php";
                                     }
                                 }
                                 $("#ModalRoom").modal("show");
+                                $("#modal_ro_id").val(ro_id);
                                 $("#modal_ro_name").val(ro_name);
                                 $("#modal_ro_people").val(ro_people);
                                 $("#modal_ro_color").val(ro_color);
@@ -395,6 +405,7 @@ require_once "../../login/check_session.php";
                                     }
                                 }
                                 $("#ModalStyle").modal("show");
+                                $("#modal_st_id").val(st_id);
                                 $("#modal_st_name").val(st_name);
                             }
                         });
@@ -479,6 +490,7 @@ require_once "../../login/check_session.php";
                                     }
                                 }
                                 $("#ModalTool").modal("show");
+                                $("#modal_to_id").val(to_id);
                                 $("#modal_to_name").val(to_name);
                             }
                         });
@@ -518,10 +530,128 @@ require_once "../../login/check_session.php";
                 }
 
             });
+            //  Btn Modal //
+            $(".btnSaveRoom").click(function(e) {
+                e.preventDefault();
 
+                var ro_id = $("#modal_ro_id").val();
+                var ro_name = $("#modal_ro_name").val();
+                var ro_people = $("#modal_ro_people").val();
+                var ro_detail = $("#modal_ro_detail").val();
 
+                $.ajax({
+                    type: "PUT",
+                    url: path + "/rooms",
+                    data: {
+                        ro_id: ro_id,
+                        ro_name: ro_name,
+                        ro_people: ro_people,
+                        ro_detail: ro_detail
+
+                    },
+                    dataType: "json",
+                    success: function(result) {
+                        $('#ModalRoom').modal('hide');
+                        toastr.success(
+                            result.message, '', {
+                                timeOut: 500,
+                                fadeOut: 500,
+                                onHidden: function() {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    },
+                    error: function(result) {
+                        toastr.warning(
+                            result.message, {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                            }
+                        );
+                    }
+                });
+            });
+
+            $(".btnSaveStyle").click(function(e) {
+                e.preventDefault();
+
+                var st_id = $("#modal_st_id").val();
+                var st_name = $("#modal_st_name").val();
+
+                $.ajax({
+                    type: "PUT",
+                    url: path + "/roomstyle",
+                    data: {
+                        st_id: st_id,
+                        st_name: st_name,
+                    },
+                    dataType: "json",
+                    success: function(result) {
+                        $('#ModalStyle').modal('hide');
+                        toastr.success(
+                            result.message, '', {
+                                timeOut: 500,
+                                fadeOut: 500,
+                                onHidden: function() {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    },
+                    error: function(result) {
+                        toastr.warning(
+                            result.message, {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                            }
+                        );
+                    }
+                });
+            });
+            $(".btnSaveTool").click(function(e) {
+                e.preventDefault();
+
+                var to_id = $("#modal_to_id").val();
+                var to_name = $("#modal_to_name").val();
+                var de_id = $("#modal_de_id").val();
+                console.log(de_id);
+                // console.log(to_id);
+                $.ajax({
+                    type: "PUT",
+                    url: path + "/tools",
+                    data: {
+                        to_id: to_id,
+                        to_name: to_name,
+                        de_id: de_id,
+                    },
+                    dataType: "json",
+                    success: function(result) {
+                        $('#ModalTool').modal('hide');
+                        toastr.success(
+                            result.message, '', {
+                                timeOut: 500,
+                                fadeOut: 500,
+                                onHidden: function() {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    },
+                    error: function(result) {
+                        toastr.warning(
+                            result.message, {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                            }
+                        );
+                    }
+                });
+            });
+            /// End Btn Modal
         });
     </script>
+
 </body>
 
 </html>

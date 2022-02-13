@@ -1,5 +1,13 @@
 <?php
 require_once "../../login/check_session.php";
+if ($_SESSION['mt_lv_id'] == 1) {
+} else {
+    echo "<script>
+            window.setTimeout(function() {
+                window.location = '../page-404.html';
+            }, 0);
+        </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +54,7 @@ require_once "../../login/check_session.php";
                 <!-- Navbar Search -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <i class="fas fa-expand-arrows"></i>
                     </a>
                 </li>
             </ul>
@@ -84,8 +92,8 @@ require_once "../../login/check_session.php";
 
                         <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph ">
-                                <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
+                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
+                                <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                             </a>
                         </li>
                     </ul>

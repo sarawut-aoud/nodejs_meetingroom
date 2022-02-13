@@ -1,5 +1,13 @@
 <?php
 require_once "../../login/check_session.php";
+if ($_SESSION['mt_lv_id'] == 4) {
+} else {
+    echo "<script>
+            window.setTimeout(function() {
+                window.location = '../page-404.html';
+            }, 0);
+        </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +16,9 @@ require_once "../../login/check_session.php";
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.css" />
+<!-- bt5 -->
+<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
@@ -48,7 +58,7 @@ require_once "../../login/check_session.php";
                 <!-- Navbar Search -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <i class="fas fa-expand-arrows"></i>
                     </a>
                 </li>
             </ul>
@@ -87,8 +97,8 @@ require_once "../../login/check_session.php";
 
                         <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph ">
-                                <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
+                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
+                                <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                             </a>
                         </li>
                     </ul>
@@ -283,8 +293,9 @@ require_once "../../login/check_session.php";
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="../plugins/jquery/jquery.min.js"></script>
-    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->

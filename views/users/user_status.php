@@ -1,5 +1,14 @@
 <?php
 require_once "../../login/check_session.php";
+if ($_SESSION['mt_lv_id'] == 2) {
+} else {
+    require_once '../../login/logout.php';
+    echo "<script>
+            window.setTimeout(function() {
+                window.location = '../page-404.html';
+            }, 0);
+        </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,9 +17,10 @@ require_once "../../login/check_session.php";
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-<!-- daterange picker -->
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.css" />
+<!-- bt5 -->
+<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+<!-- datepicker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -41,7 +51,10 @@ require_once "../../login/check_session.php";
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">Home</a>
+                    <a href="./users.php" class="nav-link ">ยื่นคำขอจองห้องประชุม</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link active">สถานะการจอง</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -49,7 +62,7 @@ require_once "../../login/check_session.php";
                 <!-- Navbar Search -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
+                        <i class="fas fa-expand-arrows"></i>
                     </a>
                 </li>
             </ul>
@@ -71,17 +84,16 @@ require_once "../../login/check_session.php";
                 <!-- Sidebar Menu -->
                 <nav class="mt-4 position-relative">
 
-                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item mt-3">
-                            <a href="./users.html" class="nav-link active">
+                            <a href="./users.php" class="nav-link active">
                                 <i class="nav-icon fas fa-columns"></i>
                                 <p>ยื่นคำขอจองห้องประชุม
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item mt-3 ">
-                            <a href="./user_status.html" class="nav-link active">
+                            <a href="./user_status.php" class="nav-link active">
                                 <i class="nav-icon fas fa-bell-exclamation"></i>
                                 <p>สถานะการจอง</p>
                             </a>
@@ -89,8 +101,8 @@ require_once "../../login/check_session.php";
 
                         <hr class="mt-5 mb-5" style="background-color:#fff">
                         <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph ">
-                                <i class="nav-icon fas fa-sign-out-alt"></i>ออกจากระบบ
+                            <a href="../../login/logout.php" class="btn btn-block btn-moph  text-white ">
+                                <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                             </a>
                         </li>
                     </ul>
@@ -107,7 +119,7 @@ require_once "../../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                <div class="row justify-content-center">
+                    <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
                                 <div class="card-body mb-0">
@@ -129,11 +141,11 @@ require_once "../../login/check_session.php";
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name"  value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name']."/".$_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -142,155 +154,70 @@ require_once "../../login/check_session.php";
 
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-xl-6 col-md-12 col-sm-12">
+                    <div class="row mt-3 justify-content-center ">
+                        <div class="col-xl-10 col-md-12 col-sm-12 ">
                             <!-- general form elements -->
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>เลือกห้องประชุม เพื่อทำการจอง</h1>
+                                        <h1>สถานะการจอง</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
                                 <form method="POST">
-                                    <div class="card-body">
-                                        <!--? Title Name -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">ชื่อโครงการ :</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" class="form-control " id="title" name="title" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--? /.Title Name -->
-                                        <!--? Input Time -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">เวลา :</label>
-                                                <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker1"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker1" />
-                                                        <div class="input-group-append" data-target="#datetimepicker1"
-                                                            data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="far fa-clock"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <label class="col-md-2 col-form-label">ถึงเวลา :</label>
-                                                <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker2"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker2" />
-                                                        <div class="input-group-append" data-target="#datetimepicker2"
-                                                            data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="far fa-clock"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--? /.Input Time -->
-                                        <!--? InputDate -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">วันที่ :</label>
-                                                <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker3"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker3" />
-                                                        <div class="input-group-append" data-target="#datetimepicker3"
-                                                            data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
-                                                <div class="col-md-4">
-                                                    <div class="input-group date" id="datetimepicker4"
-                                                        data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input"
-                                                            data-target="#datetimepicker4" />
-                                                        <div class="input-group-append" data-target="#datetimepicker4"
-                                                            data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--? /.InputDate -->
-                                        <!--? Room  -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">ห้องประชุม : </label>
-                                                <div class="col-md-10">
-                                                    <select class="form-control select2 select2-success"
-                                                        data-dropdown-css-class="select2-success" id="room"
-                                                        name="room" />
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">จำนวนคน : </label>
-                                                <div class="col-md">
-                                                    <input class="form-control " id="people" name="people" readonly />
-                                                </div>
-                                                <label class="col-md-2 col-form-label">บริเวณ : </label>
-                                                <div class="col-md">
-                                                    <input class="form-control " id="detail" name="detail" readonly />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--? /. Room  -->
-                                        <!--? Style  -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
-                                                <div class="col-md">
-                                                    <select class="form-control select2 select2-success"
-                                                        data-dropdown-css-class="select2-success" id="style"
-                                                        name="style" />
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--?/. Style  -->
+
+                                    <!-- /.card-header -->
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>User</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    <th>Reason</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>183</td>
+                                                    <td>John Doe</td>
+                                                    <td>11-7-2014</td>
+                                                    <td><span class="tag tag-success">Approved</span></td>
+                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>219</td>
+                                                    <td>Alexander Pierce</td>
+                                                    <td>11-7-2014</td>
+                                                    <td><span class="tag tag-warning">Pending</span></td>
+                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>657</td>
+                                                    <td>Bob Doe</td>
+                                                    <td>11-7-2014</td>
+                                                    <td><span class="tag tag-primary">Approved</span></td>
+                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>175</td>
+                                                    <td>Mike Doe</td>
+                                                    <td>11-7-2014</td>
+                                                    <td><span class="tag tag-danger">Denied</span></td>
+                                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <!-- /.card-body -->
-                                    <div class="card-footer ">
-                                        <div class="row justify-content-between ">
-                                            <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit"
-                                                class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
-                                        </div>
-                                    </div>
+
+
                                 </form>
                             </div>
                             <!-- /.card -->
                         </div>
                         <!-- ./col -->
-                        <div class="col-xl-6 col-md-12 ">
-                            <div class="card card-primary">
-                                <div class="card-body p-0">
-                                    <!-- THE CALENDAR -->
-                                    <div id="calendar"></div>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
                     </div>
 
                 </div><!-- /.container-fluid -->
@@ -302,8 +229,9 @@ require_once "../../login/check_session.php";
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="../plugins/jquery/jquery.min.js"></script>
-	<script src="../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -320,19 +248,19 @@ require_once "../../login/check_session.php";
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  
+
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
-      <!-- Toastr -->
-      <script src="../plugins/toastr/toastr.min.js"></script>
-      <!-- AdminLTE App -->
-      <script src="../public/javascript/adminlte.js"></script>
+    <!-- Toastr -->
+    <script src="../plugins/toastr/toastr.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
 
     <script>
-        $(function () {
+        $(function() {
 
             //Initialize Select2 Elements
             $('.select2').select2();

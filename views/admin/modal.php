@@ -15,7 +15,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">ชื่อห้องประชุม :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_ro_name" />
+                                <input type="text" class="form-control " id="modal_ro_name"  />
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">จำห้องคนที่บรรจุ :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_ro_people" />
+                                <input type="text" class="form-control " id="modal_ro_people"  />
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+    <input type="hidden" id="modal_ro_id" value="">
 </form>
 <!-- Modal Rooms -->
 <!-- Modal Style -->
@@ -90,6 +91,8 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="modal_st_id" value="">
+
 </form>
 <!-- Modal Style -->
 <!-- Modal tools -->
@@ -134,5 +137,6 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="modal_to_id" value="">
 </form>
 <!-- Modal tool -->
