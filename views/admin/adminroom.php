@@ -66,90 +66,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
         </nav>
         <!-- /.navbar -->
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-light-white  elevation-4 " style="background-color: #008622;">
-
-            <!-- Brand Logo -->
-            <a href="" class="brand-link">
-                <img src="../public/images/logo.png" alt="Logo" class="w-75" style="opacity: .8">
-                <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar mt-3 ">
-
-                <!-- Sidebar Menu -->
-                <nav class=" position-relative">
-
-                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
-                        <li class="nav-item ">
-                            <a href="./admintemplate.php" class="nav-link active">
-                                <i class="nav-icon fas fa-plus-circle"></i>
-                                <p>เพิ่มข้อมูล</p>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-3 ">
-                            <a href="./admindata.php" class="nav-link active">
-                                <i class="nav-icon  fa-solid fa-table"></i>
-                                <p>ดูข้อมูล</p>
-                            </a>
-                        </li>
-                        <hr class="mt-3 mb-3" style="background-color:#fff">
-                        <li class="mb-2 nav-header text-white"> จองห้องประชุม</li>
-
-                        <li class="nav-item ">
-                            <a href="./adminroom.php" class="nav-link active">
-                                <i class="nav-icon  fa-solid fa-calendar-check"></i>
-                                <p>จองห้องประชุม</p>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-3 ">
-                            <a href="./admindata.php" class="nav-link active">
-                                <i class="nav-icon fas fa-ballot"></i>
-                                <p>รายการจอง</p>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-3 ">
-                            <a href="./admindata.php" class="nav-link active">
-                                <i class="nav-icon fas fa-ballot"></i>
-                                <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
-                            </a>
-                        </li>
-                        <hr class="mt-3 mb-3" style="background-color:#fff">
-
-                        <li class="mb-2 nav-header text-white"> ข้อมูล</li>
-                        <li class="nav-item ">
-                            <a href="" class="nav-link active">
-                                <i class="nav-icon  fa-solid fa-award"></i>
-                                <p>ระดับสิทธิ์</p>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-3 ">
-                            <a href="" class="nav-link active">
-                                <i class="nav-icon fas fa-ballot"></i>
-                                <p>รายการที่ต้องอนุมัติ</p>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-3 ">
-                            <a href="" class="nav-link active">
-                                <i class="nav-icon fas fa-ballot"></i>
-                                <p>รายการจองทั้งหมด</p>
-                            </a>
-                        </li>
-                        <hr class="mt-5 mb-5" style="background-color:#fff">
-                        <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
-                                <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
-                            </a>
-                        </li>
-                    </ul>
-
-                </nav>
-            </div>
-
-            <!-- /.sidebar -->
-        </aside>
+        <!-- Sidebar -->
+        <?php require_once './sidebar/asidebar.php'; ?>
+        <!-- Sidebar -->
 
 
         <!-- Content Wrapper. Contains page content -->
@@ -204,13 +123,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     </div>
                                 </div>
                                 <div class="card-body mb-0">
-                                    <div class="form-group row">
-                                        <div class="input-group">
-                                            <label class="col-form-label"></label>
-                                            <div class="col-md-2" id="showcolor">
-                                              
-                                            </div>
-                                        </div>
+                                    <div id="showcolor">
                                     </div>
                                 </div>
                             </div>
@@ -301,18 +214,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">จำนวนคนที่บรรจุได้ : </label>
-                                                <div class="col-md">
-                                                    <input class="form-control " id="ro_people" name="ro_people" readonly />
-                                                </div>
-                                                <label class="col-md-2 col-form-label">บริเวณ : </label>
-                                                <div class="col-md">
-                                                    <input class="form-control " id="ro_detail" name="ro_detail" readonly />
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         <!--? /. Room  -->
                                         <!--? Style /  ผู้เข้าร่วม-->
                                         <div class="form-group row">
@@ -320,8 +221,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
                                                 <div class="col-md">
                                                     <input type="number" class="form-control " id="people" name="people" />
-                                                    <!-- <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="people" disabled="disabled" />
-                                                    </select> -->
                                                 </div>
                                                 <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                                                 <div class="col-md">
@@ -349,8 +248,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" multiple id="tool" disabled />
-                                                    <option value="" selected disabled>--เพิ่มเติม--</option>
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" multiple="multiple" id="tool" data-placeholder="-เพิ่มเติม-" disabled />
+
                                                     </select>
 
                                                 </div>
@@ -463,49 +362,23 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
                     }
                     $('#ro_name').html(data);
-
-                    // $("#ro_name").change(function() {
-                    //     $('#people').prop('disabled', false);
-                    //     var ro_id = $(this).val();
-                    //     $.ajax({
-                    //         type: "GET",
-                    //         dataType: "json",
-                    //         url: path + "/rooms",
-                    //         data: {
-                    //             ro_id: ro_id,
-                    //         },
-                    //         success: function(result) {
-                    //              var row = '';
-                    //             for (ii in result) {
-                    //                 if (result[ii].ro_id == ro_id) {
-                    //                     var people = result[ii].ro_people;
-                    //                     var detail = result[ii].ro_detail;
-
-                    //                 }
-                    //             }
-                    //             $('#ro_people').val(people);
-                    //             $('#ro_detail').val(detail);
-
-                    //         }
-                    //     });
-                    // });
                 }
             });
-            // $.ajax({
-            //     type: 'GET',
-            //     dataType: 'json',
-            //     url: path + "/rooms",
-            //     success: function(result) {
-            //         var data = '';
-            //         for (i in result) {
-            //             data +=  '<div class="w-50 rounded border style="background-color:'+ result[i].ro_color +';"></div>'
-            //         }
-                   
-            //         $('#showcolor').html(data);
-            //         // <div class="col-md-2">
-            //         // </div>
-            //     }
-            // });
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(result) {
+                    var data = data = '<div class="form-group row">' +
+                        '<div class="input-group">';
+                    for (i in result) {
+                        data += '<label class="col-md-3 col-form-label">' + result[i].ro_name + '  :</label> <div class="col-md-3 ">'
+                        data += "<div class='rounded h-75 w-100'  style =\"background-color : " + result[i].ro_color + "\"></div>";
+                        data += '</div>';
+                    }
+                    $('#showcolor').html(data);
+                }
+            });
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -523,6 +396,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                 $("#checktool1").change(function() {
                     $('#tool').prop('disabled', true);
+                    $('#tool').val(null).trigger("change");
                 });
 
                 $('#tool').prop('disabled', false);
@@ -531,7 +405,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     dataType: "json",
                     url: path + "/tools",
                     success: function(result) {
-                        var data = '<option value="" selected disabled>--เพิ่มเติม--</option>';
+                        var data = '';
                         for (i in result) {
                             data += '<option value="' + result[i].to_id + '" > ' + result[i].to_name + '</option>';
                         }

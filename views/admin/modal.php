@@ -31,14 +31,14 @@
                     </div>
                     <!-- //? Input People -->
                     <!-- //? Input Color -->
-                    <!-- <div class="form-group row">
+                    <div class="form-group row">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">สีห้อง :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control my-colorpicker1" id="modal_ro_color" >
+                                <input type="color" class="form-control " id="modal_ro_color" >
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <!-- //? Input Color -->
                     <!-- //? Input Detail -->
                     <div class="form-group row">
