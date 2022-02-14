@@ -323,8 +323,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 let minutes = date.getMinutes().toString().padStart(2, "0");
                 let second = date.getSeconds().toString().padStart(2, "0");
 
-                return `${numOfDay} ${month} ${year} ` +
-                    `${hour}:${minutes}:${second} น.`;
+                return `${numOfDay} ${month} ${year} ` ; //+
+                    // `${hour}:${minutes}:${second} น.`;
             }
             let date1 = new Date();
             var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
