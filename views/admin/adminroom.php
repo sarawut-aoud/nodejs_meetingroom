@@ -130,7 +130,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -416,10 +415,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     }
                 });
             });
-
-
-
-
         });
     </script>
 </body>

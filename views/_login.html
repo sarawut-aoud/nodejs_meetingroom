@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="icon" href="public/images/index.png" type="image/x-icon" />
+	<title>Moph : MeetingRoom</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="plugins/bootstrap5/css/bootstrap.min.css" />
+	<!-- Style Create -->
+	<link rel="stylesheet" href="public/styles/adminlte.min.css" />
+	<link rel="stylesheet" href="public/styles/styleindex.css" />
+
+</head>
+
+<body class="body_index">
+	<div class="content-wrapper">
+		<div class="col-xl-3 col-md-4 position-absolute top-50 start-50 translate-middle">
+			<div class="card shadow">
+				<div class="card-header text-white text-center card-head">
+					<img src="public/images/logo.png" alt="Logo" class="rounded" width="50%">
+					<!-- <span class="h2">Meeting Room </span> -->
+				</div>
+				<div class="card-body">
+					<div class="col-12">
+						<!-- Form -->
+						<form method="POST" id="frmLogin" name="frmLogin" id="frmLogin" action="">
+
+							<div role="alert" id="loginAlert"></div>
+
+
+							<div class="  form-floating mb-3 mt-3">
+								<input type="text" name="inputUsername" id="inputUsername" class="form-control"
+									autocomplete="off" placeholder="Username" />
+								<label for="floatingInputValue"> <small>Username</small></label>
+							</div>
+							<div class=" form-floating mb-3 mt-3">
+								<input type="password" name="inputPassword" id="inputPassword" class="form-control"
+									placeholder="Password" />
+								<label for="floatingInputValue"><small>password</small></label>
+							</div>
+							<center>
+								<div class="col-12 mt-4 mb-0">
+									<button type="submit" id="btnLogin" name="btnLogin"
+										class="login-btn btn-block ">เข้าสู่ระบบ</button>
+								</div>
+							</center>
+							<!-- /.col -->
+							<center>
+								<div class="copyright mt-4 ">
+									Copyright &copy; 2022 ศูนย์คอมพิวเตอร์<br>โรงพยาบาลเพชรบูรณ์ สงวนลิขสิทธิ์
+								</div>
+							</center>
+
+						</form>
+						<!-- /.Form -->
+					</div>
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card -->
+		</div>
+
+	</div>
+	<!-- Optional JavaScript -->
+	<script src="plugins/jquery/jquery.min.js"></script>
+	<script src="plugins/bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			var path = 'http://127.0.0.1:4500';
+
+			$("#btnLogin").click(function (e) {
+				e.preventDefault();
+
+				$.ajax({
+					type: "POST",
+					url: path + "/login/login",
+					data: $("#frmLogin").serialize(),
+					dataType: "json",
+					beforeSend: function () {
+						$("#btnLogin").attr("disabled", "disabled");
+						// $("#btnLogin").html("<img alt='loading' class='alert alert-danger' src='../views/public/images/load.gif'>");
+					},
+					timeout: 20000,
+					error: function (jqXHR, exception) {
+						var msg = '';
+
+						if (jqXHR.status === 0) {
+							msg = "ไม่สามารถเชื่อมต่อระบบเครือข่ายได้!";
+						} else if (jqXHR.status == 404) {
+							msg = "ไม่พบหน้านี้ในระบบ! [404]";
+						} else if (jqXHR.status == 500) {
+							msg = "ไม่สามารถเชื่อมต่อ Server ได้! [404]";
+						} else if (exception === 'parsererror') {
+							msg = "การร้องขอ JSON ผิดพลาด!";
+						} else if (exception === 'timeout') {
+							msg = "TIMEOUT\nการเชื่อมต่อใช้เวลานานเกินไป!";
+						} else if (exception === 'abort') {
+							msg = "การร้องขอ Ajax ถูกยกเลิกแล้ว!";
+						} else {
+							msg = "ไม่พบข้อผิดพลาด<br>" + jqXHR.responseText;
+						}
+
+						clearData(msg);
+					},
+					success: function (result) {
+						if (result.status == 0) {
+							clearData(result.message);
+						} else {
+
+							var id = result.id,
+								user = result.username,
+								person_id = result.person_id,
+								prefix = result.prefix,
+								name = result.firstname + ' ' + result.lastname,
+								position = result.position,
+								phone = result.phone,
+								de_id = result.de_id,
+								lv_id = result.lv_id,
+								lv_name = result.lv_name,
+								de_name = result.de_name
+
+							// login(id, user, person_id, prefix, name, position, phone, de_id,
+							// 	lv_id);
+							// $.ajax({
+							// 	type: "POST",
+							// 	url: path + "/login/level",
+							// 	data: {
+							// 		id: id
+							// 	},
+							// 	dataType: "json",
+							// 	success: function (result) {
+							// 		if (result.status == 0) {
+							// 			$("#btnLogin").html("เข้าสู่ระบบ");
+							// 			$("#btnLogin").removeAttr("disabled");
+							// 			$("#loginAlert").show(0).html(
+							// 					"<div align='center' class='alert alert-danger' >" +
+							// 					result.message + "</div>").delay(2500)
+							// 				.fadeOut('fast');
+							// 			$("#frmLogin")[0].reset();
+							// 			$("#inputUsername").focus();
+
+							// 		} else {
+							// 			console.log('1')
+							// 			if (result.length == 1) {
+							// 				login(id, user, person_id, prefix, name,
+							// 					position, phone, de_id, lv_id)
+							// 			}
+							// } else {
+							// 	var depart = '';
+
+							// 	$('.item_office').html('');
+							// 	$('.item_office').select2({
+							// 		width: '100%'
+							// 	});
+
+							// 	for (key in result) {
+							// 		if (result[key].ward_id != 0) {
+							// 			depart = ' : ' + result[key]
+							// 				.ward_name;
+							// 		} else if (result[key].depart_id !=
+							// 			0 && result[key].ward_id == 0) {
+							// 			depart = ' : ' + result[key]
+							// 				.depart_name;
+							// 		} else if (result[key].faction_id !=
+							// 			0 && result[key].depart_id == 0 &&
+							// 			result[key].ward_id == 0) {
+							// 			depart = ' : ' + result[key]
+							// 				.faction_name;
+							// 		} else {
+							// 			depart = '';
+							// 		}
+
+							// 		$('.item_office').append(
+							// 			'<option value="' + result[
+							// 				key].level_id + ':' +
+							// 			result[key].duty_id + ':' +
+							// 			result[key].duty_name + ':' +
+							// 			result[key].faction_id + ':' +
+							// 			result[key].faction_name +
+							// 			':' + result[key].depart_id +
+							// 			':' + result[key]
+							// 			.depart_name + ':' + result[
+							// 				key].ward_id + ':' +
+							// 			result[key].ward_name + '">' +
+							// 			result[key].duty_name +
+							// 			depart + '</option>');
+							// 	}
+							// }
+							// 		}
+							// 	}
+							// });
+						}
+						login(id, user, person_id, prefix, name, position, phone, de_id,
+							lv_id, lv_name, de_name);
+					}
+				});
+			});
+
+			function login(id, user, person_id, prefix, name, position, phone, de_id, lv_id, lv_name, de_name) {
+				$.post(
+					'../login/login.php', {
+
+						'id': id,
+						'user': user,
+						'person_id': person_id,
+						'prefix': prefix,
+						'name': name,
+						'position': position,
+						'phone': phone,
+						'de_id': de_id,
+						'lv_id': lv_id,
+						'lv_name': lv_name,
+						'de_name': de_name,
+					},
+					function () {
+						if (lv_id == 1) {
+							location.href = '../views/admin/_index.php';
+						} else if (lv_id == 3) {
+							location.href = '../views/staff/staff.php';
+						} else if (lv_id == 2) {
+							location.href = '../views/users/users.php';
+						} else if (lv_id == 4) {
+							location.href = '../views/manager/manager.php';
+
+						} else {
+							$("#loginAlert").show(0).html(
+									"<div align='center' class='alert alert-danger'>ไม่มีสิทธ์เข้าถึงการใช้งาน</div>"
+								)
+								.delay(2500).fadeOut('fast');
+						}
+					}
+				);
+			}
+
+			function clearData(msg) {
+				$("#btnLogin").html("เข้าสู่ระบบ");
+				$("#btnLogin").removeAttr("disabled");
+				$("#loginAlert").show(0).html("<div align='center' class='alert alert-danger'>" + msg + "</div>")
+					.delay(2500).fadeOut('fast');
+				$("#frmLogin")[0].reset();
+				// $("#frmLevel")[0].reset();
+				$("#inputUsername").focus();
+			}
+
+		});
+	</script>
+</body>
+
+</html>

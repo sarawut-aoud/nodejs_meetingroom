@@ -2,7 +2,6 @@
 require_once "../../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 1) {
 } else {
-
     echo "<script>
             window.setTimeout(function() {
                 window.location = '../page-404.html';
