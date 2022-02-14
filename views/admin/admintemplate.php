@@ -15,6 +15,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
+
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
@@ -46,7 +47,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link">Dashboard</a>
+                    <a href="./_index.php" class="nav-link">หน้าหลัก</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link active">เพิ่มข้อมูล</a>
                 </li>
 
             </ul>
@@ -74,6 +78,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4>ข้อมูลส่วนตัว</h4>
+                                    </div>
+                                </div>
                                 <div class="card-body mb-0">
                                     <div class="form-group row">
                                         <div class="input-group">
@@ -267,7 +276,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-
+    <?php require_once './sidebar/footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -284,8 +293,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
-    <!-- Toastr -->
-    <script src="../plugins/toastr/toastr.min.js"></script>
+    <!-- Sweetalert2 -->
+    <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
 
@@ -330,26 +339,38 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         ro_detail: ro_detail,
                     },
                     success: function(result) {
-                        toastr.success(
-                            result.message, {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+
+                        })
                         $("#frmRoom")[0].reset();
                         $("#ro_name")[0].focus();
                         $("#ro_people")[0].reset();
                         $("#ro_detail")[0].reset();
                     },
-                    error: function(data) {
-                        var msg = '';
-                        toastr.warning(
-                            "ไม่สามารถบันทึกได้", {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
-                        clear_room(msg);
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
+
+                        }).then((result) => {
+                            msg = '';
+                            clear_room(msg);
+
+                        })
                     }
 
                 })
@@ -375,24 +396,37 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         de_id: de_id,
                     },
                     success: function(result) {
-                        toastr.success(
-                            result.message, {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+
+                        })
                         $("#frmTools")[0].reset();
                         $("#to_name")[0].focus();
                     },
-                    error: function(data) {
-                        var msg = '';
-                        toastr.warning(
-                            "ไม่สามารถบันทึกได้", {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
-                        clear_tools(msg);
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลอุปกรณ์ได้'
+
+                        }).then((result) => {
+                            msg = '';
+                            clear_tools(msg);
+
+                        })
+
                     }
                 });
 
@@ -407,30 +441,46 @@ if ($_SESSION['mt_lv_id'] == 1) {
             /// Style
             $('#btnStyle').click(function(e) {
                 e.preventDefault();
+                var st_name = $("#st_name").val();
                 $.ajax({
                     type: "POST",
-                    url: path + "/tools",
+                    url: path + "/style",
                     dataType: "json",
-                    data: $('#frmStyleRoom').serialize(),
+                    data: {
+                        st_name: st_name,
+                    },
                     success: function(result) {
-                        toastr.success(
-                            result.message, {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+
+                        })
                         $("#frmStyleRoom")[0].reset();
                         $("#st_name")[0].focus();
                     },
-                    error: function(data) {
-                        var msg = '';
-                        toastr.warning(
-                            "ไม่สามารถบันทึกได้", {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
-                        clear_Style(msg);
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลรูปแบบห้องได้'
+
+                        }).then((result) => {
+                            msg = '';
+                            clear_Style(msg);
+
+                        })
+
                     }
                 })
 

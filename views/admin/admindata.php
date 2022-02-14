@@ -46,10 +46,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./admintemplate.php" class="nav-link ">Dashboard</a>
+                    <a href="./_index.php" class="nav-link ">หน้าหลัก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">Data</a>
+                    <a class="nav-link active">ดูข้อมูล</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -74,6 +74,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
+                            <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4>ข้อมูลส่วนตัว</h4>
+                                    </div>
+                                </div>
                                 <div class="card-body mb-0">
                                     <div class="form-group row">
                                         <div class="input-group">
@@ -195,7 +200,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-
+    <?php require_once './sidebar/footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -296,34 +301,51 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     $(".btnRoomDels").click(function(e) {
                         e.preventDefault();
 
-                        var st_id = $(this).attr('id');
+                        var ro_id = $(this).attr('id');
                         var _row = $(this).parent();
-                        // console.log(to_id);
-                        $.ajax({
-                            type: "DELETE",
-                            url: path + "/rooms",
-                            data: {
-                                ro_id: ro_id
-                            },
-                            dataType: "json",
-                            success: function(result) {
-                                _row.closest('tr').remove();;
-                                toastr.success(
-                                    result.message, {
-                                        timeOut: 1000,
-                                        fadeOut: 1000,
+                        Swal.fire({
+                            title: 'คุณต้องการลบข้อมูลห้องประชุมใช่หรือไม่ ?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก",
+                        }).then((btn) => {
+                            if (btn.isConfirmed) {
+                                $.ajax({
+                                    dataType: 'JSON',
+                                    type: "DELETE",
+                                    url: path + "/rooms",
+                                    data: {
+                                        ro_id: ro_id
+                                    },
+                                    success: function(result) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: result.message,
+                                        })
+                                        _row.closest('tr').remove();
+                                    },
+                                    error: function(result) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                        })
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'ไม่สามารถลบขเอมูลได้'
+
+                                        }).then((result) => {
+                                            location.reload();
+
+                                        })
                                     }
-                                );
-                            },
-                            error: function(resq) {
-                                toastr.warning(
-                                    result.message, {
-                                        timeOut: 1000,
-                                        fadeOut: 1000,
-                                    }
-                                );
+                                });
                             }
-                        });
+                        })
                     });
 
                 }
@@ -349,11 +371,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     });
                     table += '</table>';
                     $("#tableStyle").html(table);
-
+                    
                     $(".btnStyleEdit").click(function(e) {
                         e.preventDefault();
                         var st_id = $(this).attr('id');
-
                         $.ajax({
                             type: "get",
                             dataType: "json",
@@ -374,43 +395,57 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
+
                     $(".btnStyleDels").click(function(e) {
                         e.preventDefault();
-
                         var st_id = $(this).attr('id');
-                        var _row = $(this).parent();
-                        // console.log(to_id);
-                        $.ajax({
-                            type: "DELETE",
-                            url: path + "/style",
-                            data: {
-                                st_id: st_id
-                            },
-                            dataType: "json",
-                            success: function(result) {
-                                _row.closest('tr').remove();;
-                                toastr.success(
-                                    result.message, {
-                                        timeOut: 1000,
-                                        fadeOut: 1000,
-                                    }
-                                );
-                            },
-                            error: function(resq) {
-                                toastr.warning(
-                                    result.message, {
-                                        timeOut: 1000,
-                                        fadeOut: 1000,
-                                    }
-                                );
-                            }
-                        });
-                    });
 
+                        Swal.fire({
+                            title: 'คุณต้องการลบข้อมูลรูปแบบห้องประชุมใช่หรือไม่ ?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก",
+                        }).then((btn) => {
+                            if (btn.isConfirmed) {
+                                $.ajax({
+                                    dataType: 'JSON',
+                                    type: "DELETE",
+                                    url: path + "/style",
+                                    data: {
+                                        st_id: st_id
+                                    },
+                                    success: function(result) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: result.message,
+                                        })
+                                        _row.closest('tr').remove();
+                                    },
+                                    error: function(result) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                        })
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'ไม่สามารถลบข้อมูลได้'
+
+                                        }).then((result) => {
+                                            location.reload();
+
+                                        })
+                                    }
+                                });
+                            }
+                        })
+                    });
                 }
             });
-
-
             //todo: table tools
             $.ajax({
                 type: 'get',
@@ -465,31 +500,49 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         var to_id = $(this).attr('id');
                         var _row = $(this).parent();
                         // console.log(to_id);
-                        $.ajax({
-                            type: "DELETE",
-                            url: path + "/tools",
-                            data: {
-                                to_id: to_id
-                            },
-                            dataType: "json",
-                            success: function(result) {
-                                _row.closest('tr').remove();;
-                                toastr.success(
-                                    result.message, {
-                                        timeOut: 1000,
-                                        fadeOut: 1000,
+                        Swal.fire({
+                            title: 'คุณต้องการลบข้อมูลรูปแบบห้องประชุมใช่หรือไม่ ?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก",
+                        }).then((btn) => {
+                            if (btn.isConfirmed) {
+                                $.ajax({
+                                    dataType: 'JSON',
+                                    type: "DELETE",
+                                    url: path + "/tools",
+                                    data: {
+                                        to_id: to_id
+                                    },
+                                    success: function(result) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: result.message,
+                                        })
+                                        _row.closest('tr').remove();
+                                    },
+                                    error: function(result) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 2000,
+                                        })
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'ไม่สามารถลบข้อมูลได้'
+
+                                        }).then((result) => {
+                                            location.reload();
+
+                                        })
                                     }
-                                );
-                            },
-                            error: function(resq) {
-                                toastr.warning(
-                                    result.message, {
-                                        timeOut: 1000,
-                                        fadeOut: 1000,
-                                    }
-                                );
+                                });
                             }
-                        });
+                        })
                     });
                 }
 
@@ -518,23 +571,35 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     dataType: "json",
                     success: function(result) {
                         $('#ModalRoom').modal('hide');
-                        toastr.success(
-                            result.message, '', {
-                                timeOut: 500,
-                                fadeOut: 500,
-                                onHidden: function() {
-                                    window.location.reload();
-                                }
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+                        }).then((result) => {
+                            location.reload();
+                        })
+
                     },
                     error: function(result) {
-                        toastr.warning(
-                            result.message, {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
+
+                        }).then((result) => {
+                            location.reload();
+                        })
+
                     }
                 });
             });
@@ -547,7 +612,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                 $.ajax({
                     type: "PUT",
-                    url: path + "/roomstyle",
+                    url: path + "/style",
                     data: {
                         st_id: st_id,
                         st_name: st_name,
@@ -555,23 +620,31 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     dataType: "json",
                     success: function(result) {
                         $('#ModalStyle').modal('hide');
-                        toastr.success(
-                            result.message, '', {
-                                timeOut: 500,
-                                fadeOut: 500,
-                                onHidden: function() {
-                                    window.location.reload();
-                                }
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+                        })
                     },
                     error: function(result) {
-                        toastr.warning(
-                            result.message, {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลรูปแบบห้องประชุมได้'
+
+                        }).then((result) => {
+                            location.reload();
+                        })
                     }
                 });
             });
@@ -594,23 +667,31 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     dataType: "json",
                     success: function(result) {
                         $('#ModalTool').modal('hide');
-                        toastr.success(
-                            result.message, '', {
-                                timeOut: 500,
-                                fadeOut: 500,
-                                onHidden: function() {
-                                    window.location.reload();
-                                }
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+                        })
                     },
                     error: function(result) {
-                        toastr.warning(
-                            result.message, {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                            }
-                        );
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลอุปกรณ์ได้'
+
+                        }).then((result) => {
+                            location.reload();
+                        })
                     }
                 });
             });

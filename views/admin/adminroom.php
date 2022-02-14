@@ -51,7 +51,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">ยื่นคำขอจองห้องประชุม</a>
+                    <a href="./_index.php" class="nav-link">หน้าหลัก</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link active">จองห้องประชุม</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -295,7 +298,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-
+    <?php require_once './sidebar/footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -319,8 +322,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- Toastr -->
-    <script src="../plugins/toastr/toastr.min.js"></script>
+    <!-- Sweetalert2 -->
+    <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->

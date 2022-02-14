@@ -31,8 +31,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<!-- Toastr -->
-<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+<!-- Sweetalert2 -->
+<link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- fullCalendar Style -->
 <link rel="stylesheet" href="../public/styles/calendar.css">
 <!-- Theme style -->
@@ -251,8 +251,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- Toastr -->
-    <script src="../plugins/toastr/toastr.min.js"></script>
+   <!-- Sweetalert2 -->
+<link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->

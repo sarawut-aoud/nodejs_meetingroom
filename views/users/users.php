@@ -31,8 +31,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<!-- Toastr -->
-<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+<!-- Sweetalert2 -->
+<link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- fullCalendar Style -->
 <link rel="stylesheet" href="../public/styles/calendar.css">
 <!-- Theme style -->
@@ -179,7 +179,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00"/>
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -189,7 +189,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00"/>
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" />
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -205,7 +205,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000"/>
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" />
                                                         <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -253,7 +253,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
                                                 <div class="col-md">
-                                                <!-- <input class="form-control " id="people" name="people"  /> -->
+                                                    <!-- <input class="form-control " id="people" name="people"  /> -->
                                                     <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="people" disabled="disabled" />
                                                     </select>
                                                 </div>
@@ -349,8 +349,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- Toastr -->
-    <script src="../plugins/toastr/toastr.min.js"></script>
+    <!-- Sweetalert2 -->
+    <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
@@ -404,7 +404,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 ro_id: ro_id,
                             },
                             success: function(result) {
-                                 var row = '';
+                                var row = '';
                                 for (ii in result) {
                                     if (result[ii].ro_id == ro_id) {
                                         var people = result[ii].ro_people;
@@ -416,7 +416,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 }
                                 $('#ro_people').val(people);
                                 $('#ro_detail').val(detail);
-                                 $('#people').html(row);
+                                $('#people').html(row);
                             }
                         });
                     });

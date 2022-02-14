@@ -78,7 +78,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">รูปแบบห้องประชุม :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_st_name" />
+                            <input type="text" class="form-control " id="modal_st_name" />
                             </div>
                         </div>
                     </div>
