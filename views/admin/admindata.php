@@ -29,6 +29,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">
@@ -74,7 +79,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
-                            <div class="card-header text-white card-head ">
+                                <div class="card-header text-white card-head ">
                                     <div class="text-center">
                                         <h4>ข้อมูลส่วนตัว</h4>
                                     </div>
@@ -122,7 +127,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 </div>
                                 <!-- form start -->
                                 <form method="" action="" id="">
-                                    <div class="card-body table-responsive p-0">
+                                    <div class="card-body table-responsive p-2">
                                         <!--//? tableRoom -->
                                         <div id="tableRooms">
                                         </div>
@@ -148,7 +153,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 </div>
                                 <!-- form start -->
                                 <form method="" action="" id="">
-                                    <div class="card-body table-responsive p-0">
+                                    <div class="card-body table-responsive p-2">
                                         <!--//? tableStyle -->
                                         <div id="tableStyle">
                                         </div>
@@ -177,7 +182,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 </div>
                                 <!-- form start -->
                                 <form method="" action="" id="">
-                                    <div class="card-body table-responsive p-0">
+                                    <div class="card-body table-responsive p-2">
                                         <!--//? tableTools -->
                                         <div id="tableTools">
                                         </div>
@@ -216,6 +221,19 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../plugins/jszip/jszip.min.js"></script>
+    <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
@@ -224,6 +242,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
     <script>
         $(document).ready(function() {
+
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
 
@@ -252,7 +271,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 url: path + "/rooms",
                 success: function(data) {
                     var i = 0;
-                    var table = '<table with="100%" class="table table-hover text-nowrap">' +
+                    var table = '<table id="example1"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         table += ('<tr>');
@@ -261,12 +280,40 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ro_people + '</td>');
                         table += ('<td>' + cell.ro_detail + '</td>');
-                        table += ('<td width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
+                        table += ('<td align="center" width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
                             ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
                     $("#tableRooms").html(table);
+
+                    $("#example1")
+                        .DataTable({
+                            responsive: true,
+                            lengthChange: false,
+                            "lengthMenu": [[9, 24,49, -1], [10, 25, 50, "All"]],
+                            autoWidth: false,
+                            buttons: {
+                                dom: {
+                                    button: {
+                                        className: "btn btn-light  ",
+                                    },
+                                },
+                                buttons: [{
+                                    extend: "colvis",
+                                    className: "btn btn-outline-success"
+                                }, ]
+                            },
+                            language: {
+                                buttons: {
+                                    colvis: "Change columns",
+                                },
+                            },
+                        })
+                        .buttons()
+                        .container()
+                        .appendTo("#example1_wrapper .col-md-6:eq(0)");
+
 
                     $(".btnRoomEdit").click(function(e) {
                         e.preventDefault();
@@ -358,20 +405,47 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 url: path + "/style",
                 success: function(data) {
                     var i = 0;
-                    var table = '<table with="100%"class="table table-hover text-nowrap">' +
+                    var table = '<table id="tb_Style" with="100%"class="table table-hover text-nowrap">' +
                         '<thead><tr><th>ID</th><th>รูปแบบห้อง</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         table += ('<tr>');
                         table += ('<td width="20%">' + cell.st_id + '</td>');
                         table += ('<td width="60%">' + cell.st_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td width="20%"><a id="' + cell.st_id + '" class="btn btn-info btnStyleEdit"><i class="fas fa-edit"></i></a> ' +
+                        table += ('<td align="center" width="20%"><a id="' + cell.st_id + '" class="btn btn-info btnStyleEdit"><i class="fas fa-edit"></i></a> ' +
                             '<a id="' + cell.st_id + '" class="btn btn-danger btnStyleDels "><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
                     $("#tableStyle").html(table);
-                    
+
+                    $("#tb_Style")
+                        .DataTable({
+                            responsive: true,
+                            lengthChange: false,
+                            "lengthMenu": [[9, 24,49, -1], [10, 25, 50, "All"]],
+                            autoWidth: false,
+                            buttons: {
+                                dom: {
+                                    button: {
+                                        className: "btn btn-light  ",
+                                    },
+                                },
+                                buttons: [{
+                                    extend: "colvis",
+                                    className: "btn btn-outline-success"
+                                }, ]
+                            },
+                            language: {
+                                buttons: {
+                                    colvis: "Change columns",
+                                },
+                            },
+                        })
+                        .buttons()
+                        .container()
+                        .appendTo("#tb_Style_wrapper .col-md-6:eq(0)");
+
                     $(".btnStyleEdit").click(function(e) {
                         e.preventDefault();
                         var st_id = $(this).attr('id');
@@ -453,7 +527,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 url: path + "/tools",
                 success: function(data) {
                     var i = 0;
-                    var table = '<table  with="100%" class="table table-hover text-nowrap">' +
+                    var table = '<table id="tb_Tools"  with="100%" class="table table-hover text-nowrap">' +
                         '<thead><tr><th>ID</th><th>อุปกรณ์</th><th>แผนกที่ดูแลอุปกรณ์</th><th></th></tr></thead>';
 
                     $.each(data, function(idx, cell) {
@@ -462,13 +536,39 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td width="30%">' + cell.to_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td width="30%">' + cell.de_name + '</td>');
-                        table += ('<td width="20%"><a id="' + cell.to_id + '"  class="btn btn-info btnToolEdit"><i class="fas fa-edit"></i></a>' +
+                        table += ('<td  align="center"width="20%"><a id="' + cell.to_id + '"  class="btn btn-info btnToolEdit"><i class="fas fa-edit"></i></a>' +
                             ' <a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"><i class="fa fa-trash-alt " ></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
                     $("#tableTools").html(table);
 
+                    $("#tb_Tools")
+                        .DataTable({
+                            responsive: true,
+                            lengthChange: false,
+                            "lengthMenu": [[9, 24,49, -1], [10, 25, 50, "All"]],
+                            autoWidth: false,
+                            buttons: {
+                                dom: {
+                                    button: {
+                                        className: "btn btn-light  ",
+                                    },
+                                },
+                                buttons: [{
+                                    extend: "colvis",
+                                    className: "btn btn-outline-success"
+                                }, ]
+                            },
+                            language: {
+                                buttons: {
+                                    colvis: "Change columns",
+                                },
+                            },
+                        })
+                        .buttons()
+                        .container()
+                        .appendTo("#tb_Tools_wrapper .col-md-6:eq(0)");
 
                     $(".btnToolEdit").click(function(e) {
                         e.preventDefault();

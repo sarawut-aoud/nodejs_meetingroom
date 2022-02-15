@@ -257,7 +257,9 @@ const depart = require("./routers/depart");
 const tools = require("./routers/tools");
 const rooms = require("./routers/room");
 const style = require("./routers/roomstyle");
+const event = require("./routers/events");
 
+app.use("/event",event);
 app.use("/depart", depart);
 app.use("/meeting", meeting);
 app.use("/tools", tools);

@@ -31,8 +31,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<!-- Toastr -->
-<link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+<!-- sweetalert2 -->
+<link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- fullCalendar Style -->
 <link rel="stylesheet" href="../public/styles/calendar.css">
 <!-- Theme style -->
@@ -142,7 +143,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="POST">
+                                <form method="POST" action="">
                                     <div class="card-body">
                                         <!--? Title Name -->
                                         <div class="form-group row">
@@ -160,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -170,7 +171,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -186,7 +187,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="dateStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -196,7 +197,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="dateEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -264,7 +265,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
+                                            <button type="submit" id="btnAproveRoom" name="btnAproveRoom" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -276,7 +277,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card ">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h4> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h5>
+                                        <h4> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -322,7 +323,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
     <!-- Sweetalert2 -->
-    <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
+    <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
@@ -352,7 +353,79 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script>
         $(document).ready(function() {
             var path = 'http://127.0.0.1:4500';
+            
+            $('#btnAproveRoom').click(function(e) {
+                e.preventDefault();
+                var ev_title = $('#title').val();
+                var ev_starttime = $('#timeStart').val();
+                var ev_endtime = $('#timeEnd').val();
+                var ev_startdate = $('#dateStart').val();
+                var ev_enddate = $('#dateEnd').val();
+                var ro_id = $('#ro_name').val();
+                var ev_people = $('#people').val();
+                var st_id = $('#style').val();
+                var id = <?php echo $_SESSION['mt_id']; ?>;
+                var level = <?php echo $_SESSION['mt_lv_id']; ?>;
 
+                $.ajax({
+                    type: "POST",
+                    url: path + "/event",
+                    dataType: "json",
+                    data: {
+                        ev_title: ev_title,
+                        ev_starttime: ev_starttime,
+                        ev_endtime: ev_endtime,
+                        ev_startdate: ev_startdate,
+                        ev_enddate: ev_enddate,
+                        ev_people: ev_people,
+                        st_id: st_id,
+                        ro_id: ro_id,
+                        id: id,
+                        level: level,
+
+                    },
+                    success: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+
+                        })
+                        // $("#frmTools")[0].reset();
+                        // $("#to_name")[0].focus();
+                    }
+                    // ,
+                    // error: function(result) {
+                    //     const Toast = Swal.mixin({
+                    //         toast: true,
+                    //         position: 'top-end',
+                    //         showConfirmButton: false,
+                    //         timer: 3000,
+                    //     })
+                    //     Toast.fire({
+                    //         icon: 'warning',
+                    //         title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                    //     })
+                    //     // .then((result) => {
+                    //     //     location.reload();
+
+                    //     // })
+
+                    // }
+                });
+
+                function clear_tools(msg) {
+                    $("#frmTools")[0].reset();
+                    $("#to_name")[0].focus();
+                }
+
+            });
 
             $.ajax({
                 type: 'GET',
@@ -415,6 +488,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     }
                 });
             });
+
+
         });
     </script>
 </body>

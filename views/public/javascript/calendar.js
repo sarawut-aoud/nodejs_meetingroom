@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
     //   doy: 4, // The week that contains Jan 4th is the first week of the year.
     // },
     buttonText: {
-      // prev: 'ก่อนหน้า',
-      // next: 'ถัดไป',
+      prev: 'ก่อนหน้า',
+      next: 'ถัดไป',
       prevYear: "ปีก่อนหน้า",
       nextYear: "ปีถัดไป",
       year: "ปี",
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // navLinks: true, // can click day/week names to navigate views
     editable: false,
     selectable: true,
-    // businessHours: true,
+    businessHours: true,
     dayMaxEvents: true, // allow "more" link when too many events
     events: [
       {
@@ -77,8 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
       {
         title: "Lunch",
         start: "2022-02-12T12:01:00",
-      },
-      
+      }
+      ,
     ],
   });
 
