@@ -1,6 +1,6 @@
 <?php
 require_once "../../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_lv_id'] == 2) {
 } else {
 
     echo "<script>
@@ -46,10 +46,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link ">หน้าหลัก</a>
+                    <a href="./_index.php" class="nav-link ">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link  active">รายการที่ต้องอนุมัติ</a>
+                    <a class="nav-link  active">รายการจอง</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -74,6 +74,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
+                                    </div>
+                                </div>
                                 <div class="card-body mb-0">
                                     <div class="form-group row">
                                         <div class="input-group">
@@ -112,7 +117,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>รายการที่ต้องอนุมัติ</h1>
+                                        <h1>รายการจอง</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
@@ -133,7 +138,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <!-- ./row form -->
 
 
-                    <?php require_once './modal.php'; ?>
 
                 </div><!-- /.container-fluid -->
             </div>

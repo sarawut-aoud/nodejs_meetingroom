@@ -1,6 +1,6 @@
 <?php
 require_once "../../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_lv_id'] == 4) {
 } else {
 
     echo "<script>
@@ -46,7 +46,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link ">หน้าหลัก</a>
+                    <a href="./_index.php" class="nav-link ">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link  active">รายการที่ต้องอนุมัติ</a>
@@ -133,7 +133,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <!-- ./row form -->
 
 
-                    <?php require_once './modal.php'; ?>
 
                 </div><!-- /.container-fluid -->
             </div>

@@ -19,25 +19,11 @@
                      </a>
                  </li>
                  <hr class="mt-3 mb-3" style="background-color:#fff">
-                 <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
-                 <li class="nav-item ">
-                     <a href="./admintemplate.php" class="nav-link active">
-                         <i class="nav-icon fas fa-plus-circle"></i>
-                         <p>เพิ่มข้อมูล</p>
-                     </a>
-                 </li>
-
-                 <li class="nav-item mt-3 ">
-                     <a href="./admindata.php" class="nav-link active">
-                         <i class="nav-icon  fa-solid fa-table"></i>
-                         <p>ดูข้อมูล</p>
-                     </a>
-                 </li>
-                 <hr class="mt-3 mb-3" style="background-color:#fff">
+                 
                  <li class="mb-2 nav-header text-white"> จองห้องประชุม</li>
 
                  <li class="nav-item ">
-                     <a href="./adminroom.php" class="nav-link active">
+                     <a href="./manager_room.php" class="nav-link active">
                          <i class="nav-icon  fa-solid fa-calendar-check"></i>
                          <p>จองห้องประชุม</p>
                      </a>
@@ -49,7 +35,7 @@
                      </a>
                  </li>
                  <li class="nav-item mt-3 ">
-                     <a href="./room_approve.php" class="nav-link active">
+                     <a href="./manager_approve.php" class="nav-link active">
                          <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
                          <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
                      </a>

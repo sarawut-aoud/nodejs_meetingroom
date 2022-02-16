@@ -218,16 +218,16 @@
 					function () {
 						if (lv_id == 1) {
 							location.href = '../views/admin/_index.php';
-						} else if (lv_id == 3) {
-							location.href = '../views/staff/staff.php';
 						} else if (lv_id == 2) {
-							location.href = '../views/users/users.php';
+							location.href = '../views/users/_index.php';
+						} else if (lv_id == 3) {
+							location.href = '../views/staff/_index.php';
 						} else if (lv_id == 4) {
-							location.href = '../views/manager/manager.php';
+							location.href = '../views/manager/_index.php';
 
 						} else {
 							$("#loginAlert").show(0).html(
-									"<div align='center' class='alert alert-danger'>ไม่มีสิทธ์เข้าถึงการใช้งาน</div>"
+									"<div align='center' class='alert alert-danger'>"+ result.message+"</div>"
 								)
 								.delay(2500).fadeOut('fast');
 						}

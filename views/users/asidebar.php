@@ -12,54 +12,35 @@
          <nav class=" position-relative">
 
              <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                 <li class="nav-item ">
+                 <li class="nav-item mt-3">
                      <a href="./_index.php" class="nav-link active">
-                         <i class="nav-icon fas fa-home"></i>
+                         <i class="nav-icon fa-solid fa-home "></i>
                          <p>หน้าแรก</p>
                      </a>
                  </li>
-                 <hr class="mt-3 mb-3" style="background-color:#fff">
-                 <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
-                 <li class="nav-item ">
-                     <a href="./admintemplate.php" class="nav-link active">
-                         <i class="nav-icon fas fa-plus-circle"></i>
-                         <p>เพิ่มข้อมูล</p>
-                     </a>
-                 </li>
-
-                 <li class="nav-item mt-3 ">
-                     <a href="./admindata.php" class="nav-link active">
-                         <i class="nav-icon  fa-solid fa-table"></i>
-                         <p>ดูข้อมูล</p>
-                     </a>
-                 </li>
-                 <hr class="mt-3 mb-3" style="background-color:#fff">
+                 <hr class="mt-4 mb-4" style="background-color:#fff">
                  <li class="mb-2 nav-header text-white"> จองห้องประชุม</li>
 
                  <li class="nav-item ">
-                     <a href="./adminroom.php" class="nav-link active">
+                     <a href="./users_room.php" class="nav-link active">
                          <i class="nav-icon  fa-solid fa-calendar-check"></i>
                          <p>จองห้องประชุม</p>
                      </a>
                  </li>
                  <li class="nav-item mt-3 ">
-                     <a href="./room_reserve.php" class="nav-link active">
+                     <a href="./user_reserve.php" class="nav-link active">
                          <i class="nav-icon fa-regular fa-list-radio"></i>
                          <p>รายการจอง</p>
                      </a>
                  </li>
+                 <hr class="mt-4 mb-4" style="background-color:#fff">
                  <li class="nav-item mt-3 ">
-                     <a href="./room_approve.php" class="nav-link active">
-                         <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                         <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
+                     <a href="./user_status.php" class="nav-link active">
+                         <i class="nav-icon fa-regular fa-bells"></i>
+                         <p>แจ้งเตือน </p> <span class="badge badge-danger">1</span>
                      </a>
                  </li>
-                 <li class="nav-item mt-3 ">
-                     <a href="./room_reserve_all.php" class="nav-link active">
-                         <i class="nav-icon fas fa-ballot"></i>
-                         <p>รายการจองทั้งหมด</p>
-                     </a>
-                 </li>
+
                  <hr class="mt-4 mb-4" style="background-color:#fff">
                  <!-- 
             <li class="mb-2 nav-header text-white"> ข้อมูล</li>

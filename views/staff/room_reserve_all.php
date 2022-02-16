@@ -1,8 +1,7 @@
 <?php
 require_once "../../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_lv_id'] == 3) {
 } else {
-
     echo "<script>
             window.setTimeout(function() {
                 window.location = '../page-404.html';
@@ -112,7 +111,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>รายการที่ต้องอนุมัติ</h1>
+                                        <h1>รายการจองทั้งหมด</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
@@ -133,7 +132,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <!-- ./row form -->
 
 
-                    <?php require_once './modal.php'; ?>
 
                 </div><!-- /.container-fluid -->
             </div>
@@ -143,8 +141,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </div>
     <!-- ./wrapper -->
 
-    <?php require_once './footer.php'; ?>
-
+    <?php require_once './sidebar/footer.php'; ?>
+    
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -295,64 +293,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
 
-            //  Btn Modal //
-            $(".btnSaveRoom").click(function(e) {
-                e.preventDefault();
-
-                var ro_id = $("#modal_ro_id").val();
-                var ro_name = $("#modal_ro_name").val();
-                var ro_people = $("#modal_ro_people").val();
-                var ro_color = $("#modal_ro_color").val();
-                var ro_detail = $("#modal_ro_detail").val();
-
-                $.ajax({
-                    type: "PUT",
-                    url: path + "/rooms",
-                    data: {
-                        ro_id: ro_id,
-                        ro_name: ro_name,
-                        ro_people: ro_people,
-                        ro_color: ro_color,
-                        ro_detail: ro_detail
-
-                    },
-                    dataType: "json",
-                    success: function(result) {
-                        $('#ModalRoom').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
-
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    }
-                });
-            });
-
-            /// End Btn Modal
+            
         });
     </script>
 
