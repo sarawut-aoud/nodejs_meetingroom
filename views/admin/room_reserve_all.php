@@ -48,7 +48,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a href="./_index.php" class="nav-link ">หน้าหลัก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link  active">รายการที่ต้องอนุมัติ</a>
+                    <a class="nav-link  active">รายการจองทั้งหมด</a>
                 </li>
             </ul>
             <!-- Right navbar links -->

@@ -64,7 +64,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         </nav>
         <!-- /.navbar -->
         <!-- Sidebar -->
-        <?php require_once './asidebar.php'; ?>
+        <?php require_once './sidebar/asidebar.php'; ?>
         <!-- Sidebar -->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
@@ -143,7 +143,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </div>
     <!-- ./wrapper -->
 
-    <?php require_once './footer.php'; ?>
+    <?php require_once './sidebar/footer.php'; ?>
 
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>

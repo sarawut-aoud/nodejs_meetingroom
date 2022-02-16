@@ -1,6 +1,6 @@
 <?php
 require_once "../../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 2) {
+if ($_SESSION['mt_lv_id'] ==1) {
 } else {
 
     echo "<script>
@@ -178,7 +178,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-    <?php require_once './sideber/footer.php'; ?>
+    <?php require_once './sidebar/footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

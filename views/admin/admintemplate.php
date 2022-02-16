@@ -47,7 +47,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link">หน้าหลัก</a>
+                    <a href="./_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link active">เพิ่มข้อมูล</a>

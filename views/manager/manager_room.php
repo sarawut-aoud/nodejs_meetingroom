@@ -2,6 +2,7 @@
 require_once "../../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 4) {
 } else {
+
     echo "<script>
             window.setTimeout(function() {
                 window.location = '../page-404.html';
@@ -30,7 +31,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<!-- Sweetalert2 -->
+<!-- sweetalert2 -->
+<link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- fullCalendar Style -->
 <link rel="stylesheet" href="../public/styles/calendar.css">
@@ -50,7 +52,10 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">Home</a>
+                    <a href="./_index.php" class="nav-link">หน้าแรก</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link active">จองห้องประชุม</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -65,49 +70,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
         </nav>
         <!-- /.navbar -->
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-light-white  elevation-4 " style="background-color: #008622;">
-
-            <!-- Brand Logo -->
-            <a href="" class="brand-link">
-                <img src="../public/images/logo.png" alt="Logo" class="w-75" style="opacity: .8">
-                <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar mt-3 ">
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-4 position-relative">
-
-                    <ul class="nav nav-pills nav-sidebar  flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item mt-3">
-                            <a href="./staff.php" class="nav-link active">
-                                <i class="nav-icon fas fa-columns"></i>
-                                <p>ยื่นคำขอจองห้องประชุม
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-3 ">
-                            <a href="./request.php" class="nav-link active">
-                                <i class="nav-icon fas fa-bell-exclamation"></i>
-                                <p>สถานะการจอง</p>
-                            </a>
-                        </li>
-
-                        <hr class="mt-5 mb-5" style="background-color:#fff">
-                        <li class="nav-item ">
-                            <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
-                                <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
-                            </a>
-                        </li>
-                    </ul>
-
-                </nav>
-            </div>
-
-            <!-- /.sidebar -->
-        </aside>
+        <!-- Sidebar -->
+        <?php require_once './asidebar.php'; ?>
+        <!-- Sidebar -->
 
 
         <!-- Content Wrapper. Contains page content -->
@@ -115,9 +80,14 @@ if ($_SESSION['mt_lv_id'] == 4) {
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-8 col-md-12 ">
+                    <div class="row ">
+                        <div class="col-xl-6 col-md-12 ">
                             <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
+                                    </div>
+                                </div>
                                 <div class="card-body mb-0">
                                     <div class="form-group row">
                                         <div class="input-group">
@@ -149,6 +119,19 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             </div>
 
                         </div>
+                        <div class="col-xl-6 col-md-12 ">
+                            <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class="fa-solid fa-fill-drip"></i> สีประจำห้องประชุม</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body mb-0">
+                                    <div id="showcolor">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-xl-6 col-md-12 col-sm-12">
@@ -156,11 +139,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>เลือกห้องประชุม เพื่อทำการจอง</h1>
+                                        <h4>เลือกห้องประชุม เพื่อทำการจอง</h4>
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="POST">
+                                <form method="POST" action="">
                                     <div class="card-body">
                                         <!--? Title Name -->
                                         <div class="form-group row">
@@ -178,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -188,7 +171,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -204,7 +187,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="dateStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -214,7 +197,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                                 <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="dateEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -229,27 +212,19 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ห้องประชุม : </label>
                                                 <div class="col-md-10">
-                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="room" name="room" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="ro_name" />
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-2 col-form-label">จำนวนคน : </label>
-                                                <div class="col-md">
-                                                    <input class="form-control " id="people" name="people" readonly />
-                                                </div>
-                                                <label class="col-md-2 col-form-label">บริเวณ : </label>
-                                                <div class="col-md">
-                                                    <input class="form-control " id="detail" name="detail" readonly />
-                                                </div>
-                                            </div>
-                                        </div>
                                         <!--? /. Room  -->
-                                        <!--? Style  -->
+                                        <!--? Style /  ผู้เข้าร่วม-->
                                         <div class="form-group row">
                                             <div class="input-group">
+                                                <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
+                                                <div class="col-md">
+                                                    <input type="number" class="form-control " id="people" name="people" />
+                                                </div>
                                                 <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                                                 <div class="col-md">
                                                     <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="style" name="style" />
@@ -257,13 +232,40 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--?/. Style  -->
+                                        <!--? Style /  ผู้เข้าร่วม-->
+                                        <!--? Tool -->
+                                        <div class="form-group row ">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">อุปกรณ์ :</label>
+                                                <div class="col-md-4  d-flex ">
+                                                    <div class="icheck-success ">
+                                                        <input type="radio" id="checktool1" name="r1" checked>
+                                                        <label for="checktool1"> ไม่ต้องการ
+                                                        </label>
+
+                                                    </div>
+                                                    <div class="icheck-success ml-3">
+                                                        <input type="radio" id="checktool" name="r1">
+                                                        <label for="checktool"> ต้องการ
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" multiple="multiple" id="tool" data-placeholder="-เพิ่มเติม-" disabled />
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!--? Tool -->
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2">ลงทะเบียนการจอง</button>
+                                            <button type="submit" id="btnAproveRoom" name="btnAproveRoom" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -272,7 +274,12 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         </div>
                         <!-- ./col -->
                         <div class="col-xl-6 col-md-12 ">
-                            <div class="card card-primary">
+                            <div class="card ">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                    </div>
+                                </div>
                                 <div class="card-body p-0">
                                     <!-- THE CALENDAR -->
                                     <div id="calendar"></div>
@@ -291,7 +298,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-
+    <?php require_once './footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -316,7 +323,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
     <!-- Sweetalert2 -->
-    <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
+    <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
@@ -343,129 +350,148 @@ if ($_SESSION['mt_lv_id'] == 4) {
             });
         });
     </script>
-    <!-- <script>
-        $(document).ready(function () {
-            var uid = '4';
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "https://sarawut-pcru.github.io/Data/tbl_managers.json",
-                data: {
-                    uid: uid,
-                },
-                success: function (result) {
-                    var user = '';
-                    for (ii in result) {
-                        user += result[ii].uid;
-                        if (result[ii].uid === uid) {
-                            var prefix = result[ii].prefix;
-                            var fname = result[ii].fname;
-                            var lname = result[ii].lname;
-                            var de_id = result[ii].de_id;
-                            var level = result[ii].level;
-                            if (level == 1) {
-                                var lv = 'หัวหน้าแผนก';
-                            } else if (level == 2) {
-                                var lv = 'ธุรการ';
-                            } else {
-                                var lv = 'ผู้ปฏิบัติงาน';
-                            }
-                            break;
-                        }
+    <script>
+        $(document).ready(function() {
+            var path = 'http://127.0.0.1:4500';
+            
+            $('#btnAproveRoom').click(function(e) {
+                e.preventDefault();
+                var ev_title = $('#title').val();
+                var ev_starttime = $('#timeStart').val();
+                var ev_endtime = $('#timeEnd').val();
+                var ev_startdate = $('#dateStart').val();
+                var ev_enddate = $('#dateEnd').val();
+                var ro_id = $('#ro_name').val();
+                var ev_people = $('#people').val();
+                var st_id = $('#style').val();
+                var id = <?php echo $_SESSION['mt_id']; ?>;
+                var level = <?php echo $_SESSION['mt_lv_id']; ?>;
 
-                        $.ajax({
-                            type: "get",
-                            dataType: "json",
-                            url: "https://sarawut-pcru.github.io/Data/tbl_departments.json",
-                            data: {
-                                de_id: de_id,
-                            },
-                            success: function (data) {
-                                var depart = '';
-                                for (kk in data) {
-                                    // depart += data[kk].de_id;
-                                    if (data[kk].de_id === de_id) {
-                                        var de_name = data[kk].de_name;
-                                        break;
-                                    }
-                                }
-                                $('#de_name').val(de_name);
-                            }
-                        });
+                $.ajax({
+                    type: "POST",
+                    url: path + "/event",
+                    dataType: "json",
+                    data: {
+                        ev_title: ev_title,
+                        ev_starttime: ev_starttime,
+                        ev_endtime: ev_endtime,
+                        ev_startdate: ev_startdate,
+                        ev_enddate: ev_enddate,
+                        ev_people: ev_people,
+                        st_id: st_id,
+                        ro_id: ro_id,
+                        id: id,
+                        level: level,
 
+                    },
+                    success: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+
+                        })
+                        // $("#frmTools")[0].reset();
+                        // $("#to_name")[0].focus();
                     }
+                    // ,
+                    // error: function(result) {
+                    //     const Toast = Swal.mixin({
+                    //         toast: true,
+                    //         position: 'top-end',
+                    //         showConfirmButton: false,
+                    //         timer: 3000,
+                    //     })
+                    //     Toast.fire({
+                    //         icon: 'warning',
+                    //         title: 'ไม่สามารถบันทึกข้อมูลได้'
 
-                    $('#prefix').val(prefix);
-                    $('#fname').val(fname);
-                    $('#lname').val(lname);
-                    $('#level').val(lv);
+                    //     })
+                    //     // .then((result) => {
+                    //     //     location.reload();
 
+                    //     // })
+
+                    // }
+                });
+
+                function clear_tools(msg) {
+                    $("#frmTools")[0].reset();
+                    $("#to_name")[0].focus();
                 }
 
             });
 
-
-
-
-
             $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "https://sarawut-pcru.github.io/Data/tbl_styles.json",
-                success: function (result) {
-                    //  const json = JSON.stringify(response);
-                    var user = '<option value="" selected disabled>-รูปแบบห้อง-</option>';
-                    for (ii in result) {
-                        user += '<option value="' + result[ii].st_id + '">' + result[ii]
-                            .st_name +
-                            '</option>';
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
                     }
-                    // a simple user
-                    $('#style').html(user);
-
+                    $('#ro_name').html(data);
                 }
             });
             $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "https://sarawut-pcru.github.io/Data/tbl_rooms.json",
-                success: function (result) {
-                    var user = '<option value="" selected disabled>-ห้องประชุม-</option>';
-                    for (ii in result) {
-                        user += '<option value="' + result[ii].ro_id + '">' + result[ii]
-                            .ro_name +
-                            '</option>';
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(result) {
+                    var data = data = '<div class="form-group row">' +
+                        '<div class="input-group">';
+                    for (i in result) {
+                        data += '<label class="col-md-3 col-form-label">' + result[i].ro_name + '  :</label> <div class="col-md-3 ">'
+                        data += "<div class='rounded h-75 w-100'  style =\"background-color : " + result[i].ro_color + "\"></div>";
+                        data += '</div>';
                     }
-                    $('#room').html(user);
-
+                    $('#showcolor').html(data);
                 }
             });
-            $("#room").change(function () {
-                var ro_id = $(this).val();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/style",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
+                    }
+                    $('#style').html(data);
+                }
+            });
+
+            $("#checktool").change(function() {
+
+                $("#checktool1").change(function() {
+                    $('#tool').prop('disabled', true);
+                    $('#tool').val(null).trigger("change");
+                });
+
+                $('#tool').prop('disabled', false);
                 $.ajax({
                     type: "get",
                     dataType: "json",
-                    url: "https://sarawut-pcru.github.io/Data/tbl_rooms.json",
-                    data: {
-                        ro_id: ro_id,
-                    },
-                    success: function (result) {
-                        var user = '';
-                        for (ii in result) {
-                            user += result[ii].ro_id;
-                            if (result[ii].ro_id === ro_id) {
-                                var people = result[ii].ro_people;
-                                var detail = result[ii].ro_detail;
-                            }
+                    url: path + "/tools",
+                    success: function(result) {
+                        var data = '';
+                        for (i in result) {
+                            data += '<option value="' + result[i].to_id + '" > ' + result[i].to_name + '</option>';
                         }
-                        $('#people').val(people);
-                        $('#detail').val(detail);
+                        $('#tool').html(data);
                     }
                 });
             });
 
+
         });
-    </script> -->
+    </script>
 </body>
 
 </html>

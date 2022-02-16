@@ -112,7 +112,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>รายการที่ต้องอนุมัติ</h1>
+                                        <h1>รายการจอง</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->

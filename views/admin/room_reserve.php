@@ -46,10 +46,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link ">Dashboard</a>
+                    <a href="./_index.php" class="nav-link ">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link  active">รายการที่ต้องอนุมัติ</a>
+                    <a class="nav-link  active">รายการจอง</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
