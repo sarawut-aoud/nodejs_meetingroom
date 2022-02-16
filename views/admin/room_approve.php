@@ -27,6 +27,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- colorpic -->
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- Theme style -->
@@ -160,6 +165,19 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../plugins/jszip/jszip.min.js"></script>
+    <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
@@ -185,7 +203,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             '</option>';
                     }
                     $('#de_id').html(depart);
-                    $('#modal_de_id').html(depart);
+
                 }
             });
 
@@ -295,64 +313,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
 
-            //  Btn Modal //
-            $(".btnSaveRoom").click(function(e) {
-                e.preventDefault();
 
-                var ro_id = $("#modal_ro_id").val();
-                var ro_name = $("#modal_ro_name").val();
-                var ro_people = $("#modal_ro_people").val();
-                var ro_color = $("#modal_ro_color").val();
-                var ro_detail = $("#modal_ro_detail").val();
-
-                $.ajax({
-                    type: "PUT",
-                    url: path + "/rooms",
-                    data: {
-                        ro_id: ro_id,
-                        ro_name: ro_name,
-                        ro_people: ro_people,
-                        ro_color: ro_color,
-                        ro_detail: ro_detail
-
-                    },
-                    dataType: "json",
-                    success: function(result) {
-                        $('#ModalRoom').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
-
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    }
-                });
-            });
-
-            /// End Btn Modal
         });
     </script>
 

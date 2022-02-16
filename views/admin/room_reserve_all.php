@@ -26,6 +26,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- colorpic -->
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- Theme style -->
@@ -143,7 +148,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <!-- ./wrapper -->
 
     <?php require_once './sidebar/footer.php'; ?>
-    
+
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -159,6 +164,19 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../plugins/jszip/jszip.min.js"></script>
+    <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
@@ -184,7 +202,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             '</option>';
                     }
                     $('#de_id').html(depart);
-                    $('#modal_de_id').html(depart);
+
                 }
             });
 
@@ -211,147 +229,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     table += '</table>';
                     $("#tableRooms").html(table);
 
-                    $(".btnRoomEdit").click(function(e) {
-                        e.preventDefault();
-                        var ro_id = $(this).attr('id');
-
-                        $.ajax({
-                            type: "get",
-                            dataType: "json",
-                            url: path + "/rooms",
-                            data: {
-                                ro_id: ro_id,
-                            },
-                            success: function(result) {
-                                for (ii in result) {
-                                    if (result[ii].ro_id == ro_id) {
-                                        var ro_name = result[ii].ro_name;
-                                        var ro_people = result[ii].ro_people;
-                                        var ro_color = result[ii].ro_color;
-                                        var ro_detail = result[ii].ro_detail;
-                                        break;
-                                    }
-                                }
-                                $("#ModalRoom").modal("show");
-                                $("#modal_ro_id").val(ro_id);
-                                $("#modal_ro_name").val(ro_name);
-                                $("#modal_ro_people").val(ro_people);
-                                $("#modal_ro_color").val(ro_color);
-                                $("#modal_ro_detail").val(ro_detail);
-                            }
-                        });
-                    });
-                    $(".btnRoomDels").click(function(e) {
-                        e.preventDefault();
-
-                        var ro_id = $(this).attr('id');
-                        var _row = $(this).parent();
-                        Swal.fire({
-                            title: 'คุณต้องการลบข้อมูลห้องประชุมใช่หรือไม่ ?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: "ยืนยัน",
-                            cancelButtonText: "ยกเลิก",
-                        }).then((btn) => {
-                            if (btn.isConfirmed) {
-                                $.ajax({
-                                    dataType: 'JSON',
-                                    type: "DELETE",
-                                    url: path + "/rooms",
-                                    data: {
-                                        ro_id: ro_id
-                                    },
-                                    success: function(result) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: result.message,
-                                        })
-                                        _row.closest('tr').remove();
-                                    },
-                                    error: function(result) {
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                        })
-                                        Toast.fire({
-                                            icon: 'warning',
-                                            title: 'ไม่สามารถลบขเอมูลได้'
-
-                                        }).then((result) => {
-                                            location.reload();
-
-                                        })
-                                    }
-                                });
-                            }
-                        })
-                    });
-
                 }
             });
 
-            //  Btn Modal //
-            $(".btnSaveRoom").click(function(e) {
-                e.preventDefault();
 
-                var ro_id = $("#modal_ro_id").val();
-                var ro_name = $("#modal_ro_name").val();
-                var ro_people = $("#modal_ro_people").val();
-                var ro_color = $("#modal_ro_color").val();
-                var ro_detail = $("#modal_ro_detail").val();
-
-                $.ajax({
-                    type: "PUT",
-                    url: path + "/rooms",
-                    data: {
-                        ro_id: ro_id,
-                        ro_name: ro_name,
-                        ro_people: ro_people,
-                        ro_color: ro_color,
-                        ro_detail: ro_detail
-
-                    },
-                    dataType: "json",
-                    success: function(result) {
-                        $('#ModalRoom').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
-
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    }
-                });
-            });
-
-            /// End Btn Modal
         });
     </script>
 
