@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
 
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,51 +15,83 @@ const router = express.Router();
 
 //?  SELECT Data
 router.get("/", async (req, res) => {
-  const q = req.body;
+  let uid = req.body.id;
   // var level = req.body.level;
   // var id = req.body.id;
-  const sql =
-    "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-    "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,u.id " +
-    "FROM tbl_event as ev INNER JOIN tbl_rooms as ro ON (ev.ro_id = ro.ro_id) " +
-    "INNER JOIN tbl_user as u ON (ev.id=u.id) " +
-    "WHERE u.id = ?  GROUP BY ev.event_id ";
+  console.log(uid);
+  if (!uid) {
+    con.query(
+      "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+        "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,u.id " +
+        "FROM tbl_event as ev INNER JOIN tbl_rooms as ro ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN tbl_user as u ON (ev.id=u.id) " +
+        "WHERE u.id = ? ","" + uid + "" + " GROUP BY ev.event_id",
+      (error, results, fields) => {
+        if (error) throw error;
+        console.log(error);
+        console.log(results);
 
-  const params = [q.id];
-  con.query(sql, params, (err, rows) => {
-    if (err) {
-      console.log(err);
-      return res.json({
-        status: "0",
-        message: "เกิดข้อผิดพลาด",
-      });
-    } else {
-     
-      if (rows.length > 0) {
-        //  console.log(rows);
-      
-        return res.json({
-          ev_id: rows[0].ev_id,
-          event_id: rows[0].event_id,
-          ev_title: rows[0].ev_title,
-          ev_startdate: rows[0].ev_startdate,
-          ev_enddate: rows[0].ev_enddate,
-          ev_status: rows[0].ev_status,
-          ev_starttime: rows[0].ev_starttime,
-          ev_endtime: rows[0].ev_endtime,
-          ev_people: rows[0].ev_people,
-          ev_createdate: rows[0].ev_createdate,
-          ro_name: rows[0].ro_name,
-        });
-      } else {
-        return res.json({
-          status: "0",
-          message:
-            "ไม่มีรายการจองห้องประชุม",
-        });
+        res.json(results);
       }
-    }
-  });
+    );
+  } else {
+    return res.json({
+      status: "0",
+      message: "error",
+    });
+  }
+
+  // "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+  // "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,u.id " +
+  // "FROM tbl_event as ev INNER JOIN tbl_rooms as ro ON (ev.ro_id = ro.ro_id) " +
+  // "INNER JOIN tbl_user as u ON (ev.id=u.id) " +
+  // "WHERE u.id = ' ? ' GROUP BY ev.event_id";
+
+  // con.query('SELECT o.ac_id,o.ac_name ,p.typeac_id ,o.ac_pubilc ,p.typeac_name '
+  // +' FROM hr_academic AS o '
+  // +' INNER JOIN hr_typeacademic as p ON o.typeac_id=p.typeac_id where o.ac_id = ? ' ,'' + ac_id + ''
+  // +' ORDER BY o.ac_name ' , (error, results, fields) => {
+  // if (error) throw error;
+
+  // res.json(results);
+  // });
+  //  const params = [q.id];
+  // con.query(sql, params ,(error, rows) => {
+  //   if (error) {
+  //     console.log(error);
+  //     return res.json({
+  //       status: "0",
+  //       message: "เกิดข้อผิดพลาด",
+  //     });
+  //   } else {
+
+  //     if (rows.length < 0) {
+  //        console.log(rows);
+
+  //       return res.json({
+  //         ev_id: rows[0].ev_id,
+  //         event_id: rows[0].event_id,
+  //         ev_title: rows[0].ev_title,
+  //         ev_startdate: rows[0].ev_startdate,
+  //         ev_enddate: rows[0].ev_enddate,
+  //         ev_status: rows[0].ev_status,
+  //         ev_starttime: rows[0].ev_starttime,
+  //         ev_endtime: rows[0].ev_endtime,
+  //         ev_people: rows[0].ev_people,
+  //         ev_createdate: rows[0].ev_createdate,
+  //         ro_id:rows[0].ro_id,
+  //         ro_name: rows[0].ro_name,
+  //         id:rows[0].id,
+  //       });
+  //     } else {
+  //       return res.json({
+  //         status: "0",
+  //         message:
+  //           "ไม่มีรายการจองห้องประชุม",
+  //       });
+  //     }
+  //   }
+  // });
 });
 
 //? Insert Data

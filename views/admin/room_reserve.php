@@ -121,7 +121,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="" action="" id="">
+                                <form method="" action="" id="frmTable">
+                                 
                                     <div class="card-body table-responsive p-2">
                                         <!--//? tableRoom -->
                                         <div id="tableRooms">
@@ -148,11 +149,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </div>
     <!-- ./wrapper -->
 
-<<<<<<< HEAD
-    <?php require_once './sidebar/footer.php'; ?>
-=======
     <?php require_once '../footer.php'; ?>
->>>>>>> ad7d61be526a290b926d3c628911446679392df3
 
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
@@ -182,10 +179,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<<<<<<< HEAD
-
-=======
->>>>>>> ad7d61be526a290b926d3c628911446679392df3
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
@@ -197,21 +190,23 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('.select2').select2();
 
 
-            var path = 'http://127.0.0.1:4500'
+            var path = 'http://127.0.0.1:4500',
+                id = "<?php echo $_SESSION['mt_id']; ?>",
+                level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
-            var id = '<?php echo $_SESSION['mt_id']; ?>'
-            var level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
+            // var id = $('#mtID').val();
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
-                data:{
-                    id:id,
+                //  data: $("#frmTable").serialize(),
+                data: {
+                    id: id,
                 },
                 url: path + "/event",
                 success: function(data) {
-                    var i = 0;
+                    // var i = 0;
                     var table = '<table id="Room_reserve" with="100%" class="table table-hover text-nowrap">' +
                         '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
@@ -219,10 +214,12 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td>' + cell.ev_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td>' + cell.ev_startdate +' เวลา '+cell.ev_starttime+ '</td>');
-                        table += ('<td>' + cell.ev_startend +' เวลา '+cell.ev_endtime+ '</td>');
-                        // table += ('<td width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                        //     ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('<td>' + cell.ev_title + '</td>');
+                        table += ('<td>' + cell.ev_startdate + ' เวลา ' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_startend + ' เวลา ' + cell.ev_endtime + '</td>');
+                        table += ('<td>' + cell.ev_status + '</td>');
+                        table += ('<td align="center" width="20%"><a id="' + cell.ev_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="' + cell.ev_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -258,88 +255,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .container()
                         .appendTo("#Room_reserve_wrapper .col-md-6:eq(0)");
 
-                    // $(".btnRoomEdit").click(function(e) {
-                    //     e.preventDefault();
-                    //     var ro_id = $(this).attr('id');
-
-                    //     $.ajax({
-                    //         type: "get",
-                    //         dataType: "json",
-                    //         url: path + "/rooms",
-                    //         data: {
-                    //             ro_id: ro_id,
-                    //         },
-                    //         success: function(result) {
-                    //             for (ii in result) {
-                    //                 if (result[ii].ro_id == ro_id) {
-                    //                     var ro_name = result[ii].ro_name;
-                    //                     var ro_people = result[ii].ro_people;
-                    //                     var ro_color = result[ii].ro_color;
-                    //                     var ro_detail = result[ii].ro_detail;
-                    //                     break;
-                    //                 }
-                    //             }
-                    //             $("#ModalRoom").modal("show");
-                    //             $("#modal_ro_id").val(ro_id);
-                    //             $("#modal_ro_name").val(ro_name);
-                    //             $("#modal_ro_people").val(ro_people);
-                    //             $("#modal_ro_color").val(ro_color);
-                    //             $("#modal_ro_detail").val(ro_detail);
-                    //         }
-                    //     });
-                    // });
-                    // $(".btnRoomDels").click(function(e) {
-                    //     e.preventDefault();
-
-                    //     var ro_id = $(this).attr('id');
-                    //     var _row = $(this).parent();
-                    //     Swal.fire({
-                    //         title: 'คุณต้องการลบข้อมูลห้องประชุมใช่หรือไม่ ?',
-                    //         icon: 'warning',
-                    //         showCancelButton: true,
-                    //         confirmButtonColor: '#3085d6',
-                    //         cancelButtonColor: '#d33',
-                    //         confirmButtonText: "ยืนยัน",
-                    //         cancelButtonText: "ยกเลิก",
-                    //     }).then((btn) => {
-                    //         if (btn.isConfirmed) {
-                    //             $.ajax({
-                    //                 dataType: 'JSON',
-                    //                 type: "DELETE",
-                    //                 url: path + "/rooms",
-                    //                 data: {
-                    //                     ro_id: ro_id
-                    //                 },
-                    //                 success: function(result) {
-                    //                     Swal.fire({
-                    //                         icon: 'success',
-                    //                         title: result.message,
-                    //                     })
-                    //                     _row.closest('tr').remove();
-                    //                 },
-                    //                 error: function(result) {
-                    //                     const Toast = Swal.mixin({
-                    //                         toast: true,
-                    //                         position: 'top-end',
-                    //                         showConfirmButton: false,
-                    //                         timer: 3000,
-                    //                     })
-                    //                     Toast.fire({
-                    //                         icon: 'warning',
-                    //                         title: 'ไม่สามารถลบขเอมูลได้'
-
-                    //                     }).then((result) => {
-                    //                         location.reload();
-
-                    //                     })
-                    //                 }
-                    //             });
-                    //         }
-                    //     })
-                    // });
-
                 }
             });
+
+
 
             //  Btn Modal //
             $(".btnSaveRoom").click(function(e) {
