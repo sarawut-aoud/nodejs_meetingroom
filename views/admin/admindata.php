@@ -69,7 +69,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         </nav>
         <!-- /.navbar -->
         <!-- Sidebar -->
-        <?php require_once './sidebar/asidebar.php'; ?>
+        <?php require_once '../sidebar.php'; ?>
         <!-- Sidebar -->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
@@ -205,7 +205,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-    <?php require_once './sidebar/footer.php'; ?>
+    <?php require_once '../footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -271,7 +271,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 url: path + "/rooms",
                 success: function(data) {
                     var i = 0;
-                    var table = '<table id="example1"with="100%" class="table table-hover text-nowrap ">' +
+                    var table = '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         table += ('<tr>');
@@ -287,7 +287,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     table += '</table>';
                     $("#tableRooms").html(table);
 
-                    $("#example1")
+                    $("#tbRoom")
                         .DataTable({
                             responsive: true,
                             lengthChange: false,
@@ -312,7 +312,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         })
                         .buttons()
                         .container()
-                        .appendTo("#example1_wrapper .col-md-6:eq(0)");
+                        .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
 
                     $(".btnRoomEdit").click(function(e) {

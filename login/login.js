@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
     } else {
       //console.log(rows[0].person_id.toString('utf8'));
       if (rows.length > 0) {
-        console.log(rows);
+        // console.log(rows);
         // fn.dataLog('LOGIN', '', sql, q.inputUsername);
         //console.log(ip.getClientIp(req));
         return res.json({

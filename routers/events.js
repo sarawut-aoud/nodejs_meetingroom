@@ -6,19 +6,61 @@ const bodyParser = require("body-parser");
 
 const cors = require("cors");
 const con = require("../config/config");
-const { format } = require("path");
+
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const sql = express.Router();
+const router = express.Router();
 
 //?  SELECT Data
-sql.get("/", async (req, res) => {
-  var ro_id = req.body.ro_id;
-  var ev_startdate = req.body.ev_startdate;
-  var ev_enddate = req.body.ev_enddate;
+router.get("/", async (req, res) => {
+  const q = req.body;
+  // var level = req.body.level;
+  // var id = req.body.id;
+  const sql =
+    "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+    "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,u.id " +
+    "FROM tbl_event as ev INNER JOIN tbl_rooms as ro ON (ev.ro_id = ro.ro_id) " +
+    "INNER JOIN tbl_user as u ON (ev.id=u.id) " +
+    "WHERE u.id = ?  GROUP BY ev.event_id ";
+
+  const params = [q.id];
+  con.query(sql, params, (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res.json({
+        status: "0",
+        message: "เกิดข้อผิดพลาด",
+      });
+    } else {
+     
+      if (rows.length > 0) {
+        //  console.log(rows);
+      
+        return res.json({
+          ev_id: rows[0].ev_id,
+          event_id: rows[0].event_id,
+          ev_title: rows[0].ev_title,
+          ev_startdate: rows[0].ev_startdate,
+          ev_enddate: rows[0].ev_enddate,
+          ev_status: rows[0].ev_status,
+          ev_starttime: rows[0].ev_starttime,
+          ev_endtime: rows[0].ev_endtime,
+          ev_people: rows[0].ev_people,
+          ev_createdate: rows[0].ev_createdate,
+          ro_name: rows[0].ro_name,
+        });
+      } else {
+        return res.json({
+          status: "0",
+          message:
+            "ไม่มีรายการจองห้องประชุม",
+        });
+      }
+    }
+  });
 });
 
 //? Insert Data
@@ -28,7 +70,7 @@ sql.get("/", async (req, res) => {
 
 //   next();
 // });
-sql.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
   // console.log(req.currentUser);
   var level = req.body.level; // ระดับสิทธิการเข้าถึง
   var ev_title = req.body.ev_title; //todo : req -> Form .... data -> body
@@ -217,72 +259,72 @@ sql.post("/", async (req, res) => {
   // }
 });
 
-//? Update Data
-sql.put("/", async (req, res) => {
-  let ac_name = req.body.ac_name;
-  let ac_pubilc = req.body.ac_pubilc;
-  let typeac_id = req.body.typeac_id;
-  let ac_id = req.body.ac_id;
-  // validation
+// //? Update Data
+// sql.put("/", async (req, res) => {
+//   let ac_name = req.body.ac_name;
+//   let ac_pubilc = req.body.ac_pubilc;
+//   let typeac_id = req.body.typeac_id;
+//   let ac_id = req.body.ac_id;
+//   // validation
 
-  if (!ac_name || !ac_pubilc || !typeac_id) {
-    return res
-      .status(400)
-      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-  } else {
-    con.query(
-      "UPDATE hr_academic SET ac_name = ?, ac_pubilc = ? , typeac_id = ? WHERE ac_id = ?",
-      [ac_name, ac_pubilc, typeac_id, ac_id],
-      (error, results, fields) => {
-        if (error) throw error;
-        return res.send({
-          error: false,
-          status: "0",
-          message: "แก้ไขข้อมูลแล้ว",
-        });
-      }
-    );
-  }
-});
+//   if (!ac_name || !ac_pubilc || !typeac_id) {
+//     return res
+//       .status(400)
+//       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+//   } else {
+//     con.query(
+//       "UPDATE hr_academic SET ac_name = ?, ac_pubilc = ? , typeac_id = ? WHERE ac_id = ?",
+//       [ac_name, ac_pubilc, typeac_id, ac_id],
+//       (error, results, fields) => {
+//         if (error) throw error;
+//         return res.send({
+//           error: false,
+//           status: "0",
+//           message: "แก้ไขข้อมูลแล้ว",
+//         });
+//       }
+//     );
+//   }
+// });
 
-//? delete data
-sql.delete("/", async (req, res) => {
-  let ac_id = req.body.id;
+// //? delete data
+// sql.delete("/", async (req, res) => {
+//   let ac_id = req.body.id;
 
-  if (!ac_id) {
-    return res
-      .status(400)
-      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-  } else {
-    con.query(
-      "SELECT count(ac_id) as ac_id   FROM hr_personal   WHERE ac_id = ?",
-      [ac_id],
-      (error, results, fields) => {
-        if (error) throw error;
+//   if (!ac_id) {
+//     return res
+//       .status(400)
+//       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+//   } else {
+//     con.query(
+//       "SELECT count(ac_id) as ac_id   FROM hr_personal   WHERE ac_id = ?",
+//       [ac_id],
+//       (error, results, fields) => {
+//         if (error) throw error;
 
-        if (results[0].ac_id > 0) {
-          return res.send({
-            error: false,
-            status: "1",
-            message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
-          });
-        } else {
-          con.query(
-            "DELETE FROM hr_academic WHERE ac_id = ?",
-            [ac_id],
-            (error, results, fields) => {
-              if (error) throw error;
-              return res.send({
-                error: false,
-                status: "0",
-                message: "ลบข้อมูลแล้ว",
-              });
-            }
-          );
-        }
-      }
-    );
-  }
-});
+//         if (results[0].ac_id > 0) {
+//           return res.send({
+//             error: false,
+//             status: "1",
+//             message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
+//           });
+//         } else {
+//           con.query(
+//             "DELETE FROM hr_academic WHERE ac_id = ?",
+//             [ac_id],
+//             (error, results, fields) => {
+//               if (error) throw error;
+//               return res.send({
+//                 error: false,
+//                 status: "0",
+//                 message: "ลบข้อมูลแล้ว",
+//               });
+//             }
+//           );
+//         }
+//       }
+//     );
+//   }
+// });
 
-module.exports = sql;
+module.exports = router;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2022 at 07:50 AM
+-- Generation Time: Feb 17, 2022 at 07:20 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -11,15 +11,69 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `db_meeting`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_acces`
+--
+
+CREATE TABLE `tbl_acces` (
+  `ev_id` int(11) NOT NULL,
+  `to_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_acces`
+--
+
+INSERT INTO `tbl_acces` (`ev_id`, `to_id`) VALUES
+(1, 1),
+(1, 3),
+(1, 4),
+(2, 1),
+(2, 3),
+(2, 4),
+(3, 1),
+(3, 5),
+(3, 7),
+(4, 1),
+(4, 2),
+(5, 1),
+(5, 2),
+(6, 1),
+(6, 2),
+(6, 3),
+(6, 4),
+(6, 5),
+(6, 6),
+(6, 7),
+(6, 8),
+(6, 10),
+(6, 11),
+(6, 16),
+(7, 1),
+(7, 2),
+(7, 3),
+(7, 4),
+(7, 5),
+(7, 6),
+(7, 7),
+(7, 8),
+(7, 10),
+(7, 11),
+(7, 16),
+(8, 1),
+(8, 3),
+(8, 4),
+(8, 5),
+(9, 4),
+(9, 5),
+(10, 4),
+(10, 5);
 
 -- --------------------------------------------------------
 
@@ -38,14 +92,13 @@ CREATE TABLE `tbl_department` (
 --
 
 INSERT INTO `tbl_department` (`de_id`, `de_name`, `de_phone`) VALUES
+(7, 'งานเวชระเบียน', '9658'),
+(4, 'งานวัสดุการแพทย์', '1502'),
+(3, 'งานคลังพัสดุ', '1705'),
 (1, 'ศูนย์คอมพิวเตอร์', '4589'),
 (2, 'งานธุรการ', '5967'),
-(3, 'งานคลังพัสดุ', '1705'),
-(4, 'งานวัสดุการแพทย์', '1502'),
-(7, 'งานเวชระเบียน', '9658'),
 (8, 'งานโสตทัศนศีกษา', '4563'),
 (9, 'งานประชาสัมพันธ์', '8745');
-
 
 -- --------------------------------------------------------
 
@@ -72,6 +125,22 @@ CREATE TABLE `tbl_event` (
   `id` int(10) NOT NULL COMMENT 'id_user',
   `ro_id` int(5) NOT NULL COMMENT 'id_rooms'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_event`
+--
+
+INSERT INTO `tbl_event` (`ev_id`, `ev_title`, `ev_startdate`, `ev_enddate`, `ev_starttime`, `ev_endtime`, `ev_color`, `ev_createdate`, `ev_people`, `ev_status`, `ev_url`, `ev_bgcolor`, `ev_repeatday`, `event_id`, `st_id`, `id`, `ro_id`) VALUES
+(1, 'พัฒนาคุณภาพงาน', '2021-04-01', '2021-04-02', '09:00:00', '12:00:00', '#FFFFFF', '2021-04-08 09:21:37', 50, 3, '', '#FFFFFF', '', '640400001', 1, 3, 2),
+(2, 'พัฒนาคุณภาพงาน', '2021-04-02', '2021-04-02', '09:00:00', '12:00:00', '#FFFFFF', '2021-04-08 09:21:37', 50, 3, '', '#FFFFFF', '', '640400001', 1, 3, 2),
+(3, 'โครงการอบรมป้องกันโควิด-19', '2021-04-05', '2021-04-05', '08:30:00', '15:30:00', '#FFFFFF', '2021-04-08 09:23:54', 200, 3, '', '#FFFFFF', '', '640400002', 3, 3, 3),
+(4, 'โครงการอบรมและพัฒนางาน', '2021-03-31', '2021-04-01', '13:00:00', '16:00:00', '#FFFFFF', '2021-04-08 09:30:23', 20, 4, '', '#FFFFFF', '', '640400003', 3, 1, 4),
+(5, 'โครงการอบรมและพัฒนางาน', '2021-04-01', '2021-04-01', '13:00:00', '16:00:00', '#FFFFFF', '2021-04-08 09:30:23', 20, 4, '', '#FFFFFF', '', '640400003', 3, 1, 4),
+(6, 'โครงการอบรมประจำปี พ.ศ. 2564', '2021-04-06', '2021-04-07', '10:00:00', '12:00:00', '#FFFFFF', '2021-04-08 09:36:06', 5, 3, '', '#FFFFFF', '', '640400004', 3, 2, 6),
+(7, 'โครงการอบรมประจำปี พ.ศ. 2564', '2021-04-07', '2021-04-07', '10:00:00', '12:00:00', '#FFFFFF', '2021-04-08 09:36:06', 5, 3, '', '#FFFFFF', '', '640400004', 3, 2, 6),
+(8, 'ประชุมวางแผนงาน', '2021-04-20', '2021-04-20', '09:00:00', '12:00:00', '#FFFFFF', '2021-04-08 09:37:02', 15, 1, '', '#FFFFFF', '', '640400005', 3, 4, 6),
+(9, 'ประชุมด้านการแพทย์', '2021-04-05', '2021-04-06', '13:00:00', '16:00:00', '#FFFFFF', '2021-04-08 09:38:12', 25, 3, '', '#FFFFFF', '', '640400006', 1, 6, 2),
+(10, 'ประชุมด้านการแพทย์', '2021-04-06', '2021-04-06', '13:00:00', '16:00:00', '#FFFFFF', '2021-04-08 09:38:12', 25, 3, '', '#FFFFFF', '', '640400006', 1, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -113,12 +182,12 @@ CREATE TABLE `tbl_rooms` (
 --
 
 INSERT INTO `tbl_rooms` (`ro_id`, `ro_name`, `ro_people`, `ro_color`, `ro_detail`) VALUES
-(1, 'ห้องประชุมแสงจันทร์', 500, '#5ccbf0', 'ตึกผู้ป่วยนอก ชั้น 4'),
-(2, 'ห้องประชุมแสงตะวัน', 50, '#68da49', 'ห้องประชุม0'),
+(6, 'ห้องรับรอง', 15, '#fe9fe5', 'ห้องประชุม4'),
+(5, 'ห้องประชุมดอกปีบ', 150, '#ff6b6b', 'ห้องประชุม3'),
 (3, 'ห้องประชุมแสงดาว', 200, '#d84dff', 'ห้องประชุม1'),
 (4, 'ห้องประชุม 2', 20, '#ece869', 'ห้องประชุม2'),
-(5, 'ห้องประชุมดอกปีบ', 150, '#ff6b6b', 'ห้องประชุม3'),
-(6, 'ห้องรับรอง', 15, '#fe9fe5', 'ห้องประชุม4');
+(1, 'ห้องประชุมแสงจันทร์', 350, '#5ccbf0', 'ตึกผู้ป่วยนอก ชั้น 4'),
+(2, 'ห้องประชุมแสงตะวัน', 50, '#68da49', 'ห้องประชุม0');
 
 -- --------------------------------------------------------
 
@@ -162,11 +231,12 @@ CREATE TABLE `tbl_style` (
 --
 
 INSERT INTO `tbl_style` (`st_id`, `st_name`) VALUES
+(3, 'ชั้นเรียน'),
 (1, 'ประชุมทั่วไป'),
 (2, 'ตัวยู เต็มห้อง'),
-(3, 'ชั้นเรียน'),
 (4, 'ประชุมสภา'),
-(5, 'อื่นๆ');
+(5, 'อื่นๆ'),
+(6, 'อื่นๆ 2');
 
 -- --------------------------------------------------------
 
@@ -185,19 +255,19 @@ CREATE TABLE `tbl_tools` (
 --
 
 INSERT INTO `tbl_tools` (`to_id`, `to_name`, `de_id`) VALUES
+(13, 'แจ้งทางวิทยุ', 9),
+(12, 'แจ้งนักข่าวภายนอก', 9),
+(11, 'ประกาศเสียงตามสาย', 9),
+(8, 'ป้ายเวที/ป้ายชื่อวิทยากร', 7),
+(16, 'ทีมต้อนรับนะ', 4),
+(10, 'ติดบอร์ดหน้าลิฟท์', 9),
+(7, 'ทีมลงทะเบียน', 8),
+(6, 'เครื่องฉายภาพ 3 มิติ', 7),
+(5, 'วีดีทัศน์ TV/VCD', 8),
+(4, 'น้ำดื่ม/อาหารว่าง', 2),
 (1, 'เครื่องขยายเสียงพร้อมไมค์', 8),
 (2, 'Projector', 8),
 (3, 'Computer', 8),
-(4, 'น้ำดื่ม/อาหารว่าง', 2),
-(5, 'วีดีทัศน์ TV/VCD', 8),
-(6, 'เครื่องฉายภาพ 3 มิติ', 7),
-(7, 'ทีมลงทะเบียน', 8),
-(8, 'ป้ายเวที/ป้ายชื่อวิทยากร', 7),
-(16, 'ทีมต้อนรับ', 4),
-(10, 'ติดบอร์ดหน้าลิฟท์', 9),
-(11, 'ประกาศเสียงตามสาย', 9),
-(12, 'แจ้งนักข่าวภายนอก', 9),
-(13, 'แจ้งทางวิทยุ', 9),
 (14, 'แจ้งทางหนังสือพิมพ์', 9),
 (15, 'แจ้งทางโทรทัศน์', 9);
 
@@ -211,7 +281,7 @@ CREATE TABLE `tbl_user` (
   `id` int(10) NOT NULL,
   `username` varchar(50) NOT NULL COMMENT 'username',
   `password` varchar(20) NOT NULL COMMENT 'password',
-  `person_id` varchar(20) NOT NULL COMMENT 'National_ID',
+  `person_id` varchar(13) NOT NULL COMMENT 'National_id',
   `prefix` varchar(10) NOT NULL COMMENT 'คำนำหน้า',
   `firstname` varchar(250) NOT NULL,
   `lastname` varchar(250) NOT NULL,
@@ -225,15 +295,21 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id`, `username`, `password`,`person_id`, `prefix`, `firstname`, `lastname`, `position`, `phone`, `de_id`, `lv_id`) VALUES
-(1, 'sarawut', '123456', '1160400251822','นาย', 'ศราวุธ', 'อวดกล้า', 'Developer', '0979284920', 1, 1),
-(2, 'mrfapman', '123456', '1160400251822','นาย', 'สหัสวรรษ', 'แซ่เตีย', 'Developer', '', 2, 1),
-(3, 'basejako', '123456', '1160400251822','นาย', 'เอกสิทธิ์', 'ต๊ะสิงห์', 'depveloper', '', 4, 1),
-(4, 'tanakorn', '123456', '1160400251822','นาย', 'ธนกร', 'เจริญรุกข์', 'Developer', '', 3, 1);
+INSERT INTO `tbl_user` (`id`, `username`, `password`, `person_id`, `prefix`, `firstname`, `lastname`, `position`, `phone`, `de_id`, `lv_id`) VALUES
+(1, 'sarawut', '123456', '1160400251822', 'นาย', 'ศราวุธ', 'อวดกล้า', 'Developer', '0979284920', 1, 1),
+(2, 'user', '123456', '', 'นาย', 'สหัสวรรษ', 'แซ่เตีย', 'Developer', '', 2, 2),
+(3, 'basejako', '123456', '', 'นาย', 'เอกสิทธิ์', 'ต๊ะสิงห์', 'depv', '', 4, 3),
+(4, 'tanakorn', '123456', '', 'นาย', 'ธนกร', 'เจริญรุกข์', 'Developer', '', 3, 4);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tbl_acces`
+--
+ALTER TABLE `tbl_acces`
+  ADD PRIMARY KEY (`ev_id`,`to_id`);
 
 --
 -- Indexes for table `tbl_department`
@@ -252,6 +328,18 @@ ALTER TABLE `tbl_level`
 --
 ALTER TABLE `tbl_rooms`
   ADD PRIMARY KEY (`ro_id`);
+
+--
+-- Indexes for table `tbl_setdevice`
+--
+ALTER TABLE `tbl_setdevice`
+  ADD PRIMARY KEY (`dv_id`);
+
+--
+-- Indexes for table `tbl_seting`
+--
+ALTER TABLE `tbl_seting`
+  ADD PRIMARY KEY (`set_id`);
 
 --
 -- Indexes for table `tbl_style`
@@ -291,19 +379,31 @@ ALTER TABLE `tbl_level`
 -- AUTO_INCREMENT for table `tbl_rooms`
 --
 ALTER TABLE `tbl_rooms`
-  MODIFY `ro_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ro_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_setdevice`
+--
+ALTER TABLE `tbl_setdevice`
+  MODIFY `dv_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_seting`
+--
+ALTER TABLE `tbl_seting`
+  MODIFY `set_id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_style`
 --
 ALTER TABLE `tbl_style`
-  MODIFY `st_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `st_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_tools`
 --
 ALTER TABLE `tbl_tools`
-  MODIFY `to_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `to_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
@@ -311,7 +411,3 @@ ALTER TABLE `tbl_tools`
 ALTER TABLE `tbl_user`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
