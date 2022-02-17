@@ -29,6 +29,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">
@@ -64,7 +69,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         </nav>
         <!-- /.navbar -->
         <!-- Sidebar -->
-        <?php require_once './sidebar/asidebar.php'; ?>
+        <?php require_once '../sidebar.php'; ?>
         <!-- Sidebar -->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
@@ -117,7 +122,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 </div>
                                 <!-- form start -->
                                 <form method="" action="" id="">
-                                    <div class="card-body table-responsive p-0">
+                                    <div class="card-body table-responsive p-2">
                                         <!--//? tableRoom -->
                                         <div id="tableRooms">
                                         </div>
@@ -143,8 +148,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </div>
     <!-- ./wrapper -->
 
-    <?php require_once './sidebar/footer.php'; ?>
-    
+    <?php require_once '../footer.php'; ?>
+
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -160,7 +165,19 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
-
+    <!-- DataTables  & Plugins -->
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../plugins/jszip/jszip.min.js"></script>
+    <script src="../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
@@ -196,7 +213,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 url: path + "/rooms",
                 success: function(data) {
                     var i = 0;
-                    var table = '<table with="100%" class="table table-hover text-nowrap">' +
+                    var table = '<table id="Room_reserve" with="100%" class="table table-hover text-nowrap">' +
                         '<thead><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         table += ('<tr>');
@@ -211,6 +228,36 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     });
                     table += '</table>';
                     $("#tableRooms").html(table);
+
+                    $("#Room_reserve")
+                        .DataTable({
+                            responsive: true,
+                            lengthChange: false,
+                            "lengthMenu": [
+                                [9, 24, 49, -1],
+                                [10, 25, 50, "All"]
+                            ],
+                            autoWidth: false,
+                            buttons: {
+                                dom: {
+                                    button: {
+                                        className: "btn btn-light  ",
+                                    },
+                                },
+                                buttons: [{
+                                    extend: "colvis",
+                                    className: "btn btn-outline-success"
+                                }, ]
+                            },
+                            language: {
+                                buttons: {
+                                    colvis: "Change columns",
+                                },
+                            },
+                        })
+                        .buttons()
+                        .container()
+                        .appendTo("#Room_reserve_wrapper .col-md-6:eq(0)");
 
                     $(".btnRoomEdit").click(function(e) {
                         e.preventDefault();

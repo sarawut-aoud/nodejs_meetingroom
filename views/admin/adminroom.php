@@ -71,7 +71,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         <!-- /.navbar -->
 
         <!-- Sidebar -->
-        <?php require_once './sidebar/asidebar.php'; ?>
+        <?php require_once '../sidebar.php'; ?>
         <!-- Sidebar -->
 
 

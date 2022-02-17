@@ -71,7 +71,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
         <!-- /.navbar -->
 
         <!-- Sidebar -->
-        <?php require_once './asidebar.php'; ?>
+        <?php require_once '../sidebar.php'; ?>
         <!-- Sidebar -->
 
 
@@ -298,7 +298,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-    <?php require_once './footer.php'; ?>
+    <?php require_once '../footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
