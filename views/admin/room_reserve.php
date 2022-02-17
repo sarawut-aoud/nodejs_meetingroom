@@ -190,40 +190,31 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             var path = 'http://127.0.0.1:4500'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/depart",
-                success: function(result) {
-                    var depart = '<option value="" selected disabled>-- เลือกแผนกที่ดูแล --</option>';
-                    for (ii in result) {
-                        depart += '<option value="' + result[ii].de_id + '">' + result[ii]
-                            .de_name +
-                            '</option>';
-                    }
-                    $('#de_id').html(depart);
-                    $('#modal_de_id').html(depart);
-                }
-            });
+
+            var id = '<?php echo $_SESSION['mt_id']; ?>'
+            var level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
-                url: path + "/rooms",
+                data:{
+                    id:id,
+                },
+                url: path + "/event",
                 success: function(data) {
                     var i = 0;
                     var table = '<table id="Room_reserve" with="100%" class="table table-hover text-nowrap">' +
-                        '<thead><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
+                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         table += ('<tr>');
-                        table += ('<td>' + cell.ro_id + '</td>');
+                        table += ('<td>' + cell.ev_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td>' + cell.ro_people + '</td>');
-                        table += ('<td>' + cell.ro_detail + '</td>');
-                        table += ('<td width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                            ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('<td>' + cell.ev_startdate +' เวลา '+cell.ev_starttime+ '</td>');
+                        table += ('<td>' + cell.ev_startend +' เวลา '+cell.ev_endtime+ '</td>');
+                        // table += ('<td width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
+                        //     ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -259,85 +250,85 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .container()
                         .appendTo("#Room_reserve_wrapper .col-md-6:eq(0)");
 
-                    $(".btnRoomEdit").click(function(e) {
-                        e.preventDefault();
-                        var ro_id = $(this).attr('id');
+                    // $(".btnRoomEdit").click(function(e) {
+                    //     e.preventDefault();
+                    //     var ro_id = $(this).attr('id');
 
-                        $.ajax({
-                            type: "get",
-                            dataType: "json",
-                            url: path + "/rooms",
-                            data: {
-                                ro_id: ro_id,
-                            },
-                            success: function(result) {
-                                for (ii in result) {
-                                    if (result[ii].ro_id == ro_id) {
-                                        var ro_name = result[ii].ro_name;
-                                        var ro_people = result[ii].ro_people;
-                                        var ro_color = result[ii].ro_color;
-                                        var ro_detail = result[ii].ro_detail;
-                                        break;
-                                    }
-                                }
-                                $("#ModalRoom").modal("show");
-                                $("#modal_ro_id").val(ro_id);
-                                $("#modal_ro_name").val(ro_name);
-                                $("#modal_ro_people").val(ro_people);
-                                $("#modal_ro_color").val(ro_color);
-                                $("#modal_ro_detail").val(ro_detail);
-                            }
-                        });
-                    });
-                    $(".btnRoomDels").click(function(e) {
-                        e.preventDefault();
+                    //     $.ajax({
+                    //         type: "get",
+                    //         dataType: "json",
+                    //         url: path + "/rooms",
+                    //         data: {
+                    //             ro_id: ro_id,
+                    //         },
+                    //         success: function(result) {
+                    //             for (ii in result) {
+                    //                 if (result[ii].ro_id == ro_id) {
+                    //                     var ro_name = result[ii].ro_name;
+                    //                     var ro_people = result[ii].ro_people;
+                    //                     var ro_color = result[ii].ro_color;
+                    //                     var ro_detail = result[ii].ro_detail;
+                    //                     break;
+                    //                 }
+                    //             }
+                    //             $("#ModalRoom").modal("show");
+                    //             $("#modal_ro_id").val(ro_id);
+                    //             $("#modal_ro_name").val(ro_name);
+                    //             $("#modal_ro_people").val(ro_people);
+                    //             $("#modal_ro_color").val(ro_color);
+                    //             $("#modal_ro_detail").val(ro_detail);
+                    //         }
+                    //     });
+                    // });
+                    // $(".btnRoomDels").click(function(e) {
+                    //     e.preventDefault();
 
-                        var ro_id = $(this).attr('id');
-                        var _row = $(this).parent();
-                        Swal.fire({
-                            title: 'คุณต้องการลบข้อมูลห้องประชุมใช่หรือไม่ ?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: "ยืนยัน",
-                            cancelButtonText: "ยกเลิก",
-                        }).then((btn) => {
-                            if (btn.isConfirmed) {
-                                $.ajax({
-                                    dataType: 'JSON',
-                                    type: "DELETE",
-                                    url: path + "/rooms",
-                                    data: {
-                                        ro_id: ro_id
-                                    },
-                                    success: function(result) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: result.message,
-                                        })
-                                        _row.closest('tr').remove();
-                                    },
-                                    error: function(result) {
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                        })
-                                        Toast.fire({
-                                            icon: 'warning',
-                                            title: 'ไม่สามารถลบขเอมูลได้'
+                    //     var ro_id = $(this).attr('id');
+                    //     var _row = $(this).parent();
+                    //     Swal.fire({
+                    //         title: 'คุณต้องการลบข้อมูลห้องประชุมใช่หรือไม่ ?',
+                    //         icon: 'warning',
+                    //         showCancelButton: true,
+                    //         confirmButtonColor: '#3085d6',
+                    //         cancelButtonColor: '#d33',
+                    //         confirmButtonText: "ยืนยัน",
+                    //         cancelButtonText: "ยกเลิก",
+                    //     }).then((btn) => {
+                    //         if (btn.isConfirmed) {
+                    //             $.ajax({
+                    //                 dataType: 'JSON',
+                    //                 type: "DELETE",
+                    //                 url: path + "/rooms",
+                    //                 data: {
+                    //                     ro_id: ro_id
+                    //                 },
+                    //                 success: function(result) {
+                    //                     Swal.fire({
+                    //                         icon: 'success',
+                    //                         title: result.message,
+                    //                     })
+                    //                     _row.closest('tr').remove();
+                    //                 },
+                    //                 error: function(result) {
+                    //                     const Toast = Swal.mixin({
+                    //                         toast: true,
+                    //                         position: 'top-end',
+                    //                         showConfirmButton: false,
+                    //                         timer: 3000,
+                    //                     })
+                    //                     Toast.fire({
+                    //                         icon: 'warning',
+                    //                         title: 'ไม่สามารถลบขเอมูลได้'
 
-                                        }).then((result) => {
-                                            location.reload();
+                    //                     }).then((result) => {
+                    //                         location.reload();
 
-                                        })
-                                    }
-                                });
-                            }
-                        })
-                    });
+                    //                     })
+                    //                 }
+                    //             });
+                    //         }
+                    //     })
+                    // });
 
                 }
             });

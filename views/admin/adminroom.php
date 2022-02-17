@@ -298,7 +298,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-    <?php require_once './sidebar/footer.php'; ?>
+    <?php require_once '../footer.php'; ?>
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
