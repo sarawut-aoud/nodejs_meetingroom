@@ -15,22 +15,19 @@ const router = express.Router();
 
 //?  SELECT Data
 router.get("/", async (req, res) => {
-  let uid = req.body.id;
-  // var level = req.body.level;
   // var id = req.body.id;
-  console.log(uid);
-  if (!uid) {
+
+  if (!id || !level) {
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-        "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,u.id " +
-        "FROM tbl_event as ev INNER JOIN tbl_rooms as ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN tbl_user as u ON (ev.id=u.id) " +
-        "WHERE u.id = ? ","" + uid + "" + " GROUP BY ev.event_id",
+        "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
+        "FROM tbl_event as ev " +
+        "INNER JOIN tbl_rooms as ro ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN tbl_user as users ON (ev.id = users.id) GROUP BY ev.event_id" ,
+        
       (error, results, fields) => {
         if (error) throw error;
         console.log(error);
-        console.log(results);
-
         res.json(results);
       }
     );

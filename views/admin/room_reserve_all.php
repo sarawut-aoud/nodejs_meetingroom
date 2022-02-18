@@ -152,11 +152,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </div>
     <!-- ./wrapper -->
 
-<<<<<<< HEAD
-    <?php require_once './sidebar/footer.php'; ?>
-=======
     <?php require_once '../footer.php'; ?>
->>>>>>> ad7d61be526a290b926d3c628911446679392df3
 
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
@@ -186,10 +182,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<<<<<<< HEAD
 
-=======
->>>>>>> ad7d61be526a290b926d3c628911446679392df3
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
@@ -202,53 +195,53 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             var path = 'http://127.0.0.1:4500'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/depart",
-                success: function(result) {
-                    var depart = '<option value="" selected disabled>-- เลือกแผนกที่ดูแล --</option>';
-                    for (ii in result) {
-                        depart += '<option value="' + result[ii].de_id + '">' + result[ii]
-                            .de_name +
-                            '</option>';
-                    }
-                    $('#de_id').html(depart);
-
-                }
-            });
 
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
-                url: path + "/rooms",
+                url: path + "/event",
                 success: function(data) {
                     var i = 0;
+
                     var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
-                        '<thead><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
+                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
+                        if (cell.ev_status ==5) {
+                            var bage3 = '<span class="badge bg-danger">ยกเลิก</span>';
+                        }else if(cell.ev_status == 4){
+                            var  bage3 = '<span class="badge bg-secondary">ไม่อนุมัติ</span>';
+                        }else if(cell.ev_status == 3){
+                            var  bage3 = '<span class="badge bg-success">อนุมัติ</span>';
+                        }else if(cell.ev_status == 2){
+                            var  bage3 = '<span class="badge bg-warning">ไม่อนุมัติจากหัวหน้า</span>';
+                        }else if(cell.ev_status == 1){
+                            var  bage3 = '<span class="badge bg-warning">รอการอนุมัติ</span>';
+                        }else if(cell.ev_status == 0){
+                            var  bage3 = '<span class="badge bg-warning">รอการอนุมัติจากหัวหน้า</span>';
+                        }
+
                         table += ('<tr>');
-                        table += ('<td>' + cell.ro_id + '</td>');
+                        table += ('<td>' + cell.ev_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td>' + cell.ro_people + '</td>');
-                        table += ('<td>' + cell.ro_detail + '</td>');
-                        table += ('<td width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                            ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('<td>' + cell.ev_title + '</td>');
+                        table += ('<td>' + cell.ev_startdate.split('T')[0] + ' เวลา ' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' เวลา ' + cell.ev_endtime + '</td>');
+                        table += ('<td align="center">' + bage3 + '</td>'); //<span class="badge bg-success">อนุมัติ</span>
+                        table += ('<td align="center" width="20%"><a id="' + cell.ev_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="' + cell.ev_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
                     $("#tableRooms").html(table);
 
-<<<<<<< HEAD
-=======
                     $("#tb_RoomAll")
                         .DataTable({
                             responsive: true,
                             lengthChange: false,
                             "lengthMenu": [
-                                [9, 24, 49, -1],
+                                [10, 24, 49, -1],
                                 [10, 25, 50, "All"]
                             ],
                             autoWidth: false,
@@ -273,7 +266,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .container()
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
->>>>>>> ad7d61be526a290b926d3c628911446679392df3
                 }
             });
 

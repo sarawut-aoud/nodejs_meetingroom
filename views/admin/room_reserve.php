@@ -191,20 +191,22 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             var path = 'http://127.0.0.1:4500',
-                id = "<?php echo $_SESSION['mt_id']; ?>",
+                id = "1",
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
 
             // var id = $('#mtID').val();
             //todo: table room
             $.ajax({
-                type: 'get',
+                type: 'GET',
                 dataType: 'json',
                 //  data: $("#frmTable").serialize(),
-                data: {
-                    id: id,
-                },
                 url: path + "/event",
+                // data: {
+                //     id: id,
+                //     level:level,
+                // },
+              
                 success: function(data) {
                     // var i = 0;
                     var table = '<table id="Room_reserve" with="100%" class="table table-hover text-nowrap">' +
@@ -216,8 +218,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ev_title + '</td>');
                         table += ('<td>' + cell.ev_startdate + ' เวลา ' + cell.ev_starttime + '</td>');
-                        table += ('<td>' + cell.ev_startend + ' เวลา ' + cell.ev_endtime + '</td>');
-                        table += ('<td>' + cell.ev_status + '</td>');
+                        table += ('<td>' + cell.ev_enddate + ' เวลา ' + cell.ev_endtime + '</td>');
+                        table += ('<td align="center">' + cell.ev_status + '</td>');
                         table += ('<td align="center" width="20%"><a id="' + cell.ev_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
                             ' <a id="' + cell.ev_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
