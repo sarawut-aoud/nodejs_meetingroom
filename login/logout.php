@@ -44,18 +44,19 @@ echo "<script>
 
 <body>
 
-    <div id="notfound">
+    <div id="notfound" style="background-color: white;">
         <div class="notfound">
-            <div class="notfound-bg">
+            <div class="">
                 <div></div>
                 <div></div>
                 <div></div>
             </div>
             <div>
-            <h1 >Good <span style="color: green;">bye!</span></h1>
+                <img src="../views/public/images/load2.gif" style="width:400px" >
+            <h2>กำลังออกจากระบบ <span style="color: green;">Good bye!</span></h2>
             </div>
           
-            <h2 style="color: red;">กำลังออกจากระบบ</h2>
+            <!-- <h2 style="color: red;">กำลังออกจากระบบ</h2> -->
         </div>
     </div>
 

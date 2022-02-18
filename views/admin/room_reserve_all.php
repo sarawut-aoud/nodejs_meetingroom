@@ -205,31 +205,35 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     var i = 0;
 
                     var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
-                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th></thead></tr>';
+                    '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         if (cell.ev_status == 5) {
-                            var bage3 = '<span class="badge rounded-pill bg-danger">ยกเลิก</span>';
+                            var bage3 = '<span class="badge rounded-pill bg-dark">ยกเลิก</span>';
                         } else if (cell.ev_status == 4) {
-                            var bage3 = '<span class="badge rounded-pill bg-secondary">ไม่อนุมัติ</span>';
-                            var btn = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>' +
-                                ' <a id="' + cell.ev_id + '" class="btn btn-warning btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                                ' <a id="' + cell.ev_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a>'
-                        } else if (cell.ev_status == 3) {
+                            var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติ</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 3) { 
                             var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
-                            var btn = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>' +
-                                ' <a id="' + cell.ev_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a>'
-                        } else if (cell.ev_status == 2) {
-                            var bage3 = '<span class="badge rounded-pill bg-warning">ไม่อนุมัติจากหัวหน้า</span>';
-                        } else if (cell.ev_status == 1) {
-                            var bage3 = '<span class="badge rounded-pill bg-warning">รอการอนุมัติ</span>';
-                            var btn = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>' +
-                                ' <a id="' + cell.ev_id + '" class="btn btn-warning btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                                ' <a id="' + cell.ev_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a>'
-                        } else if (cell.ev_status == 0) {
-                            var bage3 = '<span class="badge rounded-pill  bg-warning">รอการอนุมัติจากหัวหน้า</span>';
-                            var btn = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>' +
-                                ' <a id="' + cell.ev_id + '" class="btn btn-warning btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                                ' <a id="' + cell.ev_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a>'
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="d-none"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 2) { //staff
+                            var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 1) { // user
+                            var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 0) { //staff
+                            var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         }
 
                         table += ('<tr>');
@@ -237,10 +241,12 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ev_title + '</td>');
-                        table += ('<td>' + cell.ev_startdate.split('T')[0] + ' เวลา ' + cell.ev_starttime + '</td>');
-                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' เวลา ' + cell.ev_endtime + '</td>');
-                        table += ('<td align="center">' + bage3 + '</td>');
-                        table += ('<td align="center" width="20%">' + btn + '</td>');
+                        table += ('<td>' + cell.ev_startdate.split('T')[0] + '<span style="color:red;"> เวลา </span> ' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
+                        table += ('<td align="center" width="10%">' + bage3 + '</td>');
+                        table += ('<td align="right" width="10%">' + info + '</td>');
+                        table += ('<td align="right" width="10%">' + edit +" "+ del +'</td>');
+                        // table += ('<td align="center" width="20%">' + del + '</td>');
                         table += ('</tr>');
                     });
                     table += '</table>';

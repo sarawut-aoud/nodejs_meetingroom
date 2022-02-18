@@ -122,7 +122,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 </div>
                                 <!-- form start -->
                                 <form method="" action="" id="">
-                                    <div class="card-body table-responsive p-0">
+                                    <div class="card-body table-responsive p-2">
                                         <!--//? tableRoom -->
                                         <div id="tableRooms">
                                         </div>
@@ -189,187 +189,100 @@ if ($_SESSION['mt_lv_id'] == 3) {
             $('.select2').select2();
 
 
-            var path = 'http://127.0.0.1:4500'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/depart",
-                success: function(result) {
-                    var depart = '<option value="" selected disabled>-- เลือกแผนกที่ดูแล --</option>';
-                    for (ii in result) {
-                        depart += '<option value="' + result[ii].de_id + '">' + result[ii]
-                            .de_name +
-                            '</option>';
-                    }
-                    $('#de_id').html(depart);
-                    $('#modal_de_id').html(depart);
-                }
-            });
+            var path = 'http://127.0.0.1:4500',
+                level  = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
             //todo: table room
             $.ajax({
-                type: 'get',
+                type: 'post',
                 dataType: 'json',
-                url: path + "/rooms",
+                url: path + "/event/status",
+                data:{level:level,},
                 success: function(data) {
                     var i = 0;
-                    var table = '<table with="100%" class="table table-hover text-nowrap">' +
-                        '<thead><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
+
+                    var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
+                    '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
+                        if (cell.ev_status == 5) {
+                            var bage3 = '<span class="badge rounded-pill bg-dark">ยกเลิก</span>';
+                        } else if (cell.ev_status == 4) {
+                            var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติ</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 3) {
+                            var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="d-none"></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 2) {
+                            var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 1) {
+                            var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-primary btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 0) {
+                            var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                        }
+
                         table += ('<tr>');
-                        table += ('<td>' + cell.ro_id + '</td>');
+                        table += ('<td>' + cell.ev_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td>' + cell.ro_people + '</td>');
-                        table += ('<td>' + cell.ro_detail + '</td>');
-                        table += ('<td width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                            ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('<td>' + cell.ev_title + '</td>');
+                        table += ('<td>' + cell.ev_startdate.split('T')[0] + ' <span style="color:red;"> เวลา </span>  ' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
+                        table += ('<td align="center" width="10%">' + bage3 + '</td>');
+                        table += ('<td align="right" width="10%">' + info + '</td>');
+                        table += ('<td align="right" width="10%">' + edit +" "+ del +'</td>');
+                        // table += ('<td align="center" width="20%">' + del + '</td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
                     $("#tableRooms").html(table);
 
-                    $(".btnRoomEdit").click(function(e) {
-                        e.preventDefault();
-                        var ro_id = $(this).attr('id');
-
-                        $.ajax({
-                            type: "get",
-                            dataType: "json",
-                            url: path + "/rooms",
-                            data: {
-                                ro_id: ro_id,
+                    $("#tb_RoomAll")
+                        .DataTable({
+                            responsive: true,
+                            lengthChange: false,
+                            "lengthMenu": [
+                                [10, 24, 49, -1],
+                                [10, 25, 50, "All"]
+                            ],
+                            autoWidth: false,
+                            buttons: {
+                                dom: {
+                                    button: {
+                                        className: "btn btn-light  ",
+                                    },
+                                },
+                                buttons: [{
+                                    extend: "colvis",
+                                    className: "btn btn-outline-success"
+                                }, ]
                             },
-                            success: function(result) {
-                                for (ii in result) {
-                                    if (result[ii].ro_id == ro_id) {
-                                        var ro_name = result[ii].ro_name;
-                                        var ro_people = result[ii].ro_people;
-                                        var ro_color = result[ii].ro_color;
-                                        var ro_detail = result[ii].ro_detail;
-                                        break;
-                                    }
-                                }
-                                $("#ModalRoom").modal("show");
-                                $("#modal_ro_id").val(ro_id);
-                                $("#modal_ro_name").val(ro_name);
-                                $("#modal_ro_people").val(ro_people);
-                                $("#modal_ro_color").val(ro_color);
-                                $("#modal_ro_detail").val(ro_detail);
-                            }
-                        });
-                    });
-                    $(".btnRoomDels").click(function(e) {
-                        e.preventDefault();
-
-                        var ro_id = $(this).attr('id');
-                        var _row = $(this).parent();
-                        Swal.fire({
-                            title: 'คุณต้องการลบข้อมูลห้องประชุมใช่หรือไม่ ?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: "ยืนยัน",
-                            cancelButtonText: "ยกเลิก",
-                        }).then((btn) => {
-                            if (btn.isConfirmed) {
-                                $.ajax({
-                                    dataType: 'JSON',
-                                    type: "DELETE",
-                                    url: path + "/rooms",
-                                    data: {
-                                        ro_id: ro_id
-                                    },
-                                    success: function(result) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: result.message,
-                                        })
-                                        _row.closest('tr').remove();
-                                    },
-                                    error: function(result) {
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                        })
-                                        Toast.fire({
-                                            icon: 'warning',
-                                            title: 'ไม่สามารถลบขเอมูลได้'
-
-                                        }).then((result) => {
-                                            location.reload();
-
-                                        })
-                                    }
-                                });
-                            }
+                            language: {
+                                buttons: {
+                                    colvis: "Change columns",
+                                },
+                            },
                         })
-                    });
+                        .buttons()
+                        .container()
+                        .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
                 }
             });
 
-            //  Btn Modal //
-            $(".btnSaveRoom").click(function(e) {
-                e.preventDefault();
 
-                var ro_id = $("#modal_ro_id").val();
-                var ro_name = $("#modal_ro_name").val();
-                var ro_people = $("#modal_ro_people").val();
-                var ro_color = $("#modal_ro_color").val();
-                var ro_detail = $("#modal_ro_detail").val();
-
-                $.ajax({
-                    type: "PUT",
-                    url: path + "/rooms",
-                    data: {
-                        ro_id: ro_id,
-                        ro_name: ro_name,
-                        ro_people: ro_people,
-                        ro_color: ro_color,
-                        ro_detail: ro_detail
-
-                    },
-                    dataType: "json",
-                    success: function(result) {
-                        $('#ModalRoom').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
-
-                        }).then((result) => {
-                            location.reload();
-                        })
-
-                    }
-                });
-            });
-
-            /// End Btn Modal
         });
     </script>
 

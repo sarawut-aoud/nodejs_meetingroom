@@ -285,6 +285,12 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                         </a>
                     </li>
                     <li class="nav-item mt-3 ">
+                        <a href="./room_reserve_all.php" class="nav-link active">
+                            <i class="nav-icon fas fa-ballot"></i>
+                            <p>รายการจองทั้งหมด</p>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3 ">
                         <a href="./staff_request.php" class="nav-link active">
                             <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
                             <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
@@ -301,12 +307,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                 </a>
             </li>
            
-            <li class="nav-item mt-3 ">
-                <a href="./room_reserve_all.php" class="nav-link active">
-                    <i class="nav-icon fas fa-ballot"></i>
-                    <p>รายการจองทั้งหมด</p>
-                </a>
-            </li>
+           
             <hr class="mt-5 mb-5" style="background-color:#fff"> -->
                     <li class="nav-item ">
                         <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
