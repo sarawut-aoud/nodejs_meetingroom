@@ -83,6 +83,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
+                                    </div>
+                                </div>
                                 <div class="card-body mb-0">
                                     <div class="form-group row">
                                         <div class="input-group">
@@ -142,7 +147,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <!-- ./row form -->
 
 
-                    <?php require_once './modal.php'; ?>
+                    <?php require_once './modal_reserveAll.php'; ?>
 
                 </div><!-- /.container-fluid -->
             </div>
@@ -205,35 +210,38 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     var i = 0;
 
                     var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
-                    '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
+                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         if (cell.ev_status == 5) {
                             var bage3 = '<span class="badge rounded-pill bg-dark">ยกเลิก</span>';
+                            var info = ' <a class="d-none"></a>';
+                            var edit = ' <a class="d-none"></a>';
+                            var del = ' <a class="d-none"></a>';
                         } else if (cell.ev_status == 4) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
-                        } else if (cell.ev_status == 3) { 
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
+                        } else if (cell.ev_status == 3) {
                             var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="d-none"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 2) { //staff
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 1) { // user
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 0) { //staff
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"  class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels" title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         }
 
                         table += ('<tr>');
@@ -245,7 +253,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
                         table += ('<td align="center" width="10%">' + bage3 + '</td>');
                         table += ('<td align="right" width="10%">' + info + '</td>');
-                        table += ('<td align="right" width="10%">' + edit +" "+ del +'</td>');
+                        table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');
                         // table += ('<td align="center" width="20%">' + del + '</td>');
                         table += ('</tr>');
                     });
@@ -283,11 +291,145 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
 
-                        $(".btnDels").click(function(e) {
+
+
+
+                    $(".btnDetail").click(function(e) {
+                        e.preventDefault();
+                        var ev_id = $(this).attr('id');
+
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: path + "/event/request",
+                            data: {
+                                ev_id: ev_id,
+                            },
+                            success: function(result) {
+                                for (ii in result) {
+                                    if (result[ii].ev_id == ev_id) {
+
+                                        var event_id = result[ii].event_id;
+                                        var ev_title = result[ii].ev_title;
+                                        var ev_startdate = result[ii].ev_startdate;
+                                        var ev_enddate = result[ii].ev_enddate;
+                                        var ev_status = result[ii].ev_status;
+                                        var ev_starttime = result[ii].ev_starttime;
+                                        var ev_endtime = result[ii].ev_endtime;
+                                        var ev_people = result[ii].ev_people;
+                                        var ev_createdate = result[ii].ev_createdate;
+                                        var ro_id = result[ii].ro_id;
+                                        var ro_name = result[ii].ro_name;
+                                        var st_name = result[ii].st_name;
+                                        var de_name = result[ii].de_name;
+                                        var de_phone = result[ii].de_phone;
+                                        var id = result[ii].id;
+                                        var firstname = result[ii].firstname;
+                                        var lastname = result[ii].lastname;
+                                        var pos = result[ii].position;
+
+                                    }
+                                }
+                                if (ev_status == 0) {
+                                    var status = 'รออนุมัติจากหัวหน้า'
+                                } else if (ev_status == 1) {
+                                    var status = 'รออนุมัติ'
+                                } else if (ev_status == 2) {
+                                    var status = 'ไม่อนุมัติจากหัวหน้า'
+                                } else if (ev_status == 3) {
+                                    var status = 'อนุมัติ'
+                                } else if (ev_status == 4) {
+                                    var status = 'ไม่อนุมัติ'
+                                } else if (ev_status == 5) {
+                                    var status = 'ยกเลิก'
+                                }
+                                $("#modalDetail").modal("show");
+                                $("#modal2_evid").html(ev_id);
+                                $("#modal2_cre_date").html(ev_createdate.split('T')[0]);
+                                $("#modal2_status").html(status);
+                                $("#modal2_roName").html(ro_name);
+                                $("#modal2_title").html(ev_title);
+                                $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
+                                $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
+                                $("#modal2_style").html(st_name);
+                                $("#modal2_people").html(ev_people + '  คน');
+                                $("#modal2_name").html(firstname + ' ' + lastname);
+                                $("#modal2_dept").html(de_name);
+                                $("#modal2_pos").html(pos);
+                                $("#modal2_phone").html(de_phone);
+
+                            }
+                        });
+                    });
+
+                    $(".btnEdit").click(function(e) {
+                        e.preventDefault();
+                        var ev_id = $(this).attr('id');
+
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: path + "/event/request",
+                            data: {
+                                ev_id: ev_id,
+                            },
+                            success: function(result) {
+                                for (ii in result) {
+                                    if (result[ii].ev_id == ev_id) {
+
+                                        var event_id = result[ii].event_id;
+                                        var ev_title = result[ii].ev_title;
+                                        var ev_startdate = result[ii].ev_startdate;
+                                        var ev_enddate = result[ii].ev_enddate;
+                                        var ev_status = result[ii].ev_status;
+                                        var ev_starttime = result[ii].ev_starttime;
+                                        var ev_endtime = result[ii].ev_endtime;
+                                        var ev_people = result[ii].ev_people;
+                                        var ev_createdate = result[ii].ev_createdate;
+                                        var ro_id = result[ii].ro_id;
+                                        var ro_name = result[ii].ro_name;
+                                        var st_name = result[ii].st_name;
+                                        var de_name = result[ii].de_name;
+                                        var de_phone = result[ii].de_phone;
+                                        var id = result[ii].id;
+                                        var firstname = result[ii].firstname;
+                                        var lastname = result[ii].lastname;
+                                        var pos = result[ii].position;
+
+                                    }
+                                }
+                                if (ev_status == 0) {
+                                    var status = 'รออนุมัติจากหัวหน้า'
+                                } else if (ev_status == 1) {
+                                    var status = 'รออนุมัติ'
+                                } else if (ev_status == 2) {
+                                    var status = 'ไม่อนุมัติจากหัวหน้า'
+                                } else if (ev_status == 3) {
+                                    var status = 'อนุมัติ'
+                                } else if (ev_status == 4) {
+                                    var status = 'ไม่อนุมัติ'
+                                } else if (ev_status == 5) {
+                                    var status = 'ยกเลิก'
+                                }
+                                $("#modalEdit").modal("show");
+                                $("#modal_ev_id").html(ev_id);
+                                // $("#modal_ro_name").html(ro_name);
+                                $("#modal_title").val(ev_title);
+                                $("#modal_timeStart").val(ev_starttime);
+                                $("#modal_timeEnd").val(ev_endtime);
+                                $("#modal_people").val(ev_people);
+                                $("#modal_dateStart").val(ev_startdate.split('T')[0]);
+                                $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
+          
+                            }
+                        });
+                    });
+
+                    $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
-                        var event_id = $(this).attr('da-id');
+                        var event_id = $(this).attr('data-id');
                         var _row = $(this).parent();
                         Swal.fire({
                             title: 'คุณต้องการลบข้อมูลใช่หรือไม่ ?',
@@ -305,7 +447,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     url: path + "/event",
                                     data: {
                                         ev_id: ev_id,
-                                        event_id:event_id,
+                                        event_id: event_id,
                                     },
                                     success: function(result) {
                                         Swal.fire({
@@ -325,9 +467,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             icon: 'warning',
                                             title: 'ไม่สามารถลบข้อมูลได้'
 
-                                        }).then((result) => {
-                                            location.reload();
-
                                         })
                                     }
                                 });
@@ -337,6 +476,53 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                 }
             });
+            /// modal ///
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+                    }
+                    $('#modal_ro_name').html(data);
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/style",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
+                    }
+                    $('#modal_style').html(data);
+                }
+            });
+            $("#checktool").change(function() {
+
+                $("#modal_checktool1").change(function() {
+                    $('#modal_tool').prop('disabled', true);
+                    $('#modal_tool').val(null).trigger("change");
+                });
+
+                $('#modal_tool').prop('disabled', false);
+                $.ajax({
+                    type: "get",
+                    dataType: "json",
+                    url: path + "/tools",
+                    success: function(result) {
+                        var data = '';
+                        for (i in result) {
+                            data += '<option value="' + result[i].to_id + '" > ' + result[i].to_name + '</option>';
+                        }
+                        $('#modal_tool').html(data);
+                    }
+                });
+            });
+            /// modal ///
 
         });
     </script>

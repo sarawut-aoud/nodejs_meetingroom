@@ -280,8 +280,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ro_people + '</td>');
                         table += ('<td>' + cell.ro_detail + '</td>');
-                        table += ('<td align="center" width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"><i class="fas fa-edit"></i></a>' +
-                            ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('<td align="center" width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -412,8 +412,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td width="20%">' + cell.st_id + '</td>');
                         table += ('<td width="60%">' + cell.st_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td align="center" width="20%"><a id="' + cell.st_id + '" class="btn btn-info btnStyleEdit"><i class="fas fa-edit"></i></a> ' +
-                            '<a id="' + cell.st_id + '" class="btn btn-danger btnStyleDels "><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('<td align="center" width="20%"><a id="' + cell.st_id + '" class="btn btn-info btnStyleEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a> ' +
+                            '<a id="' + cell.st_id + '" class="btn btn-danger btnStyleDels "title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -536,8 +536,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td width="30%">' + cell.to_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td width="30%">' + cell.de_name + '</td>');
-                        table += ('<td  align="center"width="20%"><a id="' + cell.to_id + '"  class="btn btn-info btnToolEdit"><i class="fas fa-edit"></i></a>' +
-                            ' <a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"><i class="fa fa-trash-alt " ></i></a></td>');
+                        table += ('<td  align="center"width="20%"><a id="' + cell.to_id + '"  class="btn btn-info btnToolEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';

@@ -139,7 +139,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h4>เลือกห้องประชุม เพื่อทำการจอง</h4>
+                                        <h4><i class=" fa-regular fa-calendar-check"></i> เลือกห้องประชุม เพื่อทำการจอง</h4>
                                     </div>
                                 </div>
                                 <!-- form start -->
@@ -148,7 +148,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         <!--? Title Name -->
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-2 col-form-label">ชื่อโครงการ :</label>
+                                                <label class="col-md-2 col-form-label">หัวข้อเรื่องประชุม :</label>
                                                 <div class="col-md-10">
                                                     <input type="text" class="form-control " id="title" name="title" />
                                                 </div>
@@ -251,7 +251,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" multiple="multiple" id="tool" data-placeholder="-เพิ่มเติม-" disabled />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" multiple="multiple" id="tool" data-placeholder="-อุปกรณ์โสตทัศนูปกรณ์-" disabled />
 
                                                     </select>
 
@@ -277,7 +277,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card ">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h4> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                        <h4><i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">

@@ -57,6 +57,27 @@ router.get("/", async (req, res) => {
     }
   );
 });
+// SELECT Request
+router.get("/request", async (req, res) => {
+  con.query(
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
+      "ro.ro_id, ro.ro_name, " +
+      "st.st_id, st.st_name," +
+      "users.id, users.firstname,users.lastname, users.position," +
+      "dept.de_id, dept.de_name, dept.de_phone " +
+      "FROM tbl_event ev " + " "+
+      "INNER JOIN  tbl_rooms as ro on (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN  tbl_style as st on (ev.st_id = st.st_id)" +
+      "INNER JOIN  tbl_user as users on (ev.id = users.id)" +
+      "INNER JOIN  tbl_department as dept on (users.de_id = dept.de_id) ;",
+    (error, results, fields) => {
+      if (error) throw error;
+      // console.log(error);
+      res.json(results);
+    }
+  );
+});
 // SELECT status
 router.post("/status", async (req, res) => {
   var level = req.body.level;
@@ -381,25 +402,19 @@ router.delete("/", async (req, res) => {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถลบข้อมูลได้" });
-  } else {
+  } else if (event_id) {
     con.query(
       "DELETE FROM tbl_event WHERE event_id = ? ",
       [event_id],
       (error, results, fields) => {
         if (error) throw error;
-        return res.send({
-          error: false,
-          status: "0",
-          message: "ลบข้อมูลแล้ว",
-        });
-      }
-    );
-    console.log('dels');
-    con.query(
-      "DELETE FROM tbl_acces WHERE ev_id = ? ",
-      [ev_id],
-      (error, results, fields) => {
-        if (error) throw error;
+        con.query(
+          "DELETE FROM tbl_acces WHERE ev_id = ? ",
+          [ev_id],
+          (error, results, fields) => {
+            if (error) throw error;
+          }
+        );
         return res.send({
           error: false,
           status: "0",
