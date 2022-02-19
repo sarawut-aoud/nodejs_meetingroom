@@ -218,7 +218,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="d-none"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 2) { //staff
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
@@ -233,7 +233,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"  class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         }
 
                         table += ('<tr>');
@@ -282,9 +282,61 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .container()
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
+
+                        $(".btnDels").click(function(e) {
+                        e.preventDefault();
+
+                        var ev_id = $(this).attr('id');
+                        var event_id = $(this).attr('da-id');
+                        var _row = $(this).parent();
+                        Swal.fire({
+                            title: 'คุณต้องการลบข้อมูลใช่หรือไม่ ?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก",
+                        }).then((btn) => {
+                            if (btn.isConfirmed) {
+                                $.ajax({
+                                    dataType: 'JSON',
+                                    type: "DELETE",
+                                    url: path + "/event",
+                                    data: {
+                                        ev_id: ev_id,
+                                        event_id:event_id,
+                                    },
+                                    success: function(result) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: result.message,
+                                        })
+                                        _row.closest('tr').remove();
+                                    },
+                                    error: function(result) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                        })
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'ไม่สามารถลบข้อมูลได้'
+
+                                        }).then((result) => {
+                                            location.reload();
+
+                                        })
+                                    }
+                                });
+                            }
+                        })
+                    });
+
                 }
             });
-
 
         });
     </script>

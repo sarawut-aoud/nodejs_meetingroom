@@ -60,7 +60,8 @@ router.get("/", async (req, res) => {
 // SELECT status
 router.post("/status", async (req, res) => {
   var level = req.body.level;
-  if (level == "1" || level == "4") {// admin /  manage
+  if (level == "1" || level == "4") {
+    // admin /  manage
 
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
@@ -74,7 +75,8 @@ router.post("/status", async (req, res) => {
         res.json(results);
       }
     );
-  } else if (level == "3") {  // STAFF
+  } else if (level == "3") {
+    // STAFF
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
         "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
@@ -371,43 +373,41 @@ router.post("/", async (req, res) => {
 // });
 
 // //? delete data
-// sql.delete("/", async (req, res) => {
-//   let ac_id = req.body.id;
+router.delete("/", async (req, res) => {
+  let ev_id = req.body.ev_id;
+  let event_id = req.body.event_id;
 
-//   if (!ac_id) {
-//     return res
-//       .status(400)
-//       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-//   } else {
-//     con.query(
-//       "SELECT count(ac_id) as ac_id   FROM hr_personal   WHERE ac_id = ?",
-//       [ac_id],
-//       (error, results, fields) => {
-//         if (error) throw error;
-
-//         if (results[0].ac_id > 0) {
-//           return res.send({
-//             error: false,
-//             status: "1",
-//             message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
-//           });
-//         } else {
-//           con.query(
-//             "DELETE FROM hr_academic WHERE ac_id = ?",
-//             [ac_id],
-//             (error, results, fields) => {
-//               if (error) throw error;
-//               return res.send({
-//                 error: false,
-//                 status: "0",
-//                 message: "ลบข้อมูลแล้ว",
-//               });
-//             }
-//           );
-//         }
-//       }
-//     );
-//   }
-// });
+  if (!ev_id || !event_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถลบข้อมูลได้" });
+  } else {
+    con.query(
+      "DELETE FROM tbl_event WHERE event_id = ? ",
+      [event_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.send({
+          error: false,
+          status: "0",
+          message: "ลบข้อมูลแล้ว",
+        });
+      }
+    );
+    console.log('dels');
+    con.query(
+      "DELETE FROM tbl_acces WHERE ev_id = ? ",
+      [ev_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.send({
+          error: false,
+          status: "0",
+          message: "ลบข้อมูลแล้ว",
+        });
+      }
+    );
+  }
+});
 
 module.exports = router;

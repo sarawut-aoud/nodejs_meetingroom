@@ -195,45 +195,50 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             var path = 'http://127.0.0.1:4500',
-                level  = '<?php echo $_SESSION['mt_lv_id']; ?>'
+                level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
             //todo: table room
             $.ajax({
                 type: 'post',
                 dataType: 'json',
                 url: path + "/event/status",
-                data:{level:level,},
+                data: {
+                    level: level,
+                },
                 success: function(data) {
                     var i = 0;
 
                     var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
-                    '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
+                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         if (cell.ev_status == 5) {
                             var bage3 = '<span class="badge rounded-pill bg-dark">ยกเลิก</span>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail"><i class="fa-solid fa-eye"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 4) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
                             var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 3) {
                             var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="d-none"></a>'
                             var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 2) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
                             var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 1) {
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="btn btn-primary btnEdit"><i class="fas fa-edit"></i></a>'
                             var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 0) {
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info "><i class="fa-solid fa-eye"></i></a>';
+                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"><i class="fas fa-edit"></i></a>'
                             var del = ' <a id="' + cell.ev_id + '" class="btn btn-danger btnDels"><i class="fas fa-trash-alt"></i></a>'
                         }
@@ -247,7 +252,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
                         table += ('<td align="center" width="10%">' + bage3 + '</td>');
                         table += ('<td align="right" width="10%">' + info + '</td>');
-                        table += ('<td align="right" width="10%">' + edit +" "+ del +'</td>');
+                        table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');
                         // table += ('<td align="center" width="20%">' + del + '</td>');
                         table += ('</tr>');
                     });
@@ -285,9 +290,13 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
                 }
+
+
+
             });
 
-
+            /// modal ///
+            /// modal ///
         });
     </script>
 
