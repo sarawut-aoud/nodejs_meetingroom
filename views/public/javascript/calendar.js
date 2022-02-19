@@ -3,12 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
   var initialLocaleCode = "th";
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
+   
     themeSystem: 'bootstrap',
     dayHeaderClassNames:'#C5FFA8',
     expandRows: true,
     slotMinTime: "08:00",
     slotMaxTime: "21:00",
-    initialDate: "2022-02-12",
+    // initialDate: "2022-02-12",
     headerToolbar: {
       left: "prev,next today",
       center: "title",
@@ -39,10 +40,19 @@ document.addEventListener("DOMContentLoaded", function () {
     buttonIcons: true, // show the prev/next text
     // weekNumbers: true,
     // navLinks: true, // can click day/week names to navigate views
-    editable: false,
+    editable: true,
     selectable: true,
     businessHours: true,
     dayMaxEvents: true, // allow "more" link when too many events
+    eventLimit: true, // allow "more" link when too many events
+    firstDay: 0, // กำหนดวันแรกในปฏิทินเป็นวันอาทิตย์ 0 เป็นวันจันทร์ 1
+    displayEventTime: true,
+    displayEventEnd: true,
+    eventTimeFormat: { // รูปแบบการแสดงของเวลา เช่น '14:30' 
+      hour: '2-digit',
+      minute: '2-digit',
+      meridiem: false
+    },
     events: [
       {
         title: "All Day Event",

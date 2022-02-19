@@ -55,7 +55,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./room_approve.php" class="nav-link active">
                             <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                            <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
+                            <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-danger "></span>
                         </a>
                     </li>
                     <li class="nav-item mt-3 ">
@@ -134,7 +134,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./manager_approve.php" class="nav-link active">
                             <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                            <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
+                            <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-danger"></span>
                         </a>
                     </li>
                     <li class="nav-item mt-3 ">

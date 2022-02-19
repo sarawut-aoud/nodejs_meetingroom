@@ -188,7 +188,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-
+    <script src="../public/javascript/countBage.js"></script>
     <script>
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
@@ -423,7 +423,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modal_people").val(ev_people);
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
-          
+
                             }
                         });
                     });
@@ -530,4 +530,5 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </script>
 
 </body>
+
 </html>

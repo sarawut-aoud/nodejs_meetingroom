@@ -319,7 +319,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
     <!-- Sweetalert2 -->
@@ -329,6 +328,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
+
+    <script src="../public/javascript/countBage.js"></script>
 
     <script>
         $(function() {

@@ -209,6 +209,7 @@ if ($_SESSION['mt_lv_id'] ==1) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
+    <script src="../public/javascript/countBage.js"></script>
 
     <script>
         $(function() {

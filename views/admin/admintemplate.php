@@ -297,6 +297,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
+    <script src="../public/javascript/countBage.js"></script>
 
 
     <script>
