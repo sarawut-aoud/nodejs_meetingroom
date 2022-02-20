@@ -95,6 +95,28 @@ router.get("/COUNT", async (req, res) => {
     }
   );
 });
+// SELECT calendar
+router.get("/calendar", async (req, res) => {
+  con.query(
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
+    "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
+    "ro.ro_id, ro.ro_name, " +
+    "st.st_id, st.st_name," +
+    "users.id, users.firstname,users.lastname, users.position," +
+    "dept.de_id, dept.de_name, dept.de_phone " +
+    "FROM tbl_event AS ev " + " "+
+    "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+    "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+    "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+    "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) "+
+    "WHERE ev.ev_status = '3' GROUP BY ev.event_id",
+    (error, results, fields) => {
+      if (error) throw error;
+      // console.log(error);
+      res.json(results);
+    }
+  );
+});
 // SELECT status
 router.post("/status", async (req, res) => {
   var level = req.body.level;

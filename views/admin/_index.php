@@ -1,6 +1,6 @@
 <?php
 require_once "../../login/check_session.php";
-if ($_SESSION['mt_lv_id'] ==1) {
+if ($_SESSION['mt_lv_id'] == 1) {
 } else {
 
     echo "<script>
@@ -334,6 +334,8 @@ if ($_SESSION['mt_lv_id'] ==1) {
             $('#showDate').html(button);
 
         });
+
+       
     </script>
 
 </body>
