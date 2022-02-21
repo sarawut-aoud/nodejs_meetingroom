@@ -1,11 +1,12 @@
 const express = require("express");
 const path = require("path");
-
+const strtotime = require("nodestrtotime");
 const app = express();
 const bodyParser = require("body-parser");
 
 const cors = require("cors");
 const con = require("../config/config");
+const { text } = require("body-parser");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -66,7 +67,8 @@ router.get("/request", async (req, res) => {
       "st.st_id, st.st_name," +
       "users.id, users.firstname,users.lastname, users.position," +
       "dept.de_id, dept.de_name, dept.de_phone " +
-      "FROM tbl_event AS ev " + " "+
+      "FROM tbl_event AS ev " +
+      " " +
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
       "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
@@ -81,13 +83,14 @@ router.get("/request", async (req, res) => {
 // SELECT COUNT
 router.get("/COUNT", async (req, res) => {
   con.query(
-    "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate,"+
-    "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, "+
-    "ro.ro_id, ro.ro_name, users.id  "+
-    "FROM tbl_event  AS ev"+" "+
-   " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) "+
-    "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
-    "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
+    "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
+      "ro.ro_id, ro.ro_name, users.id  " +
+      "FROM tbl_event  AS ev" +
+      " " +
+      " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
+      "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
     (error, results, fields) => {
       if (error) throw error;
       // console.log(error);
@@ -96,26 +99,209 @@ router.get("/COUNT", async (req, res) => {
   );
 });
 // SELECT calendar
-router.get("/calendar", async (req, res) => {
+router.post("/calendar", async (req, res) => {
+  let show = req.body.show;
+  if (show != "show") {
+    return res.json({
+      status: "0",
+      message: "เกิดข้อผิดพลาด",
+    });
+  } else {
+    con.query(
+      "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
+        "ev.ev_bgcolor,ev.ev_color, ev.ev_repeatday," +
+        "ro.ro_id, ro.ro_name, ro.ro_color," +
+        "st.st_id, st.st_name," +
+        "users.id, users.firstname,users.lastname, users.position," +
+        "dept.de_id, dept.de_name, dept.de_phone " +
+        "FROM tbl_event AS ev " +
+        " " +
+        "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+        "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+        "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
+        "WHERE ev.ev_status = '3' GROUP BY ev.event_id",
+      (error, results, fields) => {
+        if (error) throw error;
+        // console.log(error);
+        return res.json(results);
+      }
+    );
+  }
+});
+// select capcha
+router.get("/list", async (req, res, next) => {
+  var _start_date = "";
+  var _end_date = "";
+  var _start_time = "";
+  var _end_time = "";
+  var _repeat_day = "";
+  var _all_day = "";
+
+  const id = [];
   con.query(
-    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
-    "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
-    "ro.ro_id, ro.ro_name, " +
-    "st.st_id, st.st_name," +
-    "users.id, users.firstname,users.lastname, users.position," +
-    "dept.de_id, dept.de_name, dept.de_phone " +
-    "FROM tbl_event AS ev " + " "+
-    "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-    "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-    "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
-    "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) "+
-    "WHERE ev.ev_status = '3' GROUP BY ev.event_id",
-    (error, results, fields) => {
+    //DATE_FORMAT(o.l_day,'%Y-%m-%d') as  l_day
+    //l.ls_id,CONCAT (MONTH(l.ls_days), '/', DAY(l.ls_days), '/', (YEAR(l.ls_days))) as ls_days
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
+      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+      "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
+      // " CONCAT (YEAR( ev.ev_startdate),'-',MONTH( ev.ev_startdate), '-', (DAY( ev.ev_startdate))) as ev_startdate, ev.ev_enddate," +
+      // "CONCAT (YEAR( ev.ev_starttime),'-',MONTH( ev.ev_starttime), '-', (DAY( ev.ev_starttime))) as ev_starttime," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
+      "ev.ev_bgcolor,ev.ev_color, ev.ev_repeatday," +
+      "ro.ro_id, ro.ro_name, ro.ro_color," +
+      "st.st_id, st.st_name," +
+      "users.id, users.firstname,users.lastname, users.position," +
+      "dept.de_id, dept.de_name, dept.de_phone " +
+      "FROM tbl_event AS ev " +
+      " " +
+      "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+      "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+      "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
+      "WHERE ev.ev_status = '3' GROUP BY ev.event_id",
+    (error, row, fields) => {
       if (error) throw error;
-      // console.log(error);
-      res.json(results);
+
+      for (var i = 0; i < row.length; i++) {
+        _start_date = row[i].ev_startdate;
+        _end_date = false;
+        _start_time = false;
+        _end_time = false;
+        _repeat_day = false;
+        //  _all_day = (row['ev_allday']!=0)?true:false;
+        if (row[i].ev_starttime != "00:00:00") {
+          _start_date = row[i].ev_startdate + "T" + row[i].ev_starttime;
+          if (
+            row[i].ev_endtime != "00:00:00" &&
+            (row[i].ev_starttime == row[i].ev_enddate ||
+              row[i].ev_enddate == "0000-00-00")
+          ) {
+            _end_date = row[i].ev_startdate + "T" + row[i].ev_endtime;
+          }
+        }
+        if (row[i].ev_enddate != "0000-00-00") {
+          _end_date = row[i].ev_enddate;
+          if (row[i].ev_endtime != "00:00:00") {
+            _end_date = row[i].ev_enddate + "T" + row[i].ev_endtime;
+          } else {
+            _end_date = date("Y-m-d", strtotime(row[i].ev_enddate + " +1 day"));
+          }
+        }
+        if (
+          row[i].ev_enddate != "0000-00-00" &&
+          row[i].ev_enddate != row[i].ev_startdate &&
+          row[i].ev_starttime != "00:00:00" &&
+          row[i].ev_endtime != "00:00:00"
+        ) {
+          (_start_date = row[i].ev_startdate),
+            (_end_date = row[i].ev_enddate),
+            (_start_time = row[i].ev_starttime),
+            (_end_time = row[i].ev_endtime),
+            (_all_day = false);
+        }
+
+        if (row[i].ev_repeatday != "") {
+          var daysOfWeek = explode(",", row[i].ev_repeatday);
+        }
+        if (
+          row[i].ev_enddate != "0000-00-00" &&
+          row[i].ev_enddate != row[i].ev_startdate &&
+          row[i].ev_starttime != "00:00:00" &&
+          row[i].ev_endtime != "00:00:00"
+        ) {
+          var startRecur = _start_date;
+          var edate = new Date();
+
+          var theDate1 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
+        
+          const date = new Date(theDate1);
+
+          var endRecur = date
+            .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+            .slice(0, 10);
+          //  console.log(date.toISOString('EN-AU', { timeZone: 'Australia/Melbourne'}).slice(0, 10))
+          // leave_day : results[i].leave_day01.toISOString('EN-AU', { timeZone: 'Australia/Melbourne'}).slice(0, 10) ,
+          // แปลงเวลาที่รับมาเป็นเวลาไทย โดยการ +7
+          //leave_day : results[i].leave_day01.toLocaleDateString('en-CA', { timeZone: 'Australia/Melbourne'}),
+        }
+        if (!_all_day) {
+          delete _all_day;
+        }
+        if (!_end_date) {
+          delete end;
+        }
+        if (!_start_time) {
+          delete _start_time;
+        }
+        if (!_end_time) {
+          delete _end_time;
+        }
+
+        // ทำการเปลี่ยน หรือกำหนดการใช้งาน url หรือลิ้งค์ เป็นการเรียกใช้งาน javascript ฟังก์ชั่นF
+        row[i].ev_url = "javascript:viewdetail(" + row[i].ev_id + ");"; // ส่งค่า id ไปในฟังก์ชั่น
+        //  if (row[i].ev_id != undefined) {
+        //   ow[i].row[i].ev_url
+        //  }
+        if (row[i].ev_id != undefined) {
+         
+          var ev_startdate2 = row[i].ev_startdate.replace("-", "");
+          var ev_startdate3 = ev_startdate2.replace("-", "");
+          
+          id[i] = {
+            id: row[i].ev_id,
+            groupId: ev_startdate3,
+            // allDay: _all_day,
+            start: _start_date,
+            // start: ' 2021-04-05T08:30:00',
+
+            end: _end_date,
+
+            startTime: _start_time,
+            endTime: _end_time,
+            title: row[i].ev_title,
+            url: row[i].ev_url,
+            textColor: row[i].ev_color,
+            backgroundColor: row[i].ro_color,
+            borderColor: row[i].ev_bgcolor,
+            // daysOfWeek:daysOfWeek,
+            startRecur: startRecur,
+            endRecur: endRecur,
+
+            // };
+          };
+        }
+      }
+      req.id = id;
+     
+      res.json(id);
+      // return next();
     }
   );
+});
+router.get("/list", async (req, res) => {
+  //   const ev_list = [];
+  //   var limit = req.limit;
+  // res.json("");
+  //   for (var i = 0; i < limit; i++) {
+  // console.log(req.id[i])
+  //     // ev_list[i] = {
+  //     //   id: req[i].id,
+  //     //   groupId: req[i].groupId,
+  //     //   allDay: req[i].allDay,
+  //     //   start: req[i].start,
+  //     //   end: req[i].end,
+  //     //   startTime: req[i].startTime,
+  //     //   endTime: req[i].endTime,
+  //     //   title: req[i].title,
+  //     //   url: req[i].url,
+  //     //   textColor: req[i].textColor,
+  //     //   backgroundColor: req[i].backgroundColor,
+  //     //   borderColor: req[i].borderColor
+  //     // };
+  //   }
+  //   res.json(ev_list);
 });
 // SELECT status
 router.post("/status", async (req, res) => {

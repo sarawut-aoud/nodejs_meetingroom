@@ -236,6 +236,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             var path = 'http://127.0.0.1:4500';
 
 
+
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -333,9 +334,106 @@ if ($_SESSION['mt_lv_id'] == 1) {
             var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
             $('#showDate').html(button);
 
-        });
+            // $.ajax({
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     url: path + '/event/list',
+            //     // data: {
+            //     //     show: "show",
+            //     // },
+            //     success: function(result) {
+                   
+            //             for (i in result) {
+            //                 var ev_id = result[i].ev_id,
+            //                     event_id = result[i].event_id,
+            //                     ev_title = result[i].ev_title,
+            //                     ev_startdate = result[i].ev_startdate,
+            //                     ev_enddate = result[i].ev_enddate,
+            //                     ev_starttime = result[i].ev_starttime,
+            //                     ev_endtime = result[i].ev_endtime,
+            //                     ev_status = result[i].ev_status,
+            //                     ev_people = result[i].ev_people,
+            //                     ev_color = result[i].ev_color,
+            //                     ev_bgcolor = result[i].ev_bgcolor,
+            //                     ev_repeatday = result[i].ev_repeatday,
+            //                     ro_id = result[i].ro_id,
+            //                     ro_name = result[i].ro_name,
+            //                     ro_color = result[i].ro_color,
+            //                     st_id = result[i].st_id,
+            //                     id = result[i].id,
+            //                     firstname = result[i].firstname,
+            //                     st_name = result[i].st_name,
+            //                     lastname = result[i].lastname,
+            //                     position = result[i].position,
+            //                     de_id = result[i].de_id,
+            //                     de_name = result[i].de_name,
+            //                     de_phone = result[i].de_phone
 
-       
+            //                 // console.log(ev_id)
+            //                 calendardata(ev_id, event_id, ev_title, ev_startdate, ev_enddate, ev_starttime, ev_endtime, ev_status, ev_people, ev_color, ev_bgcolor, ev_repeatday,ro_id, ro_name, ro_color, st_id,
+            //             id, firstname, lastname, position, st_name, de_id, de_name, de_phone);
+            //             }
+
+
+                    
+                  
+            //     }
+
+            // });
+
+
+            // function calendardata(ev_id, event_id, ev_title, ev_startdate, ev_enddate, ev_starttime, ev_endtime, ev_status, ev_people, ev_color, ev_bgcolor,ev_repeatday, ro_id, ro_name, ro_color, st_id,
+            //     id, firstname, lastname, position, st_name, de_id, de_name, de_phone) {
+            //     $.post(
+            //         '../public/javascript/event01.php', {
+
+            //             'ev_id': ev_id,
+            //             'event_id': event_id,
+            //             'ev_title': ev_title,
+            //             'ev_startdate': ev_startdate,
+            //             'ev_enddate': ev_enddate,
+            //             'ev_starttime': ev_starttime,
+            //             'ev_endtime': ev_endtime,
+            //             'ev_status': ev_status,
+            //             'ev_people': ev_people,
+            //             'ev_color': ev_color,
+            //             'ev_bgcolor': ev_bgcolor,
+            //             'ev_repeatday': ev_repeatday,
+            //             'ro_id': ro_id,
+            //             'ro_name': ro_name,
+            //             'ro_color': ro_color,
+            //             'st_id': st_id,
+            //             'st_name': st_name,
+            //             'id': id,
+            //             'firstname': firstname,
+            //             'lastname': lastname,
+            //             'position': position,
+            //             'de_id': de_id,
+            //             'de_name': de_name,
+            //             'de_phone': de_phone,
+            //             'ev_url': 'javascript:viewdetail(' + ev_id + ');',
+
+            //         }
+            //         // function() {
+            //         //     if (lv_id == 1) {
+            //         //         location.href = '../views/admin/_index.php';
+            //         //     } else if (lv_id == 2) {
+            //         //         location.href = '../views/users/_index.php';
+            //         //     } else if (lv_id == 3) {
+            //         //         location.href = '../views/staff/_index.php';
+            //         //     } else if (lv_id == 4) {
+            //         //         location.href = '../views/manager/_index.php';
+
+            //         //     } else {
+            //         //         $("#loginAlert").show(0).html(
+            //         //                 "<div align='center' class='alert alert-danger'>" + result.message + "</div>"
+            //         //             )
+            //         //             .delay(2500).fadeOut('fast');
+            //         //     }
+            //         // }
+            //     );
+            // }
+        });
     </script>
 
 </body>
