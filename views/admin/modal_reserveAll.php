@@ -203,26 +203,8 @@
                     <div class="form-group row ">
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">อุปกรณ์ :</label>
-                            <div class="col-md-4  d-flex ">
-                                <div class="icheck-success ">
-                                    <input type="radio" id="modal_checktool1" name="r1" checked>
-                                    <label for="modal_checktool1"> ไม่ต้องการ
-                                    </label>
-
-                                </div>
-                                <div class="icheck-success ml-3">
-                                    <input type="radio" id="modal_checktool" name="r1">
-                                    <label for="modal_checktool"> ต้องการ
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" multiple="multiple" id="modal_tool" data-placeholder="-อุปกรณ์โสตทัศนูปกรณ์-" disabled />
-
-                                </select>
-
-                            </div>
-
+                            <div id="modaltool"></div>
+                        
                         </div>
                     </div>
                     <!--? Tool -->

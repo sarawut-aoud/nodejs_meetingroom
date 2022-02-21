@@ -111,9 +111,7 @@
                     <div class="form-group row">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_to_name" name="modal_to_name" />
-                            </div>
+                           
                         </div>
                     </div>
                     <!--//? /.Tool Name -->

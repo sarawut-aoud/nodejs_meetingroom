@@ -318,6 +318,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var ev_endtime = result[ii].ev_endtime;
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
+                                        var to_name = result[ii].to_name;
+
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
@@ -327,7 +329,30 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
-
+                                        
+                                        $.ajax({
+                                            type:'get',
+                                            dataType: 'json',
+                                            url: path+'/event/requesttool',
+                                            // data:{
+                                            //     ev_id:result[ii].event_id,
+                                            // },
+                                            success:function(tool){
+                                                // console.log(result[ii].event_id)
+                                                var to_name =''
+                                                for(i in tool){
+                                                   
+                                                    if(tool[i].ev_id == ev_id){
+                                                       
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
+                                                       
+                                                    }
+                                         
+                                                    $("#modal2_tool").html(to_name);
+                                                }
+                                             
+                                            }
+                                        });
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -351,6 +376,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
                                 $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
+                               
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
                                 $("#modal2_dept").html(de_name);
@@ -384,6 +410,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var ev_endtime = result[ii].ev_endtime;
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
+                                        var to_name = result[ii].to_name;
+                                        
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
@@ -416,6 +444,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modal_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
                                 $("#modal_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
                                 $("#modal_style").html(st_name);
+                                // $("#modal_tool").html(to_name);
                                 $("#modal_people").html(ev_people + '  คน');
                                 $("#modal_name").html(firstname + ' ' + lastname);
                                 $("#modal_dept").html(de_name);

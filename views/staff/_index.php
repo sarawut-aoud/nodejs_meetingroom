@@ -170,7 +170,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                         </div>
                     </div>
-
+                <?php  require_once '../modalcalendar.php';?>
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -333,6 +333,52 @@ if ($_SESSION['mt_lv_id'] == 3) {
             $('#showDate').html(button);
 
         });
+        function viewdetail(id) {
+            //    console.log(id);
+
+            // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:4500/event/calendar",
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                success: function(results) {
+                
+                    for (i in results) {
+                        if (results[i].ev_id == id) {
+                            var title = results[i].ev_title;
+                            var room = results[i].ro_name;
+                            var style = results[i].st_name;
+                            var start = results[i].ev_startdate;
+                            var end = results[i].ev_enddate;
+                            var starttime = results[i].ev_starttime;
+                            var endtime = results[i].ev_endtime;
+                            var people = results[i].ev_people;
+                            var name = results[i].firstname;
+                            var lastname = results[i].lastname;
+                            var dename = results[i].de_name;
+                            var dephone = results[i].de_phone;
+                        }
+                    }
+                    $("#calendarmodal").modal("show");
+
+                    $("#calendarmodal-title").html(title);
+                    $("#calendarmodal-detail").html(room);
+                    $("#calendarmodal-style").html(style);
+                    //$("#calendarmodal-detail").html(event.extendedProps.detail);
+                    $("#calendarmodal-start").html(start.split('T')[0]);
+                    $("#calendarmodal-end").html(end.split('T')[0]);
+                    $("#calendarmodal-starttime").html(starttime);
+                    $("#calendarmodal-endtime").html(endtime);
+                    $("#calendarmodal-people").html(people);
+                    $("#calendarmodal-name").html(name +' '+ lastname);
+                    $("#calendarmodal-dename").html(dename);
+                    $("#calendarmodal-dephone").html(dephone);
+                },
+            });
+        }
     </script>
 
 </body>

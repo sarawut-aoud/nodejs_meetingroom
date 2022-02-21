@@ -201,6 +201,21 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             var path = 'http://127.0.0.1:4500'
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    for (i in result) {
+                        data += '<div class="icheck-success d-flex "><input type="checkbox" id="' + result[i].to_id + '" value="' + result[i].to_id + '"  >'
+                        data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
+                    }
+                    data += '</div>';
+                    $('#modaltool').html(data);
+
+                }
+            });
             //todo: table room
             $.ajax({
                 type: 'get',
@@ -420,7 +435,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modal_people").val(ev_people);
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
-          
+
                             }
                         });
                     });

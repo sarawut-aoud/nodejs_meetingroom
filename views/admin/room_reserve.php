@@ -199,7 +199,21 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    for (i in result) {
+                        data += '<div class="icheck-success d-flex "><input type="checkbox" id="' + result[i].to_id + '" value="' + result[i].to_id + '"  >'
+                        data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
+                    }
+                    data += '</div>';
+                    $('#modaltool').html(data);
 
+                }
+            });
             // var id = $('#mtID').val();
             //todo: table room
             $.ajax({
@@ -323,6 +337,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
+                                        var to_name = result[ii].to_name;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
                                         var de_phone = result[ii].de_phone;
@@ -355,6 +370,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
                                 $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
+                                $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
                                 $("#modal2_dept").html(de_name);

@@ -194,6 +194,21 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    for (i in result) {
+                        data += '<div class="icheck-success d-flex "><input type="checkbox" id="' + result[i].to_id + '" value="' + result[i].to_id + '"  >'
+                        data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
+                    }
+                    data += '</div>';
+                    $('#modaltool').html(data);
+
+                }
+            });
             // var id = $('#mtID').val();
             //todo: table room
             $.ajax({
@@ -246,7 +261,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span>' + cell.ev_endtime + '</td>');
                         table += ('<td align="center">' + bage3 + '</td>');
                         table += ('<td align="right" width="10%">' + info + '</td>');
-                        table += ('<td align="right" width="10%">' + edit +" "+ del +'</td>');
+                        table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
