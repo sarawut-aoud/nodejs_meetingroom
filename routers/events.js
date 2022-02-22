@@ -552,26 +552,6 @@ router.post("/", async (req, res) => {
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   }
-
-  // //? validation
-  // if (!ev_title || !ac_pubilc || !typeac_id) {
-  //   return res
-  //     .status(400)
-  //     .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-  // } else {
-  //   con.query(
-  //     "INSERT INTO hr_academic (ac_name, ac_pubilc,typeac_id) VALUES(?, ?, ?)",
-  //     [ac_name, ac_pubilc, typeac_id],
-  //     (error, results, fields) => {
-  //       if (error) throw error;
-  //       return res.send({
-  //         error: false,
-  //         status: "0",
-  //         message: "บันทึกข้อมูลแล้ว",
-  //       });
-  //     }
-  //   );
-  // }
 });
 
 // //? Update Data
