@@ -92,7 +92,6 @@ router.get("/request", async (req, res) => {
       if (error) throw error;
       // console.log(error);
       res.json(results);
-<<<<<<< HEAD
     }
   );
 });
@@ -107,8 +106,6 @@ router.get("/requesttool", async (req, res) => {
 
       // console.log(results);
       res.json(results);
-=======
->>>>>>> 4085fb72001a4aec1b66de1835fcc933261b6f8b
     }
   );
 });
@@ -162,7 +159,6 @@ router.post("/calendar", async (req, res) => {
     );
   }
 });
-<<<<<<< HEAD
 // select calendar
 router.get("/list", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
@@ -179,10 +175,6 @@ router.get("/list", async (req, res) => {
   // let id = query01.id;
   // var start = req.body.start;
 
-=======
-// select capcha
-router.get("/list", async (req, res, next) => {
->>>>>>> 4085fb72001a4aec1b66de1835fcc933261b6f8b
   var _start_date = "";
   var _end_date = "";
   var _start_time = "";
