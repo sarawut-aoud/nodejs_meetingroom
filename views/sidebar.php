@@ -23,6 +23,14 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                         </a>
                     </li>
                     <hr class="mt-3 mb-3" style="background-color:#fff">
+                    <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
+                    <li class="nav-item ">
+                        <a href="./frm_user.php" class="nav-link active">
+                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <p>ข้อมูลส่วนตัว</p>
+                        </a>
+                    </li>
+                    <hr class="mt-3 mb-3" style="background-color:#fff">
                     <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
                     <li class="nav-item ">
                         <a href="./admintemplate.php" class="nav-link active">
@@ -35,6 +43,12 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                         <a href="./admindata.php" class="nav-link active">
                             <i class="nav-icon  fa-solid fa-table"></i>
                             <p>ดูข้อมูล</p>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3 ">
+                        <a href="./user_all.php" class="nav-link active">
+                        <i class="nav-icon fa-solid fa-hospital-user"></i>
+                            <p>ข้อมูลผู้ใช้งาน</p>
                         </a>
                     </li>
                     <hr class="mt-3 mb-3" style="background-color:#fff">
@@ -113,6 +127,13 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                         <a href="./_index.php" class="nav-link active">
                             <i class="nav-icon fas fa-home"></i>
                             <p>หน้าแรก</p>
+                        </a>
+                    </li> <hr class="mt-3 mb-3" style="background-color:#fff">
+                    <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
+                    <li class="nav-item ">
+                        <a href="./frm_user.php" class="nav-link active">
+                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <p>ข้อมูลส่วนตัว</p>
                         </a>
                     </li>
                     <hr class="mt-3 mb-3" style="background-color:#fff">
@@ -195,6 +216,14 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                             <p>หน้าแรก</p>
                         </a>
                     </li>
+                    <hr class="mt-3 mb-3" style="background-color:#fff">
+                    <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
+                    <li class="nav-item ">
+                        <a href="./frm_user.php" class="nav-link active">
+                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <p>ข้อมูลส่วนตัว</p>
+                        </a>
+                    </li>
                     <hr class="mt-4 mb-4" style="background-color:#fff">
                     <li class="mb-2 nav-header text-white"> จองห้องประชุม</li>
 
@@ -267,6 +296,14 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                         <a href="./_index.php" class="nav-link active">
                             <i class="nav-icon fa-solid fa-home "></i>
                             <p>หน้าแรก</p>
+                        </a>
+                    </li>
+                    <hr class="mt-3 mb-3" style="background-color:#fff">
+                    <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
+                    <li class="nav-item ">
+                        <a href="./frm_user.php" class="nav-link active">
+                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <p>ข้อมูลส่วนตัว</p>
                         </a>
                     </li>
                     <hr class="mt-4 mb-4" style="background-color:#fff">

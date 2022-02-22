@@ -254,13 +254,19 @@ app.use("/login", login);
 ////! TAR /////
 const meeting = require("./routers/events");
 const depart = require("./routers/depart");
+const user = require("./routers/user");
+const level = require("./routers/level");
 const tools = require("./routers/tools");
 const rooms = require("./routers/room");
 const style = require("./routers/roomstyle");
 const event = require("./routers/events");
 const event_post = require("./routers/event_post");
+
+
 app.use("/event",event);
 app.use("/event_post",event_post);
+app.use("/user", user);
+app.use("/level", level);
 app.use("/depart", depart);
 app.use("/meeting", meeting);
 app.use("/tools", tools);
