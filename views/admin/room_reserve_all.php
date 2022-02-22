@@ -342,7 +342,26 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
-
+                                        $.ajax({
+                                            type:'get',
+                                            dataType: 'json',
+                                            url: path+'/event/requesttool',
+                                            success:function(tool){
+                                                // console.log(result[ii].event_id)
+                                                var to_name =''
+                                                for(i in tool){
+                                                   
+                                                    if(tool[i].ev_id == ev_id){
+                                                       
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
+                                                       
+                                                    }
+                                         
+                                                    $("#modal2_tool").html(to_name);
+                                                }
+                                             
+                                            }
+                                        });
                                     }
                                 }
                                 if (ev_status == 0) {

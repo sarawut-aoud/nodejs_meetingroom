@@ -43,7 +43,22 @@ router.post("/", async (req, res) => {
     });
   }
 });
-// SELECT all
+//? SELECT Today
+router.get("/today", async (req, res) => {
+  con.query(
+    "SELECT ev.ev_title,  ev.ev_starttime,ev.ev_endtime , ro.ro_color, " +
+      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate " +
+      "FROM tbl_event as ev " +
+      "INNER JOIN tbl_rooms AS ro ON (ev.ro_id =ro.ro_id)   " +
+      "WHERE ev.ev_status = '3' " +
+      "GROUP BY ev.event_id ORDER BY ev.ev_starttime",
+    (error, results, fields) => {
+      if (error) throw error;
+      res.json(results);
+    }
+  );
+});
+//? SELECT all
 router.get("/", async (req, res) => {
   con.query(
     "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
@@ -55,11 +70,10 @@ router.get("/", async (req, res) => {
       if (error) throw error;
       // console.log(error);
       res.json(results);
-     
     }
   );
 });
-// SELECT Request
+//? SELECT Request
 router.get("/request", async (req, res) => {
   con.query(
     "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
@@ -79,10 +93,10 @@ router.get("/request", async (req, res) => {
       if (error) throw error;
       // console.log(error);
       res.json(results);
-    
     }
   );
-}); // SELECT Request
+});
+//?  SELECT Request Tool
 router.get("/requesttool", async (req, res) => {
   // let id = req.body.ev_id;
   // console.log(id)
@@ -90,14 +104,13 @@ router.get("/requesttool", async (req, res) => {
     " SELECT * FROM tbl_tools AS tools INNER JOIN tbl_acces AS acc ON (acc.to_id=tools.to_id) ",
     (error, results, fields) => {
       if (error) throw error;
-      // // console.log(error);
+
       // console.log(results);
       res.json(results);
-     
     }
   );
 });
-// SELECT COUNT
+//? SELECT COUNT
 router.get("/COUNT", async (req, res) => {
   con.query(
     "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
@@ -115,7 +128,7 @@ router.get("/COUNT", async (req, res) => {
     }
   );
 });
-// SELECT calendar
+//? SELECT calendar
 router.post("/calendar", async (req, res) => {
   let id = req.body.id;
   if (!id) {
@@ -150,6 +163,20 @@ router.post("/calendar", async (req, res) => {
 });
 // select calendar
 router.get("/list", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  let start = query01.start;
+  let end = query01.end;
+  const date2 = new Date(start);
+  const date1 = new Date(end);
+  var start2 = date2
+    .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+    .slice(0, 10);
+  var end2 = date1
+    .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+    .slice(0, 10);
+  // let id = query01.id;
+  // var start = req.body.start;
+
   var _start_date = "";
   var _end_date = "";
   var _start_time = "";
@@ -178,7 +205,9 @@ router.get("/list", async (req, res) => {
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
       "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
       "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
-      "WHERE ev.ev_status = '3' GROUP BY ev.event_id",
+      "WHERE ev.ev_status = '3' AND   ev.ev_startdate BETWEEN  ?  AND ? "+
+      "GROUP BY ev.event_id ",[start2,end2]
+      ,
     (error, row, fields) => {
       if (error) throw error;
 
@@ -320,57 +349,7 @@ router.post("/status", async (req, res) => {
     });
   }
 });
-// "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-// "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,u.id " +
-// "FROM tbl_event as ev INNER JOIN tbl_rooms as ro ON (ev.ro_id = ro.ro_id) " +
-// "INNER JOIN tbl_user as u ON (ev.id=u.id) " +
-// "WHERE u.id = ' ? ' GROUP BY ev.event_id";
 
-// con.query('SELECT o.ac_id,o.ac_name ,p.typeac_id ,o.ac_pubilc ,p.typeac_name '
-// +' FROM hr_academic AS o '
-// +' INNER JOIN hr_typeacademic as p ON o.typeac_id=p.typeac_id where o.ac_id = ? ' ,'' + ac_id + ''
-// +' ORDER BY o.ac_name ' , (error, results, fields) => {
-// if (error) throw error;
-
-// res.json(results);
-// });
-//  const params = [q.id];
-// con.query(sql, params ,(error, rows) => {
-//   if (error) {
-//     console.log(error);
-//     return res.json({
-//       status: "0",
-//       message: "เกิดข้อผิดพลาด",
-//     });
-//   } else {
-
-//     if (rows.length < 0) {
-//        console.log(rows);
-
-//       return res.json({
-//         ev_id: rows[0].ev_id,
-//         event_id: rows[0].event_id,
-//         ev_title: rows[0].ev_title,
-//         ev_startdate: rows[0].ev_startdate,
-//         ev_enddate: rows[0].ev_enddate,
-//         ev_status: rows[0].ev_status,
-//         ev_starttime: rows[0].ev_starttime,
-//         ev_endtime: rows[0].ev_endtime,
-//         ev_people: rows[0].ev_people,
-//         ev_createdate: rows[0].ev_createdate,
-//         ro_id:rows[0].ro_id,
-//         ro_name: rows[0].ro_name,
-//         id:rows[0].id,
-//       });
-//     } else {
-//       return res.json({
-//         status: "0",
-//         message:
-//           "ไม่มีรายการจองห้องประชุม",
-//       });
-//     }
-//   }
-// });
 
 //? Insert Data
 // sql.post("/", async (req, res,next) => {
@@ -388,25 +367,14 @@ router.post("/", async (req, res) => {
   var ev_starttime = req.body.ev_starttime;
   var ev_endtime = req.body.ev_endtime;
   var ev_people = req.body.ev_people;
-  var ev_staut = req.body.ev_status; //เริ่มการจอง status == 1 -> ส่งคำขอ , 2== รอการินุมัติจากหัวหน้า ,3 == อนุมัติคำขอ
+  var ev_status = req.body.ev_status;
+   //เริ่มการจอง status == 0==รออนุมัติจากหัวหน้า  , 1 -> รออนุมัติ , 2== ไม่อนุมัติจากหัวหน้า ,3 == อนุมัติ ,4==ไม่อนุมัติ,5==ยกเลิก
   var ev_id;
   var st_id = req.body.st_id; // id_style
   var id = req.body.id; // id_users
   var ro_id = req.body.ro_id; // id_rooms
-  function dateDiff(ev_startdate, ev_enddate) {
-    var date1 = new Date(ev_startdate);
-    var date2 = new Date(ev_enddate);
-    var diff = new Date(date2.getTime() - date1.getTime());
-    let f = new Intl.DateTimeFormat("en");
-    let different = f.formatToParts(diff);
-    return different;
-  }
-  var chk = 0;
-  var date_diff = dateDiff(ev_startdate, ev_enddate);
-  console.log(date_diff);
-  console.log(date_diff.toString().substring(1)); ///  คือ ? [object Object],[object Object],[object Object],[object Object],[object Object]
-  // let num = date_diff.toString().substring(1);
-  // let sing = date_diff.toString().substring(0, 1);
+ 
+  
   let num = date_diff;
   let sing = date_diff;
 

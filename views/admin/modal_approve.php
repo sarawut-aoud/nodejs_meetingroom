@@ -44,7 +44,7 @@
                     <div class="form-group row  mb-2">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label ">อุปกรณ์โสตทัศนูปกรณ์ : </label>
-                            <span class="col-form-label col-md-5" id="modal_tool"></span>
+                            <span class="col-form-label col-md" id="modal_tool"></span>
                         </div>
                     </div>
                     <hr style="size: 10px; color:black">

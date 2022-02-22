@@ -350,12 +350,15 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 var ro_id = $('#ro_name').val();
                 var ev_people = $('#people').val();
                 var st_id = $('#style').val();
+                
+                var sumnum = $('#sumnum').val();
+                var to_id = $('.to_id').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
 
                 $.ajax({
                     type: "POST",
-                    url: path + "/event",
+                    url: path + "/event_post/adddata",
                     dataType: "json",
                     data: {
                         ev_title: ev_title,
@@ -366,6 +369,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         ev_people: ev_people,
                         st_id: st_id,
                         ro_id: ro_id,
+                        to_id:to_id,
+                        sumnum:sumnum,
                         id: id,
                         level: level,
 
@@ -454,21 +459,24 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
 
 
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/tools",
-                success: function(result) {
-                    var data = ' <div class="form-group  ">';
-                    for (i in result) {
-                        data += '<div class="icheck-success d-flex "><input type="checkbox" id="' + result[i].to_id + '" value="' + result[i].to_id + '"  >'
-                        data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
-                    }
-                    data += '</div>';
-                    $('#tool').html(data);
+            // $.ajax({
+            //     type: "get",
+            //     dataType: "json",
+            //     url: path + "/tools",
+            //     success: function(result) {
+            //         var data = ' <div class="form-group  ">';
+            //         var x=0;
+            //         for (i in result) {
+            //             x++
+            //             data += '<div class="d-block "><input type="checkbox" class="to_id" id="'+(x)+'"  value="' + result[i].to_id + '"  >  '+result[i].to_name +''
+            //             // data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
+            //            data += '<input type="hidden"  id="sunnum" value="'+(x)+'">'
+            //         }
+            //         data += '</div>';
+            //         $('#tool').html(data);
 
-                }
-            });
+            //     }
+            // });
 
 
 

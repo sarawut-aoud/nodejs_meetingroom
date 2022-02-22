@@ -96,6 +96,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 </div>
                                 <div class="card-body mb-0">
                                     <div id="showDate"></div>
+                                    <div id="today" class="mt-2"></div>
+
                                 </div>
                             </div>
 
@@ -335,7 +337,28 @@ if ($_SESSION['mt_lv_id'] == 1) {
             var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
             $('#showDate').html(button);
 
+            var datetoday = new Date();
+            var today2 = datetoday.toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+              .slice(0, 10);
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/today",
+                success: function(results) {
+                    var today = ''
+                    for (i in results) {
+                        console.log(today2)
+                        if (results[i].ev_startdate == today2) {
+                          
+                            today += "<div class='rounded border  mt-2  '  style =\"background-color : " + results[i].ro_color + "\"> "+
+                            "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i].ev_starttime +" ถึง "+results[i].ev_endtime+ "</div>"+
+                            "</div>";
+                        }
+                    }
+                    $("#today").html(today);
 
+                }
+            })
         });
 
         function viewdetail(id) {
@@ -350,7 +373,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     id: id
                 },
                 success: function(results) {
-                
+
                     for (i in results) {
                         if (results[i].ev_id == id) {
                             var title = results[i].ev_title;
@@ -378,7 +401,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     $("#calendarmodal-starttime").html(starttime);
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
-                    $("#calendarmodal-name").html(name +' '+ lastname);
+                    $("#calendarmodal-name").html(name + ' ' + lastname);
                     $("#calendarmodal-dename").html(dename);
                     $("#calendarmodal-dephone").html(dephone);
                 },

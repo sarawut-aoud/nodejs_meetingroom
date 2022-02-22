@@ -258,8 +258,9 @@ const tools = require("./routers/tools");
 const rooms = require("./routers/room");
 const style = require("./routers/roomstyle");
 const event = require("./routers/events");
-
+const event_post = require("./routers/event_post");
 app.use("/event",event);
+app.use("/event_post",event_post);
 app.use("/depart", depart);
 app.use("/meeting", meeting);
 app.use("/tools", tools);

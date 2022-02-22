@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // businessHours: true,
      dayMaxEvents: true, // allow "more" link when too many events
     firstDay: 0, // กำหนดวันแรกในปฏิทินเป็นวันอาทิตย์ 0 เป็นวันจันทร์ 1
-    displayEventTime: true,
+    //displayEventTime: true,
     // displayEventEnd: true,
     eventTimeFormat: {
       // รูปแบบการแสดงของเวลา เช่น '14:30'
