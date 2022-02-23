@@ -112,8 +112,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         <div class="input-group">
                                             <label class="col-sm-2 col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-4">
-                                                <!-- <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " /> -->
-                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="prefix">
+                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="prefix2">
                                                     <option value="นาย">นาย</option>
                                                     <option value="นางสาว">นางสาว</option>
                                                     <option value="นาง">นาง</option>
@@ -263,38 +262,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                 }
             });
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/user",
-                data: {
-                    id: id,
-                },
-                success: function(result) {
-                    var data = '';
-                    for (i in result) {
-                        if (result[i].id == id) {
-                            var username = result[i].username;
-                            var password = result[i].password;
-                            var personid = result[i].person_id;
-                            var firstname = result[i].firstname;
-                            var lastname = result[i].lastname;
-                            var position = result[i].position;
-                            var phone = result[i].phone;
 
-                        }
-                    }
-                    $('#username').val(username);
-                    $('#password').val(password);
-                    $('#fname').val(firstname);
-                    $('#lname').val(lastname);
-                    $('#personid').val(personid);
-                    $('#phone').val(phone);
-                    $('#position').val(position);
-
-
-                }
-            });
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -331,6 +299,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 var username = $('#username').val();
                 var password = $('#password').val();
                 var person_id = $('#personid').val();
+                var prefix = $("#prefix2").val();
                 var firstname = $('#fname').val();
                 var lastname = $('#lname').val();
                 var position = $('#position').val();
@@ -345,12 +314,14 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         username: username,
                         password: password,
                         person_id: person_id,
+                        prefix: prefix,
                         firstname: firstname,
                         lastname: lastname,
                         position: position,
                         phone: phone,
-                        de_id :de_id,
-                        lv_id:lv_id,
+                        de_id: de_id,
+                        lv_id: lv_id,
+                        id:id,
                     },
                     success: function(result) {
                         const Toast = Swal.mixin({
@@ -363,11 +334,12 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             icon: 'success',
                             title: result.message
 
+                        }).then((result) => {
+                            location.reload();
+                            $('#fname')[0].focus();
                         })
-                        // $("#frmRoom")[0].reset();
-                        // $("#ro_name")[0].focus();
-                        // $("#ro_people")[0].reset();
-                        // $("#ro_detail")[0].reset();
+
+
                     },
                     error: function(result) {
                         const Toast = Swal.mixin({
@@ -378,14 +350,15 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         })
                         Toast.fire({
                             icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
+                            title: 'ไม่สามารถบันทึกข้อมูลได้'
 
                         }).then((result) => {
-                          
-                              // $("#frmRoom")[0].reset();
-                        // $("#ro_name")[0].focus();
-                        // $("#ro_people")[0].reset();
-                        // $("#ro_detail")[0].reset();
+                            // location.reload();
+                            $('#fname')[0].focus();
+                            $('#lname')[0].reset();
+                            $('#personid')[0].reset();
+                            $('#phone')[0].reset();
+                            $('#position')[0].reset();
 
                         })
                     }

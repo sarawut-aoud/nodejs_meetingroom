@@ -143,7 +143,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="POST" action="">
+                                <form method="POST" action="" id="frm_Addroom">
                                     <div class="card-body">
                                         <!--? Title Name -->
                                         <div class="form-group row">
@@ -161,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart"name="timeStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -171,7 +171,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd"/>
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -187,7 +187,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="dateStart" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="dateStart" name="dateStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -197,7 +197,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="dateEnd" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="dateEnd" name="dateEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -212,7 +212,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ห้องประชุม : </label>
                                                 <div class="col-md-10">
-                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="ro_name" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="ro_name" name="ro_name" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -253,6 +253,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             <button type="submit" id="btnAproveRoom" name="btnAproveRoom" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level"/>
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -275,7 +277,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         </div>
                         <!-- /.col -->
                     </div>
-                        <?php require_once '../modalcalendar.php';?>
+                    <?php require_once '../modalcalendar.php'; ?>
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -350,31 +352,31 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 var ro_id = $('#ro_name').val();
                 var ev_people = $('#people').val();
                 var st_id = $('#style').val();
-                
                 var sumnum = $('#sumnum').val();
-                var to_id = $('.to_id').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
+              
+                var formdata = $('#frm_Addroom').serializeArray();
 
                 $.ajax({
                     type: "POST",
                     url: path + "/event_post/adddata",
                     dataType: "json",
-                    data: {
-                        ev_title: ev_title,
-                        ev_starttime: ev_starttime,
-                        ev_endtime: ev_endtime,
-                        ev_startdate: ev_startdate,
-                        ev_enddate: ev_enddate,
-                        ev_people: ev_people,
-                        st_id: st_id,
-                        ro_id: ro_id,
-                        to_id:to_id,
-                        sumnum:sumnum,
-                        id: id,
-                        level: level,
-
-                    },
+                    data: formdata,
+                    // data: {
+                    //     ev_title: ev_title,
+                    //     ev_starttime: ev_starttime,
+                    //     ev_endtime: ev_endtime,
+                    //     ev_startdate: ev_startdate,
+                    //     ev_enddate: ev_enddate,
+                    //     ev_people: ev_people,
+                    //     st_id: st_id,
+                    //     ro_id: ro_id,
+                    //     to_id: to_id,
+                    //     sumnum: sumnum,
+                    //     id: id,
+                    //     level: level,
+                    // },
                     success: function(result) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -459,24 +461,24 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
 
 
-            // $.ajax({
-            //     type: "get",
-            //     dataType: "json",
-            //     url: path + "/tools",
-            //     success: function(result) {
-            //         var data = ' <div class="form-group  ">';
-            //         var x=0;
-            //         for (i in result) {
-            //             x++
-            //             data += '<div class="d-block "><input type="checkbox" class="to_id" id="'+(x)+'"  value="' + result[i].to_id + '"  >  '+result[i].to_name +''
-            //             // data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
-            //            data += '<input type="hidden"  id="sunnum" value="'+(x)+'">'
-            //         }
-            //         data += '</div>';
-            //         $('#tool').html(data);
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    var x = 0;
+                    for (i in result) {
+                        x++
+                        data += '<div class="d-block "><input type="checkbox" name="to_id[]" id="' + (x) + '"  value="' + result[i].to_id + '"  >  ' + result[i].to_name + ''
+                        // data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<input type="hidden"  id="sunnum" value="' + (x) + '">'
+                    }
+                    data += '</div>';
+                    $('#tool').html(data);
 
-            //     }
-            // });
+                }
+            });
 
 
 

@@ -141,15 +141,15 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         <!-- ./col -->
                     </div>
                     <!-- ./row form -->
-                    
-                    </div>
-                    <?php require_once './modal_user.php'; ?>
 
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+                </div>
+                <?php require_once './modal_user.php'; ?>
+
+            </div><!-- /.container-fluid -->
         </div>
-        <!-- /.content-wrapper -->
+        <!-- /.content-header -->
+    </div>
+    <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
     <?php require_once '../footer.php'; ?>
@@ -201,14 +201,29 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 dataType: "json",
                 url: path + "/depart",
                 success: function(result) {
-                    var depart = '<option value="" selected disabled>-- เลือกแผนกที่ดูแล --</option>';
+                    var depart = '<option value="0" selected disabled>-- แผนก --</option>';
                     for (ii in result) {
                         depart += '<option value="' + result[ii].de_id + '">' + result[ii]
                             .de_name +
                             '</option>';
                     }
-                    $('#de_id').html(depart);
-                    $('#modal_de_id').html(depart);
+                    $('#modaldename').html(depart);
+
+                }
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/level",
+                success: function(result) {
+                    var level = '<option value="0" selected disabled>-- ระดับสิทธ์ --</option>';
+                    for (ii in result) {
+                        level += '<option value="' + result[ii].lv_id + '">' + result[ii]
+                            .level +
+                            '</option>';
+                    }
+                    $('#modallevel').html(level);
+
                 }
             });
 
@@ -224,7 +239,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     $.each(data, function(idx, cell) {
                         table += ('<tr>');
                         table += ('<td>' + cell.id + '</td>');
-                        table += ('<td>' + cell.firstname +' '+cell.lastname+ '</td>');
+                        table += ('<td>' + cell.firstname + ' ' + cell.lastname + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.de_name + '</td>');
                         table += ('<td>' + cell.position + '</td>');
@@ -241,7 +256,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .DataTable({
                             responsive: true,
                             lengthChange: false,
-                            "lengthMenu": [[9, 24,49, -1], [10, 25, 50, "All"]],
+                            "lengthMenu": [
+                                [9, 24, 49, -1],
+                                [10, 25, 50, "All"]
+                            ],
                             autoWidth: false,
                             buttons: {
                                 dom: {
@@ -267,41 +285,48 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                     $(".btnEdit").click(function(e) {
                         e.preventDefault();
-                        var ro_id = $(this).attr('id');
+                        var id = $(this).attr('id');
 
                         $.ajax({
                             type: "get",
                             dataType: "json",
-                            url: path + "/rooms",
+                            url: path + "/user",
                             data: {
-                                ro_id: ro_id,
+                                id: id,
                             },
                             success: function(result) {
                                 for (ii in result) {
-                                    if (result[ii].ro_id == ro_id) {
-                                        var ro_name = result[ii].ro_name;
-                                        var ro_people = result[ii].ro_people;
-                                        var ro_color = result[ii].ro_color;
-                                        var ro_detail = result[ii].ro_detail;
-                                        break;
+                                    if (result[ii].id == id) {
+                                        var username = result[ii].username;
+                                        var password = result[ii].password;
+                                        var firstname = result[ii].firstname;
+                                        var lastname = result[ii].lastname;
+                                        var position = result[ii].position;
+                                        var phone = result[ii].phone;
+                                        var personid = result[ii].person_id;
+
                                     }
                                 }
-                                $("#ModalRoom").modal("show");
-                                $("#modal_ro_id").val(ro_id);
-                                $("#modal_ro_name").val(ro_name);
-                                $("#modal_ro_people").val(ro_people);
-                                $("#modal_ro_color").val(ro_color);
-                                $("#modal_ro_detail").val(ro_detail);
+                                $("#ModalUser").modal("show");
+
+                                $("#iduser").val(id);
+                                $("#modalusername").val(username);
+                                $("#modalpassword").val(password);
+                                $("#modalfname").val(firstname);
+                                $("#modallname").val(lastname);
+                                $("#modalposition").val(position);
+                                $("#modalphone").val(phone);
+                                $("#modalpersonid").val(personid);
                             }
                         });
                     });
                     $(".btnDels").click(function(e) {
                         e.preventDefault();
 
-                        var ro_id = $(this).attr('id');
+                        var id = $(this).attr('id');
                         var _row = $(this).parent();
                         Swal.fire({
-                            title: 'คุณต้องการลบข้อมูลห้องประชุมใช่หรือไม่ ?',
+                            title: 'คุณต้องการลบข้อมูลผู้ใช้ ใช่หรือไม่ ?',
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -313,9 +338,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $.ajax({
                                     dataType: 'JSON',
                                     type: "DELETE",
-                                    url: path + "/rooms",
+                                    url: path + "/user",
                                     data: {
-                                        ro_id: ro_id
+                                        id: id
                                     },
                                     success: function(result) {
                                         Swal.fire({
@@ -333,7 +358,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         })
                                         Toast.fire({
                                             icon: 'warning',
-                                            title: 'ไม่สามารถลบขเอมูลได้'
+                                            title: 'ไม่สามารถลบข้อมูลได้'
 
                                         }).then((result) => {
                                             location.reload();
@@ -349,25 +374,40 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
 
             ///  Btn Modal
-            $(".btnSaveTool").click(function(e) {
+            $("#btnSaveUser").click(function(e) {
                 e.preventDefault();
 
-                var to_id = $("#modal_to_id").val();
-                var to_name = $("#modal_to_name").val();
-                var de_id = $("#modal_de_id").val();
-                console.log(de_id);
-                // console.log(to_id);
+                var id = $("#iduser").val();
+                var lv_id = $("#modallevel").val();
+                var de_id = $("#modaldename").val();
+                var username = $("#modalusername").val();
+                var password = $("#modalpassword").val();
+                var prefix = $("#modalprefix").val();
+                var firstname = $("#modalfname").val();
+                var lastname = $("#modallname").val();
+                var position = $("#modalposition").val();
+                var phone = $("#modalphone").val();
+                var person_id = $("#modalpersonid").val();
+
                 $.ajax({
                     type: "PUT",
-                    url: path + "/tools",
+                    url: path + "/user",
                     data: {
-                        to_id: to_id,
-                        to_name: to_name,
+                        username: username,
+                        password: password,
+                        person_id: person_id,
+                        prefix: prefix,
+                        firstname: firstname,
+                        lastname: lastname,
+                        position: position,
+                        phone: phone,
                         de_id: de_id,
+                        lv_id: lv_id,
+                        id: id,
                     },
                     dataType: "json",
                     success: function(result) {
-                        $('#ModalTool').modal('hide');
+                        $('#ModalUser').modal('hide');
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -377,7 +417,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         Toast.fire({
                             icon: 'success',
                             title: result.message
+                        }).then((result) => {
+                            location.reload();
                         })
+
                     },
                     error: function(result) {
                         const Toast = Swal.mixin({
@@ -388,10 +431,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         })
                         Toast.fire({
                             icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลอุปกรณ์ได้'
+                            title: 'ไม่สามรถแก้ไขข้อมูลผู้ใช้งานนี้ได้'
 
                         }).then((result) => {
-                            location.reload();
+                            // location.reload();
+                            $('#modaldename')[0].focus();
                         })
                     }
                 });

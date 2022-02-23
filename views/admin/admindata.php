@@ -117,7 +117,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         </div>
                     </div>
                     <div class="row mt-3 justify-content-center">
-                        <div class="col-xl-10 col-md-12 col-sm-12">
+                        <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
@@ -139,11 +139,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <!-- /.card -->
                         </div>
                         <!-- ./col -->
-                    </div>
-                    <!-- ./row form -->
-                    <div class="row justify-content-center">
                         <!--  //? ./From StyleRoom -->
-                        <div class="col-xl-10 col-md-12 col-sm-12">
+                        <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
@@ -162,17 +159,37 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     <!-- /.card-body -->
                                 </form>
                                 <!--  //? ./From StyleRoom -->
-
-
-
                             </div>
                             <!-- /.card -->
                         </div>
                         <!-- ./col -->
                     </div>
+                    <!-- ./row form -->
+
                     <div class="row justify-content-center">
+                        <!-- //? Form depart -->
+                        <div class="col-xl-6 col-md-12 col-sm-12">
+                            <!-- general form elements -->
+                            <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h1>แผนก</h1>
+                                    </div>
+                                </div>
+                                <div class="card-body table-responsive p-2">
+                                    <!--//? tableTools -->
+                                    <div id="tableDepart">
+                                    </div>
+                                    <!--//? tableTools -->
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- ./col -->
+                        <!-- //? Form depart -->
                         <!-- //? Form Tools -->
-                        <div class="col-xl-10 col-md-12 col-sm-12">
+                        <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
@@ -292,7 +309,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .DataTable({
                             responsive: true,
                             lengthChange: false,
-                            "lengthMenu": [[9, 24,49, -1], [10, 25, 50, "All"]],
+                            "lengthMenu": [
+                                [9, 24, 49, -1],
+                                [10, 25, 50, "All"]
+                            ],
                             autoWidth: false,
                             buttons: {
                                 dom: {
@@ -369,11 +389,26 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         ro_id: ro_id
                                     },
                                     success: function(result) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: result.message,
-                                        })
-                                        _row.closest('tr').remove();
+                                        if (result.status == '0') {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: result.message,
+                                            })
+                                            _row.closest('tr').remove();
+                                        } else {
+                                            const Toast = Swal.mixin({
+                                                toast: true,
+                                                position: 'top-end',
+                                                showConfirmButton: false,
+                                                timer: 3000,
+                                            })
+                                            Toast.fire({
+                                                icon: 'warning',
+                                                title: result.message,
+
+                                            })
+                                        }
+
                                     },
                                     error: function(result) {
                                         const Toast = Swal.mixin({
@@ -384,7 +419,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         })
                                         Toast.fire({
                                             icon: 'warning',
-                                            title: 'ไม่สามารถลบขเอมูลได้'
+                                            title: 'ไม่สามารถลบข้อมูลได้'
 
                                         }).then((result) => {
                                             location.reload();
@@ -424,7 +459,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .DataTable({
                             responsive: true,
                             lengthChange: false,
-                            "lengthMenu": [[9, 24,49, -1], [10, 25, 50, "All"]],
+                            "lengthMenu": [
+                                [9, 24, 49, -1],
+                                [10, 25, 50, "All"]
+                            ],
                             autoWidth: false,
                             buttons: {
                                 dom: {
@@ -493,11 +531,25 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         st_id: st_id
                                     },
                                     success: function(result) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: result.message,
-                                        })
-                                        _row.closest('tr').remove();
+                                        if (result.status == '0') {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: result.message,
+                                            })
+                                            _row.closest('tr').remove();
+                                        } else {
+                                            const Toast = Swal.mixin({
+                                                toast: true,
+                                                position: 'top-end',
+                                                showConfirmButton: false,
+                                                timer: 3000,
+                                            })
+                                            Toast.fire({
+                                                icon: 'warning',
+                                                title: result.message,
+
+                                            })
+                                        }
                                     },
                                     error: function(result) {
                                         const Toast = Swal.mixin({
@@ -548,7 +600,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .DataTable({
                             responsive: true,
                             lengthChange: false,
-                            "lengthMenu": [[9, 24,49, -1], [10, 25, 50, "All"]],
+                            "lengthMenu": [
+                                [9, 24, 49, -1],
+                                [10, 25, 50, "All"]
+                            ],
                             autoWidth: false,
                             buttons: {
                                 dom: {
@@ -602,7 +657,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         var _row = $(this).parent();
                         // console.log(to_id);
                         Swal.fire({
-                            title: 'คุณต้องการลบข้อมูลรูปแบบห้องประชุมใช่หรือไม่ ?',
+                            title: 'คุณต้องการลบข้อมูลอุปกรณ์<br>ใช่หรือไม่ ?',
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -624,6 +679,153 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             title: result.message,
                                         })
                                         _row.closest('tr').remove();
+                                    },
+                                    error: function(result) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 2000,
+                                        })
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'ไม่สามารถลบข้อมูลได้'
+
+                                        }).then((result) => {
+                                            location.reload();
+
+                                        })
+                                    }
+                                });
+                            }
+                        })
+                    });
+                }
+
+            });
+            //todo: table tools
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: path + "/depart",
+
+                success: function(data) {
+                    var i = 0;
+                    var table = '<table id="tb_depart"  with="100%" class="table table-hover text-nowrap">' +
+                        '<thead><tr><th>ID</th><th>ชื่อแผนก</th><th>เบอร์โทรติดต่อสายตรง</th><th></th></tr></thead>';
+
+                    $.each(data, function(idx, cell) {
+                        table += ('<tr>');
+                        table += ('<td width="20%">' + cell.de_id + '</td>');
+                        table += ('<td width="30%">' + cell.de_name + '</td>');
+                        // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
+                        table += ('<td width="30%">' + cell.de_phone + '</td>');
+                        table += ('<td  align="center"width="20%"><a id="' + cell.de_id + '"  class="btn btn-info btndepartEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="' + cell.de_id + '" class="btn btn-danger btndepartDels"title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
+                        table += ('</tr>');
+                    });
+                    table += '</table>';
+                    $("#tableDepart").html(table);
+
+                    $("#tb_depart")
+                        .DataTable({
+                            responsive: true,
+                            lengthChange: false,
+                            "lengthMenu": [
+                                [9, 24, 49, -1],
+                                [10, 25, 50, "All"]
+                            ],
+                            autoWidth: false,
+                            buttons: {
+                                dom: {
+                                    button: {
+                                        className: "btn btn-light  ",
+                                    },
+                                },
+                                buttons: [{
+                                    extend: "colvis",
+                                    className: "btn btn-outline-success"
+                                }, ]
+                            },
+                            language: {
+                                buttons: {
+                                    colvis: "Change columns",
+                                },
+                            },
+                        })
+                        .buttons()
+                        .container()
+                        .appendTo("#tb_depart_wrapper .col-md-6:eq(0)");
+
+                    $(".btndepartEdit").click(function(e) {
+                        e.preventDefault();
+                        var de_id = $(this).attr('id');
+
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: path + "/depart",
+                            data: {
+                                de_id: de_id,
+                            },
+                            success: function(result) {
+                                for (ii in result) {
+                                    if (result[ii].de_id == de_id) {
+                                        var de_name = result[ii].de_name;
+                                        var de_phone = result[ii].de_phone;
+                                        break;
+                                    }
+                                }
+                                $("#ModalDepart").modal("show");
+                                $("#modal_de_id").val(de_id);
+                                $("#modal_de_name").val(de_name);
+                                $("#modal_de_phone").val(de_phone);
+                            }
+                        });
+                    });
+                    $(".btndepartDels").click(function(e) {
+                        e.preventDefault();
+
+                        var de_id = $(this).attr('id');
+                        var _row = $(this).parent();
+                        // console.log(to_id);
+                        Swal.fire({
+                            title: 'คุณต้องการลบข้อมูลแผนก<br>ใช่หรือไม่ ?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก",
+                        }).then((btn) => {
+                            if (btn.isConfirmed) {
+                                $.ajax({
+                                    dataType: 'JSON',
+                                    type: "DELETE",
+                                    url: path + "/depart",
+                                    data: {
+                                        de_id: de_id
+                                    },
+                                    success: function(result) {
+                                        if (result.status == '0') {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: result.message,
+                                            })
+                                            _row.closest('tr').remove();
+                                        } else {
+                                            const Toast = Swal.mixin({
+                                                toast: true,
+                                                position: 'top-end',
+                                                showConfirmButton: false,
+                                                timer: 3000,
+                                            })
+                                            Toast.fire({
+                                                icon: 'warning',
+                                                title: result.message,
+
+                                            })
+                                        }
                                     },
                                     error: function(result) {
                                         const Toast = Swal.mixin({
@@ -697,9 +899,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             icon: 'warning',
                             title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
 
-                        }).then((result) => {
-                            location.reload();
                         })
+                        // .then((result) => {
+                        //     location.reload();
+                        // })
 
                     }
                 });
@@ -755,7 +958,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 var to_id = $("#modal_to_id").val();
                 var to_name = $("#modal_to_name").val();
                 var de_id = $("#modal_de_id").val();
-                console.log(de_id);
+
                 // console.log(to_id);
                 $.ajax({
                     type: "PUT",
@@ -792,6 +995,55 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                         }).then((result) => {
                             location.reload();
+                        })
+                    }
+                });
+            });
+            $(".btnSaveDepart").click(function(e) {
+                e.preventDefault();
+
+                var de_id = $("#modal_de_id").val();
+                var de_name = $("#modal_de_name").val();
+                var de_phone = $("#modal_de_phone").val();
+
+                // console.log(to_id);
+                $.ajax({
+                    type: "PUT",
+                    url: path + "/depart",
+                    data: {
+                        de_id: de_id,
+                        de_name: de_name,
+                        de_phone: de_phone,
+                    },
+                    dataType: "json",
+                    success: function(result) {
+                        $('#ModalTool').modal('hide');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    },
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลอุปกรณ์ได้'
+
+                        }).then((result) => {
+                            $("#modal_de_name")[0].focus();
                         })
                     }
                 });

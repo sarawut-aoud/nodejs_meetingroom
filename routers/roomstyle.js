@@ -132,7 +132,7 @@ sql.delete("/", async (req, res) => {
       (error, results, fields) => {
         if (error) throw error;
 
-        if (results[0].ac_id > 0) {
+        if (results[0].st_id > 0) {
           return res.send({
             error: false,
             status: "1",

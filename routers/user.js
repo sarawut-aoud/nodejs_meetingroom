@@ -57,5 +57,73 @@ sql.get("/", async (req, res) => {
     );
   }
 });
+// //? Update Data
+sql.put("/", async (req, res) => {
+  let id = req.body.id;
+  let username = req.body.username;
+  let password = req.body.password;
+  let firstname = req.body.firstname;
+  let lastname = req.body.lastname;
+  let prefix = req.body.prefix;
+  let person_id = req.body.person_id;
+  let position = req.body.position;
+  let phone = req.body.phone;
+  let de_id = req.body.de_id;
+  let lv_id = req.body.lv_id;
 
+  if (!id || !firstname || !lastname || !de_id || !lv_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+  } else {
+    con.query(
+      "UPDATE tbl_user SET username = ?, password = ? ,  prefix = ? ,firstname = ?,lastname = ?,person_id = ? ,position = ?,phone = ? ,de_id = ? ,lv_id=? WHERE id = ?",
+      [
+        username,
+        password,
+        prefix,
+        firstname,
+        lastname,
+        person_id,
+        position,
+        phone,
+        de_id,
+        lv_id,
+        id,
+      ],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.send({
+          error: false,
+          status: "0",
+          message: "แก้ไขข้อมูลแล้ว",
+        });
+      }
+    );
+  }
+});
+
+// //? delete data
+sql.delete("/", async (req, res) => {
+  let id = req.body.id;
+
+  if (!id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
+  } else {
+    con.query(
+      "DELETE FROM tbl_user WHERE id = ?",
+      [id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.send({
+          error: false,
+          status: "0",
+          message: "ลบข้อมูลแล้ว",
+        });
+      }
+    );
+  }
+});
 module.exports = sql;

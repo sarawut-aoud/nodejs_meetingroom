@@ -120,11 +120,89 @@
         </div>
         <!-- /.content-wrapper -->
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
+        <!-- Modal -->
+        <div class="modal fade " id="calendarmodal" tabindex="-1" role="dialog">
+            <!--กำหนด id ให้กับ modal-->
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center text-white edit-head">
+                        <div class="text-center">
+                            <h4 id="calendarmodal-title"> </h4>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-9">
+                        <div class="form-group row">
+                            <b class="col-lg-6">สถานที่ประชุม :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-detail"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-lg-6">ชื่อผู้ขอใช้ห้องประชุม:</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-name"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <b class="col-lg-6">กลุ่มงาน/ฝ่าย/แผนก :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-dename"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-lg-6">เบอร์ติดต่อสายตรง :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-dephone"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-lg-6">วันที่เริ่ม :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-start"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <b class="col-lg-6">ถึงวันที่ :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-end"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-lg-6">เวลาเริ่ม :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-starttime"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-lg-6">ถึงเวลา :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-endtime"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-lg-6">จำนวนคน :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-people"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <b class="col-lg-6">รูปแบบการจัดห้อง :</b>
+                            <div class="col-lg-6">
+                                <div id="calendarmodal-style"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <!-- Modal -->
+       
 
         <!-- Main Footer -->
         <footer class="main-footer">
@@ -161,8 +239,8 @@
     <!-- Summernote -->
     <script src="./plugins/summernote/summernote-bs4.min.js"></script>
     <!-- Sweetalert2 -->
-    <script src="./plugins/fontawesome-pro6/js/"></script>
-    
+    <script src="./plugins/fontawesome-pro6/js/all.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="./public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
@@ -234,6 +312,53 @@
                 '</button></center>'
             $('#showDate').html(button);
         });
+
+        function viewdetail(id) {
+            //    console.log(id);
+
+            // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:4500/event/calendar",
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                success: function (results) {
+
+                    for (i in results) {
+                        if (results[i].ev_id == id) {
+                            var title = results[i].ev_title;
+                            var room = results[i].ro_name;
+                            var style = results[i].st_name;
+                            var start = results[i].ev_startdate;
+                            var end = results[i].ev_enddate;
+                            var starttime = results[i].ev_starttime;
+                            var endtime = results[i].ev_endtime;
+                            var people = results[i].ev_people;
+                            var name = results[i].firstname;
+                            var lastname = results[i].lastname;
+                            var dename = results[i].de_name;
+                            var dephone = results[i].de_phone;
+                        }
+                    }
+                    $("#calendarmodal").modal("show");
+
+                    $("#calendarmodal-title").html(title);
+                    $("#calendarmodal-detail").html(room);
+                    $("#calendarmodal-style").html(style);
+                    //$("#calendarmodal-detail").html(event.extendedProps.detail);
+                    $("#calendarmodal-start").html(start.split('T')[0]);
+                    $("#calendarmodal-end").html(end.split('T')[0]);
+                    $("#calendarmodal-starttime").html(starttime);
+                    $("#calendarmodal-endtime").html(endtime);
+                    $("#calendarmodal-people").html(people);
+                    $("#calendarmodal-name").html(name + ' ' + lastname);
+                    $("#calendarmodal-dename").html(dename);
+                    $("#calendarmodal-dephone").html(dephone);
+                },
+            });
+        }
     </script>
 </body>
 

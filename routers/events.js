@@ -129,35 +129,35 @@ router.get("/COUNT", async (req, res) => {
 });
 //? SELECT calendar
 router.post("/calendar", async (req, res) => {
-  let show = req.body.show;
-  if (show != "show") {
-    return res.json({
-      status: "0",
-      message: "เกิดข้อผิดพลาด",
-    });
-  } else {
+  let id = req.body.id;
+  // if (show != "show") {
+  //   return res.json({
+  //     status: "0",
+  //     message: "เกิดข้อผิดพลาด",
+  //   });
+  // } else {
     con.query(
       "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
-        "ev.ev_bgcolor,ev.ev_color, ev.ev_repeatday," +
-        "ro.ro_id, ro.ro_name, ro.ro_color," +
-        "st.st_id, st.st_name," +
-        "users.id, users.firstname,users.lastname, users.position," +
-        "dept.de_id, dept.de_name, dept.de_phone " +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
+        
+        " ro.ro_name, ro.ro_color," +
+        "st.st_name," +
+        "users.firstname,users.lastname, users.position," +
+        "dept.de_name, dept.de_phone " +
         "FROM tbl_event AS ev " +
         " " +
         "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
         "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
         "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
-        "WHERE ev.ev_status = '3' GROUP BY ev.event_id",
+        "WHERE ev.ev_status = '3' AND ev.ev_id = ? GROUP BY ev.event_id",[id],
       (error, results, fields) => {
         if (error) throw error;
         // console.log(error);
-        return res.json(results);
+       return res.json(results);
       }
     );
-  }
+  
 });
 // select calendar
 router.get("/list", async (req, res) => {

@@ -186,18 +186,18 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>เพิ่มอุปกรณ์</h1>
+                                        <h1>เพิ่มแผนก</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
                                 <form method="POST" action="" id="frmTools">
-                                    <div class="card-body shadow">
+                                    <div class="card-body ">
                                         <!--//? /.Tool Name -->
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
+                                                <label class="col-md-3 col-form-label">ชื่อแผนก :</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="to_name" name="to_name" />
+                                                    <input type="text" class="form-control " id="de_name2" name="de_name2" />
                                                 </div>
                                             </div>
                                         </div>
@@ -205,11 +205,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         <!-- //? Input People -->
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
+                                                <label class="col-md-3 col-form-label">เบอร์โทรติดต่อสายตรง :</label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="de_id">
-                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
-                                                    </select>
+                                                    <input type="text" class="form-control " id="de_phone2" name="de_phone2" />
+
                                                 </div>
                                             </div>
                                         </div>
@@ -219,7 +218,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnTools" name="btnTools">ยืนยันเพิ่มอุปกรณ์</button>
+                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnDept">ยืนยันเพิ่มแผนก</button>
                                         </div>
                                     </div>
                                 </form>
@@ -265,15 +264,64 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             </div>
                             <!-- /.card -->
                         </div>
+                        <!-- //? Form Tools -->
+                        <div class="col-xl-6 col-md-12 col-sm-12">
+                            <!-- general form elements -->
+                            <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h1>เพิ่มอุปกรณ์</h1>
+                                    </div>
+                                </div>
+                                <!-- form start -->
+                                <form method="POST" action="" id="frmTools">
+                                    <div class="card-body ">
+                                        <!--//? /.Tool Name -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control " id="to_name" name="to_name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--//? /.Tool Name -->
+                                        <!-- //? Input People -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="de_id">
+                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- //? Input People -->
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer ">
+                                        <div class="row justify-content-between ">
+                                            <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
+                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnTools" name="btnTools">ยืนยันเพิ่มอุปกรณ์</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card -->
+                        </div>
                         <!-- ./col -->
-                        <!--  //? ./From Department -->
+                        <!-- //? Form Tools -->
                     </div>
+                    <!-- ./col -->
+                    <!--  //? ./From Department -->
+                </div>
 
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+            </div><!-- /.container-fluid -->
         </div>
-        <!-- /.content-wrapper -->
+        <!-- /.content-header -->
+    </div>
+    <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
     <?php require_once '../footer.php'; ?>
@@ -383,6 +431,59 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     $("#ro_detail")[0].reset();
                 }
             });
+            // department
+            $('#btnDept').click(function(e) {
+                e.preventDefault();
+                var de_name = $('#de_name2').val();
+                var de_phone = $('#de_phone2').val();
+                $.ajax({
+                    type: "POST",
+                    url: path + "/depart",
+                    dataType: "json",
+                    data: {
+                        de_name: de_name,
+                        de_phone: de_phone,
+                    },
+                    success: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'บันทึกข้อมูลแผนกสำเร็จ'
+
+                        }).then((result) => {
+                            $("#de_name")[0].focus();
+                        })
+
+                    },
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'warning',
+                            title: 'ไม่สามารถบันทึกข้อมูลแผนกได้'
+
+                        }).then((result) => {
+
+                            $("#de_name")[0].focus();
+
+                        })
+
+                    }
+                });
+
+
+
+            });
+
             /// Tools
             $('#btnTools').click(function(e) {
                 e.preventDefault();
