@@ -16,67 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const router = express.Router();
-// router.post("/adddata", async (req, res, next) => {
-//   var ev_startdate = req.body.dateStart;
-//   var ev_enddate = req.body.dateEnd;
-//   var ro_id = req.body.ro_name;
-//   var ev_starttime = req.body.timeStart;
-//   var ev_endtime = req.body.timeEnd;
 
-//   var chk = 0;
-//   var date_diff = DATE_DIFF(ev_startdate, ev_enddate, "D").output;
-//   if (date_diff >= 0) {
-//     var dateStart = ev_enddate;
-//     for (var i = 0; i <= date_diff; i++) {
-//       con.query(
-//         "SELECT IF (ev_starttime = '00:00:00', '', substr(ev_starttime, 1, 5)) as ev_starttime, " +
-//           "IF (ev_endtime = '00:00:00', '', substr(ev_endtime, 1, 5)) as ev_endtime " +
-//           "FROM tbl_event where ev_startdate = ? and ro_id = ? and ev_status = '3'",
-//         [dateStart, ro_id],
-//         (error, results, field) => {
-//           if (error) throw error;
-//           for (var x = 0; x < results.length; x++) {
-//             var timestart = ev_starttime;
-//             var timeend = ev_endtime;
-//             console.log(timestart, timeend);
-//             if (timestart != "" && timeend != "") {
-//               if (ev_starttime >= timestart && ev_starttime <= timeend) {
-//                 chk++;
-//               } else if (
-//                 ev_starttime <= timestart &&
-//                 ev_starttime <= timestart &&
-//                 ev_endtime >= timeend
-//               ) {
-//                 chk++;
-//               } else if (
-//                 ev_starttime <= timestart &&
-//                 ev_endtime >= timestart &&
-//                 ev_endtime <= timeend
-//               ) {
-//                 chk++;
-//               } else {
-//                 if (ev_starttime == timestart) {
-//                   chk++;
-//                 }
-//               }
-//             }
-//           } //for x
-//           var theDate1 = Date.parse(dateStart) + 3600 * 1000 * 24;
-
-//           const date = new Date(theDate1);
-
-//           var dateStart = date
-//             .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
-//             .slice(0, 10);
-//         }
-//       );
-//     } //for i
-//   }
-//   req.chk = chk;
-//   // req.dateStart = dateStart;
-//   req.date_diff = date_diff;
-//   return next();
-// });
 router.post("/adddata", async (req, res) => {
   // chk = req.chk;
   // diff = req.date_diff;
