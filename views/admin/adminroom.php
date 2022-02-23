@@ -472,7 +472,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         x++
                         data += '<div class="d-block "><input type="checkbox" name="to_id[]" id="' + (x) + '"  value="' + result[i].to_id + '"  >  ' + result[i].to_name + ''
                         // data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
-                        data += '<input type="hidden"  id="sunnum" value="' + (x) + '">'
+                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                     }
                     data += '</div>';
                     $('#tool').html(data);
