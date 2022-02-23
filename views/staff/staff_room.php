@@ -31,11 +31,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<!-- DataTables -->
-<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
@@ -144,16 +139,16 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h4>เลือกห้องประชุม เพื่อทำการจอง</h4>
+                                        <h4><i class=" fa-regular fa-calendar-check"></i> เลือกห้องประชุม เพื่อทำการจอง</h4>
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="POST" action="">
+                                <form method="POST" action="" id="frm_Addroom">
                                     <div class="card-body">
                                         <!--? Title Name -->
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-2 col-form-label">ชื่อโครงการ :</label>
+                                                <label class="col-md-2 col-form-label">หัวข้อเรื่องประชุม :</label>
                                                 <div class="col-md-10">
                                                     <input type="text" class="form-control " id="title" name="title" />
                                                 </div>
@@ -166,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart"name="timeStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -176,7 +171,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd"/>
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -192,7 +187,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 <label class="col-md-2 col-form-label">วันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="dateStart" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="dateStart" name="dateStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -202,7 +197,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="dateEnd" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="dateEnd" name="dateEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar"></i>
                                                             </div>
@@ -217,7 +212,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">ห้องประชุม : </label>
                                                 <div class="col-md-10">
-                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="ro_name" />
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="ro_name" name="ro_name" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -242,25 +237,10 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         <div class="form-group row ">
                                             <div class="input-group">
                                                 <label class="col-md-2 col-form-label">อุปกรณ์ :</label>
-                                                <div class="col-md-4  d-flex ">
-                                                    <div class="icheck-success ">
-                                                        <input type="radio" id="checktool1" name="r1" checked>
-                                                        <label for="checktool1"> ไม่ต้องการ
-                                                        </label>
 
-                                                    </div>
-                                                    <div class="icheck-success ml-3">
-                                                        <input type="radio" id="checktool" name="r1">
-                                                        <label for="checktool"> ต้องการ
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" multiple="multiple" id="tool" data-placeholder="-เพิ่มเติม-" disabled />
+                                                <div id="tool"></div>
 
-                                                    </select>
 
-                                                </div>
 
                                             </div>
                                         </div>
@@ -273,6 +253,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             <button type="submit" id="btnAproveRoom" name="btnAproveRoom" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level"/>
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -282,7 +264,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             <div class="card ">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h4> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                        <h4><i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -295,7 +277,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         </div>
                         <!-- /.col -->
                     </div>
-
+                    <?php require_once '../modalcalendar.php'; ?>
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -324,20 +306,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-    <!-- DataTables  & Plugins -->
-    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="../plugins/jszip/jszip.min.js"></script>
-    <script src="../plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="../plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
     <!-- Sweetalert2 -->
@@ -347,6 +315,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
+
+    <script src="../public/javascript/countBage.js"></script>
 
     <script>
         $(function() {
@@ -382,26 +352,31 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 var ro_id = $('#ro_name').val();
                 var ev_people = $('#people').val();
                 var st_id = $('#style').val();
+                var sumnum = $('#sumnum').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
+              
+                var formdata = $('#frm_Addroom').serializeArray();
 
                 $.ajax({
                     type: "POST",
-                    url: path + "/event",
+                    url: path + "/event_post/adddata",
                     dataType: "json",
-                    data: {
-                        ev_title: ev_title,
-                        ev_starttime: ev_starttime,
-                        ev_endtime: ev_endtime,
-                        ev_startdate: ev_startdate,
-                        ev_enddate: ev_enddate,
-                        ev_people: ev_people,
-                        st_id: st_id,
-                        ro_id: ro_id,
-                        id: id,
-                        level: level,
-
-                    },
+                    data: formdata,
+                    // data: {
+                    //     ev_title: ev_title,
+                    //     ev_starttime: ev_starttime,
+                    //     ev_endtime: ev_endtime,
+                    //     ev_startdate: ev_startdate,
+                    //     ev_enddate: ev_enddate,
+                    //     ev_people: ev_people,
+                    //     st_id: st_id,
+                    //     ro_id: ro_id,
+                    //     to_id: to_id,
+                    //     sumnum: sumnum,
+                    //     id: id,
+                    //     level: level,
+                    // },
                     success: function(result) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -485,30 +460,76 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 }
             });
 
-            $("#checktool").change(function() {
 
-                $("#checktool1").change(function() {
-                    $('#tool').prop('disabled', true);
-                    $('#tool').val(null).trigger("change");
-                });
-
-                $('#tool').prop('disabled', false);
-                $.ajax({
-                    type: "get",
-                    dataType: "json",
-                    url: path + "/tools",
-                    success: function(result) {
-                        var data = '';
-                        for (i in result) {
-                            data += '<option value="' + result[i].to_id + '" > ' + result[i].to_name + '</option>';
-                        }
-                        $('#tool').html(data);
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    var x = 0;
+                    for (i in result) {
+                        x++
+                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                     }
-                });
+                    data += '</div>';
+                    $('#tool').html(data);
+
+                }
             });
 
 
+
         });
+
+        function viewdetail(id) {
+            //    console.log(id);
+
+            // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:4500/event/calendar",
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                success: function(results) {
+
+                    for (i in results) {
+                        if (results[i].ev_id == id) {
+                            var title = results[i].ev_title;
+                            var room = results[i].ro_name;
+                            var style = results[i].st_name;
+                            var start = results[i].ev_startdate;
+                            var end = results[i].ev_enddate;
+                            var starttime = results[i].ev_starttime;
+                            var endtime = results[i].ev_endtime;
+                            var people = results[i].ev_people;
+                            var name = results[i].firstname;
+                            var lastname = results[i].lastname;
+                            var dename = results[i].de_name;
+                            var dephone = results[i].de_phone;
+                        }
+                    }
+                    $("#calendarmodal").modal("show");
+
+                    $("#calendarmodal-title").html(title);
+                    $("#calendarmodal-detail").html(room);
+                    $("#calendarmodal-style").html(style);
+                    //$("#calendarmodal-detail").html(event.extendedProps.detail);
+                    $("#calendarmodal-start").html(start.split('T')[0]);
+                    $("#calendarmodal-end").html(end.split('T')[0]);
+                    $("#calendarmodal-starttime").html(starttime);
+                    $("#calendarmodal-endtime").html(endtime);
+                    $("#calendarmodal-people").html(people);
+                    $("#calendarmodal-name").html(name + ' ' + lastname);
+                    $("#calendarmodal-dename").html(dename);
+                    $("#calendarmodal-dephone").html(dephone);
+                },
+            });
+        }
     </script>
 </body>
 

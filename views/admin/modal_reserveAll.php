@@ -1,5 +1,5 @@
 <!-- Modal detail -->
-<form action="" method="">
+<form action="" method="POST" id="modalRoomall">
     <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -213,7 +213,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    <button type="submit" id="btnSave" name="btnSave" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
+                    <button type="submit" id="btnsaveRoom" name="btnsaveRoom" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
                 </div>
             </div>
         </div>

@@ -205,9 +205,12 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 url: path + "/tools",
                 success: function(result) {
                     var data = ' <div class="form-group  ">';
+                    var x = 0;
                     for (i in result) {
-                        data += '<div class="icheck-success d-flex "><input type="checkbox" id="' + result[i].to_id + '" value="' + result[i].to_id + '"  >'
-                        data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
+                        x++
+                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                     }
                     data += '</div>';
                     $('#modaltool').html(data);
@@ -346,23 +349,23 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
                                         $.ajax({
-                                            type:'get',
+                                            type: 'get',
                                             dataType: 'json',
-                                            url: path+'/event/requesttool',
-                                            success:function(tool){
+                                            url: path + '/event/requesttool',
+                                            success: function(tool) {
                                                 // console.log(result[ii].event_id)
-                                                var to_name =''
-                                                for(i in tool){
-                                                   
-                                                    if(tool[i].ev_id == ev_id){
-                                                       
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
-                                                       
+                                                var to_name = ''
+                                                for (i in tool) {
+
+                                                    if (tool[i].ev_id == ev_id) {
+
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
+
                                                     }
-                                         
+
                                                     $("#modal2_tool").html(to_name);
                                                 }
-                                             
+
                                             }
                                         });
                                     }
@@ -560,7 +563,83 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 });
             });
             /// modal ///
+            $('#btnsaveRoom').click(function(e) {
+                e.preventDefault();
+                var ev_title = $('#title').val();
+                var ev_starttime = $('#timeStart').val();
+                var ev_endtime = $('#timeEnd').val();
+                var ev_startdate = $('#dateStart').val();
+                var ev_enddate = $('#dateEnd').val();
+                var ro_id = $('#ro_name').val();
+                var ev_people = $('#people').val();
+                var st_id = $('#style').val();
+                var sumnum = $('#sumnum').val();
+                var id = <?php echo $_SESSION['mt_id']; ?>;
+                var level = <?php echo $_SESSION['mt_lv_id']; ?>;
 
+                var formdata = $('#modalRoomall').serializeArray();
+
+                $.ajax({
+                    type: "POST",
+                    url: path + "/event_post/adddata",
+                    dataType: "json",
+                    data: formdata,
+                    // data: {
+                    //     ev_title: ev_title,
+                    //     ev_starttime: ev_starttime,
+                    //     ev_endtime: ev_endtime,
+                    //     ev_startdate: ev_startdate,
+                    //     ev_enddate: ev_enddate,
+                    //     ev_people: ev_people,
+                    //     st_id: st_id,
+                    //     ro_id: ro_id,
+                    //     to_id: to_id,
+                    //     sumnum: sumnum,
+                    //     id: id,
+                    //     level: level,
+                    // },
+                    success: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: result.message
+
+                        })
+                        // $("#frmTools")[0].reset();
+                        // $("#to_name")[0].focus();
+                    }
+                    // ,
+                    // error: function(result) {
+                    //     const Toast = Swal.mixin({
+                    //         toast: true,
+                    //         position: 'top-end',
+                    //         showConfirmButton: false,
+                    //         timer: 3000,
+                    //     })
+                    //     Toast.fire({
+                    //         icon: 'warning',
+                    //         title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                    //     })
+                    //     // .then((result) => {
+                    //     //     location.reload();
+
+                    //     // })
+
+                    // }
+                });
+
+                function clear_tools(msg) {
+                    $("#frmTools")[0].reset();
+                    $("#to_name")[0].focus();
+                }
+
+            });
         });
     </script>
 

@@ -161,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart"name="timeStart" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" name="timeStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -171,7 +171,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd"/>
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -254,7 +254,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         </div>
                                     </div>
                                     <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
-                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level"/>
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level" />
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -355,7 +355,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 var sumnum = $('#sumnum').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
-              
+
                 var formdata = $('#frm_Addroom').serializeArray();
 
                 $.ajax({
@@ -466,12 +466,12 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 dataType: "json",
                 url: path + "/tools",
                 success: function(result) {
-                    var data = ' <div class="form-group  ">';
+                    var data = ' <div class="form-group">';
                     var x = 0;
                     for (i in result) {
                         x++
-                        data += '<div class="d-block "><input type="checkbox" name="to_id[]" id="' + (x) + '"  value="' + result[i].to_id + '"  >  ' + result[i].to_name + ''
-                        // data += ' <label for="' + result[i].to_id + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
                         data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                     }
                     data += '</div>';
