@@ -22,11 +22,17 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                             <p>หน้าแรก</p>
                         </a>
                     </li>
+                    <li class="nav-item mt-2 ">
+                        <a href="./room.php" class="nav-link active">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                            <p>ห้องประชุม</p>
+                        </a>
+                    </li>
                     <hr class="mt-3 mb-3" style="background-color:#fff">
                     <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
                     <li class="nav-item ">
                         <a href="./frm_user.php" class="nav-link active">
-                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <i class="nav-icon fa-solid fa-user-pen"></i>
                             <p>ข้อมูลส่วนตัว</p>
                         </a>
                     </li>
@@ -47,7 +53,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     </li>
                     <li class="nav-item mt-3 ">
                         <a href="./user_all.php" class="nav-link active">
-                        <i class="nav-icon fa-solid fa-hospital-user"></i>
+                            <i class="nav-icon fa-solid fa-hospital-user"></i>
                             <p>ข้อมูลผู้ใช้งาน</p>
                         </a>
                     </li>
@@ -128,11 +134,18 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                             <i class="nav-icon fas fa-home"></i>
                             <p>หน้าแรก</p>
                         </a>
-                    </li> <hr class="mt-3 mb-3" style="background-color:#fff">
+                    </li>
+                    <li class="nav-item mt-2 ">
+                        <a href="./room.php" class="nav-link active">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                            <p>ห้องประชุม</p>
+                        </a>
+                    </li>
+                    <hr class="mt-3 mb-3" style="background-color:#fff">
                     <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
                     <li class="nav-item ">
                         <a href="./frm_user.php" class="nav-link active">
-                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <i class="nav-icon fa-solid fa-user-pen"></i>
                             <p>ข้อมูลส่วนตัว</p>
                         </a>
                     </li>
@@ -216,11 +229,17 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                             <p>หน้าแรก</p>
                         </a>
                     </li>
+                    <li class="nav-item mt-2 ">
+                        <a href="./room.php" class="nav-link active">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                            <p>ห้องประชุม</p>
+                        </a>
+                    </li>
                     <hr class="mt-3 mb-3" style="background-color:#fff">
                     <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
                     <li class="nav-item ">
                         <a href="./frm_user.php" class="nav-link active">
-                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <i class="nav-icon fa-solid fa-user-pen"></i>
                             <p>ข้อมูลส่วนตัว</p>
                         </a>
                     </li>
@@ -298,12 +317,24 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                             <p>หน้าแรก</p>
                         </a>
                     </li>
+                    <li class="nav-item mt-2 ">
+                        <a href="./room.php" class="nav-link active">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                            <p>ห้องประชุม</p>
+                        </a>
+                    </li>
                     <hr class="mt-3 mb-3" style="background-color:#fff">
                     <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-user"></i> จัดการ</li>
                     <li class="nav-item ">
                         <a href="./frm_user.php" class="nav-link active">
-                        <i class="nav-icon fa-solid fa-user-pen"></i>
+                            <i class="nav-icon fa-solid fa-user-pen"></i>
                             <p>ข้อมูลส่วนตัว</p>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3 ">
+                        <a href="./user_all.php" class="nav-link active">
+                            <i class="nav-icon fa-solid fa-hospital-user"></i>
+                            <p>ข้อมูลผู้ใช้งาน</p>
                         </a>
                     </li>
                     <hr class="mt-4 mb-4" style="background-color:#fff">

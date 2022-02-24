@@ -541,27 +541,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     $('#modal_style').html(data);
                 }
             });
-            $("#modal_checktool").change(function() {
 
-                $("#modal_checktool1").change(function() {
-                    $('#modal_tool').prop('disabled', true);
-                    $('#modal_tool').val(null).trigger("change");
-                });
-
-                $('#modal_tool').prop('disabled', false);
-                $.ajax({
-                    type: "get",
-                    dataType: "json",
-                    url: path + "/tools",
-                    success: function(result) {
-                        var data = '';
-                        for (i in result) {
-                            data += '<option value="' + result[i].to_id + '" > ' + result[i].to_name + '</option>';
-                        }
-                        $('#modal_tool').html(data);
-                    }
-                });
-            });
             /// modal ///
             $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
@@ -609,35 +589,32 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             icon: 'success',
                             title: result.message
 
+                        }).then((result) => {
+                            location.reload();
+                            $("#frmTools")[0].reset();
+                            $("#to_name")[0].focus();
                         })
-                        // $("#frmTools")[0].reset();
-                        // $("#to_name")[0].focus();
+                    },
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                            })
+                            .then((result) => {
+                               
+                                $("#frmTools")[0].reset();
+                                $("#to_name")[0].focus();
+                            })
+
                     }
-                    // ,
-                    // error: function(result) {
-                    //     const Toast = Swal.mixin({
-                    //         toast: true,
-                    //         position: 'top-end',
-                    //         showConfirmButton: false,
-                    //         timer: 3000,
-                    //     })
-                    //     Toast.fire({
-                    //         icon: 'warning',
-                    //         title: 'ไม่สามารถบันทึกข้อมูลได้'
-
-                    //     })
-                    //     // .then((result) => {
-                    //     //     location.reload();
-
-                    //     // })
-
-                    // }
                 });
-
-                function clear_tools(msg) {
-                    $("#frmTools")[0].reset();
-                    $("#to_name")[0].focus();
-                }
 
             });
         });

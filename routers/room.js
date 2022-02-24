@@ -36,36 +36,7 @@ sql.get("/", async (req, res) => {
     );
   }
 });
-// sql.get("/", async (req, res) => {
-//   var query01 = require("url").parse(req.url, true).query;
-//   let show = query01.show;
-//   let ac_id = query01.id;
-//   let status = query01.status;
 
-//   if (show === "ture" && status != "check") {
-//     con.query(
-//       "SELECT o.ac_id,o.ac_name ,p.typeac_id ,o.ac_pubilc ,p.typeac_name " +
-//         " FROM hr_academic AS o " +
-//         " INNER JOIN hr_typeacademic as p ON o.typeac_id=p.typeac_id where o.ac_id = ? ",
-//       "" + ac_id + "" + " ORDER BY o.ac_name ",
-//       (error, results, fields) => {
-//         if (error) throw error;
-//         res.json(results);
-//       }
-//     );
-//   } else {
-//     con.query(
-//       "SELECT o.ac_id, o.ac_name ,p.typeac_id  ,o.ac_pubilc ,p.typeac_name " +
-//         " FROM hr_academic AS o " +
-//         " INNER JOIN hr_typeacademic as p ON o.typeac_id=p.typeac_id" +
-//         " ORDER BY o.ac_name ",
-//       (error, results, fields) => {
-//         if (error) throw error;
-//         res.json(results);
-//       }
-//     );
-//   }
-// });
 
 //? Insert Data
 sql.post("/", async (req, res) => {
