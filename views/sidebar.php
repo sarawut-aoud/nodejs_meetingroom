@@ -353,6 +353,12 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                         </a>
                     </li>
                     <li class="nav-item mt-3 ">
+                        <a href="./showTool.php" class="nav-link active">
+                            <i class="nav-icon fas fa-ballot"></i>
+                            <p>จัดเตรียมอุปกรณ์</p>
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3 ">
                         <a href="./room_reserve_all.php" class="nav-link active">
                             <i class="nav-icon fas fa-ballot"></i>
                             <p>รายการจองทั้งหมด</p>
