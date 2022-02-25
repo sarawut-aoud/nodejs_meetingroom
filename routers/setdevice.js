@@ -80,11 +80,11 @@ router.get("/", async (req, res) => {
 
           if (ev_id) {
             con.query(
-              "SELECT * FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
+              "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
               [ev_id, id, ev_status],
               (error, total, fields) => {
                 if (error) throw error;
-
+                console.log(total);
                 //  for (var x = 0; x < total.length; x++) {
                 if (total.length == 0) {
                   con.query(
@@ -92,7 +92,8 @@ router.get("/", async (req, res) => {
                       "VALUES(?,?,?)",
                     [id, ev_id, ev_status],
                     (error, results, fields) => {
-                      if (error) throw error;
+                      if (error) throw error
+                      console.log(results);
                     }
                   );
                 } //if total
