@@ -355,7 +355,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./showTool.php" class="nav-link active">
                             <i class="nav-icon fas fa-ballot"></i>
-                            <p>จัดเตรียมอุปกรณ์</p>
+                            <p>จัดเตรียมอุปกรณ์ <span id="uun1"></span></p>
                         </a>
                     </li>
                     <li class="nav-item mt-3 ">

@@ -170,7 +170,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                         </div>
                     </div>
-                <?php  require_once '../modalcalendar.php';?>
+                    <?php require_once '../modalcalendar.php'; ?>
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -232,7 +232,44 @@ if ($_SESSION['mt_lv_id'] == 3) {
     </script>
     <script>
         $(document).ready(function() {
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
             var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/staff",
+                data: {
+                    id: id,
+                    de_id: de_id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
 
 
             $.ajax({
@@ -333,19 +370,20 @@ if ($_SESSION['mt_lv_id'] == 3) {
             $('#showDate').html(button);
 
         });
+
         function viewdetail(id) {
             //    console.log(id);
 
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:4500/event/calendar",
+                url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id
                 },
                 success: function(results) {
-                
+
                     for (i in results) {
                         if (results[i].ev_id == id) {
                             var title = results[i].ev_title;
@@ -373,7 +411,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $("#calendarmodal-starttime").html(starttime);
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
-                    $("#calendarmodal-name").html(name +' '+ lastname);
+                    $("#calendarmodal-name").html(name + ' ' + lastname);
                     $("#calendarmodal-dename").html(dename);
                     $("#calendarmodal-dephone").html(dephone);
                 },

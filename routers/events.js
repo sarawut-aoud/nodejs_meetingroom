@@ -127,6 +127,82 @@ router.get("/COUNT", async (req, res) => {
     }
   );
 });
+//? SELECT COUNT user
+router.get("/COUNT/user", async (req, res) => {
+  con.query(
+    "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
+      "ro.ro_id, ro.ro_name, users.id  " +
+      "FROM tbl_event  AS ev" +
+      " " +
+      " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
+      "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
+    (error, results, fields) => {
+      if (error) throw error;
+      // console.log(error);
+      res.json(results);
+    }
+  );
+});
+//? SELECT COUNT user
+router.get("/count/staff", async (req, res,next) => {
+  var query01 = require("url").parse(req.url, true).query;
+  let de_id = query01.de_id;
+  let id = query01.id;
+  // const arr = {};
+  var arr = {};
+  con.query(
+    "SELECT ev.ev_status ,ev.ev_id " +
+      " FROM tbl_acces AS acc " +
+      " INNER JOIN tbl_event  AS ev ON (ev.ev_id = acc.ev_id)" +
+      " INNER JOIN tbl_user AS users ON (users.id = ev.id) " +
+      " INNER JOIN tbl_department AS dept ON (users.de_id = dept.de_id) " +
+      " INNER JOIN tbl_rooms AS ro ON (ro.ro_id = ev.ro_id) " +
+      " INNER JOIN tbl_tools AS tool ON (tool.to_id = acc.to_id) " +
+      "WHERE ev.ev_status = '3' AND tool.de_id = ? AND tool.to_id = acc.to_id " +
+      "GROUP BY ev.ev_title",
+    [de_id],
+    (error, results, fields) => {
+      if (error) throw error;
+      // console.log(error);
+      if (results.length > 0) {
+        for (var i = 0; i < results.length; i++) {
+          var ev_id = results[i].ev_id;
+          var ev_status = results[i].ev_status;
+          if (ev_id && id) {
+            con.query(
+              "SELECT dv_id FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ? ",
+              [ev_id, id, ev_status],
+              (error, results_set, fields) => {
+                if (error) throw error;
+                for (var x = 0; x < results_set.length; x++) {
+                  if (results_set.length > 0) {
+                    var q1 = results.length - results_set.length;
+                  }
+                  
+                }
+                arr = {
+                  ev_status: q1,
+                };
+                req.arr =arr
+                return next();
+               
+                //  console.log(arr)
+              }
+            );
+          } // ev_id && id
+          // res.json(arr);
+        } // for i
+       
+      } //results.lenght > 0
+  
+    }
+  );
+});
+router.get("/count/staff",async (req,res)=>{
+  res.json(req.arr);
+})
 //? SELECT calendar
 router.post("/calendar", async (req, res) => {
   let id = req.body.id;
@@ -136,28 +212,27 @@ router.post("/calendar", async (req, res) => {
   //     message: "เกิดข้อผิดพลาด",
   //   });
   // } else {
-    con.query(
-      "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
-        
-        " ro.ro_name, ro.ro_color," +
-        "st.st_name," +
-        "users.firstname,users.lastname, users.position," +
-        "dept.de_name, dept.de_phone " +
-        "FROM tbl_event AS ev " +
-        " " +
-        "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-        "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
-        "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
-        "WHERE ev.ev_status = '3' AND ev.ev_id = ? GROUP BY ev.event_id",[id],
-      (error, results, fields) => {
-        if (error) throw error;
-        // console.log(error);
-       return res.json(results);
-      }
-    );
-  
+  con.query(
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
+      " ro.ro_name, ro.ro_color," +
+      "st.st_name," +
+      "users.firstname,users.lastname, users.position," +
+      "dept.de_name, dept.de_phone " +
+      "FROM tbl_event AS ev " +
+      " " +
+      "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+      "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+      "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
+      "WHERE ev.ev_status = '3' AND ev.ev_id = ? GROUP BY ev.event_id",
+    [id],
+    (error, results, fields) => {
+      if (error) throw error;
+      // console.log(error);
+      return res.json(results);
+    }
+  );
 });
 // select calendar
 router.get("/list", async (req, res) => {
@@ -203,9 +278,9 @@ router.get("/list", async (req, res) => {
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
       "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
       "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
-      "WHERE ev.ev_status = '3' AND   ev.ev_startdate BETWEEN  ?  AND ? "+
-      "GROUP BY ev.event_id ",[start2,end2]
-      ,
+      "WHERE ev.ev_status = '3' AND   ev.ev_startdate BETWEEN  ?  AND ? " +
+      "GROUP BY ev.event_id ",
+    [start2, end2],
     (error, row, fields) => {
       if (error) throw error;
 
@@ -260,7 +335,7 @@ router.get("/list", async (req, res) => {
           var edate = new Date();
 
           var theDate1 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
-        
+
           const date = new Date(theDate1);
 
           var endRecur = date
@@ -290,10 +365,9 @@ router.get("/list", async (req, res) => {
         //   ow[i].row[i].ev_url
         //  }
         if (row[i].ev_id != undefined) {
-         
           var ev_startdate2 = row[i].ev_startdate.replace("-", "");
           var ev_startdate3 = ev_startdate2.replace("-", "");
-          
+
           id[i] = {
             id: row[i].ev_id,
             groupId: ev_startdate3,
@@ -319,7 +393,7 @@ router.get("/list", async (req, res) => {
         }
       }
       req.id = id;
-     
+
       res.json(id);
       // return next();
     }
@@ -365,7 +439,6 @@ router.post("/status", async (req, res) => {
     });
   }
 });
-
 
 // //? delete data
 router.delete("/", async (req, res) => {

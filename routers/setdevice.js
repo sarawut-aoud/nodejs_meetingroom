@@ -99,8 +99,7 @@ router.get("/", async (req, res, next) => {
         [evid, id, req.ev_status],
         (error, total, fields) => {
           if (error) throw error;
-          console.log(total.length);
-          console.log(evid, req.ev_status);
+      
           if (total.length == 0) {
               con.query(
                 "INSERT INTO tbl_setdevice(id,ev_id,dv_status)VALUES(?,?,?)",
