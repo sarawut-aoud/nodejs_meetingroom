@@ -24,7 +24,8 @@ router.get("/detail", async (req, res) => {
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
       "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
-      "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) WHERE ev.ev_id = ? ;",[ev_id],
+      "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) WHERE ev.ev_id = ? ;",
+    [ev_id],
     (error, results, fields) => {
       if (error) throw error;
       // console.log(error);
@@ -46,10 +47,11 @@ router.get("/requesttool", async (req, res) => {
     }
   );
 });
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   var query01 = require("url").parse(req.url, true).query;
   let id = query01.id;
   let de_id = query01.de_id;
+  const arr = [];
   if (!id) {
     return res
       .status(400)
@@ -73,48 +75,47 @@ router.get("/", async (req, res) => {
       [de_id],
       (error, results, fields) => {
         if (error) throw error;
-
-        for (var i = 0; i < results.length; i++) {
-          var ev_id = results[i].ev_id;
-          var ev_status = results[i].ev_status;
-
-          if (ev_id) {
-            con.query(
-              "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
-              [ev_id, id, ev_status],
-              (error, total, fields) => {
-                if (error) throw error;
-                console.log(total);
-                //  for (var x = 0; x < total.length; x++) {
-                if (total.length == 0) {
-                  con.query(
-                    "INSERT INTO tbl_setdevice(id,ev_id,dv_status) " +
-                      "VALUES(?,?,?)",
-                    [id, ev_id, ev_status],
-                    (error, results, fields) => {
-                      if (error) throw error
-                      console.log(results);
-                    }
-                  );
-                } //if total
-                else {
-                  con.query(
-                    "DELETE FROM tbl_setdevice WHERE ev_id = ? ",
-                    [ev_id],
-                    (error, results, fields) => {
-                      if (error) throw error;
-                    }
-                  );
-                }
-                //  } //for x
-              }
-            );
-          }
-        } //for i
-        return res.json(results);
+        for (var x = 0; x < results.length; x++) {
+          //  evid = ;
+          evstatus = results[x].ev_status;
+          arr[x] = results[x].ev_id;
+        }
+        req.arr = arr;
+        req.ev_status = evstatus;
+        req.res = results.length;
+        req.results = results;
+        return next();
       }
     );
   }
-});
+}),
+  router.get("/", async (req, res) => {
+    var query01 = require("url").parse(req.url, true).query;
+    let id = query01.id;
+    for(var x = 0 ; x < req.res ; x++){
+      const evid = req.arr[x];
+      con.query(
+        "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
+        [evid, id, req.ev_status],
+        (error, total, fields) => {
+          if (error) throw error;
+          console.log(total.length);
+          console.log(evid, req.ev_status);
+          if (total.length == 0) {
+              con.query(
+                "INSERT INTO tbl_setdevice(id,ev_id,dv_status)VALUES(?,?,?)",
+                [id, evid, req.ev_status],
+                (error, results, fields) => {
+                  if (error) throw error;
+                }
+              );
+            
+          }
+        }
+      );
+    }
 
+    res.json(req.results);
+  });
 module.exports = router;
+
