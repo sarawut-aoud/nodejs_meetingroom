@@ -161,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart"name="timeStart" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" name="timeStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -171,7 +171,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd"/>
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -254,7 +254,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         </div>
                                     </div>
                                     <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
-                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level"/>
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level" />
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -316,8 +316,65 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
 
-    <script src="../public/javascript/countBage.js"></script>
+    <script>
+        $(document).ready(function() {
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
 
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
+            var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/staff",
+                data: {
+                    id: id,
+                    de_id: de_id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
     <script>
         $(function() {
 
@@ -355,7 +412,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 var sumnum = $('#sumnum').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
-              
+
                 var formdata = $('#frm_Addroom').serializeArray();
 
                 $.ajax({

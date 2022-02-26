@@ -186,8 +186,65 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script src="../public/javascript/countBage.js"></script>
+    <script>
+        $(document).ready(function() {
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
 
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
+            var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/staff",
+                data: {
+                    id: id,
+                    de_id: de_id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
     <script>
         $(document).ready(function() {
 
@@ -234,24 +291,24 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 url: path + "/user",
                 success: function(data) {
                     var i = 0;
-                    
-                        var table = '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
-                            '<thead><tr><th>ID</th><th>ชื่อ-นามสกุล</th><th>แผนก/หน่วยงาน</th><th>ตำแหน่ง</th><th>เบอร์โทร</th><th>ระดับสิทธิ์</th><th></th></thead></tr>';
-                        $.each(data , function(idx, cell) {
-                            table += ('<tr>');
-                            table += ('<td>' + cell.id + '</td>');
-                            table += ('<td>' + cell.firstname + ' ' + cell.lastname + '</td>');
-                            // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                            table += ('<td>' + cell.de_name + '</td>');
-                            table += ('<td>' + cell.position + '</td>');
-                            table += ('<td>' + cell.phone + '</td>');
-                            table += ('<td>' + cell.level + '</td>');
-                            table += ('<td align="center" width="20%"><a id="' + cell.id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
-                                ' <a id="' + cell.id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>');
-                            table += ('</tr>');
-                        });
-                        table += '</table>';
-                    
+
+                    var table = '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
+                        '<thead><tr><th>ID</th><th>ชื่อ-นามสกุล</th><th>แผนก/หน่วยงาน</th><th>ตำแหน่ง</th><th>เบอร์โทร</th><th>ระดับสิทธิ์</th><th></th></thead></tr>';
+                    $.each(data, function(idx, cell) {
+                        table += ('<tr>');
+                        table += ('<td>' + cell.id + '</td>');
+                        table += ('<td>' + cell.firstname + ' ' + cell.lastname + '</td>');
+                        // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
+                        table += ('<td>' + cell.de_name + '</td>');
+                        table += ('<td>' + cell.position + '</td>');
+                        table += ('<td>' + cell.phone + '</td>');
+                        table += ('<td>' + cell.level + '</td>');
+                        table += ('<td align="center" width="20%"><a id="' + cell.id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
+                            ' <a id="' + cell.id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('</tr>');
+                    });
+                    table += '</table>';
+
 
                     $("#tableUser").html(table);
 

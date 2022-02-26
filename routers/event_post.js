@@ -209,7 +209,7 @@ router.post("/adddata", async (req, res) => {
 });
 //? update event
 router.put("/updatedata", async (req, res) => {
-  var level = req.body.evstatus; // ระดับสิทธิการเข้าถึง
+  var level = req.body.level; // ระดับสิทธิการเข้าถึง
   var ev_status = req.body.evstatus; // ระดับสิทธิการเข้าถึง
 
   var statusRoom;
@@ -223,7 +223,8 @@ router.put("/updatedata", async (req, res) => {
     // ผู้ใช้
     statusRoom = "1";
   }
-  var evevnt_id = req.body.eventid;
+  var event_id = req.body.eventid;
+  console.log(ev)
   var ev_title = req.body.title; //todo : req -> Form .... data -> body
   var ev_startdate = req.body.dateStart;
   var ev_enddate = req.body.dateEnd;
@@ -239,7 +240,7 @@ router.put("/updatedata", async (req, res) => {
 
   con.query(
     "SELECT ev_id FROM tbl_event WHERE event_id = ? ",
-    [evevnt_id],
+    [event_id],
     (error, results_evid, field) => {
       if (error) throw error;
 
@@ -300,7 +301,7 @@ router.put("/updatedata", async (req, res) => {
           if (results_evid.length > 0) {
             con.query(
               "DELETE FROM tbl_event WHERE event_id = ? ",
-              [evevnt_id],
+              [event_id],
               (error, results_del, field) => {
                 if (error) throw error;
                 con.query(

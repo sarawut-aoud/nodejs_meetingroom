@@ -17,20 +17,25 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
-<!-- bt -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+<!-- bt5 -->
+<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+<!-- daterange picker -->
+<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.css">
+
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- colorpic -->
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
-<!-- DataTables -->
-<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- DataTables -->
@@ -172,6 +177,14 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    <!-- InputMask -->
+    <script src="../plugins/moment/moment.min.js"></script>
+    <script src="../plugins/inputmask/inputmask.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <!-- date-range-picker -->
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
     <!-- DataTables  & Plugins -->
@@ -192,12 +205,81 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script src="../public/javascript/countBage.js"></script>
+    <script>
+        $(document).ready(function() {
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
+            var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/staff",
+                data: {
+                    id: id,
+                    de_id: de_id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
     <script>
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
-
+            $('#datetimepicker1').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker3').datetimepicker({
+                format: 'L'
+            });
+            $('#datetimepicker4').datetimepicker({
+                format: 'L'
+            });
 
             var path = 'http://127.0.0.1:4500'
 
@@ -346,23 +428,23 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
                                         $.ajax({
-                                            type:'get',
+                                            type: 'get',
                                             dataType: 'json',
-                                            url: path+'/event/requesttool',
-                                            success:function(tool){
+                                            url: path + '/event/requesttool',
+                                            success: function(tool) {
                                                 // console.log(result[ii].event_id)
-                                                var to_name =''
-                                                for(i in tool){
-                                                   
-                                                    if(tool[i].ev_id == ev_id){
-                                                       
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
-                                                       
+                                                var to_name = ''
+                                                for (i in tool) {
+
+                                                    if (tool[i].ev_id == ev_id) {
+
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
+
                                                     }
-                                         
+
                                                     $("#modal2_tool").html(to_name);
                                                 }
-                                             
+
                                             }
                                         });
                                     }
@@ -538,7 +620,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $('#modal_style').html(data);
                 }
             });
-          
+
             /// modal ///
             $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
@@ -557,24 +639,11 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 var formdata = $('#modalRoomall').serializeArray();
 
                 $.ajax({
-                    type: "POST",
-                    url: path + "/event_post/adddata",
+                    type: "PUT",
+                    url: path + "/event_post/updatedata",
                     dataType: "json",
                     data: formdata,
-                    // data: {
-                    //     ev_title: ev_title,
-                    //     ev_starttime: ev_starttime,
-                    //     ev_endtime: ev_endtime,
-                    //     ev_startdate: ev_startdate,
-                    //     ev_enddate: ev_enddate,
-                    //     ev_people: ev_people,
-                    //     st_id: st_id,
-                    //     ro_id: ro_id,
-                    //     to_id: to_id,
-                    //     sumnum: sumnum,
-                    //     id: id,
-                    //     level: level,
-                    // },
+
                     success: function(result) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -586,35 +655,32 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             icon: 'success',
                             title: result.message
 
+                        }).then((result) => {
+                            location.reload();
+                            $("#modalRoomall")[0].reset();
+                            $("#modal_title")[0].focus();
                         })
-                        // $("#frmTools")[0].reset();
-                        // $("#to_name")[0].focus();
+                    },
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        })
+                        Toast.fire({
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                            })
+                            .then((result) => {
+
+                                $("#modalRoomall")[0].reset();
+                                $("#modal_title")[0].focus();
+                            })
+
                     }
-                    // ,
-                    // error: function(result) {
-                    //     const Toast = Swal.mixin({
-                    //         toast: true,
-                    //         position: 'top-end',
-                    //         showConfirmButton: false,
-                    //         timer: 3000,
-                    //     })
-                    //     Toast.fire({
-                    //         icon: 'warning',
-                    //         title: 'ไม่สามารถบันทึกข้อมูลได้'
-
-                    //     })
-                    //     // .then((result) => {
-                    //     //     location.reload();
-
-                    //     // })
-
-                    // }
                 });
-
-                function clear_tools(msg) {
-                    $("#frmTools")[0].reset();
-                    $("#to_name")[0].focus();
-                }
 
             });
         });

@@ -111,46 +111,98 @@ router.get("/requesttool", async (req, res) => {
 });
 //? SELECT COUNT
 router.get("/COUNT", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  // let de_id = query01.de_id;
+  let level = query01.level;
+  if (level == "1" || level == "4") {
+    con.query(
+      "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
+        "ro.ro_id, ro.ro_name, users.id  " +
+        "FROM tbl_event  AS ev" +
+        " " +
+        " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
+        "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
+      (error, results, fields) => {
+        if (error) throw error;
+        // console.log(error);
+        res.json(results);
+      }
+    );
+  } else if (level == "3") {
+    con.query(
+      "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
+        "ro.ro_id, ro.ro_name, users.id  " +
+        "FROM tbl_event  AS ev" +
+        " " +
+        " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
+        "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
+      (error, results, fields) => {
+        if (error) throw error;
+        // console.log(error);
+        res.json(results);
+      }
+    );
+  }
+});
+//? SELECT COUNT user
+router.get("/count/user", async (req, res, next) => {
+  var query01 = require("url").parse(req.url, true).query;
+  // let de_id = query01.de_id;
+  let id = query01.id;
+  var arr = {};
   con.query(
-    "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
-      "ro.ro_id, ro.ro_name, users.id  " +
+    "SELECT ev.ev_id , ev.ev_status, " +
       "FROM tbl_event  AS ev" +
-      " " +
       " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
-      "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
+      "WHERE users.id = ? " +
+      " GROUP BY ev.ev_title",
+    [id],
     (error, results, fields) => {
       if (error) throw error;
       // console.log(error);
-      res.json(results);
+      if (results.length > 0) {
+        for (var i = 0; i < results.length; i++) {
+          var ev_id = results[i].ev_id;
+          var ev_status = results[i].ev_status;
+          if (ev_id && id) {
+            con.query(
+              "SELECT set_id WHERE ev_id = ? AND id=? AND set_status = ? ",
+              [ev_id, id, ev_status],
+              (error, results_seting, fields) => {
+                if (error) throw error;
+                for (var x = 0; x < results_seting.length; x++) {
+                  if (results_seting.length > 0) {
+                    var q1 = results.length - results_seting.length;
+                  }
+                } // for x
+                arr = {
+                  ev_status: q1,
+                };
+                req.arr = arr;
+                return next();
+              }
+            );
+          } // if ev_id && id
+        }
+      } //results.length>0
+      // res.json(results);
     }
   );
 });
-//? SELECT COUNT user
-router.get("/COUNT/user", async (req, res) => {
-  con.query(
-    "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
-      "ro.ro_id, ro.ro_name, users.id  " +
-      "FROM tbl_event  AS ev" +
-      " " +
-      " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-      "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
-      "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
-    (error, results, fields) => {
-      if (error) throw error;
-      // console.log(error);
-      res.json(results);
-    }
-  );
+router.get("/count/user", async (req, res) => {
+  res.json(req.arr);
 });
 //? SELECT COUNT user
-router.get("/count/staff", async (req, res,next) => {
+router.get("/count/staff", async (req, res, next) => {
   var query01 = require("url").parse(req.url, true).query;
   let de_id = query01.de_id;
   let id = query01.id;
-  // const arr = {};
+
   var arr = {};
   con.query(
     "SELECT ev.ev_status ,ev.ev_id " +
@@ -165,7 +217,7 @@ router.get("/count/staff", async (req, res,next) => {
     [de_id],
     (error, results, fields) => {
       if (error) throw error;
-      // console.log(error);
+
       if (results.length > 0) {
         for (var i = 0; i < results.length; i++) {
           var ev_id = results[i].ev_id;
@@ -176,33 +228,29 @@ router.get("/count/staff", async (req, res,next) => {
               [ev_id, id, ev_status],
               (error, results_set, fields) => {
                 if (error) throw error;
+
                 for (var x = 0; x < results_set.length; x++) {
                   if (results_set.length > 0) {
                     var q1 = results.length - results_set.length;
                   }
-                  
                 }
                 arr = {
                   ev_status: q1,
                 };
-                req.arr =arr
+                req.arr = arr;
                 return next();
-               
-                //  console.log(arr)
               }
             );
           } // ev_id && id
-          // res.json(arr);
         } // for i
-       
       } //results.lenght > 0
-  
     }
   );
 });
-router.get("/count/staff",async (req,res)=>{
+router.get("/count/staff", async (req, res) => {
   res.json(req.arr);
-})
+});
+
 //? SELECT calendar
 router.post("/calendar", async (req, res) => {
   let id = req.body.id;

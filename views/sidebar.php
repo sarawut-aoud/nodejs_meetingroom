@@ -75,7 +75,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./room_approve.php" class="nav-link active">
                             <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                            <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-danger "></span>
+                            <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-primary "></span>
                         </a>
                     </li>
                     <li class="nav-item mt-3 ">
@@ -168,7 +168,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./manager_approve.php" class="nav-link active">
                             <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                            <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-danger"></span>
+                            <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-primary"></span>
                         </a>
                     </li>
                     <li class="nav-item mt-3 ">
@@ -262,7 +262,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./user_status.php" class="nav-link active">
                             <i class="nav-icon fa-regular fa-bells"></i>
-                            <p>แจ้งเตือน </p> <span class="badge badge-danger">1</span>
+                            <p>แจ้งเตือน </p> <span class="badge badge-danger"></span>
                         </a>
                     </li>
 
@@ -295,7 +295,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
         <!-- /.sidebar -->
     </aside>
 <?php
-} else { //todo : staff
+} else if($_SESSION['mt_lv_id'] == 3) { //todo : staff
 ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-white  elevation-4 " style="background-color: #008622;">
@@ -367,7 +367,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./staff_request.php" class="nav-link active">
                             <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                            <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-danger">1</span>
+                            <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-primary" id="bage"></span>
                         </a>
                     </li>
 
