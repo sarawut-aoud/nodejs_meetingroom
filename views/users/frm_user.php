@@ -218,7 +218,40 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script src="../public/javascript/countBage.js"></script>
+    <script>
+        $(document).ready(function() {
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
+            var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/user",
+                data: {
+                    id: id,
+                    de_id: de_id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
 
 
     <script>

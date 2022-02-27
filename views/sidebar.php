@@ -262,7 +262,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                     <li class="nav-item mt-3 ">
                         <a href="./user_status.php" class="nav-link active">
                             <i class="nav-icon fa-regular fa-bells"></i>
-                            <p>แจ้งเตือน </p> <span class="badge badge-danger"></span>
+                            <p>แจ้งเตือน </p>  <span id="uun1"></span>
                         </a>
                     </li>
 

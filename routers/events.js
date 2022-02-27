@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
       "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
       "FROM tbl_event AS ev " +
       "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-      "INNER JOIN tbl_user AS users ON (ev.id = users.id)  GROUP BY ev.event_id",
+      "INNER JOIN tbl_user AS users ON (ev.id = users.id)  GROUP BY ev. event_id",
     (error, results, fields) => {
       if (error) throw error;
       // console.log(error);
@@ -155,7 +155,7 @@ router.get("/count/user", async (req, res, next) => {
   let id = query01.id;
   var arr = {};
   con.query(
-    "SELECT ev.ev_id , ev.ev_status, " +
+    "SELECT ev.ev_id , ev.ev_status " +
       "FROM tbl_event  AS ev" +
       " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
@@ -171,7 +171,7 @@ router.get("/count/user", async (req, res, next) => {
           var ev_status = results[i].ev_status;
           if (ev_id && id) {
             con.query(
-              "SELECT set_id WHERE ev_id = ? AND id=? AND set_status = ? ",
+              "SELECT set_id FROM tbl_seting WHERE ev_id = ? AND id=? AND set_status = ? ",
               [ev_id, id, ev_status],
               (error, results_seting, fields) => {
                 if (error) throw error;

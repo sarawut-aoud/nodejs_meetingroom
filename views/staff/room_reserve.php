@@ -179,8 +179,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-     <!-- InputMask -->
-     <script src="../plugins/moment/moment.min.js"></script>
+    <!-- InputMask -->
+    <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
     <!-- date-range-picker -->
@@ -471,7 +471,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalDetail").modal("show");
-                                $("#modal2_evid").html(ev_id); 
+                                $("#modal2_evid").html(ev_id);
                                 $("#modal2_cre_date").html(ev_createdate.split('T')[0]);
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
@@ -652,23 +652,43 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     url: path + "/event_post/updatedata",
                     dataType: "json",
                     data: formdata,
-                    
-                    success: function(result) {
-                        // const Toast = Swal.mixin({
-                        //     toast: true,
-                        //     position: 'top-end',
-                        //     showConfirmButton: false,
-                        //     timer: 3000,
-                        // })
-                        // Toast.fire({
-                        //     icon: 'success',
-                        //     title: result.message
 
-                        // }).then((result) => {
-                        //     location.reload();
-                        //     $("#frm_modalEditRoom")[0].reset();
-                        //     $("#modal_title")[0].focus();
-                        // })
+                    success: function(result) {
+                        if (result.status != 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+
+                            }).then((result) => {
+                                location.reload();
+                                $("#frm_modalEditRoom")[0].reset();
+                                $("#modal_title")[0].focus();
+                            })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                    icon: 'warning',
+                                    title: result.message
+
+                                })
+                                .then((result) => {
+
+                                    $("#modal_title")[0].focus();
+                                })
+
+                        }
+
                     },
                     error: function(result) {
                         const Toast = Swal.mixin({
@@ -683,7 +703,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                             })
                             .then((result) => {
-                               
+
                                 $("#frm_modalEditRoom")[0].reset();
                                 $("#modal_title")[0].focus();
                             })
