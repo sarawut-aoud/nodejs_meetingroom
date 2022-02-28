@@ -429,10 +429,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     //         title: 'ไม่สามารถบันทึกข้อมูลได้'
 
                     //     })
-                    //     // .then((result) => {
-                    //     //     location.reload();
+                        // .then((result) => {
+                        //     location.reload();
 
-                    //     // })
+                        // })
 
                     // }
                 });

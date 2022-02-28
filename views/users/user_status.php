@@ -140,7 +140,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
                                     <div class="card-body table-responsive p-2">
                                         <!--//? tableRoom -->
-                                        <div id="tableRooms">
+                                        <div id="tbstatus">
                                         </div>
                                         <!--//? tableRoom -->
                                     </div>
@@ -259,7 +259,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
             var path = 'http://127.0.0.1:4500',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
-                level = '<?php echo $_SESSION['mt_lv_id']; ?>'
+                level = '<?php echo $_SESSION['mt_lv_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id'];?>'
 
             $.ajax({
                 type: "get",
@@ -280,74 +281,61 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 }
             });
             // var id = $('#mtID').val();
-            //todo: table room
             $.ajax({
-                type: 'post',
+                type: 'get',
                 dataType: 'json',
-                url: path + "/event",
+                url: path + "/seting",
                 data: {
                     id: id,
+                    de_id: de_id,
                 },
                 success: function(data) {
+                    var i = 0;
 
-                    var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
-                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th></thead></tr>';
+                    var table = '<table id="tbTool"with="100%" class="table table-hover text-nowrap ">' +
+                        '<thead><tr><th>ID</th><th>วันที่ขอจอง</th><th>ชื่อห้อง</th><th>หัวข้อเรื่องประชุม</th><th>วันที่</th><th>ถึง</th><th>สถานะ</th><th>รายละเอียด</th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         if (cell.ev_status == 5) {
                             var bage3 = '<span class="badge rounded-pill bg-dark">ยกเลิก</span>';
-                            var info = ' <a class="d-none"></a>';
-                            var edit = ' <a class="d-none"></a>';
-                            var del = ' <a class="d-none"></a>';
+
                         } else if (cell.ev_status == 4) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels" title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
+
                         } else if (cell.ev_status == 3) {
                             var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="d-none"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
-                        } else if (cell.ev_status == 2) { //staff
+
+                        } else if (cell.ev_status == 2) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
-                        } else if (cell.ev_status == 1) { // user
-                            var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
-                        } else if (cell.ev_status == 0) { //staff
+
+                        } else if (cell.ev_status == 1) {
+                            var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>'
+                        } else if (cell.ev_status == 0) {
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
-                            var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
                         }
-
-
-
                         table += ('<tr>');
                         table += ('<td>' + cell.ev_id + '</td>');
-                        table += ('<td>' + cell.ro_name + '</td>');
+                        table += ('<td>' + cell.ev_createdate.split('T')[0] + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
+                        table += ('<td>' + cell.ro_name + '</td>');
                         table += ('<td>' + cell.ev_title + '</td>');
-                        table += ('<td>' + cell.ev_startdate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_starttime + '</td>');
-                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span>' + cell.ev_endtime + '</td>');
-                        table += ('<td align="center">' + bage3 + '</td>');
-                        table += ('<td align="center" width="10%">' + info + '</td>');
-                      
+                        table += ('<td>' + cell.ev_startdate.split('T')[0] + '<span style="color:red;"> เวลา </span>' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
+                        table += ('<td>' + bage3 + '</td>');
+                        table += ('<td align="center" width="10%"><a id="' + cell.ev_id + '" class="btn btn-info btnEdit" title="ดูรายละเอียด"><i class="fas fa-eye"></i></a></td>');
+
                         table += ('</tr>');
                     });
                     table += '</table>';
-                    $("#tableRooms").html(table);
 
-                    $("#tb_RoomAll")
+
+                    $("#tbstatus").html(table);
+
+                    $("#tbTool")
                         .DataTable({
                             responsive: true,
                             lengthChange: false,
                             "lengthMenu": [
-                                [10, 24, 49, -1],
+                                [9, 24, 49, -1],
                                 [10, 25, 50, "All"]
                             ],
                             autoWidth: false,
@@ -370,67 +358,56 @@ if ($_SESSION['mt_lv_id'] == 2) {
                         })
                         .buttons()
                         .container()
-                        .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
+                        .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
 
-
-
-
-                    $(".btnDetail").click(function(e) {
+                    $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
-
                         $.ajax({
                             type: "get",
                             dataType: "json",
-                            url: path + "/event/request",
+                            url: path + "/seting/detail",
                             data: {
                                 ev_id: ev_id,
                             },
                             success: function(result) {
                                 for (ii in result) {
-                                    if (result[ii].ev_id == ev_id) {
 
-                                        var event_id = result[ii].event_id;
-                                        var ev_title = result[ii].ev_title;
-                                        var ev_startdate = result[ii].ev_startdate;
-                                        var ev_enddate = result[ii].ev_enddate;
-                                        var ev_status = result[ii].ev_status;
-                                        var ev_starttime = result[ii].ev_starttime;
-                                        var ev_endtime = result[ii].ev_endtime;
-                                        var ev_people = result[ii].ev_people;
-                                        var ev_createdate = result[ii].ev_createdate;
-                                        var ro_id = result[ii].ro_id;
-                                        var ro_name = result[ii].ro_name;
-                                        var to_name = result[ii].to_name;
-                                        var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
-                                        var de_phone = result[ii].de_phone;
-                                        var id = result[ii].id;
-                                        var firstname = result[ii].firstname;
-                                        var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
-                                        $.ajax({
-                                            type: 'get',
-                                            dataType: 'json',
-                                            url: path + '/event/requesttool',
-                                            success: function(tool) {
-                                                // console.log(result[ii].event_id)
-                                                var to_name = ''
-                                                for (i in tool) {
+                                    var ev_status = result[ii].ev_status;
+                                    var roname = result[ii].ro_name;
+                                    var stname = result[ii].st_name;
+                                    var title = result[ii].ev_title;
+                                    var people = result[ii].ev_people;
+                                    var starttime = result[ii].ev_starttime;
+                                    var endtime = result[ii].ev_endtime;
+                                    var firstname = result[ii].firstname;
+                                    var lastname = result[ii].lastname;
+                                    var position = result[ii].position;
+                                    var depart = result[ii].de_name;
+                                    var phone = result[ii].de_phone;
 
-                                                    if (tool[i].ev_id == ev_id) {
+                                    $.ajax({
+                                        type: 'get',
+                                        dataType: 'json',
+                                        url: path + '/seting/requesttool',
+                                        success: function(tool) {
+                                            // console.log(result[ii].event_id)
+                                            var to_name = ''
+                                            for (i in tool) {
 
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
+                                                if (tool[i].ev_id == ev_id) {
 
-                                                    }
+                                                    to_name += '<div class="col-form-label d-inline-flex ">🔎 ' + tool[i].to_name + '  </div>'
 
-                                                    $("#modal2_tool").html(to_name);
                                                 }
 
+                                                $("#modal2_tool").html(to_name);
                                             }
-                                        });
-                                    }
+
+                                        }
+                                    });
+
                                 }
                                 if (ev_status == 0) {
                                     var status = 'รออนุมัติจากหัวหน้า'
@@ -446,28 +423,24 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalDetail").modal("show");
-                                $("#modal2_evid").html(ev_id);
-                                $("#modal2_cre_date").html(ev_createdate.split('T')[0]);
                                 $("#modal2_status").html(status);
-                                $("#modal2_roName").html(ro_name);
-                                $("#modal2_title").html(ev_title);
-                                $("#modal2_starttime").val(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal2_endtime").val(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
-                                $("#modal2_style").html(st_name);
-                                $("#modal2_tool").html(to_name);
-                                $("#modal2_people").html(ev_people + '  คน');
-                                $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(de_name);
-                                $("#modal2_pos").html(pos);
-                                $("#modal2_phone").html(de_phone);
-
+                                $("#modal2_roName").html(roname);
+                                $("#modal2_style").html(stname);
+                                $("#modal2_title").html(title);
+                                $("#modal2_people").html(people);
+                                $("#modal2_starttime").html(starttime);
+                                $("#modal2_endtime").html(endtime);
+                                $("#modal2_name").html(firstname + " " + lastname);
+                                $("#modal2_dept").html(depart);
+                                $("#modal2_pos").html(position);
+                                $("#modal2_phone").html(phone);
                             }
                         });
                     });
-
-
                 }
             });
+
+            
 
         });
     </script>

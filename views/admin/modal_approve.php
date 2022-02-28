@@ -79,8 +79,8 @@
                             <div class="col-md-9">
                                 <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="modal_id_status" data-placeholder="สถานะการจอง">
                                     <option value=""></option>
-                                    <option value="1">อนุมัติ</option>
-                                    <option value="2">ยกเลิก</option>
+                                    <option value="3">อนุมัติ</option>
+                                    <option value="4">ไม่อนุมัติ</option>
                                 </select>
                             </div>
                         </div>
@@ -95,6 +95,12 @@
         </div>
     </div>
     <input type="hidden" id="modal_ev_id" value="">
+    <input type="hidden" id="modal_eventid_h" value="">
+    <input type="hidden" id="modal_ro_id_h" value="">
+    <input type="hidden" id="modal_ev_startdate_h" value="">
+    <input type="hidden" id="modal_ev_enddate_h" value="">
+    <input type="hidden" id="modal_ev_starttime_h" value="">
+    <input type="hidden" id="modal_ev_endtime_h" value="">
 
 </form>
 <!-- Modal Status -->

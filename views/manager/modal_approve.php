@@ -95,6 +95,12 @@
         </div>
     </div>
     <input type="hidden" id="modal_ev_id" value="">
+    <input type="hidden" id="modal_eventid_h" value="">
+    <input type="hidden" id="modal_ro_id_h" value="">
+    <input type="hidden" id="modal_ev_startdate_h" value="">
+    <input type="hidden" id="modal_ev_enddate_h" value="">
+    <input type="hidden" id="modal_ev_starttime_h" value="">
+    <input type="hidden" id="modal_ev_endtime_h" value="">
 
 </form>
 <!-- Modal Status -->

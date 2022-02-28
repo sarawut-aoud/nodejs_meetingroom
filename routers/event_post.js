@@ -387,4 +387,127 @@ router.put("/updatedata", async (req, res) => {
     }
   );
 });
+
+router.put("/updatestatus", async (req, res) => {
+  var ev_status = req.body.ev_status;
+  var event_id = req.body.event_id;
+  var ro_id = req.body.ro_id;
+  var ev_startdate = req.body.ev_startdate;
+  var ev_enddate = req.body.ev_enddate;
+  var ev_starttime = req.body.ev_starttime;
+  var ev_endtime = req.body.ev_endtime;
+
+  var status_yes;
+  var status_no;
+
+  if (ev_status == "3") {
+    status_yes = 3;
+    status_no = 4;
+  } else if (ev_status == "5") {
+    status_yes = 5;
+    status_no = 1;
+  } else if (ev_status == "4") {
+    status_yes = 4;
+    status_no = 1;
+  } else if (ev_status == "1") {
+    status_yes = 1;
+    status_no = 1;
+  } else if (ev_status == "0") {
+    status_yes = 0;
+    status_no = 1;
+  }
+
+  if (!event_id) {
+    return res.json({
+      error: true,
+      status: "0",
+      message: "ไม่สามารถบันทึกได้",
+    });
+  } else {
+    con.query(
+      "UPDATE tbl_event SET ev_status = ? WHERE event_id = ?",
+      [status_yes, event_id],
+      (error, results, field) => {
+        if (error) throw error;
+
+        if (results) {
+          var chk = 0;
+          var datediff = DATE_DIFF(ev_startdate, ev_enddate, "D").output;
+          if (datediff >= 0) {
+            var dateStart = ev_startdate;
+
+            for (var i = 0; i <= datediff; i++) {
+              con.query(
+                "SELECT ev_id,event_id, substr(ev_starttime,1,5) AS ev_starttime," +
+                  "substr(ev_endtime,1,5) AS ev_endtime " +
+                  "FROM tbl_event WHERE event_id != ? AND ro_id = ? AND ev_startdate = ? AND ev_status != '3' ",
+                [event_id, ro_id, dateStart],
+                (error, results_x, field) => {
+                  for (var x = 0; x < results.length; x++) {
+                    var theDateStart = Date.parse(dateStart) + 3600 * 1000 * 24;
+                    const date = new Date(theDateStart);
+                    dateStart = date
+                      .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+                      .slice(0, 10);
+
+                    if (results_x[x].ev_starttime == ev_starttime) {
+                      con.query(
+                        "UPDATE tbl_event SET ev_status = ? WHERE event_id = ? ",
+                        [status_no, results_x[x].event_id],
+                        (error, results, field) => {
+                          if (error) throw error;
+                        }
+                      );
+                    } else if (
+                      results_x[x].ev_starttime >= ev_starttime &&
+                      results_x[x].ev_starttime <= ev_enddate
+                    ) {
+                      con.query(
+                        "UPDATE tbl_event SET ev_status = ? WHERE event_id = ? ",
+                        [status_no, results_x[x].event_id],
+                        (error, results, field) => {
+                          if (error) throw error;
+                        }
+                      );
+                    } else if (
+                      results_x[x].ev_starttime <= ev_starttime &&
+                      results_x[x].ev_starttime <= ev_starttime &&
+                      results_x[x].ev_endtime >= ev_endtime
+                    ) {
+                      con.query(
+                        "UPDATE tbl_event SET ev_status = ? WHERE event_id = ? ",
+                        [status_no, results_x[x].event_id],
+                        (error, results, field) => {
+                          if (error) throw error;
+                        }
+                      );
+                    } else if (
+                      results_x[x].ev_starttime <= ev_starttime &&
+                      results_x[x].ev_endtime >= ev_starttime &&
+                      results_x[x].ev_endtime
+                    ) {
+                      con.query(
+                        "UPDATE tbl_event SET ev_status = ? WHERE event_id = ? ",
+                        [status_no, results_x[x].event_id],
+                        (error, results, field) => {
+                          if (error) throw error;
+                        }
+                      );
+                    }
+                  }
+                }
+              );
+            } // for i
+            res.json({
+              status: "200",
+              message: "แก้ไขสถานะเรียบร้อย",
+            });
+          
+          } //datediff
+        } // results
+      }
+    );
+  }
+});
+
 module.exports = router;

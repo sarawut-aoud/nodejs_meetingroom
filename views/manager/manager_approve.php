@@ -353,25 +353,25 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
-                                        
+
                                         $.ajax({
-                                            type:'get',
+                                            type: 'get',
                                             dataType: 'json',
-                                            url: path+'/event/requesttool',
-                                            success:function(tool){
+                                            url: path + '/event/requesttool',
+                                            success: function(tool) {
                                                 // console.log(result[ii].event_id)
-                                                var to_name =''
-                                                for(i in tool){
-                                                   
-                                                    if(tool[i].ev_id == ev_id){
-                                                       
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
-                                                       
+                                                var to_name = ''
+                                                for (i in tool) {
+
+                                                    if (tool[i].ev_id == ev_id) {
+
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
+
                                                     }
-                                         
+
                                                     $("#modal2_tool").html(to_name);
                                                 }
-                                             
+
                                             }
                                         });
                                     }
@@ -397,7 +397,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
                                 $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
-                               
+
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
                                 $("#modal2_dept").html(de_name);
@@ -432,7 +432,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
                                         var to_name = result[ii].to_name;
-                                        
+
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
@@ -443,23 +443,23 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
                                         $.ajax({
-                                            type:'get',
+                                            type: 'get',
                                             dataType: 'json',
-                                            url: path+'/event/requesttool',
-                                            success:function(tool){
+                                            url: path + '/event/requesttool',
+                                            success: function(tool) {
                                                 // console.log(result[ii].event_id)
-                                                var to_name =''
-                                                for(i in tool){
-                                                   
-                                                    if(tool[i].ev_id == ev_id){
-                                                       
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
-                                                       
+                                                var to_name = ''
+                                                for (i in tool) {
+
+                                                    if (tool[i].ev_id == ev_id) {
+
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
+
                                                     }
-                                         
+
                                                     $("#modal_tool").html(to_name);
                                                 }
-                                             
+
                                             }
                                         });
                                     }
@@ -478,7 +478,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalStatus").modal("show");
-                                $("#modal_ev_id").html(ev_id);
+
                                 $("#modal_roName").html(ro_name);
                                 $("#modal_title").html(ev_title);
                                 $("#modal_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
@@ -490,6 +490,15 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 $("#modal_dept").html(de_name);
                                 $("#modal_pos").html(pos);
                                 $("#modal_phone").html(de_phone);
+
+                                //ส่งค่า
+                                $("#modal_ev_id").val(ev_id);
+                                $("#modal_eventid_h").val(event_id);
+                                $("#modal_ro_id_h").val(ro_id);
+                                $("#modal_ev_startdate_h").val(ev_startdate.split('T')[0]);
+                                $("#modal_ev_enddate_h").val(ev_enddate.split('T')[0]);
+                                $("#modal_ev_starttime_h").val(ev_starttime);
+                                $("#modal_ev_endtime_h").val(ev_endtime);
                             }
                         });
                     });
@@ -545,8 +554,66 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                 }
             });
+            /// modal
+            $('.btnSave').click(function(e) {
+                e.preventDefault();
+                var ev_status = $('#modal_id_status').val();
+                var event_id = $('#modal_eventid_h').val();
+                var ro_id = $('#modal_ro_id_h').val();
+                var ev_startdate = $('#modal_ev_startdate_h').val();
+                var ev_enddate = $('#modal_ev_enddate_h').val();
+                var ev_starttime = $('#modal_ev_starttime_h').val();
+                var ev_endtime = $('#modal_ev_endtime_h').val();
 
-           
+                $.ajax({
+                    type: "PUT",
+                    dataType: "JSON",
+                    url: path + '/event_post/updatestatus',
+                    data: {
+                        ev_status: ev_status,
+                        event_id: event_id,
+                        ro_id: ro_id,
+                        ev_startdate: ev_startdate,
+                        ev_enddate: ev_enddate,
+                        ev_starttime: ev_starttime,
+                        ev_endtime: ev_endtime,
+                    },
+                    success: function(results) {
+                        if (results.status == 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                    icon: 'warning',
+                                    title: result.message
+                                })
+                                .then((result) => {
+                                    location.reload();
+                                })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                    icon: 'success',
+                                    title: result.message
+                                })
+                                .then((result) => {
+                                    location.reload();
+                                })
+                        }
+
+                    }
+                })
+            })
+            /// modal
+
         });
     </script>
 

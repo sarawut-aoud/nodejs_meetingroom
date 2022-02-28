@@ -545,7 +545,65 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                 }
             });
+ /// modal
+ $('.btnSave').click(function(e) {
+                e.preventDefault();
+                var ev_status = $('#modal_id_status').val();
+                var event_id = $('#modal_eventid_h').val();
+                var ro_id = $('#modal_ro_id_h').val();
+                var ev_startdate = $('#modal_ev_startdate_h').val();
+                var ev_enddate = $('#modal_ev_enddate_h').val();
+                var ev_starttime = $('#modal_ev_starttime_h').val();
+                var ev_endtime = $('#modal_ev_endtime_h').val();
 
+                $.ajax({
+                    type: "PUT",
+                    dataType: "JSON",
+                    url: path + '/event_post/updatestatus',
+                    data: {
+                        ev_status: ev_status,
+                        event_id: event_id,
+                        ro_id: ro_id,
+                        ev_startdate: ev_startdate,
+                        ev_enddate: ev_enddate,
+                        ev_starttime: ev_starttime,
+                        ev_endtime: ev_endtime,
+                    },
+                    success: function(results) {
+                        if (results.status == 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                    icon: 'warning',
+                                    title: result.message
+                                })
+                                .then((result) => {
+                                    location.reload();
+                                })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                    icon: 'success',
+                                    title: result.message
+                                })
+                                .then((result) => {
+                                    location.reload();
+                                })
+                        }
+
+                    }
+                })
+            })
+            /// modal
            
         });
     </script>
