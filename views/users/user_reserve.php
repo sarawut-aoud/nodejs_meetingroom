@@ -1,6 +1,6 @@
 <?php
 require_once "../../login/check_session.php";
-if ($_SESSION['mt_lv_id'] ==2) {
+if ($_SESSION['mt_lv_id'] == 2) {
 } else {
 
     echo "<script>
@@ -99,7 +99,7 @@ if ($_SESSION['mt_lv_id'] ==2) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value=" " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value="" readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
@@ -113,7 +113,7 @@ if ($_SESSION['mt_lv_id'] ==2) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value=" " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="" readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
@@ -206,8 +206,32 @@ if ($_SESSION['mt_lv_id'] ==2) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    
     <script>
+        $(document).ready(function() {
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+        });
+    </script>
+     <script>
         $(document).ready(function() {
             cache_clear();
 
@@ -261,7 +285,6 @@ if ($_SESSION['mt_lv_id'] ==2) {
             var path = 'http://127.0.0.1:4500',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
-              
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -269,8 +292,8 @@ if ($_SESSION['mt_lv_id'] ==2) {
                 data: {
                     id: id,
                 },
-                success:function(results){
-                    for(i in results){
+                success: function(results) {
+                    for (i in results) {
                         var prefix = results[i].prefix;
                         var fname = results[i].firstname;
                         var lname = results[i].lastname;
@@ -278,10 +301,10 @@ if ($_SESSION['mt_lv_id'] ==2) {
                         var dename = results[i].de_name;
                         var level = results[i].level;
                     }
-                    $('#name').val(fname + ' ' +lname );
+                    $('#name').val(fname + ' ' + lname);
                     $('#prefix').val(prefix);
                     $('#de_name').val(dename);
-                    $('#position').val(pos+"/"+level );
+                    $('#position').val(pos + "/" + level);
                 }
             })
             $.ajax({
@@ -514,6 +537,7 @@ if ($_SESSION['mt_lv_id'] ==2) {
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
+                                        var st_id = result[ii].st_id;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
                                         var de_phone = result[ii].de_phone;
@@ -521,6 +545,33 @@ if ($_SESSION['mt_lv_id'] ==2) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/tools",
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
+                                            success: function(tool) {
+                                                // var chk = '';
+                                                var data = ' <div class="form-group  ">';
+                                                var x = 0;
+                                                for (i in tool) {
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
+                                                        console.log(tool[i].acc_toid)
+                                                        chk = 'checked="checked"'
+
+                                                    }
+                                                    x++
+                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                }
+                                                data += '</div>';
+                                                $('#modaltool').html(data);
+                                            }
+                                        });
 
                                     }
                                 }
@@ -538,8 +589,10 @@ if ($_SESSION['mt_lv_id'] ==2) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalEdit").modal("show");
-                                $("#modal_ev_id").val(event_id);
+                                $("#modal_eventid").val(event_id);
                                 $("#modal_status").val(ev_status);
+                                $("#modal_ro_id").val(ro_id);
+                                $("#modal_st_id").val(st_id);
                                 // $("#modal_ro_name").html(ro_name);
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
@@ -664,7 +717,7 @@ if ($_SESSION['mt_lv_id'] ==2) {
                                 title: result.message
 
                             }).then((result) => {
-                                location.reload();
+
                                 $("#frm_modalEditRoom")[0].reset();
                                 $("#modal_title")[0].focus();
                             })
@@ -678,11 +731,10 @@ if ($_SESSION['mt_lv_id'] ==2) {
                             Toast.fire({
                                     icon: 'warning',
                                     title: result.message
-
                                 })
                                 .then((result) => {
-
-                                    $("#modal_title")[0].focus();
+                                   
+                                    $("#ro_name")[0].focus();
                                 })
 
                         }

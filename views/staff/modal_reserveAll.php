@@ -189,7 +189,7 @@
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
                             <div class="col-md">
-                                <input type="number" class="form-control " id="modal_people" min="0" />
+                                <input type="number" class="form-control " id="modal_people" min="0" name="people" />
                             </div>
                             <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                             <div class="col-md">
@@ -218,8 +218,11 @@
             </div>
         </div>
     </div>
-    <input type="hidden" value="" id="modal_ev_id" name="eventid"/>
+    <input type="hidden" value="" id="modal_ev_id" name="ev_id"/>
+    <input type="hidden" value="" id="modal_eventid" name="eventid"/>
     <input type="hidden" value="" id="modal_status" name="evstatus"/>
+    <!-- <input type="hidden" value="" id="modal_ro_id" name="ro_id"/>
+    <input type="hidden" value="" id="modal_st_id" name="st_id"/> -->
     <input type="hidden" value="<?php echo $_SESSION['mt_id'];?>"   name="id" />
     <input type="hidden" value="<?php echo $_SESSION['mt_lv_id'];?>" name="level" />
 

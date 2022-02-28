@@ -283,6 +283,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
             var path = 'http://127.0.0.1:4500',
                 id = '<?php echo $_SESSION['mt_id']; ?>';
+
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -305,25 +306,25 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $('#position').val(pos + "/" + level);
                 }
             })
-            // $.ajax({
-            //     type: "get",
-            //     dataType: "json",
-            //     url: path + "/tools",
-            //     success: function(result) {
-            //         var data = ' <div class="form-group  ">';
-            //         var x = 0;
-            //         for (i in result) {
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    var x = 0;
+                    for (i in result) {
 
-            //             x++
-            //             data += '<div class="d-block form-check"><input class="form-check-input chk" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
-            //             data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
-            //             data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-            //         }
-            //         data += '</div>';
-            //         $('#modaltool').html(data);
+                        x++
+                        data += '<div class="d-block form-check"><input class="form-check-input chk" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                    }
+                    data += '</div>';
+                    $('#modaltool').html(data);
 
-            //     }
-            // });
+                }
+            });
             //todo: table room
             $.ajax({
                 type: 'get',
@@ -566,6 +567,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             }
                                         });
 
+
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -582,8 +584,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalEdit").modal("show");
-                                $("#modal_ev_id").html(ev_id);
-                                // $("#modal_ro_name").html(ro_name);
+                                $("#modal_ev_id").val(ev_id);
+                                $("#modal_eventid").val(event_id);
+                                $("#modal_status").html(ev_status);
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
                                 $("#modal_timeEnd").val(ev_endtime);
@@ -687,30 +690,50 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
 
-                var formdata = $('#modalRoomall').serializeArray();
+                var formdata = $('#frm_modalEditRoom').serializeArray();
 
                 $.ajax({
                     type: "PUT",
                     url: path + "/event_post/updatedata",
+
                     dataType: "json",
                     data: formdata,
 
                     success: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
+                        if (result.status == 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
 
-                        }).then((result) => {
-                            location.reload();
-                            $("#modalRoomall")[0].reset();
-                            $("#modal_title")[0].focus();
-                        })
+                            }).then((result) => {
+
+                                $("#modalRoomall")[0].reset();
+                                $("#modal_title")[0].focus();
+                            })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+
+                            }).then((result) => {
+
+                                $("#modalRoomall")[0].reset();
+                                $("#modal_title")[0].focus();
+                            })
+                        }
+
                     },
                     error: function(result) {
                         const Toast = Swal.mixin({

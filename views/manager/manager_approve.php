@@ -612,7 +612,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             })
                             Toast.fire({
                                     icon: 'warning',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();
@@ -626,7 +626,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             })
                             Toast.fire({
                                     icon: 'success',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();

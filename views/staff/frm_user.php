@@ -224,7 +224,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
             $.ajax({
                 type: "get",
-                url: path + "/event/count/user",
+                url: path + "/event/count/staff",
                 data: {
                     id: id,
                     de_id: de_id,
