@@ -93,11 +93,11 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value=" " readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="name" name="name" value=" " readonly />
                                             </div>
 
                                         </div>
@@ -107,11 +107,11 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="" readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value=" " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                                 <label class="col-md-2 col-form-label">เวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart"name="timeStart" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" name="timeStart" />
                                                         <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -171,7 +171,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                                 <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                                                 <div class="col-md-4">
                                                     <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd"/>
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd" />
                                                         <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="far fa-clock"></i>
                                                             </div>
@@ -254,7 +254,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                         </div>
                                     </div>
                                     <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
-                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level"/>
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level" />
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -373,7 +373,31 @@ if ($_SESSION['mt_lv_id'] == 2) {
     </script>
     <script>
         $(document).ready(function() {
-            var path = 'http://127.0.0.1:4500';
+            var path = 'http://127.0.0.1:4500',
+                id = <?php echo $_SESSION['mt_id'];?>
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/user",
+                data: {
+                    id: id,
+                },
+                success: function(results) {
+                    for (i in results) {
+                        var prefix = results[i].prefix;
+                        var fname = results[i].firstname;
+                        var lname = results[i].lastname;
+                        var pos = results[i].position;
+                        var dename = results[i].de_name;
+                        var level = results[i].level;
+                    }
+                    $('#name').val(fname + ' ' + lname);
+                    $('#prefix').val(prefix);
+                    $('#de_name').val(dename);
+                    $('#position').val(pos + "/" + level);
+                }
+            })
 
             $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
@@ -388,7 +412,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 var sumnum = $('#sumnum').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
-              
+
                 var formdata = $('#frm_Addroom').serializeArray();
 
                 $.ajax({
@@ -396,9 +420,9 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     url: path + "/event_post/adddata",
                     dataType: "json",
                     data: formdata,
-                  
+
                     success: function(result) {
-                        if (result.status != 0 ) {
+                        if (result.status != 0) {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -406,7 +430,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 timer: 3000,
                             })
                             Toast.fire({
-                                    icon: 'warning',
+                                    icon: 'success',
                                     title: result.message
 
                                 })
@@ -423,7 +447,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 timer: 3000,
                             })
                             Toast.fire({
-                                icon: 'success',
+                                icon: 'warning',
                                 title: result.message
 
                             })
@@ -431,8 +455,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                             $("#title")[0].focus();
 
                         }
-                    }
-                    ,
+                    },
                     error: function(result) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -441,23 +464,18 @@ if ($_SESSION['mt_lv_id'] == 2) {
                             timer: 3000,
                         })
                         Toast.fire({
-                            icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลได้'
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้'
 
-                        })
-                        .then((result) => {
-                            $('#frm_Addroom')[0].reset();
-                            $("#title")[0].focus();
+                            })
+                            .then((result) => {
+                                $('#frm_Addroom')[0].reset();
+                                $("#title")[0].focus();
 
-                        })
+                            })
 
                     }
                 });
-
-                function clear_tools(msg) {
-                    $("#frmTools")[0].reset();
-                    $("#to_name")[0].focus();
-                }
 
             });
 

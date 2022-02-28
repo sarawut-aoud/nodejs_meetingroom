@@ -139,8 +139,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                         <div class="input-group">
                                             <label class="col-sm-2 col-form-label">แผนก :</label>
                                             <div class="col-md-4">
-                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" data-placeholder="- แผนก -" id="dename">
-                                                    <option value=""></option>
+                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="dename">
+                                                 
 
                                                 </select>
                                             </div>
@@ -163,19 +163,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row ">
-                                        <div class="input-group">
 
-                                            <label class="col-sm-2 col-form-label">ระดับสิทธิ์ :</label>
-                                            <div class="col-md-4">
-                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" data-placeholder="- ระดับสิทธิ์ -" id="level">
-                                                    <option value=""></option>
-
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class=" card-footer">
                                     <div class="row justify-content-end ">
@@ -301,7 +289,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 dataType: "json",
                 url: path + "/depart",
                 success: function(result) {
-                    var depart = '<option value="0" selected disabled>-- แผนก --</option>';
+                    var depart = '<option selected disabled>-- แผนก --</option>';
                     for (ii in result) {
                         depart += '<option value="' + result[ii].de_id + '">' + result[ii]
                             .de_name +
@@ -353,25 +341,42 @@ if ($_SESSION['mt_lv_id'] == 2) {
                         position: position,
                         phone: phone,
                         de_id: de_id,
-                        lv_id: lv_id,
-                        id:id,
+                        id: id,
                     },
                     success: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
+                        if (result.status == 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
 
-                        }).then((result) => {
-                            location.reload();
-                            $('#fname')[0].focus();
-                        })
+                            })
+                            // .then((result) => {
+                            //     location.reload();
 
+                            // })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+
+                            })
+                            // .then((result) => {
+                            //     location.reload();
+
+                            // })
+                        }
 
                     },
                     error: function(result) {
@@ -385,15 +390,11 @@ if ($_SESSION['mt_lv_id'] == 2) {
                             icon: 'warning',
                             title: 'ไม่สามารถบันทึกข้อมูลได้'
 
-                        }).then((result) => {
-                            // location.reload();
-                            $('#fname')[0].focus();
-                            $('#lname')[0].reset();
-                            $('#personid')[0].reset();
-                            $('#phone')[0].reset();
-                            $('#position')[0].reset();
-
                         })
+                        // .then((result) => {
+                        //     location.reload();
+
+                        // })
                     }
 
                 })

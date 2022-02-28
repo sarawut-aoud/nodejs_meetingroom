@@ -28,7 +28,7 @@ sql.get("/", async (req, res) => {
         "INNER JOIN tbl_department As de " +
         "ON (u.de_id = de.de_id) " +
         "INNER JOIN tbl_level As lv " +
-        "ON (u.lv_id = lv.lv_id)" +
+        "ON (u.lv_id = lv.lv_id) " +
         "ORDER BY u.id ASC",
       (error, results, fields) => {
         if (error) throw error;
@@ -71,35 +71,62 @@ sql.put("/", async (req, res) => {
   let de_id = req.body.de_id;
   let lv_id = req.body.lv_id;
 
-  if (!id || !firstname || !lastname || !de_id || !lv_id) {
+  if (!id || !firstname || !lastname || !de_id ) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
-    con.query(
-      "UPDATE tbl_user SET username = ?, password = ? ,  prefix = ? ,firstname = ?,lastname = ?,person_id = ? ,position = ?,phone = ? ,de_id = ? ,lv_id=? WHERE id = ?",
-      [
-        username,
-        password,
-        prefix,
-        firstname,
-        lastname,
-        person_id,
-        position,
-        phone,
-        de_id,
-        lv_id,
-        id,
-      ],
-      (error, results, fields) => {
-        if (error) throw error;
-        return res.send({
-          error: false,
-          status: "0",
-          message: "แก้ไขข้อมูลแล้ว",
-        });
-      }
-    );
+    if(lv_id == '1'||lv_id == '4'){
+      con.query(
+        "UPDATE tbl_user SET username = ?, password = ? ,  prefix = ? ,firstname = ?,lastname = ?,person_id = ? ,position = ?,phone = ? ,de_id = ? ,lv_id=? WHERE id = ?",
+        [
+          username,
+          password,
+          prefix,
+          firstname,
+          lastname,
+          person_id,
+          position,
+          phone,
+          de_id,
+          lv_id,
+          id,
+        ],
+        (error, results, fields) => {
+          if (error) throw error;
+          return res.send({
+            error: false,
+            status: "0",
+            message: "แก้ไขข้อมูลแล้ว",
+          });
+        }
+      );
+    }else{
+      con.query(
+        "UPDATE tbl_user SET username = ?, password = ? ,  prefix = ? ,firstname = ?,lastname = ?,person_id = ? ,position = ?,phone = ? ,de_id = ?  WHERE id = ?",
+        [
+          username,
+          password,
+          prefix,
+          firstname,
+          lastname,
+          person_id,
+          position,
+          phone,
+          de_id,
+          id,
+        ],
+        (error, results, fields) => {
+          if (error) throw error;
+          return res.send({
+            error: false,
+            status: "0",
+            message: "แก้ไขข้อมูลแล้ว",
+          });
+        }
+      );
+    }
+   
   }
 });
 

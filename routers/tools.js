@@ -15,9 +15,12 @@ const sql = express.Router();
 
 // //?  SELECT Data
 sql.get("/", async (req, res) => {
-  let to_id = req.body.to_id;
+  var query01 = require("url").parse(req.url, true).query;
+  let to_id = query01.to_id;
+  let ev_id = query01.ev_id;
+  let toolid = query01.toolid;
 
-  if (!to_id) {
+  if (!to_id && !ev_id) {
     con.query(
       "SELECT t.to_id ,t.to_name ,de.de_name " +
         "FROM tbl_tools AS t " +
@@ -29,7 +32,7 @@ sql.get("/", async (req, res) => {
         res.json(results);
       }
     );
-  } else {
+  } else if (!ev_id) {
     con.query(
       "SELECT t.to_id ,t.to_name ,de.de_name " +
         "FROM tbl_tools AS t " +
@@ -45,6 +48,19 @@ sql.get("/", async (req, res) => {
       }
     );
     // console.log(results);
+
+    // console.log(results);
+  } else {
+    con.query(
+      " SELECT  t.to_id , t.to_name ,(SELECT to_id  FROM tbl_acces where  to_id= t.to_id AND ev_id = ?) as acc_toid " +
+        " FROM tbl_tools AS t " +
+        " ORDER BY t.to_id ASC",
+      [ev_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        res.json(results);
+      }
+    );
   }
 });
 
@@ -102,45 +118,6 @@ sql.put("/", async (req, res) => {
   }
 });
 
-// // //? delete data
-// sql.delete("/", async (req, res) => {
-//   let to_id = req.body.to_id;
-
-//   if (!to_id) {
-//     return res
-//       .status(400)
-//       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-//   } else {
-//     con.query(
-//       "SELECT count(to_id) as to_id   FROM  seting   WHERE to_id = ?", //? FROM seting or setdevice
-//       [to_id],
-//       (error, results, fields) => {
-//         if (error) throw error;
-
-//         if (results[0].ac_id > 0) {
-//           return res.send({
-//             error: false,
-//             status: "1",
-//             message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
-//           });
-//         } else {
-//           con.query(
-//             "DELETE FROM tbl_tools WHERE to_id = ?",
-//             [to_id],
-//             (error, results, fields) => {
-//               if (error) throw error;
-//               return res.send({
-//                 error: false,
-//                 status: "0",
-//                 message: "ลบข้อมูลแล้ว",
-//               });
-//             }
-//           );
-//         }
-//       }
-//     );
-//   }
-// });
 // //? delete data
 sql.delete("/", async (req, res) => {
   let to_id = req.body.to_id;

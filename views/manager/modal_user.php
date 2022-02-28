@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header justify-content-center text-white edit-head">
                     <div class="text-center">
-                        <h1> แก้ไขรายละเอียดการขอใช้ห้องประชุม </h1>
+                        <h1> แก้ไขรายละเอียดข้อมูลผุ้ใช้ </h1>
                     </div>
                 </div>
                 <div class="modal-body" id="modaldata">
@@ -79,7 +79,20 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="form-group row ">
+                        <div class="input-group">
+
+                            <label class="col-sm-2 col-form-label">ระดับสิทธิ์ :</label>
+                            <div class="col-md-4">
+                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" data-placeholder="- ระดับสิทธิ์ -" id="modallevel">
+                                    <option value=""></option>
+
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
                     <!--//? /.html data -->
                 </div>
                 <div class="modal-footer">

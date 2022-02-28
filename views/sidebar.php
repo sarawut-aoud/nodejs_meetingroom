@@ -149,6 +149,12 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
                             <p>ข้อมูลส่วนตัว</p>
                         </a>
                     </li>
+                    <li class="nav-item mt-3 ">
+                        <a href="./user_all.php" class="nav-link active">
+                            <i class="nav-icon fa-solid fa-hospital-user"></i>
+                            <p>ข้อมูลผู้ใช้งาน</p>
+                        </a>
+                    </li>
                     <hr class="mt-3 mb-3" style="background-color:#fff">
 
                     <li class="mb-2 nav-header text-white"> จองห้องประชุม</li>

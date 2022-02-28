@@ -98,11 +98,11 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value=" " readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="name" name="name" value="" readonly />
                                             </div>
 
                                         </div>
@@ -112,11 +112,11 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="" readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -281,26 +281,49 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 format: 'L'
             });
 
-            var path = 'http://127.0.0.1:4500'
-
+            var path = 'http://127.0.0.1:4500',
+                id = '<?php echo $_SESSION['mt_id']; ?>';
             $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/tools",
-                success: function(result) {
-                    var data = ' <div class="form-group  ">';
-                    var x = 0;
-                    for (i in result) {
-                        x++
-                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
-                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
-                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/user",
+                data: {
+                    id: id,
+                },
+                success: function(results) {
+                    for (i in results) {
+                        var prefix = results[i].prefix;
+                        var fname = results[i].firstname;
+                        var lname = results[i].lastname;
+                        var pos = results[i].position;
+                        var dename = results[i].de_name;
+                        var level = results[i].level;
                     }
-                    data += '</div>';
-                    $('#modaltool').html(data);
-
+                    $('#name').val(fname + ' ' + lname);
+                    $('#prefix').val(prefix);
+                    $('#de_name').val(dename);
+                    $('#position').val(pos + "/" + level);
                 }
-            });
+            })
+            // $.ajax({
+            //     type: "get",
+            //     dataType: "json",
+            //     url: path + "/tools",
+            //     success: function(result) {
+            //         var data = ' <div class="form-group  ">';
+            //         var x = 0;
+            //         for (i in result) {
+
+            //             x++
+            //             data += '<div class="d-block form-check"><input class="form-check-input chk" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+            //             data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+            //             data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+            //         }
+            //         data += '</div>';
+            //         $('#modaltool').html(data);
+
+            //     }
+            // });
             //todo: table room
             $.ajax({
                 type: 'get',
@@ -484,7 +507,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
-
+                        var toid = $('.chk').val();
                         $.ajax({
                             type: "get",
                             dataType: "json",
@@ -514,6 +537,34 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
+
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/tools",
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
+                                            success: function(tool) {
+                                                // var chk = '';
+                                                var data = ' <div class="form-group  ">';
+                                                var x = 0;
+                                                for (i in tool) {
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
+                                                        console.log(tool[i].acc_toid)
+                                                        chk = 'checked="checked"'
+
+                                                    }
+                                                    x++
+                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                }
+                                                data += '</div>';
+                                                $('#modaltool').html(data);
+                                            }
+                                        });
 
                                     }
                                 }

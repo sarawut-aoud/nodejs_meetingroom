@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
+const e = require("express");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -64,7 +65,7 @@ router.get("/", async (req, res, next) => {
         "users.id, users.firstname,users.lastname, users.position," +
         "dept.de_id, dept.de_name, dept.de_phone " +
         " FROM tbl_acces AS ass  " +
-        "INNER JOIN tbl_event AS ev " +
+        "INNER JOIN tbl_event AS ev ON (ev.ev_id = ass.ev_id) " +
         "INNER JOIN tbl_user AS users ON (ev.id = users.id ) " +
         "INNER JOIN tbl_department AS dept ON (users.de_id = dept.de_id) " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
@@ -75,16 +76,23 @@ router.get("/", async (req, res, next) => {
       [de_id],
       (error, results, fields) => {
         if (error) throw error;
-        for (var x = 0; x < results.length; x++) {
-          //  evid = ;
-          evstatus = results[x].ev_status;
-          arr[x] = results[x].ev_id;
+
+        if (results) {
+          for (var x = 0; x < results.length; x++) {
+            //  evid = ;
+            evstatus = results[x].ev_status;
+
+            arr[x] = results[x].ev_id;
+          }
+          req.arr = arr;
+          req.ev_status = evstatus;
+          req.res = results.length;
+      
+          req.results = results;
+
+          return next();
+        
         }
-        req.arr = arr;
-        req.ev_status = evstatus;
-        req.res = results.length;
-        req.results = results;
-        return next();
       }
     );
   }
@@ -92,15 +100,16 @@ router.get("/", async (req, res, next) => {
   router.get("/", async (req, res) => {
     var query01 = require("url").parse(req.url, true).query;
     let id = query01.id;
-    for(var x = 0 ; x < req.res ; x++){
-      const evid = req.arr[x];
-      con.query(
-        "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
-        [evid, id, req.ev_status],
-        (error, total, fields) => {
-          if (error) throw error;
-      
-          if (total.length == 0) {
+    if (req.ev_status) {
+      for (var x = 0; x < req.res; x++) {
+        const evid = req.arr[x];
+        con.query(
+          "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
+          [evid, id, req.ev_status],
+          (error, total, fields) => {
+            if (error) throw error;
+
+            if (total.length == 0) {
               con.query(
                 "INSERT INTO tbl_setdevice(id,ev_id,dv_status)VALUES(?,?,?)",
                 [id, evid, req.ev_status],
@@ -108,13 +117,16 @@ router.get("/", async (req, res, next) => {
                   if (error) throw error;
                 }
               );
-            
+            }
           }
-        }
-      );
+        );
+      }
+      res.json(req.results);
+    } else {
+      return res.json({
+        status: "0",
+        message: "เกิดข้อผิดพลาด",
+      });
     }
-
-    res.json(req.results);
   });
 module.exports = router;
-

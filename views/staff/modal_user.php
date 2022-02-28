@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header justify-content-center text-white edit-head">
                     <div class="text-center">
-                        <h1> แก้ไขรายละเอียดการขอใช้ห้องประชุม </h1>
+                        <h1> แก้ไขรายละเอียดข้อมูลผู้ใช้งาน </h1>
                     </div>
                 </div>
                 <div class="modal-body" id="modaldata">

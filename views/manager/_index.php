@@ -112,11 +112,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value="" readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="name" name="name" value=" " readonly />
                                             </div>
 
                                         </div>
@@ -126,11 +126,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value=" " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value=" " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -234,8 +234,30 @@ if ($_SESSION['mt_lv_id'] == 4) {
     </script>
     <script>
         $(document).ready(function() {
-            var path = 'http://127.0.0.1:4500';
-
+            var path = 'http://127.0.0.1:4500',
+                id = '<?php echo $_SESSION['mt_id'];?>';
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/user",
+                data: {
+                    id: id,
+                },
+                success: function(results) {
+                    for (i in results) {
+                        var prefix = results[i].prefix;
+                        var fname = results[i].firstname;
+                        var lname = results[i].lastname;
+                        var pos = results[i].position;
+                        var dename = results[i].de_name;
+                        var level = results[i].level;
+                    }
+                    $('#name').val(fname + ' ' + lname);
+                    $('#prefix').val(prefix);
+                    $('#de_name').val(dename);
+                    $('#position').val(pos + "/" + level);
+                }
+            })
 
             $.ajax({
                 type: 'GET',

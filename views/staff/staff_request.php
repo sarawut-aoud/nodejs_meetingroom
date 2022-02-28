@@ -94,11 +94,11 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value=" " readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="name" name="name" value="" readonly />
                                             </div>
 
                                         </div>
@@ -108,11 +108,11 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="" readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -224,8 +224,31 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
 
             var path = 'http://127.0.0.1:4500',
-                level = '<?php echo $_SESSION['mt_lv_id']; ?>'
+                level = '<?php echo $_SESSION['mt_lv_id']; ?>',
+                id = '<?php echo $_SESSION['mt_id']; ?>';
 
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/user",
+                data: {
+                    id: id,
+                },
+                success: function(results) {
+                    for (i in results) {
+                        var prefix = results[i].prefix;
+                        var fname = results[i].firstname;
+                        var lname = results[i].lastname;
+                        var pos = results[i].position;
+                        var dename = results[i].de_name;
+                        var level = results[i].level;
+                    }
+                    $('#name').val(fname + ' ' + lname);
+                    $('#prefix').val(prefix);
+                    $('#de_name').val(dename);
+                    $('#position').val(pos + "/" + level);
+                }
+            })
             //todo: table room
             $.ajax({
                 type: 'post',
@@ -353,25 +376,25 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
-                                        
+
                                         $.ajax({
-                                            type:'get',
+                                            type: 'get',
                                             dataType: 'json',
-                                            url: path+'/event/requesttool',
-                                            success:function(tool){
+                                            url: path + '/event/requesttool',
+                                            success: function(tool) {
                                                 // console.log(result[ii].event_id)
-                                                var to_name =''
-                                                for(i in tool){
-                                                   
-                                                    if(tool[i].ev_id == ev_id){
-                                                       
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
-                                                       
+                                                var to_name = ''
+                                                for (i in tool) {
+
+                                                    if (tool[i].ev_id == ev_id) {
+
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
+
                                                     }
-                                         
+
                                                     $("#modal2_tool").html(to_name);
                                                 }
-                                             
+
                                             }
                                         });
                                     }
@@ -397,7 +420,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
                                 $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
-                               
+
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
                                 $("#modal2_dept").html(de_name);
@@ -432,7 +455,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
                                         var to_name = result[ii].to_name;
-                                        
+                                        var st_id = result[ii].st_id;
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
@@ -443,53 +466,45 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
                                         $.ajax({
-                                            type:'get',
+                                            type: 'get',
                                             dataType: 'json',
-                                            url: path+'/event/requesttool',
-                                            success:function(tool){
-                                                // console.log(result[ii].event_id)
-                                                var to_name =''
-                                                for(i in tool){
+                                            url: path + '/event/requesttool',
+                                            success: function(tool) {
+                                               
+                                                var x = 0;
+                                                var data = ' <div class="form-group  ">';
+                                                for (i in tool) {
+                                                   if(tool[i].ev_id == ev_id){
+                                                    x++
+                                                    data += '<div class="d-block form-check"><input checked disabled  class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                   }
                                                    
-                                                    if(tool[i].ev_id == ev_id){
-                                                       
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 '+tool[i].to_name+'  </div>'
-                                                       
-                                                    }
-                                         
-                                                    $("#modal_tool").html(to_name);
                                                 }
-                                             
+                                                data += '</div>';
+                                                $('#modaltool').html(data);
+                                
+
                                             }
                                         });
                                     }
                                 }
-                                if (ev_status == 0) {
-                                    var status = 'รออนุมัติจากหัวหน้า'
-                                } else if (ev_status == 1) {
-                                    var status = 'รออนุมัติ'
-                                } else if (ev_status == 2) {
-                                    var status = 'ไม่อนุมัติจากหัวหน้า'
-                                } else if (ev_status == 3) {
-                                    var status = 'อนุมัติ'
-                                } else if (ev_status == 4) {
-                                    var status = 'ไม่อนุมัติ'
-                                } else if (ev_status == 5) {
-                                    var status = 'ยกเลิก'
-                                }
+                              
                                 $("#modalStatus").modal("show");
-                                $("#modal_ev_id").html(ev_id);
-                                $("#modal_roName").html(ro_name);
-                                $("#modal_title").html(ev_title);
-                                $("#modal_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
-                                $("#modal_style").html(st_name);
-                                // $("#modal_tool").html(to_name);
-                                $("#modal_people").html(ev_people + '  คน');
-                                $("#modal_name").html(firstname + ' ' + lastname);
-                                $("#modal_dept").html(de_name);
-                                $("#modal_pos").html(pos);
-                                $("#modal_phone").html(de_phone);
+                                $("#modal_title").val(ev_title);
+                                $("#modal_timeStart").val(ev_starttime);
+                                $("#modal_timeEnd").val(ev_endtime);
+                                $("#modal_dateStart").val(ev_startdate.split('T')[0]);
+                                $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
+                                $("#modal_ro_name").val(ro_name);
+                                $("#modal_people").val(ev_people);
+                                $("#modal_style").val(st_name);
+                                $("#modal_ev_id").val(event_id);
+                                $("#modal_ro_id").val(ro_id);
+                                $("#modal_st_id").val(st_id);
+                             
+
                             }
                         });
                     });
@@ -545,8 +560,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                 }
             });
- /// modal
- $('.btnSave').click(function(e) {
+            /// modal
+            $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_status = $('#modal_id_status').val();
                 var event_id = $('#modal_eventid_h').val();
@@ -555,20 +570,12 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 var ev_enddate = $('#modal_ev_enddate_h').val();
                 var ev_starttime = $('#modal_ev_starttime_h').val();
                 var ev_endtime = $('#modal_ev_endtime_h').val();
-
+                var formdata = $('#ModalStatus').serializeArray();
                 $.ajax({
                     type: "PUT",
                     dataType: "JSON",
                     url: path + '/event_post/updatestatus',
-                    data: {
-                        ev_status: ev_status,
-                        event_id: event_id,
-                        ro_id: ro_id,
-                        ev_startdate: ev_startdate,
-                        ev_enddate: ev_enddate,
-                        ev_starttime: ev_starttime,
-                        ev_endtime: ev_endtime,
-                    },
+                    data:formdata,
                     success: function(results) {
                         if (results.status == 0) {
                             const Toast = Swal.mixin({
@@ -579,7 +586,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             })
                             Toast.fire({
                                     icon: 'warning',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();
@@ -593,7 +600,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             })
                             Toast.fire({
                                     icon: 'success',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();
@@ -604,7 +611,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 })
             })
             /// modal
-           
+
         });
     </script>
 

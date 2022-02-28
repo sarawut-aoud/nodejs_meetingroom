@@ -397,8 +397,30 @@ if ($_SESSION['mt_lv_id'] == 3) {
     </script>
     <script>
         $(document).ready(function() {
-            var path = 'http://127.0.0.1:4500';
-
+            var path = 'http://127.0.0.1:4500',
+            id = '<?php echo $_SESSION['mt_id']; ?>';
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/user",
+                data: {
+                    id: id,
+                },
+                success: function(results) {
+                    for (i in results) {
+                        var prefix = results[i].prefix;
+                        var fname = results[i].firstname;
+                        var lname = results[i].lastname;
+                        var pos = results[i].position;
+                        var dename = results[i].de_name;
+                        var level = results[i].level;
+                    }
+                    $('#name').val(fname + ' ' + lname);
+                    $('#prefix').val(prefix);
+                    $('#de_name').val(dename);
+                    $('#position').val(pos + "/" + level);
+                }
+            })
             $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();

@@ -163,19 +163,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row ">
-                                        <div class="input-group">
 
-                                            <label class="col-sm-2 col-form-label">ระดับสิทธิ์ :</label>
-                                            <div class="col-md-4">
-                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" data-placeholder="- ระดับสิทธิ์ -" id="level">
-                                                    <option value=""></option>
-
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class=" card-footer">
                                     <div class="row justify-content-end ">
@@ -218,8 +206,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-   
-
     <script>
         $(document).ready(function() {
             cache_clear();
@@ -238,7 +224,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
             $.ajax({
                 type: "get",
-                url: path + "/event/count/staff",
+                url: path + "/event/count/user",
                 data: {
                     id: id,
                     de_id: de_id,
@@ -254,6 +240,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
             // window.location.reload(); use this if you do not remove cache
         }
     </script>
+
+
     <script>
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker()
@@ -353,25 +341,40 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         position: position,
                         phone: phone,
                         de_id: de_id,
-                        lv_id: lv_id,
-                        id:id,
+                        id: id,
                     },
                     success: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
+                        if (result.status == 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
 
-                        }).then((result) => {
-                            location.reload();
-                            $('#fname')[0].focus();
-                        })
+                            }).then((result) => {
+                                location.reload();
 
+                            })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+
+                            }).then((result) => {
+                                location.reload();
+
+                            })
+                        }
 
                     },
                     error: function(result) {
@@ -386,12 +389,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             title: 'ไม่สามารถบันทึกข้อมูลได้'
 
                         }).then((result) => {
-                            // location.reload();
-                            $('#fname')[0].focus();
-                            $('#lname')[0].reset();
-                            $('#personid')[0].reset();
-                            $('#phone')[0].reset();
-                            $('#position')[0].reset();
+                            location.reload();
 
                         })
                     }
@@ -402,31 +400,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
         });
     </script>
- <script>
-        $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
 
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
-        });
-    </script>
 </body>
 
 </html>
