@@ -15,32 +15,59 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const router = express.Router();
 
 //?  SELECT Data
-router.post("/", async (req, res) => {
-  var id = req.body.id;
+router.get("/", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  var id = query01.id;
+  var de_id = query01.de_id;
   // console.log(id);
-  if (id) {
+  if (!id && !de_id) {
+    
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
         "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN tbl_user AS users ON (ev.id = users.id) WHERE users.id = ? GROUP BY ev.event_id",
-      [id],
+        "INNER JOIN tbl_user AS users ON (ev.id = users.id)  GROUP BY ev.event_id",
 
       (error, results, fields) => {
         if (error) throw error;
-        // console.log(error);
-        if (results.length > 0) {
-          // console.log(results);
-          return res.json(results);
-        }
+        res.json(results);
       }
     );
   } else {
-    return res.json({
-      status: "0",
-      message: "error",
-    });
+    if (!de_id) {
+     
+      con.query(
+        "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+          "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
+          "FROM tbl_event AS ev " +
+          "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+          "INNER JOIN tbl_user AS users ON (ev.id = users.id) WHERE users.id = ? GROUP BY ev.event_id",
+        [id],
+
+        (error, results, fields) => {
+          if (error) throw error;
+          res.json(results);
+        }
+      );
+    } else {
+      
+      con.query(
+        "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+          "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
+          "FROM tbl_event AS ev " +
+          "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+          "INNER JOIN tbl_user AS users ON (ev.id = users.id) " +
+          "INNER JOIN tbl_department AS dept ON (users.de_id = dept.de_id) " +
+          " WHERE dept.de_id = ?  GROUP BY ev.event_id",
+        [de_id],
+
+        (error, results, fields) => {
+          if (error) throw error;
+          res.json(results);
+        }
+      );
+    }
   }
 });
 //? SELECT Today
@@ -75,27 +102,26 @@ router.get("/", async (req, res) => {
 });
 //? SELECT Request
 router.get("/request", async (req, res) => {
-  
-    con.query(
-      "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
-        "ro.ro_id, ro.ro_name, " +
-        "st.st_id, st.st_name," +
-        "users.id, users.firstname,users.lastname, users.position," +
-        "dept.de_id, dept.de_name, dept.de_phone " +
-        "FROM tbl_event AS ev " +
-        " " +
-        "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-        "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
-        "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) ",
-    
-      (error, results, fields) => {
-        if (error) throw error;
-        // console.log(error);
-        res.json(results);
-      }
-    );
+  con.query(
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
+      "ro.ro_id, ro.ro_name, " +
+      "st.st_id, st.st_name," +
+      "users.id, users.firstname,users.lastname, users.position," +
+      "dept.de_id, dept.de_name, dept.de_phone " +
+      "FROM tbl_event AS ev " +
+      " " +
+      "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+      "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+      "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) ",
+
+    (error, results, fields) => {
+      if (error) throw error;
+      // console.log(error);
+      res.json(results);
+    }
+  );
 });
 //?  SELECT Request Tool
 router.get("/requesttool", async (req, res) => {

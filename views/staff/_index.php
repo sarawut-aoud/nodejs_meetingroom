@@ -98,6 +98,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 </div>
                                 <div class="card-body mb-0">
                                     <div id="showDate"></div>
+                                    <div id="today" class="mt-2"></div>
+
                                 </div>
                             </div>
 
@@ -392,7 +394,34 @@ if ($_SESSION['mt_lv_id'] == 3) {
             let date1 = new Date();
             var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
             $('#showDate').html(button);
+            var datetoday = new Date();
+            var today2 = datetoday.toISOString("EN-AU", {
+                    timeZone: "Australia/Melbourne"
+                })
+                .slice(0, 10);
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/today",
+                success: function(results) {
+                    var today = ''
+                    for (i in results) {
+                       
+                        if (results[i].ev_startdate == today2) {
+
+                            today +=
+                                "<div class='rounded border  mt-2  '  style =\"background-color : " +
+                                results[i].ro_color + "\"> " +
+                                "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i]
+                                .ev_starttime + " ถึง " + results[i].ev_endtime + "</div>" +
+                                "</div>";
+                        }
+                    }
+                    $("#today").html(today);
+
+                }
+            })
         });
 
         function viewdetail(id) {
@@ -401,7 +430,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: path + "/event/calendar",
+                url: "http://127.0.0.1:4500/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id
@@ -465,6 +494,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 }
 
             });
+           
         });
     </script>
 </body>

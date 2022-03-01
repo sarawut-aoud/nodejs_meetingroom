@@ -244,7 +244,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             // var id = $('#mtID').val();
             //todo: table room
             $.ajax({
-                type: 'post',
+                type: 'get',
                 dataType: 'json',
                 url: path + "/event",
                 data: {
@@ -337,8 +337,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
 
+                    $(document).on('click', '.btnDetail', function(e) {
 
-                    $(".btnDetail").click(function(e) {
+                        // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -426,8 +427,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-
-                    $(".btnEdit").click(function(e) {
+                    $(document).on('click', '.btnEdit', function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -460,7 +461,29 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/tools",
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
+                                            success: function(result) {
+                                                var data = ' <div class="form-group  ">';
+                                                var x = 0;
+                                                var check = '';
+                                                for (i in result) {
 
+                                                    x++
+                                                    data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                }
+                                                data += '</div>';
+                                                $('#modaltool').html(data);
+
+                                            }
+                                        });
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -489,8 +512,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnDels', function(e) {
 
-                    $(".btnDels").click(function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -565,9 +589,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     $('#modal_style').html(data);
                 }
             });
+            $(document).on('click', '#btnsaveRoom', function(e) {
 
-            /// modal ///
-            $('#btnsaveRoom').click(function(e) {
+                /// modal ///
+                // $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();
@@ -588,20 +613,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     url: path + "/event_post/adddata",
                     dataType: "json",
                     data: formdata,
-                    // data: {
-                    //     ev_title: ev_title,
-                    //     ev_starttime: ev_starttime,
-                    //     ev_endtime: ev_endtime,
-                    //     ev_startdate: ev_startdate,
-                    //     ev_enddate: ev_enddate,
-                    //     ev_people: ev_people,
-                    //     st_id: st_id,
-                    //     ro_id: ro_id,
-                    //     to_id: to_id,
-                    //     sumnum: sumnum,
-                    //     id: id,
-                    //     level: level,
-                    // },
+
                     success: function(result) {
                         const Toast = Swal.mixin({
                             toast: true,
@@ -632,7 +644,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                             })
                             .then((result) => {
-                               
+
                                 $("#frmTools")[0].reset();
                                 $("#to_name")[0].focus();
                             })

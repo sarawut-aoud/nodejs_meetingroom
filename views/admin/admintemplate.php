@@ -395,7 +395,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
             /// Rooms
-            $('#btnRooms').click(function(e) {
+            $(document).on('click', '#btnRooms', function(e) {
+
+            // $('#btnRooms').click(function(e) {
                 e.preventDefault();
                 var ro_name = $('#ro_name').val();
                 var ro_people = $('#ro_people').val();
@@ -456,7 +458,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
             // department
-            $('#btnDept').click(function(e) {
+            $(document).on('click', '#btnDept', function(e) {
+
+            // $('#btnDept').click(function(e) {
                 e.preventDefault();
                 var de_name = $('#de_name2').val();
                 var de_phone = $('#de_phone2').val();
@@ -509,7 +513,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
 
             /// Tools
-            $('#btnTools').click(function(e) {
+            $(document).on('click', '#btnTools', function(e) {
+
+            // $('#btnTools').click(function(e) {
                 e.preventDefault();
                 var to_name = $('#to_name').val();
                 var de_id = $('#de_id').val();
@@ -565,7 +571,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             /// Style
-            $('#btnStyle').click(function(e) {
+            $(document).on('click', '#btnStyle', function(e) {
+
+            // $('#btnStyle').click(function(e) {
                 e.preventDefault();
                 var st_name = $("#st_name").val();
                 $.ajax({

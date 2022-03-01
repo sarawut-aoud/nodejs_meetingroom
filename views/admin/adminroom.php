@@ -365,8 +365,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script>
         $(document).ready(function() {
             var path = 'http://127.0.0.1:4500';
+            
+            $(document).on('click', '#btnAproveRoom', function(e) {
 
-            $('#btnAproveRoom').click(function(e) {
+                // $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();
@@ -387,21 +389,44 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     url: path + "/event_post/adddata",
                     dataType: "json",
                     data: formdata,
-                    // data: {
-                    //     ev_title: ev_title,
-                    //     ev_starttime: ev_starttime,
-                    //     ev_endtime: ev_endtime,
-                    //     ev_startdate: ev_startdate,
-                    //     ev_enddate: ev_enddate,
-                    //     ev_people: ev_people,
-                    //     st_id: st_id,
-                    //     ro_id: ro_id,
-                    //     to_id: to_id,
-                    //     sumnum: sumnum,
-                    //     id: id,
-                    //     level: level,
-                    // },
+
                     success: function(result) {
+                        if (result.status != 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                    icon: 'warning',
+                                    title: result.message
+
+                                })
+                                .then((result) => {
+                                    $('#frm_Addroom')[0].reset();
+                                    $("#title")[0].focus();
+                                })
+
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+
+                            })
+                            $('#frm_Addroom')[0].reset();
+                            $("#title")[0].focus();
+
+                        }
+
+                    },
+                    error: function(result) {
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -409,32 +434,17 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             timer: 3000,
                         })
                         Toast.fire({
-                            icon: 'success',
-                            title: result.message
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้'
 
-                        })
-                        // $("#frmTools")[0].reset();
-                        // $("#to_name")[0].focus();
+                            })
+                            .then((result) => {
+                                $('#frm_Addroom')[0].reset();
+                                $("#title")[0].focus();
+                            })
+
                     }
-                    // ,
-                    // error: function(result) {
-                    //     const Toast = Swal.mixin({
-                    //         toast: true,
-                    //         position: 'top-end',
-                    //         showConfirmButton: false,
-                    //         timer: 3000,
-                    //     })
-                    //     Toast.fire({
-                    //         icon: 'warning',
-                    //         title: 'ไม่สามารถบันทึกข้อมูลได้'
 
-                    //     })
-                        // .then((result) => {
-                        //     location.reload();
-
-                        // })
-
-                    // }
                 });
 
                 function clear_tools(msg) {

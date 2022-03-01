@@ -422,8 +422,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     $('#position').val(pos + "/" + level);
                 }
             })
+            $(document).on('click', '#btnAproveRoom', function(e) {
 
-            $('#btnAproveRoom').click(function(e) {
+            // $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();

@@ -54,7 +54,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     <a href="./_index.php" class="nav-link ">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">ดูข้อมูล</a>
+                    <a class="nav-link active">ข้อมูลผู้ใช้งาน</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -122,7 +122,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>ข้อมูลผู้ใช้</h1>
+                                        <h1>ข้อมูลผู้ใช้งาน</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
@@ -366,8 +366,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         .container()
                         .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
+                        $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                    // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var id = $(this).attr('id');
 
@@ -404,7 +405,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         });
                     });
-                    $(".btnDels").click(function(e) {
+                    $(document).on('click', '.btnDels', function(e) {
+
+                    // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var id = $(this).attr('id');
@@ -456,9 +459,10 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                 }
             });
+            $(document).on('click', '#btnSaveUser', function(e) {
 
             ///  Btn Modal
-            $("#btnSaveUser").click(function(e) {
+            // $("#btnSaveUser").click(function(e) {
                 e.preventDefault();
 
                 var id = $("#iduser").val();

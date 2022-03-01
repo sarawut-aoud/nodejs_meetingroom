@@ -222,7 +222,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
             var path = 'http://127.0.0.1:4500',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>'
-                
+
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -356,8 +356,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         .container()
                         .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
                         $.ajax({

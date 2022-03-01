@@ -225,9 +225,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
             var path = 'http://127.0.0.1:4500',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>',
-                id = '<?php echo $_SESSION['mt_id'];?>';
+                id = '<?php echo $_SESSION['mt_id']; ?>';
 
-                $.ajax({
+            $.ajax({
                 type: 'GET',
                 dataType: 'json',
                 url: path + "/user",
@@ -342,7 +342,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         .container()
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
-                    $(".btnDetail").click(function(e) {
+                    $(document).on('click', '.btnDetail', function(e) {
+
+                        // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -430,8 +432,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -526,8 +529,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnDels', function(e) {
 
-                    $(".btnDels").click(function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -579,7 +583,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 }
             });
             /// modal
-            $('.btnSave').click(function(e) {
+            $(document).on('click', '#btnSave', function(e) {
+
+                // $('.btnSave').click(function(e) {
                 e.preventDefault();
                 var ev_status = $('#modal_id_status').val();
                 var event_id = $('#modal_eventid_h').val();
@@ -612,7 +618,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             })
                             Toast.fire({
                                     icon: 'warning',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();
@@ -626,7 +632,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             })
                             Toast.fire({
                                     icon: 'success',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();

@@ -89,7 +89,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    <button type="button" class="btn btn-primary btnSave">ยืนยันการแก้ไข</button>
+                    <button type="button" class="btn btn-primary " id="btnSave">ยืนยันการแก้ไข</button>
                 </div>
             </div>
         </div>

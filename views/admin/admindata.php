@@ -359,8 +359,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .container()
                         .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
+                    $(document).on('click', '.btnRoomEdit', function(e) {
 
-                    $(".btnRoomEdit").click(function(e) {
+                        // $(".btnRoomEdit").click(function(e) {
                         e.preventDefault();
                         var ro_id = $(this).attr('id');
 
@@ -390,7 +391,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-                    $(".btnRoomDels").click(function(e) {
+                    $(document).on('click', '.btnRoomDels', function(e) {
+
+                        // $(".btnRoomDels").click(function(e) {
                         e.preventDefault();
 
                         var ro_id = $(this).attr('id');
@@ -508,8 +511,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .buttons()
                         .container()
                         .appendTo("#tb_Style_wrapper .col-md-6:eq(0)");
-
-                    $(".btnStyleEdit").click(function(e) {
+                    $(document).on('click', '.btnStyleEdit', function(e) {
+                        // $(".btnStyleEdit").click(function(e) {
                         e.preventDefault();
                         var st_id = $(this).attr('id');
                         $.ajax({
@@ -532,8 +535,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-
-                    $(".btnStyleDels").click(function(e) {
+                    $(document).on('click', '.btnStyleDels', function(e) {
+                        // $(".btnStyleDels").click(function(e) {
                         e.preventDefault();
                         var st_id = $(this).attr('id');
 
@@ -625,7 +628,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             responsive: true,
                             lengthChange: false,
                             "lengthMenu": [
-                                [9, 24, 49, -1],
+                                [10, 24, 49, -1],
                                 [10, 25, 50, "All"]
                             ],
                             autoWidth: false,
@@ -649,8 +652,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .buttons()
                         .container()
                         .appendTo("#tb_Tools_wrapper .col-md-6:eq(0)");
-
-                    $(".btnToolEdit").click(function(e) {
+                    $(document).on('click', '.btnToolEdit', function(e) {
+                        // $(".btnToolEdit").click(function(e) {
                         e.preventDefault();
                         var to_id = $(this).attr('id');
 
@@ -674,9 +677,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-                    $(".btnToolDels").click(function(e) {
+                    $(document).on('click', '.btnToolDels', function(e) {
+                        // $(".btnToolDels").click(function(e) {
                         e.preventDefault();
-
+                        console.log('das')
                         var to_id = $(this).attr('id');
                         var _row = $(this).parent();
                         // console.log(to_id);
@@ -780,8 +784,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .buttons()
                         .container()
                         .appendTo("#tb_depart_wrapper .col-md-6:eq(0)");
+                    $(document).on('click', '.btndepartEdit', function(e) {
 
-                    $(".btndepartEdit").click(function(e) {
+                        // $(".btndepartEdit").click(function(e) {
                         e.preventDefault();
                         var de_id = $(this).attr('id');
 
@@ -807,7 +812,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-                    $(".btndepartDels").click(function(e) {
+                    $(document).on('click', '.btndepartDels', function(e) {
+
+                        // $(".btndepartDels").click(function(e) {
                         e.preventDefault();
 
                         var de_id = $(this).attr('id');
@@ -875,7 +882,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             });
             //  Btn Modal //
-            $(".btnSaveRoom").click(function(e) {
+            $(document).on('click', '.btnSaveRoom', function(e) {
+
+                // $(".btnSaveRoom").click(function(e) {
                 e.preventDefault();
 
                 var ro_id = $("#modal_ro_id").val();
@@ -897,19 +906,35 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     },
                     dataType: "json",
                     success: function(result) {
-                        $('#ModalRoom').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        }).then((result) => {
-                            location.reload();
-                        })
+                        if (result.status == 400) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        } else {
+                            $('#ModalRoom').modal('hide');
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+                            }).then((result) => {
+                                location.reload();
+                            })
+
+                        }
 
                     },
                     error: function(result) {
@@ -920,19 +945,20 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             timer: 3000,
                         })
                         Toast.fire({
-                            icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลห้องประชุมได้'
 
-                        })
-                        // .then((result) => {
-                        //     location.reload();
-                        // })
+                            })
+                            .then((result) => {
+                                location.reload();
+                            })
 
                     }
                 });
             });
+            $(document).on('click', '.btnSaveStyle', function(e) {
 
-            $(".btnSaveStyle").click(function(e) {
+                // $(".btnSaveStyle").click(function(e) {
                 e.preventDefault();
 
                 var st_id = $("#modal_st_id").val();
@@ -947,17 +973,34 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     },
                     dataType: "json",
                     success: function(result) {
-                        $('#ModalStyle').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        })
+                        if (result.status == 400) {
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+                            })
+                        } else {
+                            $('#ModalStyle').modal('hide');
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        }
+
                     },
                     error: function(result) {
                         const Toast = Swal.mixin({
@@ -976,7 +1019,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     }
                 });
             });
-            $(".btnSaveTool").click(function(e) {
+            $(document).on('click', '.btnSaveTool', function(e) {
+
+                // $(".btnSaveTool").click(function(e) {
                 e.preventDefault();
 
                 var to_id = $("#modal_to_id").val();
@@ -994,17 +1039,36 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     },
                     dataType: "json",
                     success: function(result) {
-                        $('#ModalTool').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        })
+                        if (result.status == 400) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        } else {
+                            $('#ModalTool').modal('hide');
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        }
+
                     },
                     error: function(result) {
                         const Toast = Swal.mixin({
@@ -1023,7 +1087,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     }
                 });
             });
-            $(".btnSaveDepart").click(function(e) {
+            $(document).on('click', '.btnSaveDepart', function(e) {
+
+                // $(".btnSaveDepart").click(function(e) {
                 e.preventDefault();
 
                 var de_id = $("#modal_de_id").val();
@@ -1041,19 +1107,35 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     },
                     dataType: "json",
                     success: function(result) {
-                        $('#ModalTool').modal('hide');
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: result.message
-                        }).then((result) => {
-                            location.reload();
-                        })
+                        if (result.status == 400) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        } else {
+                            $('#ModalTool').modal('hide');
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        }
+
                     },
                     error: function(result) {
                         const Toast = Swal.mixin({

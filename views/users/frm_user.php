@@ -315,7 +315,9 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 }
             });
             ///saveUser
-            $('#saveUser').click(function(e) {
+            $(document).on('click', '#saveUser', function(e) {
+
+            // $('#saveUser').click(function(e) {
                 e.preventDefault();
                 var username = $('#username').val();
                 var password = $('#password').val();

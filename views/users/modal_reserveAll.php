@@ -189,7 +189,7 @@
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
                             <div class="col-md">
-                                <input type="number" class="form-control " id="modal_people" min="0" />
+                                <input type="number" class="form-control " id="modal_people" name="people"min="0" />
                             </div>
                             <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                             <div class="col-md">

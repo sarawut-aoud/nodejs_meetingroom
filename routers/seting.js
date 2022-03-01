@@ -50,7 +50,7 @@ router.get("/requesttool", async (req, res) => {
 router.get("/", async (req, res, next) => {
   var query01 = require("url").parse(req.url, true).query;
   let id = query01.id;
-  
+
   const arr = [];
   if (!id) {
     return res
@@ -70,43 +70,69 @@ router.get("/", async (req, res, next) => {
       [id],
       (error, results, fields) => {
         if (error) throw error;
+
         for (var x = 0; x < results.length; x++) {
           //  evid = ;
+
           evstatus = results[x].ev_status;
           arr[x] = results[x].ev_id;
-        }
-        req.arr = arr;
-        req.ev_status = evstatus;
-        req.res = results.length;
-        req.results = results;
-        return next();
-      }
-    );
-  }
-}),
-  router.get("/", async (req, res) => {
-    var query01 = require("url").parse(req.url, true).query;
-    let id = query01.id;
-    for (var x = 0; x < req.res; x++) {
-      const evid = req.arr[x];
-      con.query(
-        "SELECT id,ev_id,set_status FROM tbl_seting WHERE ev_id = ? AND id = ? AND set_status = ?",
-        [evid, id, req.ev_status],
-        (error, total, fields) => {
-          if (error) throw error;
-          if (total.length == 0) {
+
+          for (var x = 0; x < results.length; x++) {
+            const evid = arr[x];
             con.query(
-              "INSERT INTO tbl_seting(id,ev_id,set_status)VALUES(?,?,?)",
-              [id, evid, req.ev_status],
-              (error, results, fields) => {
+              "SELECT id,ev_id,set_status FROM tbl_seting WHERE ev_id = ? AND id = ? AND set_status = ?",
+              [evid, id, evstatus],
+              (error, total, fields) => {
                 if (error) throw error;
+                if (total.length == 0) {
+                  if (evid != null && evstatus !='') {
+                    con.query(
+                      "INSERT INTO tbl_seting(id,ev_id,set_status)VALUES(?,?,?)",
+                      [id, evid, evstatus],
+                      (error, results, fields) => {
+                        if (error) throw error;
+                      }
+                    );
+                  }
+                }
               }
             );
           }
         }
-      );
-    }
+        res.json(results);
+        // req.arr = arr;
+        // req.ev_status = evstatus;
+        // req.res = results.length;
+        // req.results = results;
 
-    res.json(req.results);
-  });
-module.exports = router;
+        // return next();
+      }
+    );
+  }
+}),
+  // router.get("/", async (req, res) => {
+  //   var query01 = require("url").parse(req.url, true).query;
+  //   let id = query01.id;
+  //   for (var x = 0; x < req.res; x++) {
+  //     const evid = req.arr[x];
+  //     con.query(
+  //       "SELECT id,ev_id,set_status FROM tbl_seting WHERE ev_id = ? AND id = ? AND set_status = ?",
+  //       [evid, id, req.ev_status],
+  //       (error, total, fields) => {
+  //         if (error) throw error;
+  //         if (total.length == 0) {
+  //           con.query(
+  //             "INSERT INTO tbl_seting(id,ev_id,set_status)VALUES(?,?,?)",
+  //             [id, evid, req.ev_status],
+  //             (error, results, fields) => {
+  //               if (error) throw error;
+  //             }
+  //           );
+  //         }
+  //       }
+  //     );
+  //   }
+
+  //   res.json(req.results);
+  // });
+  (module.exports = router);

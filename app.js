@@ -261,6 +261,7 @@ const rooms = require("./routers/room");
 const style = require("./routers/roomstyle");
 const event = require("./routers/events");
 const event_post = require("./routers/event_post");
+const event_put = require("./routers/event_put");
 const seting = require("./routers/seting");
 const setdevice = require("./routers/setdevice");
 
@@ -269,6 +270,7 @@ app.use("/event",event);
 app.use("/seting",seting);
 app.use("/setdevice",setdevice);
 app.use("/event_post",event_post);
+app.use("/event_put",event_put);
 app.use("/user", user);
 app.use("/level", level);
 app.use("/depart", depart);

@@ -96,6 +96,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 </div>
                                 <div class="card-body mb-0">
                                     <div id="showDate"></div>
+                                    <div id="today" class="mt-2"></div>
+
                                 </div>
                             </div>
 
@@ -180,7 +182,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <!-- ./wrapper -->
     <?php require_once '../footer.php'; ?>
 
-    
+
     <!-- jQuery -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -211,7 +213,31 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
+    <script>
+        $(document).ready(function() {
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
 
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+        });
+    </script>
     <script>
         $(function() {
 
@@ -235,7 +261,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script>
         $(document).ready(function() {
             var path = 'http://127.0.0.1:4500',
-                id = '<?php echo $_SESSION['mt_id'];?>';
+                id = '<?php echo $_SESSION['mt_id']; ?>';
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -355,7 +381,34 @@ if ($_SESSION['mt_lv_id'] == 4) {
             let date1 = new Date();
             var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
             $('#showDate').html(button);
+            var datetoday = new Date();
+            var today2 = datetoday.toISOString("EN-AU", {
+                    timeZone: "Australia/Melbourne"
+                })
+                .slice(0, 10);
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/today",
+                success: function(results) {
+                    var today = ''
+                    for (i in results) {
+                        console.log(today2)
+                        if (results[i].ev_startdate == today2) {
+
+                            today +=
+                                "<div class='rounded border  mt-2  '  style =\"background-color : " +
+                                results[i].ro_color + "\"> " +
+                                "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i]
+                                .ev_starttime + " ถึง " + results[i].ev_endtime + "</div>" +
+                                "</div>";
+                        }
+                    }
+                    $("#today").html(today);
+
+                }
+            })
         });
     </script>
 

@@ -306,8 +306,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .container()
                         .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var id = $(this).attr('id');
 
@@ -344,7 +345,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-                    $(".btnDels").click(function(e) {
+                    $(document).on('click', '.btnDels', function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var id = $(this).attr('id');
@@ -396,9 +398,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                 }
             });
+            $(document).on('click', '#btnSaveUser', function(e) {
 
-            ///  Btn Modal
-            $("#btnSaveUser").click(function(e) {
+                ///  Btn Modal
+                // $("#btnSaveUser").click(function(e) {
                 e.preventDefault();
 
                 var id = $("#iduser").val();

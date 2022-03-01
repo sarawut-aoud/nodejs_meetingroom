@@ -382,8 +382,9 @@ if ($_SESSION['mt_lv_id'] == 2) {
                         .container()
                         .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
                         $.ajax({

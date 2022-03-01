@@ -54,7 +54,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     <a href="./_index.php" class="nav-link ">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">ดูข้อมูล</a>
+                    <a class="nav-link active">ข้อมูลผู้ใช้งาน</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -365,8 +365,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         .container()
                         .appendTo("#tbRoom_wrapper .col-md-6:eq(0)");
 
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var id = $(this).attr('id');
 
@@ -403,7 +404,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             }
                         });
                     });
-                    $(".btnDels").click(function(e) {
+                    $(document).on('click', '.btnDels', function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var id = $(this).attr('id');
@@ -455,9 +457,10 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                 }
             });
+            $(document).on('click', '#btnSaveUser', function(e) {
 
-            ///  Btn Modal
-            $("#btnSaveUser").click(function(e) {
+                ///  Btn Modal
+                // $("#btnSaveUser").click(function(e) {
                 e.preventDefault();
 
                 var id = $("#iduser").val();

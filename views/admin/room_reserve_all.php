@@ -226,6 +226,24 @@ if ($_SESSION['mt_lv_id'] == 1) {
             var path = 'http://127.0.0.1:4500'
 
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    var x = 0;
+                    for (i in result) {
+                        x++
+                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                    }
+                    data += '</div>';
+                    $('#modaltool').html(data);
+
+                }
+            });
             //todo: table room
             $.ajax({
                 type: 'get',
@@ -318,8 +336,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
 
+                    $(document).on('click', '.btnDetail', function(e) {
 
-                    $(".btnDetail").click(function(e) {
+                        // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -439,6 +458,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
+                                       
                                         $.ajax({
                                             type: "get",
                                             dataType: "json",
@@ -446,20 +466,24 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             data: {
                                                 ev_id: ev_id,
                                             },
-                                            success: function(result) {
+                                            success: function(tool) {
+                                                // var chk = '';
                                                 var data = ' <div class="form-group  ">';
                                                 var x = 0;
-                                                var check = '';
-                                                for (i in result) {
-                                                    
+                                                for (i in tool) {
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
+                                                       
+                                                        chk = 'checked="checked"'
+
+                                                    }
                                                     x++
-                                                    data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
-                                                    data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
                                                     data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                                                 }
                                                 data += '</div>';
                                                 $('#modaltool').html(data);
-
                                             }
                                         });
                                     }

@@ -50,7 +50,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     <a href="./_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">เพิ่มข้อมูล</a>
+                    <a class="nav-link active">ข้อมูลส่วนตัว</a>
                 </li>
 
             </ul>
@@ -315,7 +315,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 }
             });
             ///saveUser
-            $('#saveUser').click(function(e) {
+            $(document).on('click', '#saveUser', function(e) {
+
+            // $('#saveUser').click(function(e) {
                 e.preventDefault();
                 var username = $('#username').val();
                 var password = $('#password').val();

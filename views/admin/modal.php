@@ -111,7 +111,9 @@
                     <div class="form-group row">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
-
+                            <div class="col-md-9">
+                                <input type="text" class="form-control " id="modal_to_name" />
+                            </div>
                         </div>
                     </div>
                     <!--//? /.Tool Name -->
@@ -154,7 +156,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">ชื่อแผนก :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_de_name"  />
+                                <input type="text" class="form-control " id="modal_de_name" />
                             </div>
                         </div>
                     </div>
@@ -164,7 +166,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">เบอร์โทรติดต่อสายตรง :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_de_phone"  />
+                                <input type="text" class="form-control " id="modal_de_phone" />
 
                             </div>
                         </div>

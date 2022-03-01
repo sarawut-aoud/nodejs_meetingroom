@@ -83,50 +83,70 @@ router.get("/", async (req, res, next) => {
             evstatus = results[x].ev_status;
 
             arr[x] = results[x].ev_id;
-          }
-          req.arr = arr;
-          req.ev_status = evstatus;
-          req.res = results.length;
-      
-          req.results = results;
 
-          return next();
-        
+            for (var x = 0; x < results.length; x++) {
+              const evid = arr[x];
+              con.query(
+                "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
+                [evid, id, evstatus],
+                (error, total, fields) => {
+                  if (error) throw error;
+                  if (evid != undefined) {
+                    if (total.length == 0) {
+                      con.query(
+                        "INSERT INTO tbl_setdevice(id,ev_id,dv_status)VALUES(?,?,?)",
+                        [id, evid, evstatus],
+                        (error, results, fields) => {
+                          if (error) throw error;
+                        }
+                      );
+                    }
+                  }
+                }
+              );
+            }
+          }
+          res.json(results);
+          // req.arr = arr;
+          // req.ev_status = evstatus;
+          // req.res = results.length;
+          // req.results = results;
+          // return next();
         }
       }
     );
   }
 }),
-  router.get("/", async (req, res) => {
-    var query01 = require("url").parse(req.url, true).query;
-    let id = query01.id;
-    if (req.ev_status) {
-      for (var x = 0; x < req.res; x++) {
-        const evid = req.arr[x];
-        con.query(
-          "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
-          [evid, id, req.ev_status],
-          (error, total, fields) => {
-            if (error) throw error;
+  // router.get("/", async (req, res) => {
+  //   var query01 = require("url").parse(req.url, true).query;
+  //   let id = query01.id;
+  //   if (req.ev_status) {
+  //     for (var x = 0; x < req.res; x++) {
+  //       const evid = req.arr[x];
+  //       con.query(
+  //         "SELECT ev_id ,id,dv_status FROM tbl_setdevice WHERE ev_id = ? AND id = ? AND dv_status = ?",
+  //         [evid, id, req.ev_status],
+  //         (error, total, fields) => {
+  //           if (error) throw error;
 
-            if (total.length == 0) {
-              con.query(
-                "INSERT INTO tbl_setdevice(id,ev_id,dv_status)VALUES(?,?,?)",
-                [id, evid, req.ev_status],
-                (error, results, fields) => {
-                  if (error) throw error;
-                }
-              );
-            }
-          }
-        );
-      }
-      res.json(req.results);
-    } else {
-      return res.json({
-        status: "0",
-        message: "เกิดข้อผิดพลาด",
-      });
-    }
-  });
-module.exports = router;
+  //           if (total.length == 0) {
+  //             con.query(
+  //               "INSERT INTO tbl_setdevice(id,ev_id,dv_status)VALUES(?,?,?)",
+  //               [id, evid, req.ev_status],
+  //               (error, results, fields) => {
+  //                 if (error) throw error;
+  //               }
+  //             );
+  //           }
+  //         }
+  //       );
+  //     }
+  //     res.json(req.results);
+  //   } else {
+  //     return res.json({
+  //       status: "0",
+  //       message: "เกิดข้อผิดพลาด",
+  //     });
+  //   }
+  // });
+  (module.exports = router);

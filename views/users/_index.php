@@ -96,6 +96,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 </div>
                                 <div class="card-body mb-0">
                                     <div id="showDate"></div>
+                                    <div id="today" class="mt-2"></div>
+
                                 </div>
                             </div>
 
@@ -170,7 +172,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
                         </div>
                     </div>
-
+                    <?php require_once '../modalcalendar.php'; ?>
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -265,6 +267,53 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 format: 'L'
             });
         });
+
+        function viewdetail(id) {
+            //    console.log(id);
+
+            // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:4500/event/calendar",
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                success: function(results) {
+
+                    for (i in results) {
+                        if (results[i].ev_id == id) {
+                            var title = results[i].ev_title;
+                            var room = results[i].ro_name;
+                            var style = results[i].st_name;
+                            var start = results[i].ev_startdate;
+                            var end = results[i].ev_enddate;
+                            var starttime = results[i].ev_starttime;
+                            var endtime = results[i].ev_endtime;
+                            var people = results[i].ev_people;
+                            var name = results[i].firstname;
+                            var lastname = results[i].lastname;
+                            var dename = results[i].de_name;
+                            var dephone = results[i].de_phone;
+                        }
+                    }
+                    $("#calendarmodal").modal("show");
+
+                    $("#calendarmodal-title").html(title);
+                    $("#calendarmodal-detail").html(room);
+                    $("#calendarmodal-style").html(style);
+                    //$("#calendarmodal-detail").html(event.extendedProps.detail);
+                    $("#calendarmodal-start").html(start.split('T')[0]);
+                    $("#calendarmodal-end").html(end.split('T')[0]);
+                    $("#calendarmodal-starttime").html(starttime);
+                    $("#calendarmodal-endtime").html(endtime);
+                    $("#calendarmodal-people").html(people);
+                    $("#calendarmodal-name").html(name + ' ' + lastname);
+                    $("#calendarmodal-dename").html(dename);
+                    $("#calendarmodal-dephone").html(dephone);
+                },
+            });
+        }
     </script>
     <script>
         $(document).ready(function() {
@@ -278,8 +327,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 data: {
                     id: id,
                 },
-                success:function(results){
-                    for(i in results){
+                success: function(results) {
+                    for (i in results) {
                         var prefix = results[i].prefix;
                         var fname = results[i].firstname;
                         var lname = results[i].lastname;
@@ -287,10 +336,10 @@ if ($_SESSION['mt_lv_id'] == 2) {
                         var dename = results[i].de_name;
                         var level = results[i].level;
                     }
-                    $('#name').val(fname + ' ' +lname );
+                    $('#name').val(fname + ' ' + lname);
                     $('#prefix').val(prefix);
                     $('#de_name').val(dename);
-                    $('#position').val(pos+"/"+level );
+                    $('#position').val(pos + "/" + level);
                 }
             })
             // room
@@ -390,6 +439,36 @@ if ($_SESSION['mt_lv_id'] == 2) {
             let date1 = new Date();
             var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
             $('#showDate').html(button);
+            var datetoday = new Date();
+            var today2 = datetoday.toISOString("EN-AU", {
+                    timeZone: "Australia/Melbourne"
+                })
+                .slice(0, 10);
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/today",
+                success: function(results) {
+                    var today = ''
+                    for (i in results) {
+                        console.log(today2)
+                        if (results[i].ev_startdate == today2) {
+
+                            today +=
+                                "<div class='rounded border  mt-2  '  style =\"background-color : " +
+                                results[i].ro_color + "\"> " +
+                                "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i]
+                                .ev_starttime + " ถึง " + results[i].ev_endtime + "</div>" +
+                                "</div>";
+                        }
+                    }
+                    $("#today").html(today);
+
+                }
+            })
+
+
 
         });
     </script>

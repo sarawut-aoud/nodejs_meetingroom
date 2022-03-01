@@ -40,7 +40,7 @@ sql.get("/", async (req, res) => {
         "WHERE t.to_id = " +
         to_id +
         "" +
-        "ORDER BY t.to_id ASC; ",
+        " ORDER BY t.to_id ASC; ",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -128,15 +128,31 @@ sql.delete("/", async (req, res) => {
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "DELETE FROM tbl_tools WHERE to_id = ?",
+      "SELECT count(to_id) as to_id   FROM  tbl_acces  WHERE to_id = ?",
       [to_id],
       (error, results, fields) => {
         if (error) throw error;
-        return res.send({
-          error: false,
-          status: "0",
-          message: "ลบข้อมูลแล้ว",
-        });
+
+        if (results[0].to_id > 0) {
+          return res.send({
+            error: false,
+            status: "1",
+            message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
+          });
+        } else {
+          con.query(
+            "DELETE FROM tbl_tools WHERE to_id = ?",
+            [to_id],
+            (error, results, fields) => {
+              if (error) throw error;
+              return res.send({
+                error: false,
+                status: "0",
+                message: "ลบข้อมูลแล้ว",
+              });
+            }
+          );
+        }
       }
     );
   }

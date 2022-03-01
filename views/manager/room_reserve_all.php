@@ -281,15 +281,16 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 format: 'L'
             });
 
-            var path = 'http://127.0.0.1:4500';
-               
+            var path = 'http://127.0.0.1:4500',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
 
-                $.ajax({
+
+            $.ajax({
                 type: 'GET',
                 dataType: 'json',
                 url: path + "/user",
                 data: {
-                    id: '<?php echo $_SESSION['mt_id'];?>',
+                    id: '<?php echo $_SESSION['mt_id']; ?>',
                 },
                 success: function(results) {
                     for (i in results) {
@@ -330,6 +331,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 type: 'get',
                 dataType: 'json',
                 url: path + "/event",
+                data: {
+                    de_id: de_id,
+                },
                 success: function(data) {
                     var i = 0;
 
@@ -417,8 +421,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
 
 
+                    $(document).on('click', '.btnDetail', function(e) {
 
-                    $(".btnDetail").click(function(e) {
+                        // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -504,8 +509,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -538,9 +544,35 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/tools",
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
+                                            success: function(tool) {
+                                                // var chk = '';
+                                                var data = ' <div class="form-group  ">';
+                                                var x = 0;
+                                                for (i in tool) {
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
+                                                        console.log(tool[i].acc_toid)
+                                                        chk = 'checked="checked"'
+
+                                                    }
+                                                    x++
+                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                }
+                                                data += '</div>';
+                                                $('#modaltool').html(data);
+                                            }
+                                        });
 
 
-                                        
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -569,8 +601,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnDels', function(e) {
 
-                    $(".btnDels").click(function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -646,9 +679,10 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     $('#modal_style').html(data);
                 }
             });
+            $(document).on('click', '#btnsaveRoom', function(e) {
 
-            /// modal ///
-            $('#btnsaveRoom').click(function(e) {
+                /// modal ///
+                // $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();

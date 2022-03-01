@@ -50,7 +50,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     <a href="./_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">เพิ่มข้อมูล</a>
+                    <a class="nav-link active">ข้อมูลส่วนตัว</a>
                 </li>
 
             </ul>
@@ -218,7 +218,31 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script src="../public/javascript/countBage.js"></script>
+    <script>
+        $(document).ready(function() {
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+        });
+    </script>
 
 
     <script>
@@ -294,7 +318,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 }
             });
             ///saveUser
-            $('#saveUser').click(function(e) {
+            $(document).on('click', '#saveUser', function(e) {
+
+            // $('#saveUser').click(function(e) {
                 e.preventDefault();
                 var username = $('#username').val();
                 var password = $('#password').val();
