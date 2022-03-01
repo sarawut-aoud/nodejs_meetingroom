@@ -540,6 +540,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
+                                        var st_id = result[ii].st_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;

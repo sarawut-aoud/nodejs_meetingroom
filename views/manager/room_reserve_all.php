@@ -448,6 +448,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
+                                        var st_id = result[ii].st_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
@@ -536,6 +537,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
+                                        var st_id = result[ii].st_id;
+
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
@@ -618,7 +621,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 $("#modalEdit").modal("show");
                                 $("#modal_ev_id").val(ev_id);
                                 $("#modal_eventid").val(event_id);
-                                 $("#modal_status").html(ev_status);
+                                $("#modal_status").html(ev_status);
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
                                 $("#modal_timeEnd").val(ev_endtime);
@@ -631,7 +634,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                     dataType: 'json',
                                     url: path + "/rooms",
                                     success: function(result) {
-                                        var room ='';
+                                        var room = '';
                                         for (i in result) {
                                             if (result[i].ro_id == ro_id) {
                                                 room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
@@ -649,8 +652,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                     dataType: 'json',
                                     url: path + "/style",
                                     success: function(result) {
-                                        var style ='';
-                                        
+                                        var style = '';
+
                                         for (k in result) {
                                             if (result[k].st_id == st_id) {
                                                 style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
@@ -720,7 +723,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 }
             });
             /// modal ///
-           
+
             $(document).on('click', '#btnsaveRoom', function(e) {
 
                 /// modal ///
@@ -743,7 +746,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 $.ajax({
                     type: "PUT",
                     url: path + "/event_post/updatedata",
-                    
+
                     dataType: "json",
                     data: formdata,
 
@@ -760,7 +763,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 title: result.message
 
                             }).then((result) => {
-                              
+
                                 $("#modalRoomall")[0].reset();
                                 $("#modal_title")[0].focus();
                             })
@@ -776,7 +779,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 title: result.message
 
                             }).then((result) => {
-                              
+
                                 $("#modalRoomall")[0].reset();
                                 $("#modal_title")[0].focus();
                             })
