@@ -231,7 +231,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
             });
         });
     </script>
-     <script>
+    <script>
         $(document).ready(function() {
             cache_clear();
 
@@ -421,9 +421,9 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
 
 
-                        $(document).on('click', '.btnDetail', function(e) {
+                    $(document).on('click', '.btnDetail', function(e) {
 
-                    // $(".btnDetail").click(function(e) {
+                        // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -513,7 +513,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     });
                     $(document).on('click', '.btnEdit', function(e) {
 
-                    // $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -539,6 +539,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
+                                        var ro_people = result[ii].ro_people;
                                         var st_id = result[ii].st_id;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
@@ -602,12 +603,49 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
 
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    url: path + "/rooms",
+                                    success: function(result) {
+                                        var room ='';
+                                        for (i in result) {
+                                            if (result[i].ro_id == ro_id) {
+                                                room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+
+                                            } else {
+                                                room += '<option  value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+                                            }
+
+                                        }
+                                        $('#modal_ro_name').html(room);
+                                    }
+                                });
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    url: path + "/style",
+                                    success: function(result) {
+                                        var style ='';
+                                        
+                                        for (k in result) {
+                                            if (result[k].st_id == st_id) {
+                                                style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
+                                            } else {
+                                                style += '<option  value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
+                                            }
+
+                                        }
+                                        $('#modal_style').html(style);
+                                    }
+                                });
+
                             }
                         });
                     });
                     $(document).on('click', '.btnDels', function(e) {
 
-                    // $(".btnDels").click(function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -657,35 +695,12 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     });
                 }
             });
-            /// modal ///
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/rooms",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
-                    }
-                    $('#modal_ro_name').html(data);
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/style",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
-                    }
-                    $('#modal_style').html(data);
-                }
-            });
+            // modal ///
+
 
             /// modal ///
             $(document).on('click', '#btnsaveRoom', function(e) {
-            // $('#btnsaveRoom').click(function(e) {
+                // $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();
@@ -716,14 +731,14 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 timer: 3000,
                             })
                             Toast.fire({
-                                icon: 'success',
-                                title: result.message
+                                    icon: 'success',
+                                    title: result.message
 
-                            })
-                            .then((result) => {
-                                location.reload();
-                               
-                            })
+                                })
+                                .then((result) => {
+                                    location.reload();
+
+                                })
                         } else {
                             const Toast = Swal.mixin({
                                 toast: true,

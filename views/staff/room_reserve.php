@@ -631,7 +631,42 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 $("#modal_people").val(ev_people);
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    url: path + "/rooms",
+                                    success: function(result) {
+                                        var room ='';
+                                        for (i in result) {
+                                            if (result[i].ro_id == ro_id) {
+                                                room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
 
+                                            } else {
+                                                room += '<option  value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+                                            }
+
+                                        }
+                                        $('#modal_ro_name').html(room);
+                                    }
+                                });
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    url: path + "/style",
+                                    success: function(result) {
+                                        var style ='';
+                                        
+                                        for (k in result) {
+                                            if (result[k].st_id == st_id) {
+                                                style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
+                                            } else {
+                                                style += '<option  value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
+                                            }
+
+                                        }
+                                        $('#modal_style').html(style);
+                                    }
+                                });
                             }
                         });
                     });
@@ -688,30 +723,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 }
             });
             /// modal ///
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/rooms",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
-                    }
-                    $('#modal_ro_name').html(data);
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/style",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
-                    }
-                    $('#modal_style').html(data);
-                }
-            });
+           
             $(document).on('click', '#btnsaveRoom', function(e) {
 
                 /// modal ///

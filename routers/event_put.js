@@ -113,8 +113,11 @@ router.put("/updatedata", async (req, res) => {
             message: "ไม่สามารถจองห้องได้",
           });
         } else {
+          console.log('1')
           if (date_diff >= 0) {
+            console.log('2')
             if (results_evid.length > 0) {
+              console.log('3')
               con.query(
                 "DELETE FROM tbl_event WHERE event_id = ? ",
                 [event_id],
@@ -124,8 +127,8 @@ router.put("/updatedata", async (req, res) => {
                     "ALTER TABLE tbl_event AUTO_INCREMENT = 1 ",
                     (error, results_alter, field) => {
                       if (error) throw error;
-
-                      for (var ii = 0; ii < date_diff; ii++) {
+                      console.log('4')
+                      for (var ii = 0; ii <= date_diff; ii++) {
                         var dateStart = ev_startdate;
 
                         var theDateend =
@@ -135,7 +138,7 @@ router.put("/updatedata", async (req, res) => {
                         var dateEnd = date2
                           .toISOString("th-TH", { timeZone: "UTC" })
                           .slice(0, 10);
-
+                          console.log('5')
                         for ($d = 0; $d <= date_diff; $d++) {
                           var theDateStart =
                             Date.parse(dateStart) + 3600 * 1000 * 24;
@@ -165,7 +168,7 @@ router.put("/updatedata", async (req, res) => {
                             ],
                             (error, results, field) => {
                               if (error) throw error;
-
+                              console.log('6')
                               //   if (to_id != undefined) {
                               con.query(
                                 "DELETE FROM tbl_acces WHERE ev_id = ?  ",

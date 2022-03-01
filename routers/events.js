@@ -105,7 +105,7 @@ router.get("/request", async (req, res) => {
   con.query(
     "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
       "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
-      "ro.ro_id, ro.ro_name, " +
+      "ro.ro_id, ro.ro_name, ro.ro_people, " +
       "st.st_id, st.st_name," +
       "users.id, users.firstname,users.lastname, users.position," +
       "dept.de_id, dept.de_name, dept.de_phone " +
