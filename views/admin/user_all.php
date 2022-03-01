@@ -220,36 +220,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             var path = 'http://127.0.0.1:4500'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/depart",
-                success: function(result) {
-                    var depart = '<option value="0" selected disabled>-- แผนก --</option>';
-                    for (ii in result) {
-                        depart += '<option value="' + result[ii].de_id + '">' + result[ii]
-                            .de_name +
-                            '</option>';
-                    }
-                    $('#modaldename').html(depart);
 
-                }
-            });
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/level",
-                success: function(result) {
-                    var level = '<option value="0" selected disabled>-- ระดับสิทธ์ --</option>';
-                    for (ii in result) {
-                        level += '<option value="' + result[ii].lv_id + '">' + result[ii]
-                            .level +
-                            '</option>';
-                    }
-                    $('#modallevel').html(level);
-
-                }
-            });
 
             //todo: table room
             $.ajax({
@@ -261,6 +232,12 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     var table = '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead><tr><th>ID</th><th>ชื่อ-นามสกุล</th><th>แผนก/หน่วยงาน</th><th>ตำแหน่ง</th><th>เบอร์โทร</th><th>ระดับสิทธิ์</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
+                        if (cell.lv_id == '1') {
+                            var dels = ' <a id="' + cell.id + '" class="d-none"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
+                        } else {
+                            var dels = ' <a id="' + cell.id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
+                        }
+
                         table += ('<tr>');
                         table += ('<td>' + cell.id + '</td>');
                         table += ('<td>' + cell.firstname + ' ' + cell.lastname + '</td>');
@@ -269,8 +246,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td>' + cell.position + '</td>');
                         table += ('<td>' + cell.phone + '</td>');
                         table += ('<td>' + cell.level + '</td>');
-                        table += ('<td align="center" width="20%"><a id="' + cell.id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
-                            ' <a id="' + cell.id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>');
+                        table += ('<td align="center" width="20%"><a id="' + cell.id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' + dels + '</td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -329,6 +305,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var position = result[ii].position;
                                         var phone = result[ii].phone;
                                         var personid = result[ii].person_id;
+                                        var lv_id = result[ii].lv_id;
+                                        var de_id = result[ii].de_id;
 
                                     }
                                 }
@@ -342,6 +320,51 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modalposition").val(position);
                                 $("#modalphone").val(phone);
                                 $("#modalpersonid").val(personid);
+
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/depart",
+                                    success: function(result) {
+                                        var depart = '';
+                                        for (ii in result) {
+                                            if (result[ii].de_id == de_id) {
+                                                depart += '<option selected value="' + result[ii].de_id + '" selected >' + result[ii]
+                                                    .de_name +
+                                                    '</option>'
+                                            } else {
+                                                depart += '<option value="' + result[ii].de_id + '">' + result[ii]
+                                                    .de_name +
+                                                    '</option>';
+                                            }
+
+                                        }
+                                        $('#modaldename').html(depart);
+
+                                    }
+                                });
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/level",
+                                    success: function(result) {
+                                        var level = '';
+                                        for (ii in result) {
+                                            if (result[ii].lv_id == lv_id) {
+                                                level += '<option selected value="' + result[ii].lv_id + '">' + result[ii]
+                                                    .level +
+                                                    '</option>';
+                                            } else {
+                                                level += '<option value="' + result[ii].lv_id + '">' + result[ii]
+                                                    .level +
+                                                    '</option>';
+                                            }
+
+                                        }
+                                        $('#modallevel').html(level);
+
+                                    }
+                                });
                             }
                         });
                     });

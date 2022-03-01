@@ -22,8 +22,8 @@ sql.get("/", async (req, res) => {
 
   if (!to_id && !ev_id) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,de.de_name " +
-        "FROM tbl_tools AS t " +
+      "SELECT t.to_id ,t.to_name ,de.de_name ,de.de_id  " +
+        " FROM tbl_tools AS t " +
         "INNER JOIN tbl_department AS de ON t.de_id = de.de_id " +
         "ORDER BY t.to_id ASC; ",
       (error, results, fields) => {
@@ -34,7 +34,7 @@ sql.get("/", async (req, res) => {
     );
   } else if (!ev_id) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,de.de_name " +
+      "SELECT t.to_id ,t.to_name ,de.de_name  ,de.de_id  " +
         "FROM tbl_tools AS t " +
         "INNER JOIN tbl_department AS de ON t.de_id = de.de_id " +
         "WHERE t.to_id = " +

@@ -302,7 +302,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             '</option>';
                     }
                     $('#de_id').html(depart);
-                    $('#modal_de_id').html(depart);
+
                 }
             });
 
@@ -668,12 +668,34 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 for (ii in result) {
                                     if (result[ii].to_id == to_id) {
                                         var to_name = result[ii].to_name;
+                                        var de_id = result[ii].de_id;
                                         break;
                                     }
                                 }
                                 $("#ModalTool").modal("show");
                                 $("#modal_to_id").val(to_id);
                                 $("#modal_to_name").val(to_name);
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/depart",
+                                    success: function(result) {
+                                        var depart = '';
+                                        for (ii in result) {
+                                            if (result[ii].de_id == de_id) {
+                                                depart += '<option selected value="' + result[ii].de_id + '" selected >' + result[ii]
+                                                    .de_name +
+                                                    '</option>'
+                                            } else {
+                                                depart += '<option value="' + result[ii].de_id + '">' + result[ii]
+                                                    .de_name +
+                                                    '</option>';
+                                            }
+
+                                        }
+                                        $('#modal_de_id').html(depart);
+                                    }
+                                })
                             }
                         });
                     });

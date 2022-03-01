@@ -268,7 +268,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             var lastname = result[i].lastname;
                             var position = result[i].position;
                             var phone = result[i].phone;
+                            var de_id = result[i].de_id;
                             var dename = result[i].de_name;
+                            var lv_id = result[i].lv_id;
                             var level = result[i].level;
                         }
                     }
@@ -281,39 +283,54 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $('#position').val(position);
 
 
+                    $.ajax({
+                        type: "get",
+                        dataType: "json",
+                        url: path + "/depart",
+                        success: function(result) {
+                            var depart = '';
+                            for (ii in result) {
+                                if (result[ii].de_id == de_id) {
+                                    depart += '<option selected value="' + result[ii].de_id + '" selected >' + result[ii]
+                                        .de_name +
+                                        '</option>'
+                                } else {
+                                    depart += '<option value="' + result[ii].de_id + '">' + result[ii]
+                                        .de_name +
+                                        '</option>';
+                                }
+
+                            }
+                            $('#dename').html(depart);
+
+                        }
+                    });
+                    $.ajax({
+                        type: "get",
+                        dataType: "json",
+                        url: path + "/level",
+                        success: function(result) {
+                            var level = '';
+                            for (ii in result) {
+                                if (result[ii].lv_id == lv_id) {
+                                    level += '<option selected value="' + result[ii].lv_id + '">' + result[ii]
+                                        .level +
+                                        '</option>';
+                                } else {
+                                    level += '<option value="' + result[ii].lv_id + '">' + result[ii]
+                                        .level +
+                                        '</option>';
+                                }
+
+                            }
+                            $('#level').html(level);
+
+                        }
+                    });
                 }
             });
 
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/depart",
-                success: function(result) {
-                    var depart = '<option value="0" selected disabled>-- แผนก --</option>';
-                    for (ii in result) {
-                        depart += '<option value="' + result[ii].de_id + '">' + result[ii]
-                            .de_name +
-                            '</option>';
-                    }
-                    $('#dename').html(depart);
-
-                }
-            });
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/level",
-                success: function(result) {
-                    var level = '<option value="0" selected disabled>-- ระดับสิทธ์ --</option>';
-                    for (ii in result) {
-                        level += '<option value="' + result[ii].lv_id + '">' + result[ii]
-                            .level +
-                            '</option>';
-                    }
-                    $('#level').html(level);
-
-                }
-            });
+            
             ///saveUser
             $(document).on('click', '#saveUser', function(e) {
 

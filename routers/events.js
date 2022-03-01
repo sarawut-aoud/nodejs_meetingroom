@@ -209,8 +209,7 @@ router.get("/count/user", async (req, res, next) => {
                   arr = {
                     ev_status: q1,
                   };
-                res.json(arr);
-
+                  res.json(arr);
                 }
 
                 // return next();
@@ -261,11 +260,14 @@ router.get("/count/staff", async (req, res, next) => {
                     var q1 = results.length - results_set.length;
                   }
                 }
-                arr = {
-                  ev_status: q1,
-                };
-                req.arr = arr;
-                return next();
+                if (q1 != undefined) {
+                  arr = {
+                    ev_status: q1,
+                  };
+
+                  req.arr = arr;
+                  return next();
+                }
               }
             );
           } // ev_id && id
@@ -276,6 +278,7 @@ router.get("/count/staff", async (req, res, next) => {
 });
 router.get("/count/staff", async (req, res) => {
   res.json(req.arr);
+  
 });
 
 //? SELECT calendar
