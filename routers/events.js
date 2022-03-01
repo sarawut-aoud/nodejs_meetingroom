@@ -21,7 +21,6 @@ router.get("/", async (req, res) => {
   var de_id = query01.de_id;
   // console.log(id);
   if (!id && !de_id) {
-    
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
         "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
@@ -36,7 +35,6 @@ router.get("/", async (req, res) => {
     );
   } else {
     if (!de_id) {
-     
       con.query(
         "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
           "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
@@ -51,7 +49,6 @@ router.get("/", async (req, res) => {
         }
       );
     } else {
-      
       con.query(
         "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
           "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.id " +
@@ -208,11 +205,15 @@ router.get("/count/user", async (req, res, next) => {
                     var q1 = results.length - results_seting.length;
                   }
                 } // for x
-                arr = {
-                  ev_status: q1,
-                };
-                req.arr = arr;
-                return next();
+                if (q1 != undefined) {
+                  arr = {
+                    ev_status: q1,
+                  };
+                res.json(arr);
+
+                }
+
+                // return next();
               }
             );
           } // if ev_id && id
@@ -222,9 +223,7 @@ router.get("/count/user", async (req, res, next) => {
     }
   );
 });
-router.get("/count/user", async (req, res) => {
-  res.json(req.arr);
-});
+router.get("/count/user", async (req, res) => {});
 //? SELECT COUNT user
 router.get("/count/staff", async (req, res, next) => {
   var query01 = require("url").parse(req.url, true).query;
