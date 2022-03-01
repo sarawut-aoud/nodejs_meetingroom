@@ -452,7 +452,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 timer: 3000,
                             })
                             Toast.fire({
-                                    icon: 'warning',
+                                    icon: 'success',
                                     title: result.message
 
                                 })
@@ -469,7 +469,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 timer: 3000,
                             })
                             Toast.fire({
-                                icon: 'success',
+                                icon: 'warning',
                                 title: result.message
 
                             })

@@ -539,6 +539,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
+                                        var st_id = result[ii].st_id;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
                                         var de_phone = result[ii].de_phone;
@@ -546,6 +547,34 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/tools",
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
+                                            success: function(tool) {
+                                                // var chk = '';
+                                                var data = ' <div class="form-group  ">';
+                                                var x = 0;
+                                                for (i in tool) {
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
+                                                        console.log(tool[i].acc_toid)
+                                                        chk = 'checked="checked"'
+
+                                                    }
+                                                    x++
+                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                }
+                                                data += '</div>';
+                                                $('#modaltool').html(data);
+                                            }
+                                        });
+
 
                                         $.ajax({
                                             type: "get",
@@ -591,8 +620,10 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalEdit").modal("show");
-                                $("#modal_ev_id").val(event_id);
+                                $("#modal_eventid").val(event_id);
                                 $("#modal_status").val(ev_status);
+                                $("#modal_ro_id").val(ro_id);
+                                $("#modal_st_id").val(st_id);
                                 // $("#modal_ro_name").html(ro_name);
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
@@ -719,7 +750,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 title: result.message
 
                             }).then((result) => {
-                                location.reload();
+
                                 $("#frm_modalEditRoom")[0].reset();
                                 $("#modal_title")[0].focus();
                             })
@@ -733,11 +764,10 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             Toast.fire({
                                     icon: 'warning',
                                     title: result.message
-
                                 })
                                 .then((result) => {
-
-                                    $("#modal_title")[0].focus();
+                                   
+                                    $("#ro_name")[0].focus();
                                 })
 
                         }

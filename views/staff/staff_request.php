@@ -194,6 +194,40 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
+            var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/staff",
+                data: {
+                    id: id,
+                    de_id: de_id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
             $.ajax({
                 type: "get",
@@ -376,27 +410,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
-
-                                        $.ajax({
-                                            type: 'get',
-                                            dataType: 'json',
-                                            url: path + '/event/requesttool',
-                                            success: function(tool) {
-                                                // console.log(result[ii].event_id)
-                                                var to_name = ''
-                                                for (i in tool) {
-
-                                                    if (tool[i].ev_id == ev_id) {
-
-                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
-
-                                                    }
-
-                                                    $("#modal2_tool").html(to_name);
-                                                }
-
-                                            }
-                                        });
+                                     
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -470,27 +484,27 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
                                             success: function(tool) {
-                                               
+
                                                 var x = 0;
                                                 var data = ' <div class="form-group  ">';
                                                 for (i in tool) {
-                                                   if(tool[i].ev_id == ev_id){
-                                                    x++
-                                                    data += '<div class="d-block form-check"><input checked disabled  class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
-                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
-                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-                                                   }
-                                                   
+                                                    if (tool[i].ev_id == ev_id) {
+                                                        x++
+                                                        data += '<div class="d-block form-check"><input checked disabled  class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                        data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                    }
+
                                                 }
                                                 data += '</div>';
                                                 $('#modaltool').html(data);
-                                
+
 
                                             }
                                         });
                                     }
                                 }
-                              
+
                                 $("#modalStatus").modal("show");
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
@@ -503,7 +517,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 $("#modal_ev_id").val(event_id);
                                 $("#modal_ro_id").val(ro_id);
                                 $("#modal_st_id").val(st_id);
-                             
+
 
                             }
                         });
@@ -575,7 +589,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     type: "PUT",
                     dataType: "JSON",
                     url: path + '/event_post/updatestatus',
-                    data:formdata,
+                    data: formdata,
                     success: function(results) {
                         if (results.status == 0) {
                             const Toast = Swal.mixin({

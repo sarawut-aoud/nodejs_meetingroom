@@ -222,7 +222,7 @@ router.put("/updatestatus", async (req, res) => {
   var ev_enddate = req.body.ev_enddate;
   var ev_starttime = req.body.ev_starttime;
   var ev_endtime = req.body.ev_endtime;
-
+  
   var status_yes;
   var status_no;
 
@@ -335,16 +335,17 @@ router.put("/updatestatus", async (req, res) => {
   }
 });
 router.put("/updatestatus/staff", async (req, res) => {
-  var ev_status = req.body.ev_status;
-  var event_id = req.body.event_id;
+  var ev_id = req.body.ev_id;
+  var ev_status = req.body.evstatus;
+  var event_id = req.body.eventid;
   var ev_title = req.body.title;
-  var ro_id = req.body.roid;
+  var ro_id = req.body.ro_name;
   var ev_startdate = req.body.dateStart;
   var ev_enddate = req.body.dateEnd;
   var ev_starttime = req.body.timeStart;
   var ev_endtime = req.body.timeEnd;
   var ev_people = req.body.people;
-  var st_id = req.body.st_id;
+  var st_id = req.body.style;
   var to_id = req.body.to_id;
 
   if (!event_id || ! ev_status) {
@@ -402,7 +403,7 @@ router.put("/updatestatus/staff", async (req, res) => {
                       ) {
                         chk++;
                       } else {
-                        if (ev_starttime == $timestart) {
+                        if (ev_starttime == timestart) {
                           chk++;
                         }
                       }

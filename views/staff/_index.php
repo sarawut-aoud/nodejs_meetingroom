@@ -250,28 +250,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
             var id = '<?php echo $_SESSION['mt_id']; ?>',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
 
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/user",
-                data: {
-                    id: id,
-                },
-                success: function(results) {
-                    for (i in results) {
-                        var prefix = results[i].prefix;
-                        var fname = results[i].firstname;
-                        var lname = results[i].lastname;
-                        var pos = results[i].position;
-                        var dename = results[i].de_name;
-                        var level = results[i].level;
-                    }
-                    $('#name').val(fname + ' ' + lname);
-                    $('#prefix').val(prefix);
-                    $('#de_name').val(dename);
-                    $('#position').val(pos + "/" + level);
-                }
-            })
+
             $.ajax({
                 type: "get",
                 url: path + "/event/count/staff",
@@ -295,7 +274,28 @@ if ($_SESSION['mt_lv_id'] == 3) {
             var path = 'http://127.0.0.1:4500';
             var id = '<?php echo $_SESSION['mt_id']; ?>',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/user",
+                data: {
+                    id: id,
+                },
+                success: function(results) {
+                    for (i in results) {
+                        var prefix = results[i].prefix;
+                        var fname = results[i].firstname;
+                        var lname = results[i].lastname;
+                        var pos = results[i].position;
+                        var dename = results[i].de_name;
+                        var level = results[i].level;
+                    }
+                    $('#name').val(fname + ' ' + lname);
+                    $('#prefix').val(prefix);
+                    $('#de_name').val(dename);
+                    $('#position').val(pos + "/" + level);
+                }
+            })
 
 
             $.ajax({
