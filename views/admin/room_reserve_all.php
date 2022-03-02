@@ -421,8 +421,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                    // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -500,7 +501,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalEdit").modal("show");
-                                $("#modal_ev_id").html(ev_id);
+                                $("#modal_eventid").val(event_id);
+                                $("#modal_status").val(ev_status);
+                                $("#modal_ro_id").val(ro_id);
+                                $("#modal_st_id").val(st_id);
                                 // $("#modal_ro_name").html(ro_name);
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
@@ -508,6 +512,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modal_people").val(ev_people);
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
+
                                 $.ajax({
                                     type: 'GET',
                                     dataType: 'json',
@@ -547,8 +552,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnDels', function(e) {
 
-                    $(".btnDels").click(function(e) {
+                    // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -584,7 +590,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000,
+                                            timer: 1500,
                                         })
                                         Toast.fire({
                                             icon: 'warning',
@@ -601,9 +607,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
             /// modal ///
            
-
+            $(document).on('click', '#btnsaveRoom', function(e) {
             /// modal ///
-            $('#btnsaveRoom').click(function(e) {
+            // $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();
@@ -617,11 +623,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 var id = <?php echo $_SESSION['mt_id']; ?>;
                 var level = <?php echo $_SESSION['mt_lv_id']; ?>;
 
-                var formdata = $('#modalRoomall').serializeArray();
+                var formdata = $('#frm_modalEditRoom').serializeArray();
 
                 $.ajax({
-                    type: "POST",
-                    url: path + "/event_post/adddata",
+                    type: "PUT",
+                    url: path + "/event_put/updatedata",
                     dataType: "json",
                     data: formdata,
 
@@ -631,7 +637,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                     icon: 'warning',
@@ -639,6 +645,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                                 })
                                 .then((result) => {
+                                    $("#modalEdit").modal("hide");
                                     location.reload();
 
                                 })
@@ -647,14 +654,15 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
                                 title: result.message
 
                             }).then((result) => {
-                                $('#modalRoomall')[0].reset();
+                                $("#modalEdit").modal("hide");
+                                $('#frm_modalEditRoom')[0].reset();
                                 $('#title').focus();
                             })
                         }
@@ -666,7 +674,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                                 icon: 'warning',

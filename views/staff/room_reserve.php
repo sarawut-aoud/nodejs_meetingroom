@@ -709,7 +709,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000,
+                                            timer: 1500,
                                         })
                                         Toast.fire({
                                             icon: 'warning',
@@ -756,14 +756,14 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
                                 title: result.message
 
                             }).then((result) => {
-
+                                $("#modalEdit").modal("hide");
                                 $("#frm_modalEditRoom")[0].reset();
                                 $("#modal_title")[0].focus();
                             })
@@ -772,15 +772,14 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                     icon: 'warning',
                                     title: result.message
                                 })
                                 .then((result) => {
-
-                                    $("#ro_name")[0].focus();
+                                    location.reload();
                                 })
 
                         }
@@ -791,7 +790,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                                 icon: 'warning',
@@ -800,8 +799,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             })
                             .then((result) => {
 
-                                $("#frm_modalEditRoom")[0].reset();
-                                $("#modal_title")[0].focus();
+                                location.reload();
                             })
 
                     }

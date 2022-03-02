@@ -597,15 +597,18 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalEdit").modal("show");
-                                $("#modal_ev_id").val(ev_id);
                                 $("#modal_eventid").val(event_id);
-                                $("#modal_status").html(ev_status);
+                                $("#modal_status").val(ev_status);
+                                $("#modal_ro_id").val(ro_id);
+                                $("#modal_st_id").val(st_id);
+                                // $("#modal_ro_name").html(ro_name);
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
                                 $("#modal_timeEnd").val(ev_endtime);
                                 $("#modal_people").val(ev_people);
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
+
 
                                 $.ajax({
                                     type: 'GET',
@@ -685,7 +688,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000,
+                                            timer: 1500,
                                         })
                                         Toast.fire({
                                             icon: 'warning',
@@ -734,7 +737,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'warning',
@@ -750,7 +753,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
@@ -769,7 +772,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                                 icon: 'warning',

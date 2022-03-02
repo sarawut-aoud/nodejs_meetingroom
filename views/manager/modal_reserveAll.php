@@ -218,8 +218,11 @@
             </div>
         </div>
     </div>
-    <input type="hidden" value="" id="modal_ev_id" name="eventid"/>
+    <input type="hidden" value="" id="modal_ev_id" name="ev_id"/>
+    <input type="hidden" value="" id="modal_eventid" name="eventid"/>
     <input type="hidden" value="" id="modal_status" name="evstatus"/>
+    <!-- <input type="hidden" value="" id="modal_ro_id" name="ro_id"/>
+    <input type="hidden" value="" id="modal_st_id" name="st_id"/> -->
     <input type="hidden" value="<?php echo $_SESSION['mt_id'];?>"   name="id" />
     <input type="hidden" value="<?php echo $_SESSION['mt_lv_id'];?>" name="level" />
 

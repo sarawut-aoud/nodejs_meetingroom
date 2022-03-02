@@ -206,7 +206,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-  
+
     <script>
         $(document).ready(function() {
             cache_clear();
@@ -261,7 +261,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
             var path = '<?php echo $_SESSION['mt_path'] ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
-                
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -605,7 +605,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                     dataType: 'json',
                                     url: path + "/rooms",
                                     success: function(result) {
-                                        var room ='';
+                                        var room = '';
                                         for (i in result) {
                                             if (result[i].ro_id == ro_id) {
                                                 room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
@@ -623,8 +623,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                     dataType: 'json',
                                     url: path + "/style",
                                     success: function(result) {
-                                        var style ='';
-                                        
+                                        var style = '';
+
                                         for (k in result) {
                                             if (result[k].st_id == st_id) {
                                                 style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
@@ -678,7 +678,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000,
+                                            timer: 1500,
                                         })
                                         Toast.fire({
                                             icon: 'warning',
@@ -725,7 +725,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                     icon: 'success',
@@ -733,7 +733,9 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
                                 })
                                 .then((result) => {
-                                    location.reload();
+                                    $("#modalEdit").modal("hide");
+                                    $("#frm_modalEditRoom")[0].reset();
+                                    $("#modal_title")[0].focus();
 
                                 })
                         } else {
@@ -741,15 +743,15 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                     icon: 'warning',
                                     title: result.message
                                 })
                                 .then((result) => {
-                                    // location.reload();
-                                    $("#modal_title")[0].focus();
+                                    location.reload();
+                                   
                                 })
 
                         }
@@ -760,7 +762,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer:1500 ,
                         })
                         Toast.fire({
                                 icon: 'warning',

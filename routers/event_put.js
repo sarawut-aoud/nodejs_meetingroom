@@ -1,11 +1,8 @@
 const express = require("express");
-const path = require("path");
-const strtotime = require("nodestrtotime");
 const app = express();
 
 const DATE_DIFF = require("date-diff-js");
 const bodyParser = require("body-parser");
-const moment = require("moment");
 const cors = require("cors");
 const con = require("../config/config");
 const { text } = require("body-parser");
@@ -21,17 +18,6 @@ router.put("/updatedata", async (req, res) => {
   var level = req.body.level; // ระดับสิทธิการเข้าถึง
   var ev_status = req.body.evstatus; // ระดับสิทธิการเข้าถึง
 
-  //   var statusRoom;
-  //   //เริ่มการจอง status == 0==รออนุมัติจากหัวหน้า  , 1 -> รออนุมัติ , 2== ไม่อนุมัติจากหัวหน้า ,3 == อนุมัติ ,4==ไม่อนุมัติ,5==ยกเลิก
-  //   if (level == "1" || level == "4") {
-  //     ev_status;
-  //   } else if (level == "3") {
-  //     // ธุรการ
-  //     ev_status;
-  //   } else if (level == "2") {
-  //     // ผู้ใช้
-  //     statusRoom = "1";
-  //   }
   var event_id = req.body.eventid;
 
   var ev_title = req.body.title; //todo : req -> Form .... data -> body
@@ -63,7 +49,7 @@ router.put("/updatedata", async (req, res) => {
           var dateStart = ev_startdate;
           var date_ev_startdate = new Date(ev_startdate);
           var dateCheck = date_ev_startdate.getFullYear() + "-" + date_ev_startdate.getMonth() + "-" + date_ev_startdate.getDate();
-
+         
           for (var i = 0; i <= date_diff; i++) {
             con.query(
               "SELECT IF (ev_starttime = '00:00:00', '', substr(ev_starttime, 1, 5)) as ev_starttime, " +
@@ -113,14 +99,14 @@ router.put("/updatedata", async (req, res) => {
         if (chk > 0) {
           return res.json({
             status: "0",
-            message: "ไม่สามารถจองห้องได้",
+            message: "ไม่สามารถแก้ไขรายการจองได้",
           });
         } else {
-          console.log('1')
+         
           if (date_diff >= 0) {
-            console.log('2')
+            console.log(results_evid.length)
             if (results_evid.length > 0) {
-              console.log('3')
+             
               con.query(
                 "DELETE FROM tbl_event WHERE event_id = ? ",
                 [event_id],
@@ -141,7 +127,7 @@ router.put("/updatedata", async (req, res) => {
                         var dateEnd = date2
                           .toISOString("th-TH", { timeZone: "UTC" })
                           .slice(0, 10);
-                          console.log('5')
+                        
                         for ($d = 0; $d <= date_diff; $d++) {
                           var theDateStart =
                             Date.parse(dateStart) + 3600 * 1000 * 24;
@@ -171,7 +157,7 @@ router.put("/updatedata", async (req, res) => {
                             ],
                             (error, results, field) => {
                               if (error) throw error;
-                              console.log('6')
+                            
                               //   if (to_id != undefined) {
                               con.query(
                                 "DELETE FROM tbl_acces WHERE ev_id = ?  ",
@@ -207,7 +193,7 @@ router.put("/updatedata", async (req, res) => {
           } //date_diff >= 0
           return res.json({
             status: "200",
-            message: "บันทึกข้อมูลสำเร็จ",
+            message: "แก้ไขข้อมูลสำเร็จ",
           });
         }
       }

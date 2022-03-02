@@ -587,10 +587,12 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     var status = 'ยกเลิก'
                                 }
                                 $("#modalEdit").modal("show");
-                                $("#modal_ev_id").val(event_id);
+                                $("#modal_eventid").val(event_id);
+                                $("#modal_status").val(ev_status);
+                                $("#modal_ro_id").val(ro_id);
+                                $("#modal_st_id").val(st_id);
                                 // $("#modal_ro_name").html(ro_name);
                                 $("#modal_title").val(ev_title);
-                                $("#modal_status").val(ev_status);
                                 $("#modal_timeStart").val(ev_starttime);
                                 $("#modal_timeEnd").val(ev_endtime);
                                 $("#modal_people").val(ev_people);
@@ -673,7 +675,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000,
+                                            timer: 1500,
                                         })
                                         Toast.fire({
                                             icon: 'warning',
@@ -722,7 +724,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                     icon: 'warning',
@@ -730,8 +732,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                                 })
                                 .then((result) => {
-
-                                    $("#modalRoomall")[0].reset();
+                                    location.reload();
                                     $("#modal_title")[0].focus();
                                 })
                         } else {
@@ -739,15 +740,16 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
                                 title: result.message
 
                             }).then((result) => {
+                                $("#modalEdit").modal("hide");
                                 location.reload();
-                                $("#modalRoomall")[0].reset();
+                                $("#frm_modalEditRoom")[0].reset();
                                 $("#modal_title")[0].focus();
                             })
                         }
@@ -758,7 +760,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                                 icon: 'warning',
@@ -766,9 +768,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                             })
                             .then((result) => {
-
-                                $("#modalRoomall")[0].reset();
-                                $("#modal_title")[0].focus();
+                                location.reload();
                             })
 
                     }

@@ -426,7 +426,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 toast: true,
                                                 position: 'top-end',
                                                 showConfirmButton: false,
-                                                timer: 3000,
+                                                timer: 1500,
                                             })
                                             Toast.fire({
                                                 icon: 'warning',
@@ -441,7 +441,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000,
+                                            timer: 1500,
                                         })
                                         Toast.fire({
                                             icon: 'warning',
@@ -568,7 +568,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 toast: true,
                                                 position: 'top-end',
                                                 showConfirmButton: false,
-                                                timer: 3000,
+                                                timer: 1500,
                                             })
                                             Toast.fire({
                                                 icon: 'warning',
@@ -582,7 +582,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             toast: true,
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000,
+                                            timer: 1500,
                                         })
                                         Toast.fire({
                                             icon: 'warning',
@@ -872,7 +872,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 toast: true,
                                                 position: 'top-end',
                                                 showConfirmButton: false,
-                                                timer: 3000,
+                                                timer: 1500,
                                             })
                                             Toast.fire({
                                                 icon: 'warning',
@@ -934,7 +934,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'warning',
@@ -948,7 +948,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
@@ -965,7 +965,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                                 icon: 'warning',
@@ -1002,7 +1002,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'warning',
@@ -1014,7 +1014,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
@@ -1030,7 +1030,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                             icon: 'warning',
@@ -1067,7 +1067,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'warning',
@@ -1082,7 +1082,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
@@ -1098,7 +1098,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                             icon: 'warning',
@@ -1135,7 +1135,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'warning',
@@ -1149,7 +1149,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                             })
                             Toast.fire({
                                 icon: 'success',
@@ -1165,7 +1165,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 1500,
                         })
                         Toast.fire({
                             icon: 'warning',

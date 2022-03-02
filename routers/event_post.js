@@ -46,7 +46,7 @@ router.post("/adddata", async (req, res) => {
   var chk = 0;
   var date_ev_startdate = new Date(ev_startdate);
   var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
-
+  
   if (
     !ev_title ||
     !ev_people ||
@@ -265,7 +265,7 @@ router.put("/updatestatus", async (req, res) => {
             var dateStart = ev_startdate;
             var date_ev_startdate = new Date(ev_startdate);
             var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
-  
+           
             for (var i = 0; i <= datediff; i++) {
               con.query(
                 "SELECT ev_id,event_id, substr(ev_starttime,1,5) AS ev_starttime," +
@@ -371,12 +371,17 @@ router.put("/updatestatus/staff", async (req, res) => {
 
           if (datediff >= 0) {
             var dateStart = ev_startdate;
+
+            var date_ev_startdate = new Date(ev_startdate);
+            var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
+          
+            
             for (var i = 0; i <= datediff; i++) {
               con.query(
                 "SELECT if (ev_starttime = '00:00:00','', substr(ev_starttime,1,5)) AS ev_starttime , " +
                   "IF (ev_endtime = '00:00:00','', substr(ev_endtime,1,5)) AS ev_endtime " +
                   "FROM tbl_event WHERE ev_startdate = ? AND ro_id = ? AND ev_status = '3' ",
-                [dateStart, ro_id],
+                [dateCheck, ro_id],
                 (error, results, field) => {
                   for (var rs = 0; rs < results.length; rs++) {
                     var timestart = results[rs].ev_starttime;
