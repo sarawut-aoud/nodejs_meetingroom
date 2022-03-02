@@ -278,7 +278,6 @@ router.get("/count/staff", async (req, res, next) => {
 });
 router.get("/count/staff", async (req, res) => {
   res.json(req.arr);
-  
 });
 
 //? SELECT calendar
@@ -291,7 +290,9 @@ router.post("/calendar", async (req, res) => {
   //   });
   // } else {
   con.query(
-    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, "+
+    "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+    "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
       "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
       " ro.ro_name, ro.ro_color," +
       "st.st_name," +
@@ -361,8 +362,9 @@ router.get("/list", async (req, res) => {
     [start2, end2],
     (error, row, fields) => {
       if (error) throw error;
-
+      
       for (var i = 0; i < row.length; i++) {
+       
         _start_date = row[i].ev_startdate;
         _end_date = false;
         _start_time = false;
@@ -381,10 +383,18 @@ router.get("/list", async (req, res) => {
         }
         if (row[i].ev_enddate != "0000-00-00") {
           _end_date = row[i].ev_enddate;
+
           if (row[i].ev_endtime != "00:00:00") {
             _end_date = row[i].ev_enddate + "T" + row[i].ev_endtime;
           } else {
-            _end_date = date("Y-m-d", strtotime(row[i].ev_enddate + " +1 day"));
+            var theDate2 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
+
+            const date = new Date(theDate2);
+
+             _end_date = date
+              .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+              .slice(0, 10);
+           
           }
         }
         if (
@@ -410,8 +420,6 @@ router.get("/list", async (req, res) => {
           row[i].ev_endtime != "00:00:00"
         ) {
           var startRecur = _start_date;
-          var edate = new Date();
-
           var theDate1 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
 
           const date = new Date(theDate1);
@@ -424,50 +432,59 @@ router.get("/list", async (req, res) => {
           // แปลงเวลาที่รับมาเป็นเวลาไทย โดยการ +7
           //leave_day : results[i].leave_day01.toLocaleDateString('en-CA', { timeZone: 'Australia/Melbourne'}),
         }
-        if (!_all_day) {
-          delete _all_day;
-        }
-        if (!_end_date) {
-          delete end;
-        }
-        if (!_start_time) {
-          delete _start_time;
-        }
-        if (!_end_time) {
-          delete _end_time;
-        }
 
         // ทำการเปลี่ยน หรือกำหนดการใช้งาน url หรือลิ้งค์ เป็นการเรียกใช้งาน javascript ฟังก์ชั่นF
         row[i].ev_url = "javascript:viewdetail(" + row[i].ev_id + ");"; // ส่งค่า id ไปในฟังก์ชั่น
-        //  if (row[i].ev_id != undefined) {
-        //   ow[i].row[i].ev_url
-        //  }
+
         if (row[i].ev_id != undefined) {
           var ev_startdate2 = row[i].ev_startdate.replace("-", "");
           var ev_startdate3 = ev_startdate2.replace("-", "");
 
-          id[i] = {
-            id: row[i].ev_id,
-            groupId: ev_startdate3,
-            // allDay: _all_day,
-            start: _start_date,
-            // start: ' 2021-04-05T08:30:00',
+          if (
+            _end_time == false &&
+            _start_time == false &&
+            startRecur &&
+            endRecur
+          ) {
+            
+            id[i] = {
+              id: row[i].ev_id,
+              groupId: ev_startdate3,
+              allDay: _all_day,
+              start: _start_date,
+              end: _end_date,
+              // startTime: _start_time,
+              // endTime: _end_time,
+              title: row[i].ev_title,
+              url: row[i].ev_url,
+              textColor: row[i].ev_color,
+              backgroundColor: row[i].ro_color,
+              borderColor: row[i].ev_bgcolor,
+              // daysOfWeek: daysOfWeek,
+              // startRecur: startRecur,
+              // endRecur: endRecur,
+            };
+          } else {
+            id[i] = {
+              id: row[i].ev_id,
+              groupId: ev_startdate3,
+              allDay: _all_day,
+              start: _start_date,
+              end: _end_date,
+              startTime: _start_time,
+              endTime: _end_time,
+              title: row[i].ev_title,
+              url: row[i].ev_url,
+              textColor: row[i].ev_color,
+              backgroundColor: row[i].ro_color,
+              borderColor: row[i].ev_bgcolor,
+              daysOfWeek: daysOfWeek,
+              startRecur: startRecur,
+              endRecur: endRecur,
 
-            end: _end_date,
-
-            startTime: _start_time,
-            endTime: _end_time,
-            title: row[i].ev_title,
-            url: row[i].ev_url,
-            textColor: row[i].ev_color,
-            backgroundColor: row[i].ro_color,
-            borderColor: row[i].ev_bgcolor,
-            // daysOfWeek:daysOfWeek,
-            startRecur: startRecur,
-            endRecur: endRecur,
-
-            // };
-          };
+              // };
+            };
+          }
         }
       }
       req.id = id;

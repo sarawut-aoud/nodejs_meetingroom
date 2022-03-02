@@ -354,10 +354,10 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 title: result.message
 
                             })
-                            // .then((result) => {
-                            //     location.reload();
+                            .then((result) => {
+                                location.reload();
 
-                            // })
+                            })
                         } else {
                             const Toast = Swal.mixin({
                                 toast: true,
@@ -370,10 +370,10 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 title: result.message
 
                             })
-                            // .then((result) => {
-                            //     location.reload();
+                            .then((result) => {
+                                location.reload();
 
-                            // })
+                            })
                         }
 
                     },
@@ -389,10 +389,10 @@ if ($_SESSION['mt_lv_id'] == 2) {
                             title: 'ไม่สามารถบันทึกข้อมูลได้'
 
                         })
-                        // .then((result) => {
-                        //     location.reload();
+                        .then((result) => {
+                            location.reload();
 
-                        // })
+                        })
                     }
 
                 })
