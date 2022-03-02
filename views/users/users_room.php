@@ -315,7 +315,26 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
+    <script>
+        $(function() {
 
+            //Initialize Select2 Elements
+            $('.select2').select2();
+            //timepicker
+            $('#datetimepicker1').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker3').datetimepicker({
+                format: 'L'
+            });
+            $('#datetimepicker4').datetimepicker({
+                format: 'L'
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             cache_clear();
@@ -351,26 +370,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
         }
     </script>
 
-    <script>
-        $(function() {
-
-            //Initialize Select2 Elements
-            $('.select2').select2();
-            //timepicker
-            $('#datetimepicker1').datetimepicker({
-                format: 'H:mm'
-            });
-            $('#datetimepicker2').datetimepicker({
-                format: 'H:mm'
-            });
-            $('#datetimepicker3').datetimepicker({
-                format: 'L'
-            });
-            $('#datetimepicker4').datetimepicker({
-                format: 'L'
-            });
-        });
-    </script>
+   
     <script>
         $(document).ready(function() {
             var path = 'http://127.0.0.1:4500',

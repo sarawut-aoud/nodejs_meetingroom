@@ -173,17 +173,22 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 dataType: 'json',
                 url: path + "/rooms",
                 success: function (data) {
-                    var i = 0;
                     var table =
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
-                        '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th></thead></tr>';
+                        '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function (idx, cell) {
+                        var icon =
+                            ' <div class="badge-online rounded-pill   position-relative">Online' +
+                            '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
+                            '<span class="visually-hidden">New alerts</span></span></span></div>';
+
                         table += ('<tr align="center">');
                         table += ('<td>' + cell.ro_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ro_people + ' คน </td>');
                         table += ('<td>' + cell.ro_detail + '</td>');
+                        table += ('<td>' + icon + '</td>');
 
                         table += ('</tr>');
                     });

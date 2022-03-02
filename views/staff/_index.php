@@ -274,6 +274,28 @@ if ($_SESSION['mt_lv_id'] == 3) {
             var path = 'http://127.0.0.1:4500';
             var id = '<?php echo $_SESSION['mt_id']; ?>',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -407,14 +429,16 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 success: function(results) {
                     var today = ''
                     for (i in results) {
-                       
+
                         if (results[i].ev_startdate == today2) {
 
                             today +=
-                                "<div class='rounded border  mt-2  '  style =\"background-color : " +
+                                "<div class='rounded border  mt-2 position-relative '  style =\"background-color : " +
                                 results[i].ro_color + "\"> " +
                                 "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i]
                                 .ev_starttime + " ถึง " + results[i].ev_endtime + "</div>" +
+                                '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">' +
+                                ' ใหม่ <span class="visually-hidden">unread messages</span><span>' +
                                 "</div>";
                         }
                     }
@@ -470,32 +494,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 },
             });
         }
-    </script>
-    <script>
-        $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
-           
-        });
     </script>
 </body>
 

@@ -315,33 +315,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
-
-    <script>
-        $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
-        });
-    </script>
-
     <script>
         $(function() {
 
@@ -364,8 +337,38 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </script>
     <script>
         $(document).ready(function() {
+
+
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
             var path = 'http://127.0.0.1:4500';
-            
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+
             $(document).on('click', '#btnAproveRoom', function(e) {
 
                 // $('#btnAproveRoom').click(function(e) {

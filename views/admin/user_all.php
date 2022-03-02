@@ -186,8 +186,15 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
+  
     <script>
         $(document).ready(function() {
+
+            // $('.my-colorpicker1').colorpicker();
+            $('.select2').select2();
+
+
+            var path = 'http://127.0.0.1:4500'
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
             $.ajax({
                 type: "get",
@@ -209,18 +216,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
 
             });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-
-            // $('.my-colorpicker1').colorpicker();
-            $('.select2').select2();
-
-
-            var path = 'http://127.0.0.1:4500'
-
 
             //todo: table room
             $.ajax({

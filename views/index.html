@@ -322,7 +322,7 @@
                     timeZone: "Australia/Melbourne"
                 })
                 .slice(0, 10);
-                
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -334,10 +334,12 @@
                         if (results[i].ev_startdate == today2) {
 
                             today +=
-                                "<div class='rounded border  mt-2  '  style =\"background-color : " +
+                                "<div class='rounded border  mt-2 position-relative '  style =\"background-color : " +
                                 results[i].ro_color + "\"> " +
                                 "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i]
                                 .ev_starttime + " ถึง " + results[i].ev_endtime + "</div>" +
+                                '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">' +
+                                ' ใหม่ <span class="visually-hidden">unread messages</span><span>' +
                                 "</div>";
                         }
                     }

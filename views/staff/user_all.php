@@ -188,27 +188,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
 
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
         });
     </script>
     <script>
@@ -255,6 +235,28 @@ if ($_SESSION['mt_lv_id'] == 3) {
             var path = 'http://127.0.0.1:4500',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+           
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "http://127.0.0.1:4500" + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -277,7 +279,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $('#position').val(pos + "/" + level);
                 }
             })
-           
+
 
             //todo: table room
             $.ajax({
@@ -292,11 +294,10 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $.each(data, function(idx, cell) {
                         if (cell.lv_id == '1') {
                             var dels = '<a id="' + cell.id + '" class="d-none"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a> <a id="' + cell.id + '" class="d-none"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
-                        } else if(cell.lv_id == lv_id){
+                        } else if (cell.lv_id == lv_id) {
                             var dels = '<a id="' + cell.id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a> <a id="' + cell.id + '" class="d-none"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
 
-                        }
-                        else{
+                        } else {
                             var dels = '<a id="' + cell.id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a> <a id="' + cell.id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
                         }
 
@@ -406,7 +407,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                                     }
                                 });
-                               
+
                             }
                         });
                     });

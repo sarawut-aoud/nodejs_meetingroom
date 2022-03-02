@@ -315,29 +315,23 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
-
     <script>
-        $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
+        $(function() {
 
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
+            //Initialize Select2 Elements
+            $('.select2').select2();
+            //timepicker
+            $('#datetimepicker1').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker3').datetimepicker({
+                format: 'L'
+            });
+            $('#datetimepicker4').datetimepicker({
+                format: 'L'
             });
         });
     </script>
@@ -375,31 +369,35 @@ if ($_SESSION['mt_lv_id'] == 4) {
             // window.location.reload(); use this if you do not remove cache
         }
     </script>
-    <script>
-        $(function() {
 
-            //Initialize Select2 Elements
-            $('.select2').select2();
-            //timepicker
-            $('#datetimepicker1').datetimepicker({
-                format: 'H:mm'
-            });
-            $('#datetimepicker2').datetimepicker({
-                format: 'H:mm'
-            });
-            $('#datetimepicker3').datetimepicker({
-                format: 'L'
-            });
-            $('#datetimepicker4').datetimepicker({
-                format: 'L'
-            });
-        });
-    </script>
+  
+
     <script>
         $(document).ready(function() {
             var path = 'http://127.0.0.1:4500',
-            id = '<?php echo $_SESSION['mt_id'];?>';
+                id = '<?php echo $_SESSION['mt_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -424,7 +422,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
             })
             $(document).on('click', '#btnAproveRoom', function(e) {
 
-            // $('#btnAproveRoom').click(function(e) {
+                // $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();
@@ -447,7 +445,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     data: formdata,
 
                     success: function(result) {
-                        if (result.status != 0 ) {
+                        if (result.status != 0) {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -512,7 +510,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
                     for (i in result) {
                         data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
-                      
+
                     }
                     $('#ro_name').html(data);
                 }

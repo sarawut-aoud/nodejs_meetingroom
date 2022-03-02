@@ -77,7 +77,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <div class="row mt-3 mb-4 ">
                         <center>
                             <div class="col-xl-6 col-md-12 ">
-                                <h1>ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h1>
+                                <h1> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h1>
                             </div>
                         </center>
                     </div>
@@ -145,7 +145,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h4> <i class="fa-regular fa-calendars"></i>ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                        <h4> <i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -212,32 +212,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
     <script>
-        $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
-        });
-    </script>
-
-    <script>
         $(function() {
 
             //Initialize Select2 Elements
@@ -260,8 +234,28 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script>
         $(document).ready(function() {
             var path = 'http://127.0.0.1:4500';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
 
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
 
 
             $.ajax({
@@ -362,8 +356,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('#showDate').html(button);
 
             var datetoday = new Date();
-            var today2 = datetoday.toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
-              .slice(0, 10);
+            var today2 = datetoday.toISOString("EN-AU", {
+                    timeZone: "Australia/Melbourne"
+                })
+                .slice(0, 10);
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -373,10 +369,15 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     for (i in results) {
                         console.log(today2)
                         if (results[i].ev_startdate == today2) {
-                          
-                            today += "<div class='rounded border  mt-2  '  style =\"background-color : " + results[i].ro_color + "\"> "+
-                            "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i].ev_starttime +" ถึง "+results[i].ev_endtime+ "</div>"+
-                            "</div>";
+
+                            today +=
+                                "<div class='rounded border  mt-2 position-relative '  style =\"background-color : " +
+                                results[i].ro_color + "\"> " +
+                                "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i]
+                                .ev_starttime + " ถึง " + results[i].ev_endtime + "</div>" +
+                                '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">' +
+                                ' ใหม่ <span class="visually-hidden">unread messages</span><span>' +
+                                "</div>";
                         }
                     }
                     $("#today").html(today);

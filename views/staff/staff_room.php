@@ -316,9 +316,24 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
 
+    
     <script>
         $(document).ready(function() {
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
+            var path = 'http://127.0.0.1:4500';
+            var id = '<?php echo $_SESSION['mt_id']; ?>',
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -339,24 +354,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 }
 
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            cache_clear();
-
-            setInterval(function() {
-                cache_clear()
-            }, 5000);
-        });
-
-
-        function cache_clear() {
-
-            var path = 'http://127.0.0.1:4500';
-            var id = '<?php echo $_SESSION['mt_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-
             $.ajax({
                 type: "get",
                 url: path + "/event/count/staff",
@@ -398,7 +395,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script>
         $(document).ready(function() {
             var path = 'http://127.0.0.1:4500',
-            id = '<?php echo $_SESSION['mt_id']; ?>';
+                id = '<?php echo $_SESSION['mt_id']; ?>';
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -421,7 +418,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     $('#position').val(pos + "/" + level);
                 }
             })
-            $('#btnAproveRoom').click(function(e) {
+            $(document).on('click', '#btnAproveRoom', function(e) {
+
+                // $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();
@@ -444,7 +443,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     data: formdata,
 
                     success: function(result) {
-                        if (result.status != 0 ) {
+                        if (result.status != 0) {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -509,7 +508,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
                     for (i in result) {
                         data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
-                      
+
                     }
                     $('#ro_name').html(data);
                 }

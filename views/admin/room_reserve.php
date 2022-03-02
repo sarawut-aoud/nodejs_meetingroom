@@ -191,26 +191,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script>
         $(document).ready(function() {
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
 
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
         });
     </script>
     <script>
@@ -222,6 +203,25 @@ if ($_SESSION['mt_lv_id'] == 1) {
             var path = 'http://127.0.0.1:4500',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: level,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                }
+            });
 
             $.ajax({
                 type: "get",
@@ -514,7 +514,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     dataType: 'json',
                                     url: path + "/rooms",
                                     success: function(result) {
-                                        var room ='';
+                                        var room = '';
                                         for (i in result) {
                                             if (result[i].ro_id == ro_id) {
                                                 room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
@@ -532,8 +532,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     dataType: 'json',
                                     url: path + "/style",
                                     success: function(result) {
-                                        var style ='';
-                                        
+                                        var style = '';
+
                                         for (k in result) {
                                             if (result[k].st_id == st_id) {
                                                 style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
@@ -601,7 +601,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
             /// modal ///
-          
+
             $(document).on('click', '#btnsaveRoom', function(e) {
 
                 /// modal ///

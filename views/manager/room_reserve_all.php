@@ -207,31 +207,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
             cache_clear();
 
             setInterval(function() {
@@ -283,7 +258,28 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
             var path = 'http://127.0.0.1:4500',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
 
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
 
             $.ajax({
                 type: 'GET',
@@ -307,25 +303,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     $('#position').val(pos + "/" + level);
                 }
             })
-            // $.ajax({
-            //     type: "get",
-            //     dataType: "json",
-            //     url: path + "/tools",
-            //     success: function(result) {
-            //         var data = ' <div class="form-group  ">';
-            //         var x = 0;
-            //         for (i in result) {
 
-            //             x++
-            //             data += '<div class="d-block form-check"><input class="form-check-input chk" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
-            //             data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
-            //             data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-            //         }
-            //         data += '</div>';
-            //         $('#modaltool').html(data);
-
-            //     }
-            // });
             //todo: table room
             $.ajax({
                 type: 'get',

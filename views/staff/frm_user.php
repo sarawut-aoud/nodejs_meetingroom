@@ -250,6 +250,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
             var path = 'http://127.0.0.1:4500';
             var id = '<?php echo $_SESSION['mt_id'] ?>';
+            
             $.ajax({
                 type: "get",
                 dataType: "json",

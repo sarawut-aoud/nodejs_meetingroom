@@ -226,15 +226,23 @@ if ($_SESSION['mt_lv_id'] == 3) {
             // window.location.reload(); use this if you do not remove cache
         }
     </script>
+
     <script>
         $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            $.ajax({
+            $('.my-colorpicker1').colorpicker();
+            $('.select2').select2();
+
+
+            var path = 'http://127.0.0.1:4500',
+                level = '<?php echo $_SESSION['mt_lv_id']; ?>',
+                id = '<?php echo $_SESSION['mt_id']; ?>';
+
+                $.ajax({
                 type: "get",
                 dataType: "json",
                 url: "http://127.0.0.1:4500" + "/event/count",
                 data: {
-                    level: lv_id,
+                    level: level,
                 },
                 success: function(result) {
                     var bage = 0;
@@ -249,18 +257,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 }
 
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.my-colorpicker1').colorpicker();
-            $('.select2').select2();
-
-
-            var path = 'http://127.0.0.1:4500',
-                level = '<?php echo $_SESSION['mt_lv_id']; ?>',
-                id = '<?php echo $_SESSION['mt_id']; ?>';
-
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -375,7 +371,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         .container()
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
-                    $(".btnDetail").click(function(e) {
+                    $(document).on('click', '.btnDetail', function(e) {
+                        // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -410,7 +407,26 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
-                                     
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/event/requesttool',
+                                            success: function(tool) {
+                                                // console.log(result[ii].event_id)
+                                                var to_name = ''
+                                                for (i in tool) {
+
+                                                    if (tool[i].ev_id == ev_id) {
+
+                                                        to_name += '<div class="col-form-label d-inline mr-3 ml-3">📢 ' + tool[i].to_name + '  </div>'
+
+                                                    }
+
+                                                    $("#modal2_tool").html(to_name);
+                                                }
+
+                                            }
+                                        });
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -443,8 +459,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnEdit', function(e) {
 
-                    $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -522,8 +539,9 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             }
                         });
                     });
+                    $(document).on('click', '.btnDels', function(e) {
 
-                    $(".btnDels").click(function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -617,6 +635,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     title: results.message
                                 })
                                 .then((result) => {
+                                    $("#modalStatus").modal("hide");
                                     location.reload();
                                 })
                         }

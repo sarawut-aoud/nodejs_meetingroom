@@ -347,11 +347,24 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('.my-colorpicker1').colorpicker()
+            $('.select2').select2();
+
+
+            var path = 'http://127.0.0.1:4500';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
+                url: path + "/event/count",
                 data: {
                     level: lv_id,
                 },
@@ -364,21 +377,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         }
                     }
                     $("#bage").html(bage);
-
                 }
-
             });
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function() {
-            $('.my-colorpicker1').colorpicker()
-            $('.select2').select2();
-
-
-            var path = 'http://127.0.0.1:4500'
+            
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -397,7 +398,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             /// Rooms
             $(document).on('click', '#btnRooms', function(e) {
 
-            // $('#btnRooms').click(function(e) {
+                // $('#btnRooms').click(function(e) {
                 e.preventDefault();
                 var ro_name = $('#ro_name').val();
                 var ro_people = $('#ro_people').val();
@@ -460,7 +461,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             // department
             $(document).on('click', '#btnDept', function(e) {
 
-            // $('#btnDept').click(function(e) {
+                // $('#btnDept').click(function(e) {
                 e.preventDefault();
                 var de_name = $('#de_name2').val();
                 var de_phone = $('#de_phone2').val();
@@ -515,7 +516,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             /// Tools
             $(document).on('click', '#btnTools', function(e) {
 
-            // $('#btnTools').click(function(e) {
+                // $('#btnTools').click(function(e) {
                 e.preventDefault();
                 var to_name = $('#to_name').val();
                 var de_id = $('#de_id').val();
@@ -573,7 +574,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             /// Style
             $(document).on('click', '#btnStyle', function(e) {
 
-            // $('#btnStyle').click(function(e) {
+                // $('#btnStyle').click(function(e) {
                 e.preventDefault();
                 var st_name = $("#st_name").val();
                 $.ajax({
