@@ -273,7 +273,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var path = 'https://pbhapi.moph.go.th:4200';
 
             $.ajax({
                 type: 'GET',
@@ -352,7 +352,7 @@
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var path = 'https://pbhapi.moph.go.th:4200';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",

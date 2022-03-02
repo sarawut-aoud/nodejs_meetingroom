@@ -180,6 +180,8 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="modal_de_id" value="">
+    <!-- <input type="hidden" id="modal_de_id" value="" > -->
+    <input type="hidden" id="modal2_de_id" value="">
+
 </form>
 <!-- Modal tool -->

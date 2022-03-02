@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     events: {
       // เรียกใช้งาน event จาก json ไฟล์ ที่สร้างด้วย php
       // url: "../event01.php?gData=1",
-      url:"http://127.0.0.1:4500/event/list",
+      url:"https://pbhapi.moph.go.th:4200/event/list",
       error: function () {},
     },
   });

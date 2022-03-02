@@ -234,7 +234,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script>
         $(document).ready(function() {
             
-            var path = <?php echo $_SESSION['mt_path'] ?>;
+            var path = "<?php echo $_SESSION['mt_path']; ?>";
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
             $.ajax({

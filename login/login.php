@@ -37,7 +37,8 @@
     $_SESSION['mt_lv_id'] = $_POST['lv_id'];
     $_SESSION['mt_lv_name'] = $_POST['lv_name'];
     $_SESSION['mt_de_name'] = $_POST['de_name'];
-    $_SESSION['mt_path'] = "https://pbhapi.moph.go.th:4300"
+    // $_SESSION['mt_path'] = "https://pbhapi.moph.go.th:4200"
+      $_SESSION['mt_path'] = "http://127.0.0.1:4200"
 
     
 ?>

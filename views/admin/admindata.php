@@ -265,7 +265,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('.select2').select2();
 
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            var path = <?php echo $_SESSION['mt_path'] ?>
+            var path = "<?php echo $_SESSION['mt_path'] ?>";
 
 
             $.ajax({
@@ -538,7 +538,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         // $(".btnStyleDels").click(function(e) {
                         e.preventDefault();
                         var st_id = $(this).attr('id');
-
+                        var _row = $(this).parent();
                         Swal.fire({
                             title: 'คุณต้องการลบข้อมูลรูปแบบห้องประชุมใช่หรือไม่ ?',
                             icon: 'warning',
@@ -651,6 +651,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .buttons()
                         .container()
                         .appendTo("#tb_Tools_wrapper .col-md-6:eq(0)");
+
                     $(document).on('click', '.btnToolEdit', function(e) {
                         // $(".btnToolEdit").click(function(e) {
                         e.preventDefault();
@@ -826,8 +827,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         break;
                                     }
                                 }
+                                console.log(de_id)
                                 $("#ModalDepart").modal("show");
-                                $("#modal_de_id").val(de_id);
+                                $("#modal2_de_id").val(de_id);
                                 $("#modal_de_name").val(de_name);
                                 $("#modal_de_phone").val(de_phone);
                             }
@@ -1113,7 +1115,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 // $(".btnSaveDepart").click(function(e) {
                 e.preventDefault();
 
-                var de_id = $("#modal_de_id").val();
+                var de_id = $("#modal2_de_id").val();
                 var de_name = $("#modal_de_name").val();
                 var de_phone = $("#modal_de_phone").val();
 

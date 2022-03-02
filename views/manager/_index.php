@@ -290,7 +290,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
     <script>
         $(document).ready(function() {
-            var path = '<?php echo $_SESSION['mt_path'] ?>',
+            var path = '<?php echo $_SESSION['mt_path'] ;?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
 

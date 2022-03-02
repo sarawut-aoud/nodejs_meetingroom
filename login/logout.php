@@ -17,7 +17,7 @@ unset($_SESSION['mt_lv_name']);
 
 echo "<script>
 	window.setTimeout(function() {
-		window.location = '../views/index.html';
+		window.location = '../views/index.php';
 	 }, 1000);
 </script>";
 ?>

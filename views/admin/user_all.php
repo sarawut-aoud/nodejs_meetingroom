@@ -194,8 +194,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('.select2').select2();
 
 
-            var path = '<?php echo $_SESSION['mt_path'] ?>'
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
             $.ajax({
                 type: "get",
                 dataType: "json",

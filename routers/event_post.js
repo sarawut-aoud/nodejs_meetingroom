@@ -44,6 +44,8 @@ router.post("/adddata", async (req, res) => {
   var id = req.body.id; // id_users
   var ro_id = req.body.ro_name; // id_rooms
   var chk = 0;
+  var date_ev_startdate = new Date(ev_startdate);
+  var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
 
   if (
     !ev_title ||
@@ -71,7 +73,7 @@ router.post("/adddata", async (req, res) => {
           "SELECT IF (ev_starttime = '00:00:00', '', substr(ev_starttime, 1, 5)) as ev_starttime, " +
             "IF (ev_endtime = '00:00:00', '', substr(ev_endtime, 1, 5)) as ev_endtime " +
             "FROM tbl_event where ev_startdate = ? and ro_id = ?  and ev_status = '3'",
-          [dateStart, ro_id],
+          [dateCheck, ro_id],
           (error, results, field) => {
             if (error) throw error;
             for (var x = 0; x < results.length; x++) {
@@ -222,7 +224,7 @@ router.put("/updatestatus", async (req, res) => {
   var ev_enddate = req.body.ev_enddate;
   var ev_starttime = req.body.ev_starttime;
   var ev_endtime = req.body.ev_endtime;
-  
+
   var status_yes;
   var status_no;
 
@@ -261,13 +263,15 @@ router.put("/updatestatus", async (req, res) => {
           var datediff = DATE_DIFF(ev_startdate, ev_enddate, "D").output;
           if (datediff >= 0) {
             var dateStart = ev_startdate;
-
+            var date_ev_startdate = new Date(ev_startdate);
+            var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
+  
             for (var i = 0; i <= datediff; i++) {
               con.query(
                 "SELECT ev_id,event_id, substr(ev_starttime,1,5) AS ev_starttime," +
                   "substr(ev_endtime,1,5) AS ev_endtime " +
                   "FROM tbl_event WHERE event_id != ? AND ro_id = ? AND ev_startdate = ? AND ev_status != '3' ",
-                [event_id, ro_id, dateStart],
+                [event_id, ro_id, dateCheck],
                 (error, results_x, field) => {
                   for (var x = 0; x < results.length; x++) {
                     var theDateStart = Date.parse(dateStart) + 3600 * 1000 * 24;
@@ -348,7 +352,7 @@ router.put("/updatestatus/staff", async (req, res) => {
   var st_id = req.body.style;
   var to_id = req.body.to_id;
 
-  if (!event_id || ! ev_status) {
+  if (!event_id || !ev_status) {
     return res.json({
       error: true,
       status: "0",

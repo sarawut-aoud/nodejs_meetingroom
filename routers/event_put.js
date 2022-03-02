@@ -61,12 +61,15 @@ router.put("/updatedata", async (req, res) => {
 
         if (date_diff >= 0) {
           var dateStart = ev_startdate;
+          var date_ev_startdate = new Date(ev_startdate);
+          var dateCheck = date_ev_startdate.getFullYear() + "-" + date_ev_startdate.getMonth() + "-" + date_ev_startdate.getDate();
+
           for (var i = 0; i <= date_diff; i++) {
             con.query(
               "SELECT IF (ev_starttime = '00:00:00', '', substr(ev_starttime, 1, 5)) as ev_starttime, " +
                 "IF (ev_endtime = '00:00:00', '', substr(ev_endtime, 1, 5)) as ev_endtime " +
                 "FROM tbl_event where ev_startdate = ? and ro_id = ?  and ev_status = '3'",
-              [dateStart, ro_id],
+              [dateCheck, ro_id],
               (error, results, field) => {
                 if (error) throw error;
 

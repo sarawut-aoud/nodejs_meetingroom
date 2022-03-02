@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 // const fs = require("fs");
 // const https = require('https');
 const cors = require("cors");
-const port = 4500;
+const port = 4200;
 
 // const privateKey = fs.readFileSync('../ssl/wildcard_moph_go_th.key');
 // const certificate = fs.readFileSync('../ssl/wildcard_moph_go_th.crt');
