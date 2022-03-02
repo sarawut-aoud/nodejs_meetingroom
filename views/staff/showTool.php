@@ -186,7 +186,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    
+
 
     <script>
         $(document).ready(function() {
@@ -195,7 +195,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
             $('.select2').select2();
 
 
-            var path = 'http://127.0.0.1:4500',
+            var path = '<?php echo $_SESSION['mt_path'] ?>',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>'
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
@@ -203,7 +203,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
+                url: path + "/event/count",
                 data: {
                     level: lv_id,
                 },

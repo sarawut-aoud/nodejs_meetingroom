@@ -126,11 +126,25 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
+
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('.my-colorpicker1').colorpicker()
+            $('.select2').select2();
+
+
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var id = '<?php echo $_SESSION['mt_id'] ?>';
+
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
+                url: path + "/event/count",
                 data: {
                     level: lv_id,
                 },
@@ -147,28 +161,16 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
 
             });
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function() {
-            $('.my-colorpicker1').colorpicker()
-            $('.select2').select2();
-
-
-            var path = 'http://127.0.0.1:4500';
-            var id = '<?php echo $_SESSION['mt_id'] ?>';
             $.ajax({
                 type: 'get',
                 dataType: 'json',
                 url: path + "/rooms",
-                success: function (data) {
+                success: function(data) {
                     var i = 0;
                     var table =
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
-                    $.each(data, function (idx, cell) {
+                    $.each(data, function(idx, cell) {
                         var icon =
                             ' <div class="badge-online rounded-pill   position-relative">Online' +
                             '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
@@ -189,7 +191,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
 
-           
+
         });
     </script>
 

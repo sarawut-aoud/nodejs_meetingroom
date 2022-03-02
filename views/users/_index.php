@@ -225,7 +225,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
         function cache_clear() {
 
-            var path = 'http://127.0.0.1:4500';
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
 
@@ -270,11 +270,11 @@ if ($_SESSION['mt_lv_id'] == 2) {
 
         function viewdetail(id) {
             //    console.log(id);
-
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:4500/event/calendar",
+                url: path+"/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id
@@ -317,7 +317,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
     </script>
     <script>
         $(document).ready(function() {
-            var path = 'http://127.0.0.1:4500',
+            var path = '<?php echo $_SESSION['mt_path'] ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>'
 
             $.ajax({

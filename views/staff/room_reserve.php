@@ -208,7 +208,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
-           
+
         });
     </script>
     <script>
@@ -223,7 +223,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
         function cache_clear() {
 
-            var path = 'http://127.0.0.1:4500';
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
 
@@ -262,14 +262,14 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 format: 'L'
             });
 
-            var path = 'http://127.0.0.1:4500',
+            var path = '<?php echo $_SESSION['mt_path'] ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
-              
+
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
+                url: path + "/event/count",
                 data: {
                     level: level,
                 },
@@ -637,7 +637,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     dataType: 'json',
                                     url: path + "/rooms",
                                     success: function(result) {
-                                        var room ='';
+                                        var room = '';
                                         for (i in result) {
                                             if (result[i].ro_id == ro_id) {
                                                 room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
@@ -655,8 +655,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     dataType: 'json',
                                     url: path + "/style",
                                     success: function(result) {
-                                        var style ='';
-                                        
+                                        var style = '';
+
                                         for (k in result) {
                                             if (result[k].st_id == st_id) {
                                                 style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
@@ -724,7 +724,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 }
             });
             /// modal ///
-           
+
             $(document).on('click', '#btnsaveRoom', function(e) {
 
                 /// modal ///
@@ -779,7 +779,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     title: result.message
                                 })
                                 .then((result) => {
-                                   
+
                                     $("#ro_name")[0].focus();
                                 })
 

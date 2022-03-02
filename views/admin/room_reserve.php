@@ -200,7 +200,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('.select2').select2();
 
 
-            var path = 'http://127.0.0.1:4500',
+            var path = '<?php echo $_SESSION['mt_path'] ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>'
 

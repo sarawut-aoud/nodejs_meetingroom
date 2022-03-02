@@ -149,7 +149,7 @@
 
     <script>
         $(document).ready(function () {
-            var path = 'http://127.0.0.1:4500';
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
 
             $.ajax({
                 type: 'get',

@@ -43,7 +43,7 @@
                     <img src="./public/images/logo.png" alt="Logo" class="brand-image " style="opacity: .8">
                     <span class="brand-text font-weight-light">ระบบจองห้องประชุม</span>
                 </a>
-                <a href="./room.html" class="navbar-brand ml-5">
+                <a href="./room.php" class="navbar-brand ml-5">
                     <span class="brand-text font-weight-light">ห้องประชุม</span>
                 </a>
 
@@ -273,7 +273,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            var path = 'http://127.0.0.1:4500';
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
 
             $.ajax({
                 type: 'GET',
@@ -352,11 +352,11 @@
 
         function viewdetail(id) {
             //    console.log(id);
-
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:4500/event/calendar",
+                url: path+"/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id

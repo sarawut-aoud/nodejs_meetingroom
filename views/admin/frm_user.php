@@ -227,13 +227,13 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('.select2').select2();
 
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-            var path = 'http://127.0.0.1:4500';
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
             var id = '<?php echo $_SESSION['mt_id'] ?>';
 
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "http://127.0.0.1:4500" + "/event/count",
+                url: path+ "/event/count",
                 data: {
                     level: lv_id,
                 },
