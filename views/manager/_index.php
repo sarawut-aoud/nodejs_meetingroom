@@ -282,11 +282,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
             });
         }
     </script>
-    <script>
-        $(document).ready(function() {
-
-        });
-    </script>
 
     <script>
         $(document).ready(function() {

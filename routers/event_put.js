@@ -104,7 +104,7 @@ router.put("/updatedata", async (req, res) => {
         } else {
          
           if (date_diff >= 0) {
-            console.log(results_evid.length)
+           
             if (results_evid.length > 0) {
              
               con.query(
@@ -116,7 +116,7 @@ router.put("/updatedata", async (req, res) => {
                     "ALTER TABLE tbl_event AUTO_INCREMENT = 1 ",
                     (error, results_alter, field) => {
                       if (error) throw error;
-                      console.log('4')
+                     
                       for (var ii = 0; ii <= date_diff; ii++) {
                         var dateStart = ev_startdate;
 

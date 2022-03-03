@@ -1,3 +1,8 @@
+<?php 
+    session_start();
+    $_SESSION['mt_path'] == "http://127.0.0.1:4200";
+    // $_SESSION['mt_path']=='https://pbhapi.moph.go.th:4200'
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -25,12 +30,10 @@
     <link rel="stylesheet" href="./plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- Toastr -->
     <link rel="stylesheet" href="./plugins/sweetalert2/sweetalert2.min.css">
-
-    <!-- fullCalendar Style -->
-    <link rel="stylesheet" href="./public/styles/calendar.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="./public/styles/adminlte.min.css">
     <link rel="stylesheet" href="./public/styles/styleindex.css">
+
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -39,7 +42,7 @@
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white shadow">
             <div class="container-fluid ">
-                <a href="./index.html" class="navbar-brand">
+                <a href="./index.php" class="navbar-brand">
                     <img src="./public/images/logo.png" alt="Logo" class="brand-image " style="opacity: .8">
                     <span class="brand-text font-weight-light">ระบบจองห้องประชุม</span>
                 </a>
@@ -143,24 +146,22 @@
 
     <!-- AdminLTE App -->
     <script src="./public/javascript/adminlte.js"></script>
-    <!-- fullCalendar 2.2.5 -->
-    <script src="./public/javascript/maincalendar.js"></script>
-    <script src='./public/javascript/calendar.js'></script>
+
 
     <script>
-        $(document).ready(function () {
-            var path = 'https://pbhapi.moph.go.th:4200';
-
+        $(document).ready(function() {
+            // var path = 'https://pbhapi.moph.go.th:4200';
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
             $.ajax({
                 type: 'get',
                 dataType: 'json',
                 url: path + "/rooms",
-                success: function (data) {
+                success: function(data) {
                     var i = 0;
                     var table =
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
-                    $.each(data, function (idx, cell) {
+                    $.each(data, function(idx, cell) {
                         // var icon = '<span class="waitingForConnection"> 🟢 </span><span> Online </span>';
 
                         var icon =

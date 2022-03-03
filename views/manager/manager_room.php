@@ -370,8 +370,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
         }
     </script>
 
-
-
     <script>
         $(document).ready(function() {
             var path = '<?php echo $_SESSION['mt_path'] ?>',
@@ -420,8 +418,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     $('#position').val(pos + "/" + level);
                 }
             })
+            
             $(document).on('click', '#btnAproveRoom', function(e) {
-
                 // $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();

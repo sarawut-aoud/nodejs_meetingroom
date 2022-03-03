@@ -1,13 +1,9 @@
 const express = require("express");
 const path = require("path");
-
 const app = express();
 const bodyParser = require("body-parser");
-
 const cors = require("cors");
 const con = require("../config/config");
-const { error } = require("console");
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

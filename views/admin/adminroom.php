@@ -366,7 +366,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
 
             $(document).on('click', '#btnAproveRoom', function(e) {
-
                 // $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();

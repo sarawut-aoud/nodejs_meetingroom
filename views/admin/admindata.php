@@ -806,8 +806,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .buttons()
                         .container()
                         .appendTo("#tb_depart_wrapper .col-md-6:eq(0)");
-                    $(document).on('click', '.btndepartEdit', function(e) {
 
+                    $(document).on('click', '.btndepartEdit', function(e) {
                         // $(".btndepartEdit").click(function(e) {
                         e.preventDefault();
                         var de_id = $(this).attr('id');
@@ -835,8 +835,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-                    $(document).on('click', '.btndepartDels', function(e) {
 
+                    $(document).on('click', '.btndepartDels', function(e) {
                         // $(".btndepartDels").click(function(e) {
                         e.preventDefault();
 
@@ -906,7 +906,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
             //  Btn Modal //
             $(document).on('click', '.btnSaveRoom', function(e) {
-
                 // $(".btnSaveRoom").click(function(e) {
                 e.preventDefault();
 
@@ -980,7 +979,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 });
             });
             $(document).on('click', '.btnSaveStyle', function(e) {
-
                 // $(".btnSaveStyle").click(function(e) {
                 e.preventDefault();
 
@@ -1042,8 +1040,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     }
                 });
             });
-            $(document).on('click', '.btnSaveTool', function(e) {
 
+            $(document).on('click', '.btnSaveTool', function(e) {
                 // $(".btnSaveTool").click(function(e) {
                 e.preventDefault();
 
@@ -1110,8 +1108,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     }
                 });
             });
+            
             $(document).on('click', '.btnSaveDepart', function(e) {
-
                 // $(".btnSaveDepart").click(function(e) {
                 e.preventDefault();
 

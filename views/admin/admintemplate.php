@@ -357,7 +357,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('.my-colorpicker1').colorpicker()
             $('.select2').select2();
 
-
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
 
@@ -397,7 +396,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
             /// Rooms
             $(document).on('click', '#btnRooms', function(e) {
-
                 // $('#btnRooms').click(function(e) {
                 e.preventDefault();
                 var ro_name = $('#ro_name').val();
@@ -460,7 +458,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
             // department
             $(document).on('click', '#btnDept', function(e) {
-
                 // $('#btnDept').click(function(e) {
                 e.preventDefault();
                 var de_name = $('#de_name2').val();
@@ -515,7 +512,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             /// Tools
             $(document).on('click', '#btnTools', function(e) {
-
                 // $('#btnTools').click(function(e) {
                 e.preventDefault();
                 var to_name = $('#to_name').val();
@@ -573,7 +569,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             /// Style
             $(document).on('click', '#btnStyle', function(e) {
-
                 // $('#btnStyle').click(function(e) {
                 e.preventDefault();
                 var st_name = $("#st_name").val();

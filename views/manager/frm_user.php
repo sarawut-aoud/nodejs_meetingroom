@@ -218,12 +218,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script>
-        $(document).ready(function() {
-
-        });
-    </script>
-
+   
 
     <script>
         $(document).ready(function() {
@@ -337,10 +332,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 }
             });
 
-
             ///saveUser
             $(document).on('click', '#saveUser', function(e) {
-
                 // $('#saveUser').click(function(e) {
                 e.preventDefault();
                 var username = $('#username').val();

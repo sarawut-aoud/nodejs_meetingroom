@@ -308,8 +308,6 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 }
             });
 
-
-
             ///saveUser
             $(document).on('click', '#saveUser', function(e) {
 

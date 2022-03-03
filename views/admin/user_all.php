@@ -417,8 +417,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                 }
             });
+            
             $(document).on('click', '#btnSaveUser', function(e) {
-
                 ///  Btn Modal
                 // $("#btnSaveUser").click(function(e) {
                 e.preventDefault();

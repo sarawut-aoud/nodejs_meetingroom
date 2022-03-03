@@ -110,29 +110,5 @@ router.get("/", async (req, res, next) => {
     );
   }
 }),
-  // router.get("/", async (req, res) => {
-  //   var query01 = require("url").parse(req.url, true).query;
-  //   let id = query01.id;
-  //   for (var x = 0; x < req.res; x++) {
-  //     const evid = req.arr[x];
-  //     con.query(
-  //       "SELECT id,ev_id,set_status FROM tbl_seting WHERE ev_id = ? AND id = ? AND set_status = ?",
-  //       [evid, id, req.ev_status],
-  //       (error, total, fields) => {
-  //         if (error) throw error;
-  //         if (total.length == 0) {
-  //           con.query(
-  //             "INSERT INTO tbl_seting(id,ev_id,set_status)VALUES(?,?,?)",
-  //             [id, evid, req.ev_status],
-  //             (error, results, fields) => {
-  //               if (error) throw error;
-  //             }
-  //           );
-  //         }
-  //       }
-  //     );
-  //   }
-
-  //   res.json(req.results);
-  // });
+ 
   (module.exports = router);

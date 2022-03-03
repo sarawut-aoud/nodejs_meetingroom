@@ -462,9 +462,6 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     });
                 }
             });
-
-
-
         });
     </script>
 

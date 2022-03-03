@@ -45,12 +45,12 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">ตั้งแต่ :</label> <span class="col-form-label col-md-5" id="modal2_starttime"></span>
+                            <label class="col-md-3 col-form-label ">ตั้งแต่ :</label> <span class="col-form-label col-md-5 modal1_starttime" id="modal1_starttime"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">ถึง :</label> <span class="col-form-label col-md-5" id="modal2_endtime"></span>
+                            <label class="col-md-3 col-form-label ">ถึง :</label> <span class="col-form-label col-md-5 modal2_endtime" id="modal2_endtime"></span>
                         </div>
                     </div>
 

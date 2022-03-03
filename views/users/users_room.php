@@ -370,7 +370,6 @@ if ($_SESSION['mt_lv_id'] == 2) {
         }
     </script>
 
-
     <script>
         $(document).ready(function() {
             var path = '<?php echo $_SESSION['mt_path'] ?>',

@@ -410,12 +410,12 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 }
                                 $("#modalDetail").modal("show");
                                 $("#modal2_evid").html(ev_id);
-                                $("#modal2_cre_date").html(ev_createdate.split('T')[0]);
+                                $("#modal2_cre_date").html(ev_createdate);
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
                                 $("#modal2_title").html(ev_title);
-                                $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
+                                $(".modal1_starttime").html(ev_startdate+' เวลา ' + ev_starttime );
+                                $("#modal2_endtime").html(ev_enddate + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
                                 $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
@@ -427,6 +427,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
+
                     $(document).on('click', '.btnEdit', function(e) {
                         // $(".btnEdit").click(function(e) {
                         e.preventDefault();
@@ -552,8 +553,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
+                    
                     $(document).on('click', '.btnDels', function(e) {
-
                         // $(".btnDels").click(function(e) {
                         e.preventDefault();
 

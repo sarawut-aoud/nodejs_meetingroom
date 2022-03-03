@@ -82,9 +82,12 @@ if ($_SESSION['mt_lv_id'] == 2) {
                         </center>
                     </div>
                     <div class="row mb-4 justify-content-center">
-                        <div class="col-xl-2 col-md-12 ">
-                            <a href="./users_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
-                        </div>
+                        <center>
+                            <div class="col-xl-2 col-md-12 ">
+                                <a href="./users_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                            </div>
+                        </center>
+
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-xl-6 col-md-12 ">
@@ -274,7 +277,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: path+"/event/calendar",
+                url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id

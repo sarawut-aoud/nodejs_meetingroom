@@ -77,13 +77,15 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <div class="row mt-3 mb-4 ">
                         <center>
                             <div class="col-xl-6 col-md-12 ">
-                                <h1> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h1>
+                                <h1>ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h1>
                             </div>
                         </center>
                     </div>
                     <div class="row mb-4 justify-content-center">
                         <div class="col-xl-2 col-md-12 ">
-                            <a href="./adminroom.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                            <center>
+                                <a href="./adminroom.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                            </center>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -114,11 +116,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value="" readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="name" name="name" value=" " readonly />
                                             </div>
 
                                         </div>
@@ -128,11 +130,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value=" " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value=" " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -145,7 +147,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h4> <i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                        <h4> <i class="fa-regular fa-calendars"></i>ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
@@ -233,10 +235,32 @@ if ($_SESSION['mt_lv_id'] == 1) {
     </script>
     <script>
         $(document).ready(function() {
-            
+
             var path = "<?php echo $_SESSION['mt_path']; ?>";
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-
+            var id = '<?php echo $_SESSION['mt_id'];?>';
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/user",
+                data: {
+                    id: id,
+                },
+                success: function(results) {
+                    for (i in results) {
+                        var prefix = results[i].prefix;
+                        var fname = results[i].firstname;
+                        var lname = results[i].lastname;
+                        var pos = results[i].position;
+                        var dename = results[i].de_name;
+                        var level = results[i].level;
+                    }
+                    $('#name').val(fname + ' ' + lname);
+                    $('#prefix').val(prefix);
+                    $('#de_name').val(dename);
+                    $('#position').val(pos + "/" + level);
+                }
+            })
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -368,7 +392,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 success: function(results) {
                     var today = ''
                     for (i in results) {
-                        console.log(today2)
+
                         if (results[i].ev_startdate == today2) {
 
                             today +=
@@ -385,6 +409,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                 }
             })
+
         });
 
         function viewdetail(id) {
@@ -393,7 +418,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: path + "event/calendar",
+                url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id

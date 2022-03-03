@@ -415,10 +415,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
 
-
-
                     $(document).on('click', '.btnDetail', function(e) {
-
                         // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
@@ -637,8 +634,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
                             }
                         });
                     });
-                    $(document).on('click', '.btnDels', function(e) {
 
+                    $(document).on('click', '.btnDels', function(e) {
                         // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
@@ -690,9 +687,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                 }
             });
-            /// modal ///
-
-
             /// modal ///
             $(document).on('click', '#btnsaveRoom', function(e) {
 

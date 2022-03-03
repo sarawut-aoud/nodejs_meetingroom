@@ -192,7 +192,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    
+
     <script>
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
@@ -313,8 +313,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         .buttons()
                         .container()
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
+                        
+                    $(document).on('click', '.btnDetail', function(e) {
 
-                    $(".btnDetail").click(function(e) {
+                        // $(".btnDetail").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -390,8 +392,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
                                 $("#modal2_title").html(ev_title);
-                                $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
+                                $("#modal2_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
+                                $("#modal2_endtime").html(ev_enddate + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
 
                                 $("#modal2_people").html(ev_people + '  คน');
@@ -403,7 +405,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         });
                     });
 
-                    $(".btnEdit").click(function(e) {
+                    $(document).on('click', '.btnEdit', function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -490,7 +493,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         });
                     });
 
-                    $(".btnDels").click(function(e) {
+                    $(document).on('click', '.btnDels', function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -542,7 +546,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
             /// modal
-            $('.btnSave').click(function(e) {
+            $(document).on('click', '.btnSave', function(e) {
+                // $('.btnSave').click(function(e) {
                 e.preventDefault();
                 var ev_status = $('#modal_id_status').val();
                 var event_id = $('#modal_eventid_h').val();

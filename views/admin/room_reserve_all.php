@@ -552,8 +552,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-                    $(document).on('click', '.btnDels', function(e) {
 
+                    $(document).on('click', '.btnDels', function(e) {
                     // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
@@ -606,7 +606,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
             /// modal ///
-           
+        
             $(document).on('click', '#btnsaveRoom', function(e) {
             /// modal ///
             // $('#btnsaveRoom').click(function(e) {

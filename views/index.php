@@ -1,3 +1,9 @@
+<?php 
+    session_start();
+    $_SESSION['mt_path'] == "http://127.0.0.1:4200";
+    // $_SESSION['mt_path']=='https://pbhapi.moph.go.th:4200'
+
+?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -252,7 +258,7 @@
     <script src="./public/javascript/maincalendar.js"></script>
     <script src='./public/javascript/calendar.js'></script>
     <script>
-        $(function () {
+        $(function() {
 
             //Initialize Select2 Elements
             $('.select2').select2();
@@ -272,14 +278,15 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
-            var path = 'https://pbhapi.moph.go.th:4200';
+        $(document).ready(function() {
+            // var path = 'https://pbhapi.moph.go.th:4200';
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
 
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
                 url: path + "/rooms",
-                success: function (result) {
+                success: function(result) {
                     var data = data = '<div class="form-group row">' +
                         '<div class="input-group">';
                     for (i in result) {
@@ -327,10 +334,10 @@
                 type: "get",
                 dataType: "json",
                 url: path + "/event/today",
-                success: function (results) {
+                success: function(results) {
                     var today = ''
                     for (i in results) {
-                        console.log(today2)
+                       
                         if (results[i].ev_startdate == today2) {
 
                             today +=
@@ -352,16 +359,16 @@
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = 'https://pbhapi.moph.go.th:4200';
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: path+"/event/calendar",
+                url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id
                 },
-                success: function (results) {
+                success: function(results) {
 
                     for (i in results) {
                         if (results[i].ev_id == id) {

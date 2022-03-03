@@ -432,8 +432,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         });
                     });
-                    $(document).on('click', '.btnDels', function(e) {
 
+                    $(document).on('click', '.btnDels', function(e) {
                         // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
@@ -486,8 +486,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                 }
             });
+            
             $(document).on('click', '#btnSaveUser', function(e) {
-
                 ///  Btn Modal
                 // $("#btnSaveUser").click(function(e) {
                 e.preventDefault();
