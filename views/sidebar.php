@@ -102,7 +102,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
             </li>
             <hr class="mt-5 mb-5" style="background-color:#fff"> -->
                     <li class="nav-item ">
-                        <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
+                        <a href="../login/logout.php" class="btn btn-block btn-moph text-white ">
                             <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                         </a>
                     </li>
@@ -201,7 +201,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
             </li>
             <hr class="mt-5 mb-5" style="background-color:#fff"> -->
                     <li class="nav-item ">
-                        <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
+                        <a href="../login/logout.php" class="btn btn-block btn-moph text-white ">
                             <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                         </a>
                     </li>
@@ -290,7 +290,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
             </li>
             <hr class="mt-5 mb-5" style="background-color:#fff"> -->
                     <li class="nav-item ">
-                        <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
+                        <a href="../login/logout.php" class="btn btn-block btn-moph text-white ">
                             <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                         </a>
                     </li>
@@ -390,7 +390,7 @@ if ($_SESSION['mt_lv_id'] == 1) { // admin
            
             <hr class="mt-5 mb-5" style="background-color:#fff"> -->
                     <li class="nav-item ">
-                        <a href="../../login/logout.php" class="btn btn-block btn-moph text-white ">
+                        <a href="../login/logout.php" class="btn btn-block btn-moph text-white ">
                             <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                         </a>
                     </li>

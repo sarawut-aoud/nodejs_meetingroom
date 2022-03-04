@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 1) {
 } else {
     echo "<script>
@@ -18,7 +18,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Select2 -->
@@ -160,8 +160,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <?php require_once '../footer.php'; ?>
 
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
     <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
@@ -192,14 +192,14 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-   
+
     <script>
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
 
 
-            var path = '<?php echo $_SESSION['mt_path'] ;?>';
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
 
             $.ajax({
@@ -423,7 +423,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     });
                     $(document).on('click', '.btnEdit', function(e) {
 
-                    // $(".btnEdit").click(function(e) {
+                        // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
 
@@ -457,7 +457,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
-                                       
+
                                         $.ajax({
                                             type: "get",
                                             dataType: "json",
@@ -472,7 +472,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                                 for (i in tool) {
                                                     var chk = '';
                                                     if (tool[i].acc_toid != null) {
-                                                       
+
                                                         chk = 'checked="checked"'
 
                                                     }
@@ -518,7 +518,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     dataType: 'json',
                                     url: path + "/rooms",
                                     success: function(result) {
-                                        var room ='';
+                                        var room = '';
                                         for (i in result) {
                                             if (result[i].ro_id == ro_id) {
                                                 room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
@@ -536,8 +536,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     dataType: 'json',
                                     url: path + "/style",
                                     success: function(result) {
-                                        var style ='';
-                                        
+                                        var style = '';
+
                                         for (k in result) {
                                             if (result[k].st_id == st_id) {
                                                 style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
@@ -554,7 +554,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     });
 
                     $(document).on('click', '.btnDels', function(e) {
-                    // $(".btnDels").click(function(e) {
+                        // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
                         var ev_id = $(this).attr('id');
@@ -606,10 +606,10 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 }
             });
             /// modal ///
-        
+
             $(document).on('click', '#btnsaveRoom', function(e) {
-            /// modal ///
-            // $('#btnsaveRoom').click(function(e) {
+                /// modal ///
+                // $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();

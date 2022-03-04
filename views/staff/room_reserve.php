@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 3) {
 } else {
 
@@ -20,7 +20,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
 
 <!-- bt5 -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
@@ -167,8 +167,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <?php require_once '../footer.php'; ?>
 
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
     <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->

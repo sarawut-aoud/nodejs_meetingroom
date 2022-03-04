@@ -1,7 +1,6 @@
 <?php 
-    session_start();
-    $_SESSION['mt_path'] == "http://127.0.0.1:4200";
-    // $_SESSION['mt_path']=='https://pbhapi.moph.go.th:4200'
+     //$path = "http://127.0.0.1:4200";
+     $path = "https://pbhapi.moph.go.th:4200";
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +16,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="./plugins/fontawesome-pro6/css/all.css" />
     <!-- bt5 -->
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./plugins/bootstrap5/css/bootstrap.min.css" />
     <!-- daterange picker -->
     <link rel="stylesheet" href="./plugins/daterangepicker/daterangepicker.css">
     <!-- Ionicons -->
@@ -220,7 +219,7 @@
             <div class="float-right d-none d-sm-block">
                 <b> </b>
             </div>
-            <strong>Copyright &copy; 2022 ศูนย์คอมพิวเตอร์ โรงพยาบาลเพชรบูรณ์ สงวนลิขสิทธิ์ </strong>
+            <strong>Copyright &copy; 2022 ศูนย์คอมพิวเตอร์ โรงพยาบาลเพชรบูรณ์ สงวนลิขสิทธิ์ <?php echo $path ?> </strong>
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -280,7 +279,7 @@
     <script>
         $(document).ready(function() {
             // var path = 'https://pbhapi.moph.go.th:4200';
-            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var path = '<?php echo $path; ?>';
 
             $.ajax({
                 type: 'GET',
@@ -359,7 +358,7 @@
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var path = '<?php echo $path; ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",

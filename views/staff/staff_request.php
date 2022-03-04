@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 3) {
 } else {
 
@@ -19,7 +19,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Select2 -->
@@ -161,8 +161,8 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <?php require_once '../footer.php'; ?>
 
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
     <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
@@ -237,10 +237,10 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>';
 
-                $.ajax({
+            $.ajax({
                 type: "get",
                 dataType: "json",
-                url: path+ "/event/count",
+                url: path + "/event/count",
                 data: {
                     level: level,
                 },
@@ -594,7 +594,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
             });
             /// modal
             $(document).on('click', '#btnsaveRoom', function(e) {
-            // $('#btnsaveRoom').click(function(e) {
+                // $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_status = $('#modal_id_status').val();
                 var event_id = $('#modal_eventid_h').val();
