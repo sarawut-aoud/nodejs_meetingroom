@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 2) {
 } else {
 
@@ -19,7 +19,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.css" />
 <!-- bt5 -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
@@ -82,9 +82,12 @@ if ($_SESSION['mt_lv_id'] == 2) {
                         </center>
                     </div>
                     <div class="row mb-4 justify-content-center">
-                        <div class="col-xl-2 col-md-12 ">
-                            <a href="./users_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
-                        </div>
+                        <center>
+                            <div class="col-xl-2 col-md-12 ">
+                                <a href="./users_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                            </div>
+                        </center>
+
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-xl-6 col-md-12 ">
@@ -182,8 +185,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <!-- ./wrapper -->
     <?php require_once '../footer.php'; ?>
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <script src="../plugins/fontawesome-pro6/js/all.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
@@ -274,7 +277,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: path+"/event/calendar",
+                url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id

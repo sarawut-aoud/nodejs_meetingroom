@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const strtotime = require("nodestrtotime");
+
 const app = express();
 const bodyParser = require("body-parser");
 
@@ -99,26 +99,59 @@ router.get("/", async (req, res) => {
 });
 //? SELECT Request
 router.get("/request", async (req, res) => {
-  con.query(
-    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
-      "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
-      "ro.ro_id, ro.ro_name, ro.ro_people, " +
-      "st.st_id, st.st_name," +
-      "users.id, users.firstname,users.lastname, users.position," +
-      "dept.de_id, dept.de_name, dept.de_phone " +
-      "FROM tbl_event AS ev " +
-      " " +
-      "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-      "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-      "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
-      "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) ",
+  var query01 = require("url").parse(req.url, true).query;
+  var ev_id = query01.ev_id;
+  if (!ev_id) {
+    con.query(
+      "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
+        "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+        "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
+        "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,  " +
+        "ro.ro_id, ro.ro_name, ro.ro_people, " +
+        "st.st_id, st.st_name," +
+        "users.id, users.firstname,users.lastname, users.position," +
+        "dept.de_id, dept.de_name, dept.de_phone " +
+        "FROM tbl_event AS ev " +
+        " " +
+        "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+        "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+        "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) ",
 
-    (error, results, fields) => {
-      if (error) throw error;
-      // console.log(error);
-      res.json(results);
-    }
-  );
+      (error, results, fields) => {
+        if (error) throw error;
+        // console.log(error);
+        res.json(results);
+      }
+    );
+  } else {
+    con.query(
+      "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
+        "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+        "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
+        "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, " +
+        "ro.ro_id, ro.ro_name, ro.ro_people, " +
+        "st.st_id, st.st_name," +
+        "users.id, users.firstname,users.lastname, users.position," +
+        "dept.de_id, dept.de_name, dept.de_phone " +
+        "FROM tbl_event AS ev " +
+        " " +
+        "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+        "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+        "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
+        "WHERE ev.ev_id = ?",
+      [ev_id],
+
+      (error, results, fields) => {
+        if (error) throw error;
+        // console.log(error);
+        res.json(results);
+      }
+    );
+  }
 });
 //?  SELECT Request Tool
 router.get("/requesttool", async (req, res) => {
@@ -290,9 +323,9 @@ router.post("/calendar", async (req, res) => {
   //   });
   // } else {
   con.query(
-    "SELECT ev.ev_id, ev.event_id, ev.ev_title, "+
-    "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
-    "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
+      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+      "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
       "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
       " ro.ro_name, ro.ro_color," +
       "st.st_name," +
@@ -362,9 +395,8 @@ router.get("/list", async (req, res) => {
     [start2, end2],
     (error, row, fields) => {
       if (error) throw error;
-      
+
       for (var i = 0; i < row.length; i++) {
-       
         _start_date = row[i].ev_startdate;
         _end_date = false;
         _start_time = false;
@@ -391,10 +423,9 @@ router.get("/list", async (req, res) => {
 
             const date = new Date(theDate2);
 
-             _end_date = date
+            _end_date = date
               .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
               .slice(0, 10);
-           
           }
         }
         if (
@@ -446,7 +477,6 @@ router.get("/list", async (req, res) => {
             startRecur &&
             endRecur
           ) {
-            
             id[i] = {
               id: row[i].ev_id,
               groupId: ev_startdate3,

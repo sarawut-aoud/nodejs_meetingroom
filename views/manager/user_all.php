@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 4) {
 } else {
 
@@ -19,7 +19,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Select2 -->
@@ -154,8 +154,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <!-- ./wrapper -->
     <?php require_once '../footer.php'; ?>
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
     <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
@@ -186,7 +186,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-  
+
     <script>
         $(document).ready(function() {
             cache_clear();
@@ -230,8 +230,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
             var path = '<?php echo $_SESSION['mt_path'] ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
-                lv_id = '<?php echo $_SESSION['mt_lv_id'];?>';
-               
+                lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
 
             $.ajax({
                 type: "get",
@@ -290,7 +290,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     $.each(data, function(idx, cell) {
                         if (cell.lv_id == '1') {
                             var dels = '<a id="' + cell.id + '" class="d-none"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a> <a id="' + cell.id + '" class="d-none"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
-                        }else if (cell.lv_id == lv_id){
+                        } else if (cell.lv_id == lv_id) {
                             var dels = '<a id="' + cell.id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a> <a id="' + cell.id + '" class="d-none"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
 
                         } else {
@@ -432,8 +432,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         });
                     });
-                    $(document).on('click', '.btnDels', function(e) {
 
+                    $(document).on('click', '.btnDels', function(e) {
                         // $(".btnDels").click(function(e) {
                         e.preventDefault();
 
@@ -486,8 +486,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                 }
             });
-            $(document).on('click', '#btnSaveUser', function(e) {
 
+            $(document).on('click', '#btnSaveUser', function(e) {
                 ///  Btn Modal
                 // $("#btnSaveUser").click(function(e) {
                 e.preventDefault();

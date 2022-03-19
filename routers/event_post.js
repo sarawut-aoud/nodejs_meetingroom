@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const strtotime = require("nodestrtotime");
+
 const app = express();
 
 const DATE_DIFF = require("date-diff-js");
@@ -79,7 +79,7 @@ router.post("/adddata", async (req, res) => {
             for (var x = 0; x < results.length; x++) {
               var timestart = results[x].ev_starttime;
               var timeend = results[x].ev_endtime;
-              console.log(timestart, timeend);
+              
               if (timestart != "" && timeend != "") {
                 if (ev_starttime >= timestart && ev_starttime <= timeend) {
                   // console.log("a");

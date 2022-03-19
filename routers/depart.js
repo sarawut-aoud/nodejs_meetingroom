@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 
 const cors = require("cors");
 const con = require("../config/config");
-const { error } = require("console");
+
 
 app.use(cors());
 app.use(bodyParser.json());

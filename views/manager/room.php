@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 4) {
 } else {
     echo "<script>
@@ -19,7 +19,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Select2 -->
@@ -105,8 +105,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <!-- ./wrapper -->
     <?php require_once '../footer.php'; ?>
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
     <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
@@ -124,12 +124,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script>
-        $(document).ready(function() {
-           
-        });
-    </script>
-
 
     <script>
         $(document).ready(function() {
@@ -165,11 +159,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 type: 'get',
                 dataType: 'json',
                 url: path + "/rooms",
-                success: function (data) {
+                success: function(data) {
                     var table =
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
-                    $.each(data, function (idx, cell) {
+                    $.each(data, function(idx, cell) {
                         var icon =
                             ' <div class="badge-online rounded-pill   position-relative">Online' +
                             '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
@@ -190,7 +184,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 }
             });
 
-           
+
         });
     </script>
 

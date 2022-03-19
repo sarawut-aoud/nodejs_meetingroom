@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 1) {
 } else {
 
@@ -19,7 +19,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Select2 -->
@@ -157,8 +157,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <?php require_once '../footer.php'; ?>
 
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
     <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
@@ -410,12 +410,12 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 }
                                 $("#modalDetail").modal("show");
                                 $("#modal2_evid").html(ev_id);
-                                $("#modal2_cre_date").html(ev_createdate.split('T')[0]);
+                                $("#modal2_cre_date").html(ev_createdate);
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
                                 $("#modal2_title").html(ev_title);
-                                $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
+                                $(".modal1_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
+                                $("#modal2_endtime").html(ev_enddate + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
                                 $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
@@ -427,6 +427,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
+
                     $(document).on('click', '.btnEdit', function(e) {
                         // $(".btnEdit").click(function(e) {
                         e.preventDefault();
@@ -552,8 +553,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             }
                         });
                     });
-                    $(document).on('click', '.btnDels', function(e) {
 
+                    $(document).on('click', '.btnDels', function(e) {
                         // $(".btnDels").click(function(e) {
                         e.preventDefault();
 

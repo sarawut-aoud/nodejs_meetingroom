@@ -1,5 +1,5 @@
 <?php 
-  
+  unset($_SESSION['mt_path']);
     session_start();
     //! สร้าง session ใหม่
     // $_SESSION['erp_user'] = $_POST['user'];
@@ -38,6 +38,6 @@
     $_SESSION['mt_lv_id'] = $_POST['lv_id'];
     $_SESSION['mt_lv_name'] = $_POST['lv_name'];
     $_SESSION['mt_de_name'] = $_POST['de_name'];
-    // $_SESSION['mt_path'] = "https://pbhapi.moph.go.th:4200"
-      $_SESSION['mt_path'] = "http://127.0.0.1:4200"
+    $_SESSION['mt_path'] = "https://pbhapi.moph.go.th:4200"
+    //$_SESSION['mt_path'] = "http://127.0.0.1:4200"
 ?>

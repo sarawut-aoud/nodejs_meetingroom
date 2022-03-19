@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
   var initialLocaleCode = "th";
   var calendar = new FullCalendar.Calendar(calendarEl, {
     themeSystem: "bootstrap",
-     dayHeaderClassNames: "#C5FFA8",
-    // expandRows: true,
+    dayHeaderClassNames: "#C5FFA8",
+     expandRows: true,
     slotMinTime: "08:00",
     slotMaxTime: "21:00",
-   
+
     headerToolbar: {
       left: "prev,next today",
       center: "title",
@@ -41,10 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // editable: true,
     // selectable: true,
     // businessHours: true,
-     dayMaxEvents: true, // allow "more" link when too many events
+    dayMaxEvents: true, // allow "more" link when too many events
     firstDay: 0, // กำหนดวันแรกในปฏิทินเป็นวันอาทิตย์ 0 เป็นวันจันทร์ 1
-    //displayEventTime: true,
-    // displayEventEnd: true,
+    // displayEventTime: true,
+    //  displayEventEnd: true,
     eventTimeFormat: {
       // รูปแบบการแสดงของเวลา เช่น '14:30'
       hour: "2-digit",
@@ -54,7 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
     events: {
       // เรียกใช้งาน event จาก json ไฟล์ ที่สร้างด้วย php
       // url: "../event01.php?gData=1",
-      url:"https://pbhapi.moph.go.th:4200/event/list",
+      url: "https://pbhapi.moph.go.th:4200/event/list",
+    //url:"http://127.0.0.1:4200/event/list",
       error: function () {},
     },
   });

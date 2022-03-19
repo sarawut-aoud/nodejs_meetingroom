@@ -1,5 +1,5 @@
 <?php
-require_once "../../login/check_session.php";
+require_once "../login/check_session.php";
 if ($_SESSION['mt_lv_id'] == 4) {
 } else {
 
@@ -19,7 +19,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.css" />
 <!-- bt5 -->
-<link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
@@ -184,8 +184,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
 
     <!-- jQuery -->
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <script src="../plugins/fontawesome-pro6/js/all.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
@@ -241,7 +241,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
-                url: path+"/event/calendar",
+                url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
                     id: id
@@ -282,15 +282,10 @@ if ($_SESSION['mt_lv_id'] == 4) {
             });
         }
     </script>
-    <script>
-        $(document).ready(function() {
-
-        });
-    </script>
 
     <script>
         $(document).ready(function() {
-            var path = '<?php echo $_SESSION['mt_path'] ;?>',
+            var path = '<?php echo $_SESSION['mt_path']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
 
