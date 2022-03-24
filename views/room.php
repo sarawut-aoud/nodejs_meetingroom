@@ -1,5 +1,4 @@
 <?php 
-   
     //$path = "http://127.0.0.1:4200";
     $path = "https://pbhapi.moph.go.th:4200";
 ?>
@@ -152,7 +151,7 @@
     <script>
         $(document).ready(function() {
             // var path = 'https://pbhapi.moph.go.th:4200';
-            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var path = '<?php echo $path ?>';
             $.ajax({
                 type: 'get',
                 dataType: 'json',

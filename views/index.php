@@ -1,6 +1,6 @@
 <?php 
-     //$path = "http://127.0.0.1:4200";
-     $path = "https://pbhapi.moph.go.th:4200";
+     $path = "http://127.0.0.1:4200";
+     //$path = "https://pbhapi.moph.go.th:4200";
 
 ?>
 <!DOCTYPE html>
@@ -226,8 +226,8 @@
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./plugins/jquery/jquery.min.js"></script>
+    <script src="./plugins/bootstrap5/js/bootstrap.min.js"></script>
     <script src="./plugins/fontawesome-pro6/js/all.js"></script>
     <!-- Select2 -->
     <script src="./plugins/select2/js/select2.full.min.js"></script>
