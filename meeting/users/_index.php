@@ -23,7 +23,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
@@ -84,7 +84,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     <div class="row mb-4 justify-content-center">
                         <center>
                             <div class="col-xl-2 col-md-12 ">
-                                <a href="./users_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                                <a href="users_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
                             </div>
                         </center>
 
@@ -199,20 +199,15 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <!-- InputMask -->
     <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
-        <script src="../public/javascript/moment-with-locales.js"></script>
-
+    <script src="../public/javascript/moment-with-locales.js"></script>
     <!-- date-range-picker -->
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
-    <!-- Sweetalert2 -->
-    <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>

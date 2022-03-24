@@ -17,11 +17,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
 <link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -51,7 +51,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link ">หน้าแรก</a>
+                    <a href="_index.php" class="nav-link ">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link active">ดูข้อมูล</a>
@@ -102,7 +102,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         <div class="input-group">
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
-
                                                 <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
@@ -113,7 +112,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="row mt-3 justify-content-center">
@@ -141,10 +139,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         <!-- ./col -->
                     </div>
                     <!-- ./row form -->
-
                 </div>
                 <?php require_once './modal_user.php'; ?>
-
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
@@ -157,7 +153,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
-    <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -189,10 +185,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
     <script>
         $(document).ready(function() {
-
             // $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
-
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
@@ -213,9 +207,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         }
                     }
                     $("#bage").html(bage);
-
                 }
-
             });
 
             //todo: table room
@@ -233,7 +225,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         } else {
                             var dels = ' <a id="' + cell.id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>';
                         }
-
                         table += ('<tr>');
                         table += ('<td>' + cell.id + '</td>');
                         table += ('<td>' + cell.firstname + ' ' + cell.lastname + '</td>');

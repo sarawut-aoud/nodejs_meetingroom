@@ -17,11 +17,11 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <title>Moph : MeetingRoom</title>
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
 <link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -47,7 +47,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link">หน้าแรก</a>
+                    <a href="_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link active">ข้อมูลส่วนตัว</a>
@@ -90,7 +90,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 <center>
                                                     <img src="../public/images/user.png" width="200px">
                                                 </center>
-
                                             </div>
 
                                         </div>
@@ -119,7 +118,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                     <option value="">ไม่ระบุ</option>
                                                 </select>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="form-group row ">
@@ -134,21 +132,18 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="form-group row ">
                                         <div class="input-group">
                                             <label class="col-sm-2 col-form-label">แผนก :</label>
                                             <div class="col-md-4">
                                                 <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" data-placeholder="- แผนก -" id="dename">
                                                     <option value=""></option>
-
                                                 </select>
                                             </div>
                                             <label class="col-sm-2 col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control " id="position" />
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="form-group row ">
@@ -163,21 +158,15 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class=" card-footer">
                                     <div class="row justify-content-end ">
-
                                         <button type="submit" id="saveUser" class="col-md-4 btn btn-success mt-2 ">ยืนยันการแก้ไขข้อมูล</button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
-
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -190,7 +179,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
-    <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->

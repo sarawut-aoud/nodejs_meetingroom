@@ -16,6 +16,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
+
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.css" />
 <!-- bt5 -->
@@ -23,7 +24,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
@@ -52,7 +53,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link">หน้าแรก</a>
+                    <a href="_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link active">จองห้องประชุม</a>
@@ -301,7 +302,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <!-- InputMask -->
     <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
-        <script src="../public/javascript/moment-with-locales.js"></script>
+    <script src="../public/javascript/moment-with-locales.js"></script>
 
     <!-- date-range-picker -->
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
@@ -437,6 +438,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 .then((result) => {
                                     $('#frm_Addroom')[0].reset();
                                     $("#title")[0].focus();
+                                    location.href = 'user_reserve.php';
                                 })
 
                         } else {
@@ -450,31 +452,36 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 icon: 'warning',
                                 title: result.message
 
-                            })
-                            $('#frm_Addroom')[0].reset();
-                            $("#title")[0].focus();
-
-                        }
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-                        Toast.fire({
-                                icon: 'warning',
-                                title: 'ไม่สามารถบันทึกข้อมูลได้'
-
-                            })
-                            .then((result) => {
+                            }).then((result) => {
                                 $('#frm_Addroom')[0].reset();
                                 $("#title")[0].focus();
 
                             })
 
+
+                        }
                     }
+
+                    // ,
+                    // error: function(result) {
+                    //     const Toast = Swal.mixin({
+                    //         toast: true,
+                    //         position: 'top-end',
+                    //         showConfirmButton: false,
+                    //         timer: 1500,
+                    //     })
+                    //     Toast.fire({
+                    //             icon: 'warning',
+                    //             title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                    //         })
+                    //         .then((result) => {
+                    //             $('#frm_Addroom')[0].reset();
+                    //             $("#title")[0].focus();
+
+                    //         })
+
+                    // }
                 });
 
             });

@@ -17,11 +17,11 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
 <link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -56,7 +56,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link ">หน้าหลัก</a>
+                    <a href="_index.php" class="nav-link ">หน้าหลัก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link  active">รายการที่ต้องอนุมัติ</a>
@@ -164,7 +164,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
-    <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->

@@ -70,8 +70,8 @@
 	<script type="text/javascript">
 		$(function () {
 			
-			 //var path = 'https://pbhapi.moph.go.th:4200';
-			var path = 'http://127.0.0.1:4200';
+			var path = 'https://pbhapi.moph.go.th:4200';
+			//var path = 'http://127.0.0.1:4200';
 
 			$("#btnLogin").click(function (e) {
 				e.preventDefault();
@@ -203,7 +203,7 @@
 
 			function login(id, user, person_id, prefix, name, position, phone, de_id, lv_id, lv_name, de_name) {
 				$.post(
-					'./login/login.php', {
+					'login/login.php', {
 
 						'id': id,
 						'user': user,
@@ -219,13 +219,13 @@
 					},
 					function () {
 						if (lv_id == 1) {
-							location.href = '../views/admin/_index.php';
+							location.href = 'admin/_index.php';
 						} else if (lv_id == 2) {
-							location.href = '../views/users/_index.php';
+							location.href = 'users/_index.php';
 						} else if (lv_id == 3) {
-							location.href = '../views/staff/_index.php';
+							location.href = 'staff/_index.php';
 						} else if (lv_id == 4) {
-							location.href = '../views/manager/_index.php';
+							location.href = 'manager/_index.php';
 
 						} else {
 							$("#loginAlert").show(0).html(

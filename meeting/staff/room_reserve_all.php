@@ -14,28 +14,25 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
+
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
-
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt5 -->
 <link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
 <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.css">
-
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- colorpic -->
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
-
-
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- DataTables -->
@@ -46,12 +43,10 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <!-- Theme style -->
 <link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
@@ -104,7 +99,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             <div class="col-md">
                                                 <input type="text" class="form-control " id="name" name="name" value="" readonly />
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="form-group row ">
@@ -122,7 +116,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="row mt-3 justify-content-center">
@@ -150,10 +143,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                         <!-- ./col -->
                     </div>
                     <!-- ./row form -->
-
-
                     <?php require_once './modal_reserveAll.php'; ?>
-
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -161,14 +151,12 @@ if ($_SESSION['mt_lv_id'] == 3) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-
     <?php require_once '../footer.php'; ?>
-
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
-    <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -180,8 +168,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <!-- InputMask -->
     <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
-        <script src="../public/javascript/moment-with-locales.js"></script>
-
+    <script src="../public/javascript/moment-with-locales.js"></script>
     <!-- date-range-picker -->
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
@@ -201,7 +188,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->

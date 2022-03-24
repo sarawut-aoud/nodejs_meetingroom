@@ -16,14 +16,14 @@ if ($_SESSION['mt_lv_id'] == 4) {
 <link rel="icon" href="../public/images/index.png" type="image/x-icon" />
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="../../views/plugins/fontawesome-pro6/css/all.min.css">
+<link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
 
 <!-- bt5 -->
 <link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css" />
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
@@ -60,7 +60,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link ">หน้าหลัก</a>
+                    <a href="_index.php" class="nav-link ">หน้าหลัก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link  active">รายการจองทั้งหมด</a>
@@ -122,7 +122,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="row mt-3 justify-content-center">
@@ -150,10 +149,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         <!-- ./col -->
                     </div>
                     <!-- ./row form -->
-
-
                     <?php require_once './modal_reserveAll.php'; ?>
-
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -161,14 +157,12 @@ if ($_SESSION['mt_lv_id'] == 4) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
-
     <?php require_once '../footer.php'; ?>
-
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
     <!-- Font Awesome 6 -->
-    <script src="../../views/plugins/fontawesome-pro6/js/all.min.js"></script>
+    <script src="../plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -180,7 +174,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <!-- InputMask -->
     <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
-        <script src="../public/javascript/moment-with-locales.js"></script>
+    <script src="../public/javascript/moment-with-locales.js"></script>
 
     <!-- date-range-picker -->
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>

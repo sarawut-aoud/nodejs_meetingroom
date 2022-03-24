@@ -23,7 +23,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
@@ -52,7 +52,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link">หน้าแรก</a>
+                    <a href="_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link active">จองห้องประชุม</a>
@@ -301,7 +301,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
     <!-- InputMask -->
     <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
-        <script src="../public/javascript/moment-with-locales.js"></script>
+    <script src="../public/javascript/moment-with-locales.js"></script>
 
     <!-- date-range-picker -->
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
@@ -336,9 +336,6 @@ if ($_SESSION['mt_lv_id'] == 1) {
             });
         });
     </script>
-
-
-
     <script>
         $(document).ready(function() {
 
@@ -405,6 +402,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                 .then((result) => {
                                     $('#frm_Addroom')[0].reset();
                                     $("#title")[0].focus();
+                                    location.href = 'room_reserve.php';
                                 })
 
                         } else {

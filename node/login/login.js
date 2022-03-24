@@ -12,8 +12,7 @@ router.get("/", async (req, res) => {
 //todo : login
 router.post("/login", async (req, res) => {
   const q = req.body;
-  console.log(q.inputUsername + "  " + q.inputPassword);
-
+  // console.log(q.inputUsername + "  " + q.inputPassword);
   const sql =
     "SELECT  " +
     " u.id , u.username ,u.person_id,u.prefix , u.firstname ,u.lastname ," +

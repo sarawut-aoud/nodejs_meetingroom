@@ -23,7 +23,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 <!-- daterange picker -->
 <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
-    <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- iCheck -->
@@ -301,7 +301,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <!-- InputMask -->
     <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
-        <script src="../public/javascript/moment-with-locales.js"></script>
+    <script src="../public/javascript/moment-with-locales.js"></script>
 
     <!-- date-range-picker -->
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
@@ -459,6 +459,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 .then((result) => {
                                     $('#frm_Addroom')[0].reset();
                                     $("#title")[0].focus();
+                                    location.href = 'room_reserve.php'
                                 })
 
                         } else {
@@ -472,31 +473,33 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 icon: 'warning',
                                 title: result.message
 
-                            })
-                            $('#frm_Addroom')[0].reset();
-                            $("#title")[0].focus();
-
-                        }
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-                        Toast.fire({
-                                icon: 'warning',
-                                title: 'ไม่สามารถบันทึกข้อมูลได้'
-
-                            })
-                            .then((result) => {
+                            }).then((result) => {
                                 $('#frm_Addroom')[0].reset();
                                 $("#title")[0].focus();
+
                             })
 
+                        }
                     }
+                    // },
+                    // error: function(result) {
+                    //     const Toast = Swal.mixin({
+                    //         toast: true,
+                    //         position: 'top-end',
+                    //         showConfirmButton: false,
+                    //         timer: 1500,
+                    //     })
+                    //     Toast.fire({
+                    //             icon: 'warning',
+                    //             title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                    //         })
+                    //         .then((result) => {
+                    //             $('#frm_Addroom')[0].reset();
+                    //             $("#title")[0].focus();
+                    //         })
+
+                    // }
                 });
 
             });

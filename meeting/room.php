@@ -10,28 +10,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <div class="collapse navbar-collapse order-3" id="navbarCollapse"> -->
-    <link rel="icon" href="./public/images/index.png" type="image/x-icon" />
+    <link rel="icon" href="public/images/index.png" type="image/x-icon" />
     <title>Moph : MeetingRoom</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="./plugins/fontawesome-pro6/css/all.css" />
+    <link rel="stylesheet" href="plugins/fontawesome-pro6/css/all.css" />
     <!-- bt5 -->
-    <link rel="stylesheet" href="./plugins/bootstrap5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="plugins/bootstrap5/css/bootstrap.min.css" />
     <!-- daterange picker -->
-    <link rel="stylesheet" href="./plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="./public/styles/ionicons.min.css">
+    <link rel="stylesheet" href="public/styles/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="./plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="./plugins/icheck-bootstrap/icheck-bootstrap.css">
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.css">
     <!-- Select2 -->
-    <link rel="stylesheet" href="./plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="./plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- Toastr -->
-    <link rel="stylesheet" href="./plugins/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="plugins/sweetalert2/sweetalert2.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="./public/styles/adminlte.min.css">
-    <link rel="stylesheet" href="./public/styles/styleindex.css">
+    <link rel="stylesheet" href="public/styles/adminlte.min.css">
+    <link rel="stylesheet" href="public/styles/styleindex.css">
 
 </head>
 
@@ -41,11 +41,11 @@
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white shadow">
             <div class="container-fluid ">
-                <a href="./index.php" class="navbar-brand">
-                    <img src="./public/images/logo.png" alt="Logo" class="brand-image " style="opacity: .8">
+                <a href="index.php" class="navbar-brand">
+                    <img src="public/images/logo.png" alt="Logo" class="brand-image " style="opacity: .8">
                     <span class="brand-text font-weight-light">ระบบจองห้องประชุม</span>
                 </a>
-                <a href="./room.html" class="navbar-brand ml-5">
+                <a href="room.php" class="navbar-brand ml-5">
                     <span class="brand-text font-weight-light">ห้องประชุม</span>
                 </a>
 
@@ -53,7 +53,7 @@
                 <!-- Right navbar links -->
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <!-- <a class="btn btn-success  mr-3">หน้าหลัก</a> -->
-                    <a href="./_login.html" class="btn btn-success mr-3">เข้าสู่ระบบ</a>
+                    <a href="_login.html" class="btn btn-success mr-3">เข้าสู่ระบบ</a>
                 </ul>
             </div>
         </nav>
@@ -118,34 +118,34 @@
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <script src="./plugins/jquery/jquery.min.js"></script>
-    <script src="./plugins/bootstrap5/js/bootstrap.min.js"></script>
-    <script src="./plugins/fontawesome-pro6/js/all.js"></script>
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/bootstrap5/js/bootstrap.min.js"></script>
+    <script src="plugins/fontawesome-pro6/js/all.js"></script>
     <!-- Select2 -->
-    <script src="./plugins/select2/js/select2.full.min.js"></script>
+    <script src="plugins/select2/js/select2.full.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="./plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
     <!-- InputMask -->
-    <script src="./plugins/moment/moment.min.js"></script>
-    <script src="./plugins/inputmask/inputmask.min.js"></script>
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/inputmask/inputmask.min.js"></script>
         <script src="./public/javascript/moment-with-locales.js"></script>
 
     <!-- date-range-picker -->
-    <script src="./plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
-    <script src="./plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Summernote -->
-    <script src="./plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="plugins/summernote/summernote-bs4.min.js"></script>
     <!-- Sweetalert2 -->
-    <script src="./plugins/fontawesome-pro6/js/all.min.js"></script>
+    <script src="plugins/fontawesome-pro6/js/all.min.js"></script>
 
     <!-- AdminLTE App -->
-    <script src="./public/javascript/adminlte.js"></script>
+    <script src="public/javascript/adminlte.js"></script>
 
 
     <script>
