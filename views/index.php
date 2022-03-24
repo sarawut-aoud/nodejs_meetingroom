@@ -20,7 +20,7 @@
     <!-- daterange picker -->
     <link rel="stylesheet" href="./plugins/daterangepicker/daterangepicker.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="./public/styles/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="./plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
@@ -219,7 +219,7 @@
             <div class="float-right d-none d-sm-block">
                 <b> </b>
             </div>
-            <strong>Copyright &copy; 2022 ศูนย์คอมพิวเตอร์ โรงพยาบาลเพชรบูรณ์ สงวนลิขสิทธิ์ <?php echo $path ?> </strong>
+            <strong>Copyright &copy; 2022 ศูนย์คอมพิวเตอร์ โรงพยาบาลเพชรบูรณ์ สงวนลิขสิทธิ์ </strong>
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -240,7 +240,8 @@
     <!-- InputMask -->
     <script src="./plugins/moment/moment.min.js"></script>
     <script src="./plugins/inputmask/inputmask.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script src="./public/javascript/moment-with-locales.js"></script>
+
     <!-- date-range-picker -->
     <script src="./plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
