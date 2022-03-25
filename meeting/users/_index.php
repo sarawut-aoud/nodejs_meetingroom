@@ -452,7 +452,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     var today = ''
                     for (i in results) {
                         console.log(today2)
-                        if (results[i].ev_startdate == today2) {
+                        if (results[i].ev_startdate == today2 || results[i].ev_enddate == today2) {
 
                             today +=
                                 "<div class='rounded border  mt-2  '  style =\"background-color : " +
