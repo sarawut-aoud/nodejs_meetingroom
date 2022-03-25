@@ -1,10 +1,22 @@
 const express = require("express");
+const crypto = require('');
 // const fn = require('../function/function');
 const key = require("../function/key");
 const con = require("../config/config");
 
 const app = express();
 const router = express.Router();
+
+const dbname = require('../function/database');
+const password = crypto.createHash('md5').update(q.inputPassword).digest('hex');
+const ho = dbname.ho+".";
+const pbh = dbname.pbh+".";
+
+// const sql = "SELECT o.person_username, o.person_firstname ,o.person_lastname   "
+//                 +"FROM "+pbh+"hr_personal AS o  " 
+//                 +"WHERE o.person_username = ? "
+//                 +"AND o.person_password = ? ";
+
 
 router.get("/", async (req, res) => {
   res.send({ status: "1", message: "ยินดีต้อนรับเข้าสู่ระบบ" });
@@ -26,7 +38,7 @@ router.post("/login", async (req, res) => {
     "WHERE u.username = ? AND u.password = ?;";
   // "SELECT * " +
   // "SELECT ps.person_username, " +
-  // //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
+   //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
   // "ps.person_id," +
   // "ps.person_firstname, " +
   // "ps.person_lastname, " +

@@ -71,7 +71,8 @@ router.get("/", async (req, res) => {
 router.get("/today", async (req, res) => {
   con.query(
     "SELECT ev.ev_title,  ev.ev_starttime,ev.ev_endtime , ro.ro_color, " +
-      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate " +
+      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
+      "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate " +
       "FROM tbl_event as ev " +
       "INNER JOIN tbl_rooms AS ro ON (ev.ro_id =ro.ro_id)   " +
       "WHERE ev.ev_status = '3' " +

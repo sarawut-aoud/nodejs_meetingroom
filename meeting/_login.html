@@ -70,6 +70,7 @@
 	<script type="text/javascript">
 		$(function () {
 			
+			var paths = 'https://pbhapi.moph.go.th:4300';
 			var path = 'https://pbhapi.moph.go.th:4200';
 			//var path = 'http://127.0.0.1:4200';
 
@@ -78,7 +79,7 @@
 
 				$.ajax({
 					type: "POST",
-					url: path + "/login/login",
+					url: paths + "/login/login",
 					data: $("#frmLogin").serialize(),
 					dataType: "json",
 					beforeSend: function () {
