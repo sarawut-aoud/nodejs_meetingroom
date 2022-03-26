@@ -1,5 +1,5 @@
 <?php
-unset($_SESSION['mt_path']);
+error_reporting(~E_NOTICE);
 session_start();
 //! สร้าง session ใหม่
 // $_SESSION['erp_user'] = $_POST['user'];

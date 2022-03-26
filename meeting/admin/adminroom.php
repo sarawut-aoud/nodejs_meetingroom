@@ -233,6 +233,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             </div>
                                         </div>
                                         <!--? Style /  ผู้เข้าร่วม-->
+
                                         <!--? Tool -->
                                         <div class="form-group row ">
                                             <div class="input-group">
@@ -240,11 +241,38 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
                                                 <div id="tool"></div>
 
-
-
                                             </div>
                                         </div>
                                         <!--? Tool -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">อื่น ๆ : </label>
+                                                <div class="d-flex col-form-label ">
+                                                    <div class="form-group clearfix mr-3">
+                                                        <div class="icheck-success d-inline">
+                                                            <input type="radio" id="radioPrimary1" name="r1" checked>
+                                                            <label for="radioPrimary1">ไม่ต้องการ</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group clearfix">
+                                                        <div class="icheck-success d-inline">
+                                                            <input type="radio" id="radioPrimary2" name="r1">
+                                                            <label for="radioPrimary2">ต้องการ</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-3 col-md">
+                                                    <input type="text" class="form-control " id="tool_request" name="" disabled />
+                                                    <div class="ml-3 col-md">
+                                                        <span style="font-size: 14px;">( ZOOM ,Google Meetroom , Microsoft Team ,อื่นๆ )</span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer ">
@@ -341,6 +369,13 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
+            $('#radioPrimary2').change(function() {
+                $("#tool_request").prop('disabled', false);
+                $('#radioPrimary1').change(function() {
+                    $("#tool_request").prop('disabled', true);
+                })
+            })
 
             $.ajax({
                 type: "get",

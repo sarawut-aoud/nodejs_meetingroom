@@ -69,17 +69,17 @@
 	<script src="plugins/bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		$(function () {
-			
+
 			var paths = 'https://pbhapi.moph.go.th:4300';
-			var path = 'https://pbhapi.moph.go.th:4200';
-			//var path = 'http://127.0.0.1:4200';
+			// var path = 'https://pbhapi.moph.go.th:4200';
+			var path = 'http://127.0.0.1:4200';
 
 			$("#btnLogin").click(function (e) {
 				e.preventDefault();
 
 				$.ajax({
 					type: "POST",
-					url: paths + "/login/login",
+					url: path + "/login/login",
 					data: $("#frmLogin").serialize(),
 					dataType: "json",
 					beforeSend: function () {
@@ -230,7 +230,7 @@
 
 						} else {
 							$("#loginAlert").show(0).html(
-									"<div align='center' class='alert alert-danger'>"+ result.message+"</div>"
+									"<div align='center' class='alert alert-danger'>" + result.message + "</div>"
 								)
 								.delay(2500).fadeOut('fast');
 						}

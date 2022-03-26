@@ -6,13 +6,62 @@ const bodyParser = require("body-parser");
 
 const cors = require("cors");
 const con = require("../config/config");
+const { error } = require("console");
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const sql = express.Router();
+// select tool with deprt
+sql.get("/tools_request", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  var de_id = query01.de_id;
+  var datetoday = query01.date;
 
+  if (!de_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "ไม่มีข้อมูลแผนก" });
+  } else {
+    var date2 = Date.parse(datetoday) + 3600 * 1000 * 24 * 7;
+    const date_2 = new Date(date2);
+    var date_after = date_2
+      .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+      .slice(0, 10);
+    con.query(
+      "SELECT ev.ev_id , ev.ev_title , ev.ev_status, " +
+        "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
+        "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
+        "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
+        "ev.ev_starttime , ev.ev_endtime ,ev.ev_people, " +
+        "st_name , ro_name  " +
+        "FROM tbl_acces AS ace "+
+        "INNER JOIN tbl_event AS ev " +
+        "ON (ace.ev_id =ev.ev_id) "+
+        "INNER JOIN tbl_tools AS tool " +
+        "ON (ace.to_id = tool.to_id) "+
+        "INNER JOIN tbl_department AS dept " +
+        "ON (tool.de_id = dept.de_id) " +
+        "INNER JOIN tbl_style AS st " +
+        "ON (ev.st_id = st.st_id ) " +
+        "INNER JOIN tbl_rooms AS ro " +
+        "ON (ev.ro_id = ro.ro_id ) " +
+        "INNER JOIN tbl_user AS user " +
+        "ON (ev.id = user.id )" +
+        "WHERE dept.de_id = ? " +
+        "AND (ev.ev_status = '1' OR ev.ev_status = '3') AND " +
+        "ev.ev_startdate BETWEEN  ?  AND ?" +
+        "GROUP BY  ev.event_id ORDER BY ev.event_id ASC ",
+      [de_id, datetoday, date_after],
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  }
+});
 // //?  SELECT Data
 sql.get("/", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;

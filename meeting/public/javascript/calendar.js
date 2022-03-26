@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var calendar = new FullCalendar.Calendar(calendarEl, {
     themeSystem: "bootstrap",
     dayHeaderClassNames: "#C5FFA8",
-     expandRows: true,
+    expandRows: true,
     slotMinTime: "08:00",
     slotMaxTime: "21:00",
 
@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
     events: {
       // เรียกใช้งาน event จาก json ไฟล์ ที่สร้างด้วย php
       // url: "../event01.php?gData=1",
-      url: "https://pbhapi.moph.go.th:4200/event/list",
-    //url:"http://127.0.0.1:4200/event/list",
+      //url: "https://pbhapi.moph.go.th:4200/event/list",
+      url: "http://127.0.0.1:4200/event/list",
       error: function () {},
     },
   });

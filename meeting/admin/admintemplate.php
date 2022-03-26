@@ -181,7 +181,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>เพิ่มแผนก</h1>
+                                        <h1>เพิ่มอุปกรณ์</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
@@ -190,9 +190,9 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         <!--//? /.Tool Name -->
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-3 col-form-label">ชื่อแผนก :</label>
+                                                <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="de_name2" name="de_name2" />
+                                                    <input type="text" class="form-control " id="to_name" name="to_name" />
                                                 </div>
                                             </div>
                                         </div>
@@ -200,10 +200,31 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         <!-- //? Input People -->
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-3 col-form-label">เบอร์โทรติดต่อสายตรง :</label>
+                                                <label class="col-md-3 col-form-label">duty :</label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="de_phone2" name="de_phone2" />
-
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="">
+                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">ward :</label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="">
+                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="de_id">
+                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -213,7 +234,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnDept">ยืนยันเพิ่มแผนก</button>
+                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnTools" name="btnTools">ยืนยันเพิ่มอุปกรณ์</button>
                                         </div>
                                     </div>
                                 </form>
@@ -259,54 +280,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                             </div>
                             <!-- /.card -->
                         </div>
-                        <!-- //? Form Tools -->
-                        <div class="col-xl-6 col-md-12 col-sm-12">
-                            <!-- general form elements -->
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h1>เพิ่มอุปกรณ์</h1>
-                                    </div>
-                                </div>
-                                <!-- form start -->
-                                <form method="POST" action="" id="frmTools">
-                                    <div class="card-body ">
-                                        <!--//? /.Tool Name -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control " id="to_name" name="to_name" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--//? /.Tool Name -->
-                                        <!-- //? Input People -->
-                                        <div class="form-group row">
-                                            <div class="input-group">
-                                                <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="de_id">
-                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- //? Input People -->
-                                    </div>
-                                    <!-- /.card-body -->
-                                    <div class="card-footer ">
-                                        <div class="row justify-content-between ">
-                                            <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnTools" name="btnTools">ยืนยันเพิ่มอุปกรณ์</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- ./col -->
-                        <!-- //? Form Tools -->
+
                     </div>
                     <!-- ./col -->
                     <!--  //? ./From Department -->

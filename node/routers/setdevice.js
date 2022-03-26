@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
 
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,10 +35,20 @@ router.get("/detail", async (req, res) => {
 });
 //?  SELECT Request Tool
 router.get("/requesttool", async (req, res) => {
-  // let id = req.body.ev_id;
-  // console.log(id)
+  var query01 = require("url").parse(req.url, true).query;
+  let de_id = query01.de_id;
+  let ev_id = query01.ev_id;
   con.query(
-    " SELECT * FROM tbl_tools AS tools INNER JOIN tbl_acces AS acc ON (acc.to_id=tools.to_id) ",
+    " SELECT tools.to_name " +
+      "FROM tbl_tools AS tools " +
+      "INNER JOIN tbl_acces AS acc " +
+      "ON (acc.to_id=tools.to_id) " +
+      "INNER JOIN tbl_event AS ev "+
+      "ON (acc.ev_id = ev.ev_id ) "+
+      "INNER JOIN tbl_department AS dept " +
+      "ON (tools.de_id = dept.de_id) " +
+      "WHERE ev.ev_id = ? AND dept.de_id = ?",
+    [ev_id,de_id],
     (error, results, fields) => {
       if (error) throw error;
 
@@ -52,6 +61,7 @@ router.get("/", async (req, res, next) => {
   var query01 = require("url").parse(req.url, true).query;
   let id = query01.id;
   let de_id = query01.de_id;
+
   const arr = [];
   if (!id) {
     return res
