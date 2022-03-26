@@ -24,6 +24,7 @@ router.get("/", async (req, res) => {
 router.post("/login", async (req, res) => {
   const q = req.body;
   // console.log(q.inputUsername + "  " + q.inputPassword);
+ const password = crypto.createHash("md5").update(q.inputPassword).digest("hex");
 
   const sql =
     "SELECT  " +
@@ -36,7 +37,6 @@ router.post("/login", async (req, res) => {
     "INNER JOIN tbl_department AS de " +
     "ON (u.de_id = de.de_id ) " +
     "WHERE u.username = ? AND u.password = ?;";
-  // "SELECT * " +
   // "SELECT ps.person_username, " +
   //  +"AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, "
   // "ps.person_id," +
