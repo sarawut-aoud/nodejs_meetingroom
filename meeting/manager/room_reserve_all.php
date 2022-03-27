@@ -275,29 +275,39 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 }
 
             });
-
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/user",
-                data: {
-                    id: '<?php echo $_SESSION['mt_id']; ?>',
-                },
-                success: function(results) {
-                    for (i in results) {
-                        var prefix = results[i].prefix;
-                        var fname = results[i].firstname;
-                        var lname = results[i].lastname;
-                        var pos = results[i].position;
-                        var dename = results[i].de_name;
-                        var level = results[i].level;
-                    }
-                    $('#name').val(fname + ' ' + lname);
-                    $('#prefix').val(prefix);
-                    $('#de_name').val(dename);
-                    $('#position').val(pos + "/" + level);
-                }
-            })
+            // แสดงข้อมูลส่วนตัว
+            var prefix = '';
+            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
+                prefix = 'นาย';
+            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
+                prefix = 'นาง';
+            }
+            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
+            $('#prefix').val(prefix);
+            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['position']; ?>");
+            // $.ajax({
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     url: path + "/user",
+            //     data: {
+            //         id: '<?php echo $_SESSION['mt_id']; ?>',
+            //     },
+            //     success: function(results) {
+            //         for (i in results) {
+            //             var prefix = results[i].prefix;
+            //             var fname = results[i].firstname;
+            //             var lname = results[i].lastname;
+            //             var pos = results[i].position;
+            //             var dename = results[i].de_name;
+            //             var level = results[i].level;
+            //         }
+            //         $('#name').val(fname + ' ' + lname);
+            //         $('#prefix').val(prefix);
+            //         $('#de_name').val(dename);
+            //         $('#position').val(pos + "/" + level);
+            //     }
+            // })
 
             //todo: table room
             $.ajax({

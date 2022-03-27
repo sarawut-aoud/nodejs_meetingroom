@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 2) {
+if ($_SESSION['mt_lv_id'] == '') {
 } else {
 
     echo "<script>
@@ -31,7 +31,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<!-- Sweetalert2 -->
+<!-- sweetalert2 -->
+<link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- fullCalendar Style -->
 <link rel="stylesheet" href="../public/styles/calendar.css">
@@ -51,7 +52,10 @@ if ($_SESSION['mt_lv_id'] == 2) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">หน้าแรก</a>
+                    <a href="_index.php" class="nav-link">หน้าแรก</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="nav-link active">จองห้องประชุม</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -66,7 +70,9 @@ if ($_SESSION['mt_lv_id'] == 2) {
         </nav>
         <!-- /.navbar -->
 
-        <?php require_once '../sidebar.php';  ?>
+        <!-- Sidebar -->
+        <?php require_once '../sidebar.php'; ?>
+        <!-- Sidebar -->
 
 
         <!-- Content Wrapper. Contains page content -->
@@ -74,38 +80,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <div class="row mt-3 mb-4 ">
-                        <center>
-                            <div class="col-xl-6 col-md-12 ">
-                                <h1>ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h1>
-                            </div>
-                        </center>
-                    </div>
-                    <div class="row mb-4 justify-content-center">
-                        <center>
-                            <div class="col-xl-2 col-md-12 ">
-                                <a href="users_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
-                            </div>
-                        </center>
-
-                    </div>
-                    <div class="row justify-content-center">
+                    <div class="row ">
                         <div class="col-xl-6 col-md-12 ">
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4> <i class="fa-regular fa-calendar-days"></i> การประชุมประจำวัน</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body mb-0">
-                                    <div id="showDate"></div>
-                                    <div id="today" class="mt-2"></div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-xl-4 col-md-12 ">
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
@@ -117,11 +93,11 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="" readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="" readonly />
+                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
                                             </div>
 
                                         </div>
@@ -131,36 +107,19 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value=" " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value=" " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo   $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                    <div class="row mt-3 justify-content-center">
                         <div class="col-xl-6 col-md-12 ">
-                            <div class="card">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4> <i class="fa-regular fa-calendars"></i>ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body p-0">
-                                    <!-- THE CALENDAR -->
-                                    <div id="calendar"></div>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-xl-4 col-md-12 ">
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
@@ -172,8 +131,179 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-xl-6 col-md-12 col-sm-12">
+                            <!-- general form elements -->
+                            <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class=" fa-regular fa-calendar-check"></i> เลือกห้องประชุม เพื่อทำการจอง</h4>
+                                    </div>
+                                </div>
+                                <!-- form start -->
+                                <form method="POST" action="" id="frm_Addroom">
+                                    <div class="card-body">
+                                        <!--? Title Name -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">หัวข้อเรื่องประชุม :</label>
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control " id="title" name="title" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /.Title Name -->
+                                        <!--? Input Time -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">เวลา :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="timeStart" name="timeStart" />
+                                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-md-2 col-form-label">ถึงเวลา :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="timeEnd" name="timeEnd" />
+                                                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="far fa-clock"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /.Input Time -->
+                                        <!--? InputDate -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">วันที่ :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="dateStart" name="dateStart" />
+                                                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
+                                                <div class="col-md-4">
+                                                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="dateEnd" name="dateEnd" />
+                                                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /.InputDate -->
+                                        <!--? Room  -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">ห้องประชุม : </label>
+                                                <div class="col-md-10">
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="ro_name" name="ro_name" />
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? /. Room  -->
+                                        <!--? Style /  ผู้เข้าร่วม-->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
+                                                <div class="col-md">
+                                                    <input type="number" class="form-control " id="people" name="people" />
+                                                </div>
+                                                <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
+                                                <div class="col-md">
+                                                    <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="style" name="style" />
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--? Style /  ผู้เข้าร่วม-->
+
+                                        <!--? Tool -->
+                                        <div class="form-group row ">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">อุปกรณ์ :</label>
+
+                                                <div id="tool"></div>
+
+                                            </div>
+                                        </div>
+                                        <!--? Tool -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">อื่น ๆ : </label>
+                                                <div class="d-flex col-form-label ">
+                                                    <div class="form-group clearfix mr-3">
+                                                        <div class="icheck-success d-inline">
+                                                            <input type="radio" id="radioPrimary1" name="r1" checked>
+                                                            <label for="radioPrimary1">ไม่ต้องการ</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group clearfix">
+                                                        <div class="icheck-success d-inline">
+                                                            <input type="radio" id="radioPrimary2" name="r1">
+                                                            <label for="radioPrimary2">ต้องการ</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-3 col-md">
+                                                    <input type="text" class="form-control " id="tool_request" name="" disabled />
+                                                    <div class="ml-3 col-md">
+                                                        <span style="font-size: 14px;">( ZOOM ,Google Meetroom , Microsoft Team ,อื่นๆ )</span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer ">
+                                        <div class="row justify-content-between ">
+                                            <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
+                                            <button type="submit" id="btnAproveRoom" name="btnAproveRoom" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level" />
+                                </form>
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-xl-6 col-md-12 ">
+                            <div class="card ">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <!-- THE CALENDAR -->
+                                    <div id="calendar"></div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
                     </div>
                     <?php require_once '../modalcalendar.php'; ?>
                 </div><!-- /.container-fluid -->
@@ -200,53 +330,20 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <script src="../plugins/moment/moment.min.js"></script>
     <script src="../plugins/inputmask/inputmask.min.js"></script>
     <script src="../public/javascript/moment-with-locales.js"></script>
+
     <!-- date-range-picker -->
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- Sweetalert2 -->
+    <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
-
-    <script>
-        $(document).ready(function() {
-            cache_clear();
-
-            setInterval(function() {
-                cache_clear()
-            }, 5000);
-        });
-
-
-        function cache_clear() {
-
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-
-            $.ajax({
-                type: "get",
-                url: path + "/event/count/user",
-                data: {
-                    id: id,
-                    de_id: de_id,
-                },
-                success: function(result) {
-                    if (result.ev_status > 0) {
-                        $("#uun1").html(
-                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
-                        );
-                    }
-                },
-            });
-            // window.location.reload(); use this if you do not remove cache
-        }
-    </script>
-
     <script>
         $(function() {
 
@@ -266,10 +363,196 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 format: 'L'
             });
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
+            $('#radioPrimary2').change(function() {
+                $("#tool_request").prop('disabled', false);
+                $('#radioPrimary1').change(function() {
+                    $("#tool_request").prop('disabled', true);
+                })
+            })
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+
+            $(document).on('click', '#btnAproveRoom', function(e) {
+                // $('#btnAproveRoom').click(function(e) {
+                e.preventDefault();
+                var ev_title = $('#title').val();
+                var ev_starttime = $('#timeStart').val();
+                var ev_endtime = $('#timeEnd').val();
+                var ev_startdate = $('#dateStart').val();
+                var ev_enddate = $('#dateEnd').val();
+                var ro_id = $('#ro_name').val();
+                var ev_people = $('#people').val();
+                var st_id = $('#style').val();
+                var sumnum = $('#sumnum').val();
+                var id = <?php echo $_SESSION['mt_id']; ?>;
+                var level = <?php echo $_SESSION['mt_lv_id']; ?>;
+
+                var formdata = $('#frm_Addroom').serializeArray();
+
+                $.ajax({
+                    type: "POST",
+                    url: path + "/event_post/adddata",
+                    dataType: "json",
+                    data: formdata,
+
+                    success: function(result) {
+                        if (result.status != 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                            Toast.fire({
+                                    icon: 'success',
+                                    title: result.message
+
+                                })
+                                .then((result) => {
+                                    $('#frm_Addroom')[0].reset();
+                                    $("#title")[0].focus();
+                                    location.href = 'room_reserve.php';
+                                })
+
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+
+                            })
+                            $('#frm_Addroom')[0].reset();
+                            $("#title")[0].focus();
+
+                        }
+
+                    },
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                        Toast.fire({
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                            })
+                            .then((result) => {
+                                $('#frm_Addroom')[0].reset();
+                                $("#title")[0].focus();
+                            })
+
+                    }
+
+                });
+
+                function clear_tools(msg) {
+                    $("#frmTools")[0].reset();
+                    $("#to_name")[0].focus();
+                }
+
+            });
+
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+                    }
+                    $('#ro_name').html(data);
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/rooms",
+                success: function(result) {
+                    var data = data = '<div class="form-group row">' +
+                        '<div class="input-group">';
+                    for (i in result) {
+                        data += '<label class="col-md-3 col-form-label">' + result[i].ro_name + '  :</label> <div class="col-md-3 ">'
+                        data += "<div class='rounded h-75 w-100'  style =\"background-color : " + result[i].ro_color + "\"></div>";
+                        data += '</div>';
+                    }
+                    $('#showcolor').html(data);
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: path + "/style",
+                success: function(result) {
+                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
+                    for (i in result) {
+                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
+                    }
+                    $('#style').html(data);
+                }
+            });
+
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group">';
+                    var x = 0;
+                    for (i in result) {
+                        x++
+                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                    }
+                    data += '</div>';
+                    $('#tool').html(data);
+
+                }
+            });
+
+
+
+        });
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var path = "<?php echo $_SESSION['mt_path']; ?>";
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
@@ -314,164 +597,6 @@ if ($_SESSION['mt_lv_id'] == 2) {
             });
         }
     </script>
-    <script>
-        $(document).ready(function() {
-            var path = '<?php echo $_SESSION['mt_path'] ?>',
-                id = '<?php echo $_SESSION['mt_id']; ?>'
-
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/user",
-                data: {
-                    id: id,
-                },
-                success: function(results) {
-                    for (i in results) {
-                        var prefix = results[i].prefix;
-                        var fname = results[i].firstname;
-                        var lname = results[i].lastname;
-                        var pos = results[i].position;
-                        var dename = results[i].de_name;
-                        var level = results[i].level;
-                    }
-                    $('#name').val(fname + ' ' + lname);
-                    $('#prefix').val(prefix);
-                    $('#de_name').val(dename);
-                    $('#position').val(pos + "/" + level);
-                }
-            })
-            // room
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/rooms",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + '</option>';
-                    }
-                    $('#ro_name').html(data);
-
-                    $("#ro_name").change(function() {
-                        $('#people').prop('disabled', false);
-                        var ro_id = $(this).val();
-                        $.ajax({
-                            type: "GET",
-                            dataType: "json",
-                            url: path + "/rooms",
-                            data: {
-                                ro_id: ro_id,
-                            },
-                            success: function(result) {
-                                var row = '';
-                                for (ii in result) {
-                                    if (result[ii].ro_id == ro_id) {
-                                        var people = result[ii].ro_people;
-                                        var detail = result[ii].ro_detail;
-                                        for (x = 1; x <= people; x++) {
-                                            row += '<option value="' + x + '" > ' + x + '</option>';
-                                        }
-                                    }
-                                }
-                                $('#ro_people').val(people);
-                                $('#ro_detail').val(detail);
-                                $('#people').html(row);
-                            }
-                        });
-                    });
-                }
-            });
-
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/style",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
-                    }
-                    $('#style').html(data);
-                }
-            });
-
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/rooms",
-                success: function(result) {
-                    data = '';
-                    // var data = '<div class="form-group row">' +
-                    //     '<div class="input-group">'
-                    for (i in result) {
-                        data += '<div class="form-group row">' +
-                            '<div class="input-group">'
-                        data += '<label class="col-md col-form-label">' + result[i].ro_name + '  :</label> <div class="col-md ">'
-                        data += "<div class=' h-75 w-75 mt-2 rounded '  style =\"background-color : " + result[i].ro_color + "\"></div>";
-                        data += '</div>';
-                        data += '</div></div>';
-                    }
-
-                    $('#showcolor').html(data);
-                }
-            });
-
-            function toThaiDateString(date) {
-                let monthNames = [
-                    "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-                    "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม.",
-                    "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-                ];
-
-                let year = date.getFullYear() + 543;
-                let month = monthNames[date.getMonth()];
-                let numOfDay = date.getDate();
-
-                let hour = date.getHours().toString().padStart(2, "0");
-                let minutes = date.getMinutes().toString().padStart(2, "0");
-                let second = date.getSeconds().toString().padStart(2, "0");
-
-                return `${numOfDay} ${month} ${year} `; //+
-                // `${hour}:${minutes}:${second} น.`;
-            }
-            let date1 = new Date();
-            var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
-            $('#showDate').html(button);
-            var datetoday = new Date();
-            var today2 = datetoday.toISOString("EN-AU", {
-                    timeZone: "Australia/Melbourne"
-                })
-                .slice(0, 10);
-
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/event/today",
-                success: function(results) {
-                    var today = ''
-                    for (i in results) {
-                        console.log(today2)
-                        if (results[i].ev_startdate == today2 || results[i].ev_enddate == today2) {
-
-                            today +=
-                                "<div class='rounded border  mt-2  '  style =\"background-color : " +
-                                results[i].ro_color + "\"> " +
-                                "<div class='ml-5 '>" + results[i].ev_title + " เวลา " + results[i]
-                                .ev_starttime + " ถึง " + results[i].ev_endtime + "</div>" +
-                                "</div>";
-                        }
-                    }
-                    $("#today").html(today);
-
-                }
-            })
-
-
-
-        });
-    </script>
-
 </body>
 
 </html>

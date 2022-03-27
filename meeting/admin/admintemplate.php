@@ -100,7 +100,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>

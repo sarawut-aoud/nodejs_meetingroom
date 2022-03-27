@@ -5,15 +5,21 @@ session_start();
 
 unset($_SESSION['mt_id']);
 unset($_SESSION['mt_user']);
-unset($_SESSION['mt_person_id']);
+// unset($_SESSION['mt_person_id']);
 unset($_SESSION['mt_prefix']);
 unset($_SESSION['mt_name']);
-unset($_SESSION['mt_position']);
-unset($_SESSION['mt_phone']);
-unset($_SESSION['mt_de_id']);
+// unset($_SESSION['mt_position']);
+// unset($_SESSION['mt_phone']);
+// unset($_SESSION['mt_de_id']);
+// unset($_SESSION['mt_lv_id']);
+// unset($_SESSION['mt_lv_name']); 
 unset($_SESSION['mt_lv_id']);
-unset($_SESSION['mt_lv_name']);
-
+unset($_SESSION['mt_duty_id']);
+unset($_SESSION['mt_duty_name']);
+unset($_SESSION['mt_faction_id']);
+unset($_SESSION['mt_faction_name']);
+unset($_SESSION['mt_de_id']);
+unset($_SESSION['mt_de_name']);
 
 echo "<script>
 	window.setTimeout(function() {
@@ -52,10 +58,10 @@ echo "<script>
                 <div></div>
             </div>
             <div>
-                <img src="../public/images/load2.gif" style="width:400px" >
-            <h2>กำลังออกจากระบบ <span style="color: green;">Good bye!</span></h2>
+                <img src="../public/images/load2.gif" style="width:400px">
+                <h2>กำลังออกจากระบบ <span style="color: green;">Good bye!</span></h2>
             </div>
-          
+
             <!-- <h2 style="color: red;">กำลังออกจากระบบ</h2> -->
         </div>
     </div>

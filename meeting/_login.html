@@ -113,122 +113,139 @@
 							clearData(result.message);
 						} else {
 
-							var id = result.id,
-								user = result.username,
-								person_id = result.person_id,
-								prefix = result.prefix,
-								name = result.firstname + ' ' + result.lastname,
-								position = result.position,
-								phone = result.phone,
-								de_id = result.de_id,
-								lv_id = result.lv_id,
-								lv_name = result.lv_name,
-								de_name = result.de_name
+							var id = result.person_id,
+								user = result.person_username,
+								prefix = result.person_prefix,
+								name = result.person_firstname + ' ' + result.person_lastname;
+							// position = result.position,
+							// phone = result.phone,
+							// de_id = result.de_id,
+							// lv_id = result.lv_id,
+							// lv_name = result.lv_name,
+							// de_name = result.de_name
 
 							// login(id, user, person_id, prefix, name, position, phone, de_id,
 							// 	lv_id);
-							// $.ajax({
-							// 	type: "POST",
-							// 	url: path + "/login/level",
-							// 	data: {
-							// 		id: id
-							// 	},
-							// 	dataType: "json",
-							// 	success: function (result) {
-							// 		if (result.status == 0) {
-							// 			$("#btnLogin").html("เข้าสู่ระบบ");
-							// 			$("#btnLogin").removeAttr("disabled");
-							// 			$("#loginAlert").show(0).html(
-							// 					"<div align='center' class='alert alert-danger' >" +
-							// 					result.message + "</div>").delay(2500)
-							// 				.fadeOut('fast');
-							// 			$("#frmLogin")[0].reset();
-							// 			$("#inputUsername").focus();
+							$.ajax({
+								type: "POST",
+								url: path + "/login/level",
+								data: {
+									id: id
+								},
+								dataType: "json",
+								success: function (results) {
+									if (result.status == 0) {
+										$("#btnLogin").html("เข้าสู่ระบบ");
+										$("#btnLogin").removeAttr("disabled");
+										$("#loginAlert").show(0).html(
+												"<div align='center' class='alert alert-danger' >" +
+												result.message + "</div>").delay(2500)
+											.fadeOut('fast');
+										$("#frmLogin")[0].reset();
+										$("#inputUsername").focus();
 
-							// 		} else {
-							// 			console.log('1')
-							// 			if (result.length == 1) {
-							// 				login(id, user, person_id, prefix, name,
-							// 					position, phone, de_id, lv_id)
-							// 			}
-							// } else {
-							// 	var depart = '';
+									} else {
+										for (i in results) {
+											var de_id = results[i].depart_id,
+												de_name = results[i].depart_name,
+												duty_id = results[i].duty_id,
+												duty_name = results[i].duty_name,
+												faction_id = results[i].faction_id,
+												faction_name = results[i].faction_name,
+												ward_id = results[i].ward_id,
+												ward_name = results[i].ward_name,
+												lv_id = results[i].level_id
+										}
 
-							// 	$('.item_office').html('');
-							// 	$('.item_office').select2({
-							// 		width: '100%'
-							// 	});
+									
 
-							// 	for (key in result) {
-							// 		if (result[key].ward_id != 0) {
-							// 			depart = ' : ' + result[key]
-							// 				.ward_name;
-							// 		} else if (result[key].depart_id !=
-							// 			0 && result[key].ward_id == 0) {
-							// 			depart = ' : ' + result[key]
-							// 				.depart_name;
-							// 		} else if (result[key].faction_id !=
-							// 			0 && result[key].depart_id == 0 &&
-							// 			result[key].ward_id == 0) {
-							// 			depart = ' : ' + result[key]
-							// 				.faction_name;
-							// 		} else {
-							// 			depart = '';
-							// 		}
+									}
+									// else {
+									// 	var depart = '';
 
-							// 		$('.item_office').append(
-							// 			'<option value="' + result[
-							// 				key].level_id + ':' +
-							// 			result[key].duty_id + ':' +
-							// 			result[key].duty_name + ':' +
-							// 			result[key].faction_id + ':' +
-							// 			result[key].faction_name +
-							// 			':' + result[key].depart_id +
-							// 			':' + result[key]
-							// 			.depart_name + ':' + result[
-							// 				key].ward_id + ':' +
-							// 			result[key].ward_name + '">' +
-							// 			result[key].duty_name +
-							// 			depart + '</option>');
-							// 	}
-							// }
-							// 		}
-							// 	}
-							// });
+									// 	$('.item_office').html('');
+									// 	$('.item_office').select2({
+									// 		width: '100%'
+									// 	});
+
+									// 	for (key in result) {
+									// 		if (result[key].ward_id != 0) {
+									// 			depart = ' : ' + result[key]
+									// 				.ward_name;
+									// 		} else if (result[key].depart_id !=
+									// 			0 && result[key].ward_id == 0) {
+									// 			depart = ' : ' + result[key]
+									// 				.depart_name;
+									// 		} else if (result[key].faction_id !=
+									// 			0 && result[key].depart_id == 0 &&
+									// 			result[key].ward_id == 0) {
+									// 			depart = ' : ' + result[key]
+									// 				.faction_name;
+									// 		} else {
+									// 			depart = '';
+									// 		}
+
+									// 		$('.item_office').append(
+									// 			'<option value="' + result[
+									// 				key].level_id + ':' +
+									// 			result[key].duty_id + ':' +
+									// 			result[key].duty_name + ':' +
+									// 			result[key].faction_id + ':' +
+									// 			result[key].faction_name +
+									// 			':' + result[key].depart_id +
+									// 			':' + result[key]
+									// 			.depart_name + ':' + result[
+									// 				key].ward_id + ':' +
+									// 			result[key].ward_name + '">' +
+									// 			result[key].duty_name +
+									// 			depart + '</option>');
+									// 	}
+									// }
+									login(id, user, prefix, name, de_id, de_name,
+										duty_id, duty_name, faction_id,
+										faction_name,
+										ward_id, ward_name, lv_id)
+								}
+
+								// }
+							});
+
+
 						}
-						login(id, user, person_id, prefix, name, position, phone, de_id,
-							lv_id, lv_name, de_name);
+
+
 					}
 				});
 			});
 
-			function login(id, user, person_id, prefix, name, position, phone, de_id, lv_id, lv_name, de_name) {
+			function login(id, user, prefix, name, de_id, de_name, duty_id, duty_name, faction_id, faction_name,
+				ward_id, ward_name, lv_id) {
 				$.post(
 					'login/login.php', {
 
 						'id': id,
 						'user': user,
-						'person_id': person_id,
 						'prefix': prefix,
 						'name': name,
-						'position': position,
-						'phone': phone,
 						'de_id': de_id,
-						'lv_id': lv_id,
-						'lv_name': lv_name,
 						'de_name': de_name,
+						'duty_id': duty_id,
+						'duty_name': duty_name,
+						'faction_id': faction_id,
+						'faction_name': faction_name,
+						'ward_id': ward_id,
+						'ward_name': ward_name,
+						'lv_id': lv_id
 					},
 					function () {
 						if (lv_id == 1) {
 							location.href = 'admin/_index.php';
-						} else if (lv_id == 2) {
-							location.href = 'users/_index.php';
 						} else if (lv_id == 3) {
 							location.href = 'staff/_index.php';
 						} else if (lv_id == 4) {
 							location.href = 'manager/_index.php';
-
 						} else {
+							location.href = 'users/_index.php';
 							$("#loginAlert").show(0).html(
 									"<div align='center' class='alert alert-danger'>" + result.message + "</div>"
 								)

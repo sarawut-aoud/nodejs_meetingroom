@@ -59,19 +59,20 @@ router.post("/login", async (req, res) => {
   req.lastname;
   var key = "password";
   con.query(
-    "SELECT ps.person_username, " +
+    "SELECT ps.person_username, ps.person_prefix," +
       "AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, " +
+      // "ps.person_id," +
       "ps.person_firstname, " +
       "ps.person_lastname, " +
       "ps.person_right, " +
       "ps.person_page, " +
       "ps.person_token " +
-      "po.position_id, " +
-      "po.position_name, " +
-      "s.sign_id, " +
-      "s.sign_pic, " +
-      "a.ac_id, " +
-      "a.ac_name " +
+      // "po.position_id, " +
+      // "po.position_name, " +
+      // "s.sign_id, " +
+      // "s.sign_pic, " +
+      // "a.ac_id, " +
+      // "a.ac_name " +
       "FROM " +
       pbh +
       "hr_personal AS ps  " +
@@ -83,7 +84,7 @@ router.post("/login", async (req, res) => {
       // "ON (ps.ac_id = a.ac_id) " +
       // "JOIN " +pbh +"hr_state_work AS sw " +
       // "ON (ps.person_state = sw.person_state) " +
-      "WHERE username = ? ",
+      "WHERE person_username = ? ",
     // "AND password = ? ";
     // "AND sw.sw_action = 'Y' " +
     // "ORDER BY s.sign_id DESC LIMIT 1 ";
@@ -91,36 +92,37 @@ router.post("/login", async (req, res) => {
     (error, results, fields) => {
       if (error) throw error;
       if (results.length > 0) {
-        (ac_id = results[0].ac_id),
-          (ac_name = results[0].ac_name),
-          (office_id = results[0].office_id),
-          (office_name = results[0].office_name),
-          (person_firstname = results[0].person_firstname),
-          (person_lastname = results[0].person_lastname),
-          (person_menu = results[0].person_menu),
-          (person_page = results[0].person_page),
-          (person_photo = results[0].person_photo),
-          (person_right = results[0].person_right),
-          (person_token = results[0].person_token),
-          (position_id = results[0].position_id),
-          (position_name = results[0].position_name),
-          (sign_id = results[0].sign_id);
+        
+        // (ac_id = results[0].ac_id),
+        //   (ac_name = results[0].ac_name),
+        //   (office_id = results[0].office_id),
+        //   (office_name = results[0].office_name),
+        return res.json({
+          person_username: results[0].person_username,
+          person_prefix: results[0].person_prefix,
+          person_firstname: results[0].person_firstname,
+          person_lastname: results[0].person_lastname,
+          person_id:  Buffer.from(results[0].person_id).toString(),
+          person_menu: results[0].person_menu,
+          person_page: results[0].person_page,
+          person_photo: results[0].person_photo,
+          person_right: results[0].person_right,
+          person_token: results[0].person_token,
+        });
+
+        // (position_id = results[0].position_id),
+        // (position_name = results[0].position_name),
+        // (sign_id = results[0].sign_id);
       }
     }
   );
 });
 
 router.post("/level", async (req, res) => {
-  const q = req.body;
-  console.log(q.id);
+  var q = req.body;
+ 
   const sql =
-    //   "SELECT  lv.lv_id , lv.level ," +
-    //   "user.username ,user.person_id,user.prefix , user.firstname , user.lastname ," +
-    //   "user.position , user.phone , user.de_id ,user.lv_id " +
-    //   "FROM tbl_user AS user " +
-    //   "LEFT JOIN tbl_level AS lv" +
-    //   "ON (user.lv_id = lv.lv_id)" +
-    //   "WHERE user.id = ?";
+
     "SELECT l.level_id, " +
     "IF (d.duty_lv IS NULL, 0, d.duty_lv) AS duty_id, " +
     "IF (d.duty_name IS NULL, '', d.duty_name) AS duty_name, " +
@@ -130,18 +132,30 @@ router.post("/level", async (req, res) => {
     "IF (p.depart_name IS NULL, '', p.depart_name) AS depart_name, " +
     "IF (w.ward_id IS NULL, 0, w.ward_id) AS ward_id, " +
     "IF (w.ward_name IS NULL, '', w.ward_name) AS ward_name " +
-    "FROM hr_level AS l " +
-    "LEFT JOIN hr_duty AS d " +
+    "FROM " +
+    pbh +
+    " hr_level AS l " +
+    "LEFT JOIN " +
+    pbh +
+    " hr_duty AS d " +
     "ON (l.duty_id = d.duty_id) " +
-    "LEFT JOIN hr_faction AS f " +
+    "LEFT JOIN " +
+    pbh +
+    " hr_faction AS f " +
     "ON (l.faction_id = f.faction_id) " +
-    "LEFT JOIN hr_depart AS p " +
+    "LEFT JOIN " +
+    pbh +
+    " hr_depart AS p " +
     "ON (l.depart_id = p.depart_id) " +
-    "LEFT JOIN hr_ward AS w " +
+    "LEFT JOIN " +
+    pbh +
+    " hr_ward AS w " +
     "ON (l.ward_id = w.ward_id) " +
-    "WHERE l.person_id =  ?"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
+    "WHERE l.person_id =  AES_ENCRYPT(?, UNHEX(SHA2('password', 512)))"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
   const params = [q.id];
+  
   con.query(sql, params, (err, rows) => {
+    
     if (err) {
       return res.json({
         status: "0",
@@ -149,7 +163,7 @@ router.post("/level", async (req, res) => {
       });
     } else {
       if (rows.length > 0) {
-        //console.log(rows);
+        // console.log(rows);
         return res.json(rows);
       } else {
         return res.json({

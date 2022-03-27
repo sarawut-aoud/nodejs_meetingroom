@@ -52,7 +52,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link">หน้าแรก</a>
+                    <a href="_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link active">จองห้องประชุม</a>
@@ -111,7 +111,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_lv_name'] . "/" . $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo   $_SESSION['mt_position']; ?> " readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -233,6 +233,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                             </div>
                                         </div>
                                         <!--? Style /  ผู้เข้าร่วม-->
+
                                         <!--? Tool -->
                                         <div class="form-group row ">
                                             <div class="input-group">
@@ -240,11 +241,38 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
                                                 <div id="tool"></div>
 
-
-
                                             </div>
                                         </div>
                                         <!--? Tool -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-2 col-form-label">อื่น ๆ : </label>
+                                                <div class="d-flex col-form-label ">
+                                                    <div class="form-group clearfix mr-3">
+                                                        <div class="icheck-success d-inline">
+                                                            <input type="radio" id="radioPrimary1" name="r1" checked>
+                                                            <label for="radioPrimary1">ไม่ต้องการ</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group clearfix">
+                                                        <div class="icheck-success d-inline">
+                                                            <input type="radio" id="radioPrimary2" name="r1">
+                                                            <label for="radioPrimary2">ต้องการ</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-3 col-md">
+                                                    <input type="text" class="form-control " id="tool_request" name="" disabled />
+                                                    <div class="ml-3 col-md">
+                                                        <span style="font-size: 14px;">( ZOOM ,Google Meetroom , Microsoft Team ,อื่นๆ )</span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer ">
@@ -316,63 +344,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
     <!-- fullCalendar 2.2.5 -->
     <script src="../public/javascript/maincalendar.js"></script>
     <script src='../public/javascript/calendar.js'></script>
-
-
-    <script>
-        $(document).ready(function() {
-            cache_clear();
-
-            setInterval(function() {
-                cache_clear()
-            }, 5000);
-        });
-
-
-        function cache_clear() {
-
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
-
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
-            $.ajax({
-                type: "get",
-                url: path + "/event/count/staff",
-                data: {
-                    id: id,
-                    de_id: de_id,
-                },
-                success: function(result) {
-                    if (result.ev_status > 0) {
-                        $("#uun1").html(
-                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
-                        );
-                    }
-                },
-            });
-            // window.location.reload(); use this if you do not remove cache
-        }
-    </script>
     <script>
         $(function() {
 
@@ -395,32 +366,39 @@ if ($_SESSION['mt_lv_id'] == 3) {
     </script>
     <script>
         $(document).ready(function() {
-            var path = '<?php echo $_SESSION['mt_path'] ?>',
-                id = '<?php echo $_SESSION['mt_id']; ?>';
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/user",
-                data: {
-                    id: id,
-                },
-                success: function(results) {
-                    for (i in results) {
-                        var prefix = results[i].prefix;
-                        var fname = results[i].firstname;
-                        var lname = results[i].lastname;
-                        var pos = results[i].position;
-                        var dename = results[i].de_name;
-                        var level = results[i].level;
-                    }
-                    $('#name').val(fname + ' ' + lname);
-                    $('#prefix').val(prefix);
-                    $('#de_name').val(dename);
-                    $('#position').val(pos + "/" + level);
-                }
-            })
-            $(document).on('click', '#btnAproveRoom', function(e) {
 
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
+            $('#radioPrimary2').change(function() {
+                $("#tool_request").prop('disabled', false);
+                $('#radioPrimary1').change(function() {
+                    $("#tool_request").prop('disabled', true);
+                })
+            })
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
+
+            $(document).on('click', '#btnAproveRoom', function(e) {
                 // $('#btnAproveRoom').click(function(e) {
                 e.preventDefault();
                 var ev_title = $('#title').val();
@@ -459,7 +437,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 .then((result) => {
                                     $('#frm_Addroom')[0].reset();
                                     $("#title")[0].focus();
-                                    location.href = 'room_reserve.php'
+                                    location.href = 'room_reserve.php';
                                 })
 
                         } else {
@@ -473,34 +451,38 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                 icon: 'warning',
                                 title: result.message
 
-                            }).then((result) => {
-                                $('#frm_Addroom')[0].reset();
-                                $("#title")[0].focus();
-
                             })
+                            $('#frm_Addroom')[0].reset();
+                            $("#title")[0].focus();
 
                         }
+
+                    },
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                        Toast.fire({
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                            })
+                            .then((result) => {
+                                $('#frm_Addroom')[0].reset();
+                                $("#title")[0].focus();
+                            })
+
                     }
-                    // },
-                    // error: function(result) {
-                    //     const Toast = Swal.mixin({
-                    //         toast: true,
-                    //         position: 'top-end',
-                    //         showConfirmButton: false,
-                    //         timer: 1500,
-                    //     })
-                    //     Toast.fire({
-                    //             icon: 'warning',
-                    //             title: 'ไม่สามารถบันทึกข้อมูลได้'
 
-                    //         })
-                    //         .then((result) => {
-                    //             $('#frm_Addroom')[0].reset();
-                    //             $("#title")[0].focus();
-                    //         })
-
-                    // }
                 });
+
+                function clear_tools(msg) {
+                    $("#frmTools")[0].reset();
+                    $("#to_name")[0].focus();
+                }
 
             });
 
@@ -512,7 +494,6 @@ if ($_SESSION['mt_lv_id'] == 3) {
                     var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
                     for (i in result) {
                         data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
-
                     }
                     $('#ro_name').html(data);
                 }
@@ -551,7 +532,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
                 dataType: "json",
                 url: path + "/tools",
                 success: function(result) {
-                    var data = ' <div class="form-group  ">';
+                    var data = ' <div class="form-group">';
                     var x = 0;
                     for (i in result) {
                         x++
@@ -571,7 +552,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var path = "<?php echo $_SESSION['mt_path']; ?>";
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
