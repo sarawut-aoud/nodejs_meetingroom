@@ -4,10 +4,17 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
+
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const key = require("../function/key");
+const dbname = require("../function/database");
+const { json } = require("body-parser");
+const ho = dbname.ho + ".";
+const pbh = dbname.pbh + ".";
 const sql = express.Router();
 
 //?  SELECT Data
@@ -67,12 +74,12 @@ sql.put("/", async (req, res) => {
   let de_id = req.body.de_id;
   let lv_id = req.body.lv_id;
 
-  if (!id || !firstname || !lastname || !de_id ) {
+  if (!id || !firstname || !lastname || !de_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
-    if(lv_id == '1'||lv_id == '4'){
+    if (lv_id == "1" || lv_id == "4") {
       con.query(
         "UPDATE tbl_user SET username = ?, password = ? ,  prefix = ? ,firstname = ?,lastname = ?,person_id = ? ,position = ?,phone = ? ,de_id = ? ,lv_id=? WHERE id = ?",
         [
@@ -97,7 +104,7 @@ sql.put("/", async (req, res) => {
           });
         }
       );
-    }else{
+    } else {
       con.query(
         "UPDATE tbl_user SET username = ?, password = ? ,  prefix = ? ,firstname = ?,lastname = ?,person_id = ? ,position = ?,phone = ? ,de_id = ?  WHERE id = ?",
         [
@@ -122,7 +129,6 @@ sql.put("/", async (req, res) => {
         }
       );
     }
-   
   }
 });
 

@@ -4,9 +4,13 @@ const path = require("path");
 const app = express();
 const bodyParser = require("body-parser");
 
+const dbname = require("../function/database");
+const { json } = require("body-parser");
+const ho = dbname.ho + ".";
+const pbh = dbname.pbh + ".";
+
 const cors = require("cors");
 const con = require("../config/config");
-const { error } = require("console");
 
 app.use(cors());
 app.use(bodyParser.json());

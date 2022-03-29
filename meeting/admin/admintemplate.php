@@ -83,11 +83,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="<?php echo $_SESSION['mt_prefix']; ?> " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix"  readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="<?php echo $_SESSION['mt_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="name" name="name"  readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -96,11 +96,11 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value="<?php echo $_SESSION['mt_de_name']; ?> " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name"  readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="<?php echo  $_SESSION['mt_position']; ?> " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -328,6 +328,18 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
+            // แสดงข้อมูลส่วนตัว
+            var prefix = '';
+            if(<?php echo $_SESSION['mt_prefix']; ?> == 1){
+                prefix = 'นาย';
+            }else if (<?php echo $_SESSION['mt_prefix']; ?> == 2){
+                prefix = 'นาง';
+            }
+            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
+            $('#prefix').val(prefix);
+            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['position']; ?>");
 
             $.ajax({
                 type: "get",

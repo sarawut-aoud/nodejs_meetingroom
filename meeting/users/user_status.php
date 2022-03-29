@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 2) {
+if ($_SESSION['mt_de_id'] == 1) {
 } else {
 
     echo "<script>
@@ -95,11 +95,11 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="" readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value=" " readonly />
+                                                <input type="text" class="form-control " id="name" name="name" readonly />
                                             </div>
 
                                         </div>
@@ -109,11 +109,11 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value=" " readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value=" " readonly />
+                                                <input type="text" class="form-control " id="position" name="position" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -205,6 +205,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
+           
             cache_clear();
 
             setInterval(function() {
@@ -257,18 +258,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
             var path = '<?php echo $_SESSION['mt_path'] ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>'
-            // แสดงข้อมูลส่วนตัว
-            var prefix = '';
-            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
-                prefix = 'นาย';
-            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
-                prefix = 'นาง';
-            }
-            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
-            $('#prefix').val(prefix);
-            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['position']; ?>");
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+
             // $.ajax({
             //     type: 'GET',
             //     dataType: 'json',
@@ -291,6 +282,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
             //         $('#position').val(pos + "/" + level);
             //     }
             // })
+
 
             $.ajax({
                 type: "get",
@@ -404,12 +396,13 @@ if ($_SESSION['mt_lv_id'] == 2) {
                             },
                             success: function(result) {
                                 for (ii in result) {
-
+                                    var ev_id = result[ii].ev_id;
                                     var ev_status = result[ii].ev_status;
                                     var roname = result[ii].ro_name;
                                     var stname = result[ii].st_name;
                                     var title = result[ii].ev_title;
                                     var people = result[ii].ev_people;
+                                    var create = result[ii].ev_createdate;
                                     var starttime = result[ii].ev_starttime;
                                     var endtime = result[ii].ev_endtime;
                                     var firstname = result[ii].firstname;
@@ -455,6 +448,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 }
                                 $("#modalDetail").modal("show");
                                 $("#modal2_status").html(status);
+                                $("#modal2_evid").html(ev_id);
+                                $("#modal2_cre_date").html(create.split('T')[0]);
                                 $("#modal2_roName").html(roname);
                                 $("#modal2_style").html(stname);
                                 $("#modal2_title").html(title);

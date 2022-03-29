@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 2) {
+if ($_SESSION['mt_de_id'] == 1) {
 } else {
     echo "<script>
             window.setTimeout(function() {

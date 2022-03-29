@@ -1,7 +1,13 @@
 const express = require("express");
 const path = require("path");
+const key = require("../function/key");
 
 const app = express();
+
+const dbname = require("../function/database");
+const { json } = require("body-parser");
+const ho = dbname.ho + ".";
+const pbh = dbname.pbh + ".";
 
 const DATE_DIFF = require("date-diff-js");
 const bodyParser = require("body-parser");
@@ -166,7 +172,7 @@ router.post("/adddata", async (req, res) => {
 
                 //todo : INSERT data
                 con.query(
-                  "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,id,ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id)" +
+                  "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,id)" +
                     "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                   [
                     ev_title,

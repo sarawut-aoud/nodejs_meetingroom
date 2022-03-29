@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 2) {
+if ($_SESSION['mt_de_id'] == 1) {
 } else {
 
     echo "<script>
@@ -282,17 +282,7 @@ if ($_SESSION['mt_lv_id'] == 2) {
                 }
 
             });
-            // แสดงข้อมูลส่วนตัว
-            var prefix = '';
-            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
-                prefix = 'นาย';
-            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
-                prefix = 'นาง';
-            }
-            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
-            $('#prefix').val(prefix);
-            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['position']; ?>");
+           
             // $.ajax({
             //     type: 'GET',
             //     dataType: 'json',
@@ -503,8 +493,8 @@ if ($_SESSION['mt_lv_id'] == 2) {
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
                                 $("#modal2_title").html(ev_title);
-                                $("#modal2_starttime").val(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal2_endtime").val(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
+                                $("#modal2_starttime").html(ev_startdate+' เวลา ' + ev_starttime);
+                                $("#modal2_endtime").html(ev_enddate+ ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
                                 $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');

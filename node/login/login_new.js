@@ -92,17 +92,18 @@ router.post("/login", async (req, res) => {
     (error, results, fields) => {
       if (error) throw error;
       if (results.length > 0) {
-        
         // (ac_id = results[0].ac_id),
         //   (ac_name = results[0].ac_name),
         //   (office_id = results[0].office_id),
         //   (office_name = results[0].office_name),
+       
         return res.json({
           person_username: results[0].person_username,
           person_prefix: results[0].person_prefix,
           person_firstname: results[0].person_firstname,
           person_lastname: results[0].person_lastname,
-          person_id:  Buffer.from(results[0].person_id).toString(),
+           //person_id:  Buffer.from(results[0].person_id).toString(),
+           person_id: results[0].person_id.toString('utf8'),
           person_menu: results[0].person_menu,
           person_page: results[0].person_page,
           person_photo: results[0].person_photo,
@@ -120,9 +121,8 @@ router.post("/login", async (req, res) => {
 
 router.post("/level", async (req, res) => {
   var q = req.body;
- 
-  const sql =
 
+  const sql =
     "SELECT l.level_id, " +
     "IF (d.duty_lv IS NULL, 0, d.duty_lv) AS duty_id, " +
     "IF (d.duty_name IS NULL, '', d.duty_name) AS duty_name, " +
@@ -153,9 +153,8 @@ router.post("/level", async (req, res) => {
     "ON (l.ward_id = w.ward_id) " +
     "WHERE l.person_id =  AES_ENCRYPT(?, UNHEX(SHA2('password', 512)))"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
   const params = [q.id];
-  
+
   con.query(sql, params, (err, rows) => {
-    
     if (err) {
       return res.json({
         status: "0",

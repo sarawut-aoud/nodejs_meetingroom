@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 3) {
+if ($_SESSION['mt_de_id'] == 1) {
 } else {
     echo "<script>
             window.setTimeout(function() {
@@ -161,7 +161,7 @@ if ($_SESSION['mt_lv_id'] == 3) {
             var id = '<?php echo $_SESSION['mt_id']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
             var de_id = "<?php echo $_SESSION['mt_de_id']; ?>";
-
+           
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -311,12 +311,12 @@ if ($_SESSION['mt_lv_id'] == 3) {
                                                 to_name += '<div class="col-form-label d-inline-flex ">🔎 ' + tool[i].to_name + '  </div>'
 
                                             }
-                                            if(to_name == ''){
+                                            if (to_name == '') {
                                                 $("#modal2_tool").html('<span style="color:blue;">ไม่มีอุปกรณ์ที่ต้องเตรียม</span>');
-                                            }else{
+                                            } else {
                                                 $("#modal2_tool").html(to_name);
                                             }
-                                          
+
                                         }
                                     });
 

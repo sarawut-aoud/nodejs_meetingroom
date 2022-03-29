@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const key = require("../function/key");
 
 const DATE_DIFF = require("date-diff-js");
 const bodyParser = require("body-parser");
@@ -7,6 +8,11 @@ const cors = require("cors");
 const con = require("../config/config");
 const { text } = require("body-parser");
 const { parse } = require("path");
+
+const dbname = require("../function/database");
+const { json } = require("body-parser");
+const ho = dbname.ho + ".";
+const pbh = dbname.pbh + ".";
 
 app.use(cors());
 app.use(bodyParser.json());

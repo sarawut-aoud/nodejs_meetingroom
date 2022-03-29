@@ -3,10 +3,16 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
+const key = require("../function/key");
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const dbname = require("../function/database");
+const { json } = require("body-parser");
+const ho = dbname.ho + ".";
+const pbh = dbname.pbh + ".";
 
 const router = express.Router();
 router.get("/detail", async (req, res) => {
@@ -43,12 +49,12 @@ router.get("/requesttool", async (req, res) => {
       "FROM tbl_tools AS tools " +
       "INNER JOIN tbl_acces AS acc " +
       "ON (acc.to_id=tools.to_id) " +
-      "INNER JOIN tbl_event AS ev "+
-      "ON (acc.ev_id = ev.ev_id ) "+
+      "INNER JOIN tbl_event AS ev " +
+      "ON (acc.ev_id = ev.ev_id ) " +
       "INNER JOIN tbl_department AS dept " +
       "ON (tools.de_id = dept.de_id) " +
       "WHERE ev.ev_id = ? AND dept.de_id = ?",
-    [ev_id,de_id],
+    [ev_id, de_id],
     (error, results, fields) => {
       if (error) throw error;
 
