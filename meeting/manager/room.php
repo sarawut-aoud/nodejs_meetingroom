@@ -124,6 +124,12 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
+    <script>
+        $(document).ready(function() {
+
+        });
+    </script>
+
 
     <script>
         $(document).ready(function() {
@@ -131,9 +137,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
             $('.select2').select2();
 
 
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id'] ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var id = '<?php echo $_SESSION['mt_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
 
             $.ajax({
                 type: "get",
@@ -160,14 +166,26 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 dataType: 'json',
                 url: path + "/rooms",
                 success: function(data) {
+                    var i = 0;
                     var table =
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
-                        var icon =
-                            ' <div class="badge-online rounded-pill   position-relative">Online' +
-                            '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
+                        var txt='';
+                        var badge = '';
+                        if(cell.ro_public == 'Y'){
+                            txt = 'Online';
+                            badge ='badge-online';
+                            var connect =  '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
                             '<span class="visually-hidden">New alerts</span></span></span></div>';
+                        }else{
+                            txt = 'Offline';
+                            badge ='badge-offline';
+                            connect =''
+                        }
+                        var icon =
+                            ' <div class="'+badge +' rounded-pill   position-relative">'+txt +connect
+                           
 
                         table += ('<tr align="center">');
                         table += ('<td>' + cell.ro_id + '</td>');

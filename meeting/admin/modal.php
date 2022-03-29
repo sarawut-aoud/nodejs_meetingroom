@@ -50,6 +50,17 @@
                         </div>
                     </div>
                     <!-- //? Input Detail -->
+                    <div class="form-group row">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label">สถานะ :</label>
+                            <div class="col-md-9">
+                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="ro_public" name="ro_public">
+                                    <option value="Y">Online</option>
+                                    <option value="N">Offline</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>

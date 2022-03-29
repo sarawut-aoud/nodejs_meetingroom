@@ -61,14 +61,14 @@ router.post("/login", async (req, res) => {
   con.query(
     "SELECT ps.person_username, ps.person_prefix," +
       "AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, " +
-      // "ps.person_id," +
+
       "ps.person_firstname, " +
       "ps.person_lastname, " +
       "ps.person_right, " +
       "ps.person_page, " +
-      "ps.person_token " +
-      // "po.position_id, " +
-      // "po.position_name, " +
+      "ps.person_token, " +
+      "ofs.office_id, " +
+      "ofs.office_name " +
       // "s.sign_id, " +
       // "s.sign_pic, " +
       // "a.ac_id, " +
@@ -76,6 +76,8 @@ router.post("/login", async (req, res) => {
       "FROM " +
       pbh +
       "hr_personal AS ps  " +
+      "LEFT JOIN "+pbh+"hr_office_sit AS ofs " +
+      "ON (ps.office_id = ofs.office_id ) "+
       // "LEFT JOIN " +pbh +" hr_position AS po " +
       // "ON (ps.position_id = po.position_id) " +
       // "LEFT JOIN " +pbh +" hr_sign AS s " +
@@ -92,23 +94,20 @@ router.post("/login", async (req, res) => {
     (error, results, fields) => {
       if (error) throw error;
       if (results.length > 0) {
-        // (ac_id = results[0].ac_id),
-        //   (ac_name = results[0].ac_name),
-        //   (office_id = results[0].office_id),
-        //   (office_name = results[0].office_name),
        
         return res.json({
           person_username: results[0].person_username,
           person_prefix: results[0].person_prefix,
           person_firstname: results[0].person_firstname,
           person_lastname: results[0].person_lastname,
-           //person_id:  Buffer.from(results[0].person_id).toString(),
-           person_id: results[0].person_id.toString('utf8'),
+          person_id: results[0].person_id.toString('utf8'),
           person_menu: results[0].person_menu,
           person_page: results[0].person_page,
           person_photo: results[0].person_photo,
           person_right: results[0].person_right,
           person_token: results[0].person_token,
+          office_id: results[0].office_id,
+          office_name: results[0].office_name,
         });
 
         // (position_id = results[0].position_id),

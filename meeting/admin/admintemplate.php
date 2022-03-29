@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_duty_id'] == 2) {
 } else {
     echo "<script>
             window.setTimeout(function() {
@@ -162,6 +162,17 @@ if ($_SESSION['mt_lv_id'] == 1) {
                                             </div>
                                         </div>
                                         <!-- //? Input Detail -->
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">สถานะ :</label>
+                                                <div class="col-md-9">
+                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="ro_public" name="ro_public">
+                                                        <option value="Y">Online</option>
+                                                        <option value="N">Offline</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer ">
@@ -327,7 +338,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
             $('.select2').select2();
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
 
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
@@ -383,6 +394,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                 var ro_people = $('#ro_people').val();
                 var ro_color = $('#ro_color').val();
                 var ro_detail = $('#ro_detail').val();
+                var ro_public = $('#ro_public').val();
                 $.ajax({
                     type: "POST",
                     url: path + "/rooms",
@@ -392,6 +404,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         ro_people: ro_people,
                         ro_color: ro_color,
                         ro_detail: ro_detail,
+                        ro_public: ro_public,
                     },
                     success: function(result) {
                         const Toast = Swal.mixin({

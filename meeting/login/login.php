@@ -1,5 +1,5 @@
 <?php
-error_reporting(~E_NOTICE);
+//error_reporting(~E_NOTICE);
 session_start();
 //! สร้าง session ใหม่
 // $_SESSION['erp_user'] = $_POST['user'];
@@ -30,15 +30,19 @@ session_start();
 // meeting
 $_SESSION['mt_id'] = $_POST['id'];
 $_SESSION['mt_user'] = $_POST['user'];
-// $_SESSION['mt_person_id'] = $_POST['person_id'];
 $_SESSION['mt_prefix'] = $_POST['prefix'];
 $_SESSION['mt_name'] = $_POST['name']; // fname + lname
-$_SESSION['mt_lv_id'] = $_POST['lv_id'];
+$_SESSION['mt_page'] = $_POST['page']; //person_page
+$_SESSION['mt_office_id'] = $_POST['office_id']; // office_id
+$_SESSION['mt_office_name'] = $_POST['office_name']; // office_name
 $_SESSION['mt_duty_id'] = $_POST['duty_id'];
 $_SESSION['mt_duty_name'] = $_POST['duty_name'];
 $_SESSION['mt_faction_id'] = $_POST['faction_id'];
 $_SESSION['mt_faction_name'] = $_POST['faction_name'];
 $_SESSION['mt_de_id'] = $_POST['de_id'];
 $_SESSION['mt_de_name'] = $_POST['de_name'];
+$_SESSION['mt_ward_id'] = $_POST['ward_id'];
+$_SESSION['mt_ward_name'] = $_POST['ward_name'];
+
 //$_SESSION['mt_path'] = "https://pbhapi.moph.go.th:4200";
 $_SESSION['mt_path'] = "http://127.0.0.1:4200";

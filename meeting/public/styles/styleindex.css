@@ -39,6 +39,12 @@
     width: 4rem;
     background-color: #00b8c5;
 }
+.badge-offline {
+    font-size: .75em;
+    color: white;
+    width: 4rem;
+    background-color: #ff3b3b;
+}
 
 .body_index {
     background-color: #086b02;

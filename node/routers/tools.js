@@ -71,29 +71,28 @@ sql.get("/", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   let to_id = query01.to_id;
   let ev_id = query01.ev_id;
-  let toolid = query01.toolid;
+  let office_id = query01.office_id;
 
   if (!to_id && !ev_id) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,de.de_name ,de.de_id  " +
+      "SELECT t.to_id ,t.to_name ,ofs.office_name  " +
         " FROM tbl_tools AS t " +
-        "INNER JOIN tbl_department AS de ON t.de_id = de.de_id " +
-        "ORDER BY t.to_id ASC; ",
+        "INNER JOIN "+ pbh +"hr_office_sit AS ofs ON t.de_id = ofs.office_id " +
+        "WHERE ofs.office_id = ? "+
+        "ORDER BY t.to_id ASC",[office_id],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
         res.json(results);
       }
     );
-  } else if (!ev_id) {
+  } else if (!ev_id ) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,de.de_name  ,de.de_id  " +
+      "SELECT t.to_id ,t.to_name ,ofs.office_name   " +
         "FROM tbl_tools AS t " +
-        "INNER JOIN tbl_department AS de ON t.de_id = de.de_id " +
-        "WHERE t.to_id = " +
-        to_id +
-        "" +
-        " ORDER BY t.to_id ASC; ",
+        "INNER JOIN "+ pbh+"hr_office_sit AS ofs ON t.de_id = ofs.office_id " +
+        "WHERE t.to_id = ? "+
+        " ORDER BY t.to_id ASC ",[to_id],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);

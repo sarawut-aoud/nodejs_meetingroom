@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_duty_id'] == 2) {
 } else {
     echo "<script>
             window.setTimeout(function() {
@@ -139,7 +139,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
 
             $.ajax({
                 type: "get",
@@ -171,10 +171,21 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
-                        var icon =
-                            ' <div class="badge-online rounded-pill   position-relative">Online' +
-                            '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
+                        var txt='';
+                        var badge = '';
+                        if(cell.ro_public == 'Y'){
+                            txt = 'Online';
+                            badge ='badge-online';
+                            var connect =  '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
                             '<span class="visually-hidden">New alerts</span></span></span></div>';
+                        }else{
+                            txt = 'Offline';
+                            badge ='badge-offline';
+                            connect =''
+                        }
+                        var icon =
+                            ' <div class="'+badge +' rounded-pill   position-relative">'+txt +connect
+                           
 
                         table += ('<tr align="center">');
                         table += ('<td>' + cell.ro_id + '</td>');

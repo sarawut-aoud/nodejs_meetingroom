@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_duty_id'] == 2) {
 } else {
 
     echo "<script>
@@ -236,7 +236,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
         $(document).ready(function() {
 
             var path = "<?php echo $_SESSION['mt_path']; ?>";
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
+            var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>'
             var id = '<?php echo $_SESSION['mt_id']; ?>';
 
             // แสดงข้อมูลส่วนตัว

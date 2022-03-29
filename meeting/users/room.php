@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_de_id'] == 1) {
+if ($_SESSION['mt_duty_id'] != 1) {
 } else {
     echo "<script>
             window.setTimeout(function() {
@@ -47,7 +47,7 @@ if ($_SESSION['mt_de_id'] == 1) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="_index.php" class="nav-link">หน้าแรก</a>
+                    <a href="./_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link active">ห้องประชุม</a>
@@ -88,9 +88,14 @@ if ($_SESSION['mt_de_id'] == 1) {
                                     <div id="tableRooms"></div>
                                 </div>
                                 <!-- /.card-body -->
+
                             </div>
+
                         </div>
                     </div>
+
+
+
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -112,6 +117,7 @@ if ($_SESSION['mt_de_id'] == 1) {
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
     <!-- Sweetalert2 -->
@@ -120,37 +126,8 @@ if ($_SESSION['mt_de_id'] == 1) {
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
-            cache_clear();
 
-            setInterval(function() {
-                cache_clear()
-            }, 5000);
         });
-
-
-        function cache_clear() {
-
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-
-            $.ajax({
-                type: "get",
-                url: path + "/event/count/user",
-                data: {
-                    id: id,
-                    de_id: de_id,
-                },
-                success: function(result) {
-                    if (result.ev_status > 0) {
-                        $("#uun1").html(
-                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
-                        );
-                    }
-                },
-            });
-            // window.location.reload(); use this if you do not remove cache
-        }
     </script>
 
 
@@ -160,21 +137,55 @@ if ($_SESSION['mt_de_id'] == 1) {
             $('.select2').select2();
 
 
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id'] ?>';
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var id = '<?php echo $_SESSION['mt_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+
+            });
             $.ajax({
                 type: 'get',
                 dataType: 'json',
                 url: path + "/rooms",
                 success: function(data) {
+                    var i = 0;
                     var table =
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
-                        var icon =
-                            ' <div class="badge-online rounded-pill   position-relative">Online' +
-                            '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
+                        var txt='';
+                        var badge = '';
+                        if(cell.ro_public == 'Y'){
+                            txt = 'Online';
+                            badge ='badge-online';
+                            var connect =  '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
                             '<span class="visually-hidden">New alerts</span></span></span></div>';
+                        }else{
+                            txt = 'Offline';
+                            badge ='badge-offline';
+                            connect =''
+                        }
+                        var icon =
+                            ' <div class="'+badge +' rounded-pill   position-relative">'+txt +connect
+                           
 
                         table += ('<tr align="center">');
                         table += ('<td>' + cell.ro_id + '</td>');

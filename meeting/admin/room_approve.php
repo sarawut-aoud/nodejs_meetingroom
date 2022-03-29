@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_duty_id'] == 2) {
 } else {
 
     echo "<script>
@@ -199,7 +199,7 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             var path = '<?php echo $_SESSION['mt_path']; ?>',
-                level = '<?php echo $_SESSION['mt_lv_id']; ?>'
+                level = '<?php echo $_SESSION['mt_duty_id']; ?>'
 
             $.ajax({
                 type: "get",
@@ -272,8 +272,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ev_title + '</td>');
-                        table += ('<td>' + cell.ev_startdate.split('T')[0] + ' <span style="color:red;"> เวลา </span>  ' + cell.ev_starttime + '</td>');
-                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
+                        table += ('<td>' + cell.ev_startdate + ' <span style="color:red;"> เวลา </span>  ' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_enddate + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
                         table += ('<td align="center" width="10%">' + bage3 + '</td>');
                         table += ('<td align="right" width="10%">' + info + '</td>');
                         table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');

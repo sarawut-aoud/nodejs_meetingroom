@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 1) {
+if ($_SESSION['mt_duty_id'] == 2) {
 } else {
     echo "<script>
             window.setTimeout(function() {
@@ -198,7 +198,8 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
+            var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
 
             $.ajax({
                 type: "get",
@@ -221,29 +222,15 @@ if ($_SESSION['mt_lv_id'] == 1) {
 
             });
 
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/tools",
-                success: function(result) {
-                    var data = ' <div class="form-group  ">';
-                    var x = 0;
-                    for (i in result) {
-                        x++
-                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
-                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
-                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-                    }
-                    data += '</div>';
-                    $('#modaltool').html(data);
-
-                }
-            });
+          
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
                 url: path + "/event",
+                data:{
+                    ward_id:ward_id,
+                },
                 success: function(data) {
                     var i = 0;
 
