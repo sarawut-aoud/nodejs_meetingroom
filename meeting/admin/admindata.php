@@ -236,32 +236,30 @@ if ($_SESSION['mt_duty_id'] == 2) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            var prefix = ''
-            if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
-                prefix = 'นาย'
-            } else {
-                prefix = 'นาง'
-
-            }
-            $('#prefix').val(prefix);
-            $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
-            $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
-            $('#posiotion').val('');
-        })
-    </script>
     <script>
         $(document).ready(function() {
 
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
+            $(document).ready(function() {
+                var prefix = ''
+                if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
+                    prefix = 'นาย'
+                } else {
+                    prefix = 'นาง'
 
+                }
+                $('#prefix').val(prefix);
+                $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
+                $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
+                $('#posiotion').val('');
+            })
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>'
             var path = "<?php echo $_SESSION['mt_path'] ?>";
             var ward_id = "<?php echo $_SESSION['mt_ward_id'] ?>";
             var office_id = "<?php echo $_SESSION['mt_office_id'] ?>";
+            var depert_id = "<?php echo $_SESSION['mt_de_id'] ?>";
+            var fac_id = "<?php echo $_SESSION['mt_faction_id'] ?>";
 
             $.ajax({
                 type: "get",
@@ -598,7 +596,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         table += ('<td width="30%">' + cell.to_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td width="30%">' + cell.ward_name + '</td>');
-                        table += ('<td  align="center"width="20%"><a id="' + cell.to_id + '"  class="btn btn-info btnToolEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
+                        table += ('<td  align="center"width="20%"><a id="' + cell.to_id + '"data_id="' + cell.ward_id + '"  class="btn btn-info btnToolEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
                             ' <a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
                         table += ('</tr>');
                     });
@@ -639,19 +637,22 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         // $(".btnToolEdit").click(function(e) {
                         e.preventDefault();
                         var to_id = $(this).attr('id');
-
+                        var ward_id = $(this).attr('data_id');
                         $.ajax({
                             type: "get",
                             dataType: "json",
                             url: path + "/tools",
                             data: {
                                 to_id: to_id,
+                                ward_id: ward_id,
                             },
                             success: function(result) {
                                 for (ii in result) {
                                     if (result[ii].to_id == to_id) {
                                         var to_name = result[ii].to_name;
                                         var ward_id = result[ii].ward_id;
+                                        var fac_id = result[ii].faction_id;
+                                        var depart_id = result[ii].depart_id;
 
                                     }
                                 }
@@ -665,30 +666,46 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                     success: function(result) {
                                         var depart = '';
                                         for (ii in result) {
-                                            if (result[ii].ward_id == ward_id) {
-                                                depart += '<option selected value="' + result[ii].ward_id + '" selected >' + result[ii]
-                                                    .ward_name +
+                                            if (result[ii].depart_id == depart_id && result[ii].faction_id == fac_id ) {
+                                                depart += '<option selected value="' + result[ii].depart_id + '" selected >' + result[ii]
+                                                    .depart_name +
                                                     '</option>'
                                             } else {
-                                                depart += '<option value="' + result[ii].ward_id + '">' + result[ii]
-                                                    .ward_name +
+                                                depart += '<option value="' + result[ii].depart_id + '">' + result[ii]
+                                                    .depart_name +
                                                     '</option>';
                                             }
 
                                         }
-                                        $.ajax({
-                                            type: "get",
-                                            dataType: "json",
-                                            url: path + "/depart/faction",
-                                            data: {
-                                                ward_id: ward_id,
-                                            },
-                                            success: function(fac) {
 
-                                            }
-                                        })
-                                        $('#modal_ward_id').html(depart);
+
+                                        $('#modal_depart_id').html(depart);
                                     }
+                                })
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/depart/faction",
+                                    data: {
+                                        faction_id: fac_id,
+                                    },
+                                    success: function(fac) {
+                                        var fact = '';
+                                        for (ii in result) {
+                                            if (result[ii].faction_id == fac_id) {
+                                                fact += '<option selected value="' + result[ii].faction_id + '" selected >' + result[ii]
+                                                    .faction_name +
+                                                    '</option>'
+                                            } else {
+                                                fact += '<option value="' + result[ii].faction_id + '">' + result[ii]
+                                                    .faction_name +
+                                                    '</option>';
+                                            }
+
+                                        }
+                                        $('#modal_fac_id').html(fact);
+                                    }
+
                                 })
                             }
                         });

@@ -78,7 +78,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <?=  require_once '../infomation.php' ?>
+                    <?php  require_once '../infomation.php' ?>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->

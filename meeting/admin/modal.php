@@ -131,9 +131,9 @@
                     <!-- //? Input People -->
                     <div class="form-group row">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label">Department :</label>
+                            <label class="col-md-3 col-form-label">ward :</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_depart_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_ward_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>
@@ -151,9 +151,9 @@
                     </div>
                     <div class="form-group row">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label">Ward:</label>
+                            <label class="col-md-3 col-form-label">depart:</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_ward_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_depart_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>

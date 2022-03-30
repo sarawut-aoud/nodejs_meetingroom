@@ -40,18 +40,22 @@ sql.get("/tools_request", async (req, res) => {
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
         "ev.ev_starttime , ev.ev_endtime ,ev.ev_people, " +
         "st_name , ro_name  " +
-        "FROM tbl_acces AS ace "+
+        "FROM tbl_acces AS ace " +
         "INNER JOIN tbl_event AS ev " +
-        "ON (ace.ev_id =ev.ev_id) "+
+        "ON (ace.ev_id =ev.ev_id) " +
         "INNER JOIN tbl_tools AS tool " +
-        "ON (ace.to_id = tool.to_id) "+
-        "INNER JOIN "+pbh +" hr_ward AS w " +
+        "ON (ace.to_id = tool.to_id) " +
+        "INNER JOIN " +
+        pbh +
+        " hr_ward AS w " +
         "ON (tool.de_id = w.ward_id) " +
         "INNER JOIN tbl_style AS st " +
         "ON (ev.st_id = st.st_id ) " +
         "INNER JOIN tbl_rooms AS ro " +
         "ON (ev.ro_id = ro.ro_id ) " +
-        "INNER JOIN "+pbh+"hr_personal AS user " +
+        "INNER JOIN " +
+        pbh +
+        "hr_personal AS user " +
         "ON (ev.id = user.person_id )" +
         "WHERE w.ward_id = ? " +
         "AND (ev.ev_status = '1' OR ev.ev_status = '3') AND " +
@@ -73,7 +77,7 @@ sql.get("/", async (req, res) => {
   let ev_id = query01.ev_id;
   let ward_id = query01.ward_id;
 
-  if (!to_id && !ev_id &&!ward_id) {
+  if (!to_id && !ev_id && !ward_id) {
     con.query(
       "SELECT t.to_id ,t.to_name  " +
         "FROM tbl_tools AS t " +
@@ -84,26 +88,37 @@ sql.get("/", async (req, res) => {
         res.json(results);
       }
     );
-  } else if (!ev_id && !to_id ) {
+  } else if (!ev_id && !to_id) {
     con.query(
       "SELECT t.to_id ,t.to_name ,w.ward_id ,w.ward_name     " +
         "FROM tbl_tools AS t " +
-        "INNER JOIN "+ pbh+" hr_ward  AS w ON (t.de_id = w.ward_id) " +
-        "WHERE w.ward_id = ? "+
-        " ORDER BY t.to_id ASC ",[ward_id],
+        "INNER JOIN " +
+        pbh +
+        " hr_ward  AS w ON (t.ward_id = w.ward_id) " +
+        "WHERE w.ward_id = ? " +
+        " ORDER BY t.to_id ASC ",
+      [ward_id],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
         res.json(results);
       }
     );
-  }else if(!ev_id && !ward_id){
+  } else if (to_id && ward_id) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,w.ward_id ,w.ward_name   " +
+      "SELECT t.to_id ,t.to_name ,w.ward_id ,w.ward_name ," +
+        " f.faction_id ,f.faction_name , d.depart_id , d.depart_name  " +
         "FROM tbl_tools AS t " +
-        "INNER JOIN "+ pbh+" hr_ward  AS w ON (t.de_id = w.ward_id) " +
-        "WHERE t.to_id = ? "+
-        " ORDER BY t.to_id ASC ",[to_id],
+        "INNER JOIN " +
+        pbh +
+        " hr_ward  AS w ON (t.ward_id = w.ward_id) " +
+        "INNER JOIN "+pbh+"hr_faction AS f "+
+        "ON (w.faction_id = f.faction_id)"+
+        "INNER JOIN "+pbh+"hr_depart AS d "+
+        "ON (w.depart_id = d.depart_id)"+
+        "WHERE t.to_id = ? AND w.ward_id = ? " +
+        " ORDER BY t.to_id ASC ",
+      [to_id,ward_id],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
