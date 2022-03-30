@@ -20,10 +20,10 @@ const sql = express.Router();
 // select tool with deprt
 sql.get("/tools_request", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
-  var de_id = query01.de_id;
+  var ward_id = query01.ward_id;
   var datetoday = query01.date;
 
-  if (!de_id) {
+  if (!ward_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่มีข้อมูลแผนก" });
@@ -45,19 +45,19 @@ sql.get("/tools_request", async (req, res) => {
         "ON (ace.ev_id =ev.ev_id) "+
         "INNER JOIN tbl_tools AS tool " +
         "ON (ace.to_id = tool.to_id) "+
-        "INNER JOIN tbl_department AS dept " +
-        "ON (tool.de_id = dept.de_id) " +
+        "INNER JOIN "+pbh +" hr_ward AS w " +
+        "ON (tool.de_id = w.ward_id) " +
         "INNER JOIN tbl_style AS st " +
         "ON (ev.st_id = st.st_id ) " +
         "INNER JOIN tbl_rooms AS ro " +
         "ON (ev.ro_id = ro.ro_id ) " +
-        "INNER JOIN tbl_user AS user " +
-        "ON (ev.id = user.id )" +
-        "WHERE dept.de_id = ? " +
+        "INNER JOIN "+pbh+"hr_personal AS user " +
+        "ON (ev.id = user.person_id )" +
+        "WHERE w.ward_id = ? " +
         "AND (ev.ev_status = '1' OR ev.ev_status = '3') AND " +
         "ev.ev_startdate BETWEEN  ?  AND ?" +
         "GROUP BY  ev.event_id ORDER BY ev.event_id ASC ",
-      [de_id, datetoday, date_after],
+      [ward_id, datetoday, date_after],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -71,26 +71,37 @@ sql.get("/", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   let to_id = query01.to_id;
   let ev_id = query01.ev_id;
-  let office_id = query01.office_id;
+  let ward_id = query01.ward_id;
 
-  if (!to_id && !ev_id) {
+  if (!to_id && !ev_id &&!ward_id) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,ofs.office_name  " +
-        " FROM tbl_tools AS t " +
-        "INNER JOIN "+ pbh +"hr_office_sit AS ofs ON t.de_id = ofs.office_id " +
-        "WHERE ofs.office_id = ? "+
-        "ORDER BY t.to_id ASC",[office_id],
+      "SELECT t.to_id ,t.to_name  " +
+        "FROM tbl_tools AS t " +
+        "ORDER BY t.to_id ASC",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
         res.json(results);
       }
     );
-  } else if (!ev_id ) {
+  } else if (!ev_id && !to_id ) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,ofs.office_name   " +
+      "SELECT t.to_id ,t.to_name ,w.ward_id ,w.ward_name     " +
         "FROM tbl_tools AS t " +
-        "INNER JOIN "+ pbh+"hr_office_sit AS ofs ON t.de_id = ofs.office_id " +
+        "INNER JOIN "+ pbh+" hr_ward  AS w ON (t.de_id = w.ward_id) " +
+        "WHERE w.ward_id = ? "+
+        " ORDER BY t.to_id ASC ",[ward_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  }else if(!ev_id && !ward_id){
+    con.query(
+      "SELECT t.to_id ,t.to_name ,w.ward_id ,w.ward_name   " +
+        "FROM tbl_tools AS t " +
+        "INNER JOIN "+ pbh+" hr_ward  AS w ON (t.de_id = w.ward_id) " +
         "WHERE t.to_id = ? "+
         " ORDER BY t.to_id ASC ",[to_id],
       (error, results, fields) => {
@@ -99,9 +110,6 @@ sql.get("/", async (req, res) => {
         res.json(results);
       }
     );
-    // console.log(results);
-
-    // console.log(results);
   } else {
     con.query(
       " SELECT  t.to_id , t.to_name ,(SELECT to_id  FROM tbl_acces where  to_id= t.to_id AND ev_id = ?) as acc_toid " +

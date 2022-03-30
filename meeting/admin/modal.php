@@ -131,22 +131,43 @@
                     <!-- //? Input People -->
                     <div class="form-group row">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label">แผนกดูแลอุปกรณ์ :</label>
+                            <label class="col-md-3 col-form-label">Department :</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_de_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_depart_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <!-- //? Input People -->
+                    <div class="form-group row">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label">facion :</label>
+                            <div class="col-md-9">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_fac_id">
+                                    <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label">Ward:</label>
+                            <div class="col-md-9">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_ward_id">
+                                    <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    <button type="button" class="btn btn-primary btnSaveTool">ยืนยันการแก้ไข</button>
-                </div>
+                <!-- //? Input People -->
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
+                <button type="button" class="btn btn-primary btnSaveTool">ยืนยันการแก้ไข</button>
             </div>
         </div>
+    </div>
     </div>
     <input type="hidden" id="modal_to_id" value="">
 </form>

@@ -58,7 +58,7 @@ if ($_SESSION['mt_duty_id'] == 2) { // admin
                     <li class="nav-item  ">
                         <a href="admindata.php" class="nav-link active">
                             <i class="nav-icon  fa-solid fa-table"></i>
-                            <p>ดูข้อมูล</p>
+                            <p>แก้ไขข้อมูล & ลบข้อมูล</p>
                         </a>
                     </li>
 

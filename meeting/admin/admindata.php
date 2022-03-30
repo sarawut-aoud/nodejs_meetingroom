@@ -107,7 +107,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position"  readonly />
+                                                <input type="text" class="form-control " id="position" name="position" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                     <!-- ./row form -->
 
                     <div class="row justify-content-center">
-                       
+
                         <!-- //? Form Tools -->
                         <div class="col-xl-12 col-md-12 col-sm-12">
                             <!-- general form elements -->
@@ -238,17 +238,17 @@ if ($_SESSION['mt_duty_id'] == 2) {
     <script src="../public/javascript/adminlte.js"></script>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             var prefix = ''
-            if(<?php echo $_SESSION['mt_prefix']?> == 1){
+            if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
                 prefix = 'นาย'
-            }else{
+            } else {
                 prefix = 'นาง'
 
             }
             $('#prefix').val(prefix);
-            $('#name').val('<?php echo $_SESSION['mt_name']?>');
-            $('#de_name').val('<?php echo $_SESSION['mt_de_name']?>');
+            $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
+            $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
             $('#posiotion').val('');
         })
     </script>
@@ -284,7 +284,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
 
             });
 
-          
+
             //todo: table room
             $.ajax({
                 type: 'get',
@@ -584,8 +584,8 @@ if ($_SESSION['mt_duty_id'] == 2) {
                 type: 'get',
                 dataType: 'json',
                 url: path + "/tools",
-                data:{
-                    office_id :office_id,
+                data: {
+                    ward_id: ward_id,
                 },
                 success: function(data) {
                     var i = 0;
@@ -597,7 +597,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         table += ('<td width="20%">' + cell.to_id + '</td>');
                         table += ('<td width="30%">' + cell.to_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td width="30%">' + cell.office_name + '</td>');
+                        table += ('<td width="30%">' + cell.ward_name + '</td>');
                         table += ('<td  align="center"width="20%"><a id="' + cell.to_id + '"  class="btn btn-info btnToolEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
                             ' <a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
                         table += ('</tr>');
@@ -651,34 +651,45 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                 for (ii in result) {
                                     if (result[ii].to_id == to_id) {
                                         var to_name = result[ii].to_name;
-                                        var de_id = result[ii].office_id;
-                                        break;
+                                        var ward_id = result[ii].ward_id;
+
                                     }
                                 }
                                 $("#ModalTool").modal("show");
                                 $("#modal_to_id").val(to_id);
                                 $("#modal_to_name").val(to_name);
-                                // $.ajax({
-                                //     type: "get",
-                                //     dataType: "json",
-                                //     url: path + "/depart",
-                                //     success: function(result) {
-                                //         var depart = '';
-                                //         for (ii in result) {
-                                //             if (result[ii].de_id == de_id) {
-                                //                 depart += '<option selected value="' + result[ii].office_id + '" selected >' + result[ii]
-                                //                     .de_name +
-                                //                     '</option>'
-                                //             } else {
-                                //                 depart += '<option value="' + result[ii].office_id + '">' + result[ii]
-                                //                     .office_name +
-                                //                     '</option>';
-                                //             }
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/depart",
+                                    success: function(result) {
+                                        var depart = '';
+                                        for (ii in result) {
+                                            if (result[ii].ward_id == ward_id) {
+                                                depart += '<option selected value="' + result[ii].ward_id + '" selected >' + result[ii]
+                                                    .ward_name +
+                                                    '</option>'
+                                            } else {
+                                                depart += '<option value="' + result[ii].ward_id + '">' + result[ii]
+                                                    .ward_name +
+                                                    '</option>';
+                                            }
 
-                                //         }
-                                //         $('#modal_de_id').html(depart);
-                                //     }
-                                // })
+                                        }
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/depart/faction",
+                                            data: {
+                                                ward_id: ward_id,
+                                            },
+                                            success: function(fac) {
+
+                                            }
+                                        })
+                                        $('#modal_ward_id').html(depart);
+                                    }
+                                })
                             }
                         });
                     });
@@ -736,7 +747,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                 }
 
             });
-            
+
             //  Btn Modal //
             $(document).on('click', '.btnSaveRoom', function(e) {
                 // $(".btnSaveRoom").click(function(e) {
@@ -944,7 +955,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                 });
             });
 
-            
+
             /// End Btn Modal
         });
     </script>

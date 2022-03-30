@@ -7,6 +7,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
 
+const dbname = require("../function/database");
+const { json } = require("body-parser");
+const ho = dbname.ho + ".";
+const pbh = dbname.pbh + ".";
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,40 +20,28 @@ const sql = express.Router();
 
 //?  SELECT Data
 sql.get("/", async (req, res) => {
-  let de_id = req.body.de_id;
-  if(!de_id){
+  let ward_id = req.body.de_id;
+  if (!ward_id) {
     con.query(
-      "SELECT de_id,de_name,de_phone FROM tbl_department  ORDER BY tbl_department.de_id ASC",
+      "SELECT ward_id,ward_name " +
+        "FROM " +
+        pbh +
+        "hr_ward AS w " +
+        "ORDER BY w.ward_id ASC",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
         res.json(results);
       }
     );
-  }else{
-    con.query(
-      "SELECT de_id,de_name,de_phone FROM tbl_department WHERE de_id = ?  ORDER BY tbl_department.de_id ASC",[de_id],
-      (error, results, fields) => {
-        if (error) throw error;
-        res.status(200);
-        res.json(results);
-      }
-    );
-  }
- 
-});
-// INSERT DATA
-sql.post("/", async (req, res) => {
-  let de_name = req.body.de_name;
-  let de_phone = req.body.de_phone;
-  if (!de_name || !de_phone) {
-    return res
-      .status(400)
-      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "INSERT INTO tbl_department(de_name,de_phone) VALUES(?,?)",
-      [de_name, de_phone],
+      "SELECT ward_id,ward_name " +
+        "FROM " +
+        pbh +
+        "hr_ward AS w " +
+        "ORDER BY w.ward_id ASC",
+      [ward_id],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -58,75 +50,28 @@ sql.post("/", async (req, res) => {
     );
   }
 });
-
-// //? Update Data
-sql.put("/", async (req, res) => {
-  let de_name = req.body.de_name;
-  let de_phone = req.body.de_phone;
-  let de_id = req.body.de_id;
-
-
-  if (!de_id || !de_phone || !de_name ) {
-    return res
-      .status(400)
-      .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
-  } else {
-    con.query(
-      "UPDATE tbl_department SET de_name = ?, de_phone = ?  WHERE de_id = ?",
-      [
-        de_name,
-        de_phone,
-        de_id,
-      ],
-      (error, results, fields) => {
-        if (error) throw error;
-        return res.send({
-          error: false,
-          status: "0",
-          message: "แก้ไขข้อมูลแล้ว",
-        });
-      }
-    );
-  }
-});
-
-// //? delete data
-sql.delete("/", async (req, res) => {
-  let de_id = req.body.de_id;
-
-  if (!de_id) {
-    return res
-      .status(400)
-      .send({ error: true, status: "0", message: "ไม่สามารถลบได้" });
-  } else {
-    con.query(
-      "SELECT count(de_id) as de_id   FROM  tbl_tools   WHERE de_id = ?", //? 
-      [de_id],
-      (error, results, fields) => {
-        if (error) throw error;
-
-        if (results[0].de_id > 0) {
-          return res.send({
-            error: false,
-            status: "1",
-            message: "มีการใช้งานอยู่ไม่สามารถลบข้อมูลได้",
-          });
-        } else {
-          con.query(
-            "DELETE FROM tbl_department WHERE de_id = ?",
-            [de_id],
-            (error, results, fields) => {
-              if (error) throw error;
-              return res.send({
-                error: false,
-                status: "0",
-                message: "ลบข้อมูลแล้ว",
-              });
-            }
-          );
-        }
-      }
-    );
-  }
+sql.get("/faction", async (req, res) => {
+  let ward_id = req.body.de_id;
+  con.query(
+    "SELECT w.ward_id , f.faction_id ,f.faction_name, dep.depart_id,dep.depart_name " +
+      "FROM " +
+      pbh +
+      "hr_faction AS f " +
+      "INNER JOIN " +
+      pbh +
+      "hr_ward AS w " +
+      "ON(w.faction_id = f.faction_id) " +
+      "INNER JOIN " +
+      pbh +
+      "hr_depart AS dep " +
+      "ON (dep.faction_id = f.faction_id ) " +
+      "WHERE w.ward_id = ? ORDER BY f.faction_id ASC",
+    [ward_id],
+    (error, results, fields) => {
+      if (error) throw error;
+      res.status(200);
+      res.json(results);
+    }
+  );
 });
 module.exports = sql;
