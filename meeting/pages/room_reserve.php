@@ -1,13 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 4) {
-} else {
-    echo "<script>
-            window.setTimeout(function() {
-                window.location = '../page-404.html';
-            }, 0);
-        </script>";
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,25 +10,15 @@ if ($_SESSION['mt_lv_id'] == 4) {
 <title>Moph : MeetingRoom</title>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
-
-<!-- bt5 -->
-<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css" />
-<!-- daterange picker -->
-<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+<!-- bt -->
+<link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="../public/styles/ionicons.min.css">
-<!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-<!-- iCheck -->
-<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.css">
-
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- colorpic -->
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
-
-
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- DataTables -->
@@ -60,10 +43,10 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="_index.php" class="nav-link ">หน้าหลัก</a>
+                    <a href="./_index.php" class="nav-link ">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link  active">รายการจองทั้งหมด</a>
+                    <a class="nav-link  active">รายการจอง</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -98,11 +81,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value=" " readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix"  readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value="" readonly />
+                                                <input type="text" class="form-control " id="name" name="name"  readonly />
                                             </div>
 
                                         </div>
@@ -112,16 +95,17 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value="" readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name"  readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value="" readonly />
+                                                <input type="text" class="form-control " id="position" name="position" readonly />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="row mt-3 justify-content-center">
@@ -130,11 +114,12 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
-                                        <h1>รายการจองทั้งหมด</h1>
+                                        <h1>รายการจอง</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="" action="" id="">
+                                <form method="" action="" id="frmTable">
+
                                     <div class="card-body table-responsive p-2">
                                         <!--//? tableRoom -->
                                         <div id="tableRooms">
@@ -149,7 +134,10 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         <!-- ./col -->
                     </div>
                     <!-- ./row form -->
+
+
                     <?php require_once './modal_reserveAll.php'; ?>
+
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
@@ -157,7 +145,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
         <!-- /.content-wrapper -->
     </div>
     <!-- ./wrapper -->
+
     <?php require_once '../footer.php'; ?>
+
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
@@ -171,15 +161,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-    <!-- InputMask -->
-    <script src="../plugins/moment/moment.min.js"></script>
-    <script src="../plugins/inputmask/inputmask.min.js"></script>
-    <script src="../public/javascript/moment-with-locales.js"></script>
-
-    <!-- date-range-picker -->
-    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
     <!-- DataTables  & Plugins -->
@@ -195,72 +176,32 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
-            cache_clear();
+            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>'
 
-            setInterval(function() {
-                cache_clear()
-            }, 5000);
         });
-
-
-        function cache_clear() {
-
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-
-            $.ajax({
-                type: "get",
-                url: path + "/event/count/staff",
-                data: {
-                    id: id,
-                    de_id: de_id,
-                },
-                success: function(result) {
-                    if (result.ev_status > 0) {
-                        $("#uun1").html(
-                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
-                        );
-                    }
-                },
-            });
-            // window.location.reload(); use this if you do not remove cache
-        }
     </script>
     <script>
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
-            $('#datetimepicker1').datetimepicker({
-                format: 'H:mm'
-            });
-            $('#datetimepicker2').datetimepicker({
-                format: 'H:mm'
-            });
-            $('#datetimepicker3').datetimepicker({
-                format: 'L'
-            });
-            $('#datetimepicker4').datetimepicker({
-                format: 'L'
-            });
 
-            var path = '<?php echo $_SESSION['mt_path'] ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+
+            var path = '<?php echo $_SESSION['mt_path']; ?>',
+                id = '<?php echo $_SESSION['mt_id']; ?>',
+                level = '<?php echo $_SESSION['mt_duty_id']; ?>'
 
             $.ajax({
                 type: "get",
                 dataType: "json",
                 url: path + "/event/count",
                 data: {
-                    level: lv_id,
+                    level: level,
                 },
                 success: function(result) {
                     var bage = 0;
@@ -271,54 +212,37 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         }
                     }
                     $("#bage").html(bage);
+                }
+            });
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/tools",
+                success: function(result) {
+                    var data = ' <div class="form-group  ">';
+                    var x = 0;
+                    for (i in result) {
+                        x++
+                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                    }
+                    data += '</div>';
+                    $('#modaltool').html(data);
 
                 }
-
             });
-            // แสดงข้อมูลส่วนตัว
-            var prefix = '';
-            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
-                prefix = 'นาย';
-            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
-                prefix = 'นาง';
-            }
-            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
-            $('#prefix').val(prefix);
-            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['position']; ?>");
-            // $.ajax({
-            //     type: 'GET',
-            //     dataType: 'json',
-            //     url: path + "/user",
-            //     data: {
-            //         id: '<?php echo $_SESSION['mt_id']; ?>',
-            //     },
-            //     success: function(results) {
-            //         for (i in results) {
-            //             var prefix = results[i].prefix;
-            //             var fname = results[i].firstname;
-            //             var lname = results[i].lastname;
-            //             var pos = results[i].position;
-            //             var dename = results[i].de_name;
-            //             var level = results[i].level;
-            //         }
-            //         $('#name').val(fname + ' ' + lname);
-            //         $('#prefix').val(prefix);
-            //         $('#de_name').val(dename);
-            //         $('#position').val(pos + "/" + level);
-            //     }
-            // })
-
+            // var id = $('#mtID').val();
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
                 url: path + "/event",
                 data: {
-                    de_id: de_id,
+                    id: id,
                 },
                 success: function(data) {
-                    var i = 0;
 
                     var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
                         '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
@@ -331,41 +255,42 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         } else if (cell.ev_status == 4) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels" title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 3) {
                             var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="d-none"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 2) { //staff
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 1) { // user
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 0) { //staff
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels" title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
                         }
+
+
 
                         table += ('<tr>');
                         table += ('<td>' + cell.ev_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ev_title + '</td>');
-                        table += ('<td>' + cell.ev_startdate.split('T')[0] + '<span style="color:red;"> เวลา </span> ' + cell.ev_starttime + '</td>');
-                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
-                        table += ('<td align="center" width="10%">' + bage3 + '</td>');
+                        table += ('<td>' + cell.ev_startdate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span>' + cell.ev_endtime + '</td>');
+                        table += ('<td align="center">' + bage3 + '</td>');
                         table += ('<td align="right" width="10%">' + info + '</td>');
                         table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');
-                        // table += ('<td align="center" width="20%">' + del + '</td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -402,6 +327,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         .appendTo("#tb_RoomAll_wrapper .col-md-6:eq(0)");
 
 
+
+
                     $(document).on('click', '.btnDetail', function(e) {
 
                         // $(".btnDetail").click(function(e) {
@@ -429,8 +356,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
-                                        var st_id = result[ii].st_id;
                                         var ro_name = result[ii].ro_name;
+                                        var to_name = result[ii].to_name;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
                                         var de_phone = result[ii].de_phone;
@@ -475,13 +402,14 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 }
                                 $("#modalDetail").modal("show");
                                 $("#modal2_evid").html(ev_id);
-                                $("#modal2_cre_date").html(ev_createdate.split('T')[0]);
+                                $("#modal2_cre_date").html(ev_createdate);
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
                                 $("#modal2_title").html(ev_title);
-                                $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
+                                $(".modal1_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
+                                $("#modal2_endtime").html(ev_enddate + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
+                                $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
                                 $("#modal2_dept").html(de_name);
@@ -496,7 +424,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
-                        var toid = $('.chk').val();
+
                         $.ajax({
                             type: "get",
                             dataType: "json",
@@ -519,7 +447,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
                                         var st_id = result[ii].st_id;
-
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
@@ -535,55 +462,22 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                             data: {
                                                 ev_id: ev_id,
                                             },
-                                            success: function(tool) {
-                                                // var chk = '';
+                                            success: function(result) {
                                                 var data = ' <div class="form-group  ">';
                                                 var x = 0;
-                                                for (i in tool) {
-                                                    var chk = '';
-                                                    if (tool[i].acc_toid != null) {
-                                                        console.log(tool[i].acc_toid)
-                                                        chk = 'checked="checked"'
+                                                var check = '';
+                                                for (i in result) {
 
-                                                    }
                                                     x++
-                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
-                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
                                                     data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                                                 }
                                                 data += '</div>';
                                                 $('#modaltool').html(data);
+
                                             }
                                         });
-
-                                        $.ajax({
-                                            type: "get",
-                                            dataType: "json",
-                                            url: path + "/tools",
-                                            data: {
-                                                ev_id: ev_id,
-                                            },
-                                            success: function(tool) {
-                                                // var chk = '';
-                                                var data = ' <div class="form-group  ">';
-                                                var x = 0;
-                                                for (i in tool) {
-                                                    var chk = '';
-                                                    if (tool[i].acc_toid != null) {
-                                                        console.log(tool[i].acc_toid)
-                                                        chk = 'checked="checked"'
-
-                                                    }
-                                                    x++
-                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
-                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
-                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-                                                }
-                                                data += '</div>';
-                                                $('#modaltool').html(data);
-                                            }
-                                        });
-
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -611,7 +505,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 $("#modal_people").val(ev_people);
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
-
 
                                 $.ajax({
                                     type: 'GET',
@@ -649,7 +542,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                         $('#modal_style').html(style);
                                     }
                                 });
-
                             }
                         });
                     });
@@ -703,12 +595,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
                             }
                         })
                     });
-
                 }
             });
             /// modal ///
-            $(document).on('click', '#btnsaveRoom', function(e) {
 
+            $(document).on('click', '#btnsaveRoom', function(e) {
                 /// modal ///
                 // $('#btnsaveRoom').click(function(e) {
                 e.preventDefault();
@@ -728,8 +619,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                 $.ajax({
                     type: "PUT",
-                    url: path + "/event_post/updatedata",
-
+                    url: path + "/event_put/updatedata",
                     dataType: "json",
                     data: formdata,
 
@@ -742,14 +632,15 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 timer: 1500,
                             })
                             Toast.fire({
-                                icon: 'warning',
-                                title: result.message
+                                    icon: 'warning',
+                                    title: result.message
 
-                            }).then((result) => {
+                                })
+                                .then((result) => {
+                                    $("#modalEdit").modal("hide");
+                                    location.reload();
 
-                                $("#modalRoomall")[0].reset();
-                                $("#modal_title")[0].focus();
-                            })
+                                })
                         } else {
                             const Toast = Swal.mixin({
                                 toast: true,
@@ -763,10 +654,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                             }).then((result) => {
 
-                                $("#modalRoomall")[0].reset();
-                                $("#modal_title")[0].focus();
+                                $('#frm_modalEditRoom')[0].reset();
+                                $('#title').focus();
                             })
                         }
+
 
                     },
                     error: function(result) {
@@ -782,13 +674,14 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                             })
                             .then((result) => {
+                                location.reload();
 
-                                $("#modalRoomall")[0].reset();
-                                $("#modal_title")[0].focus();
                             })
 
                     }
                 });
+
+
 
             });
         });

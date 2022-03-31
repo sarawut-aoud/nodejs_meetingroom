@@ -1,14 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 4) {
-} else {
 
-    echo "<script>
-            window.setTimeout(function() {
-                window.location = '../page-404.html';
-            }, 0);
-        </script>";
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +57,10 @@ if ($_SESSION['mt_lv_id'] == 4) {
             </ul>
         </nav>
         <!-- /.navbar -->
+
         <?php require_once '../sidebar.php';  ?>
+
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper" style="background-color: rgba(189, 189, 189, 0.384);">
             <!-- Content Header (Page header) -->
@@ -80,7 +75,9 @@ if ($_SESSION['mt_lv_id'] == 4) {
                     </div>
                     <div class="row mb-4 justify-content-center">
                         <div class="col-xl-2 col-md-12 ">
-                            <a href="manager_room.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                            <center>
+                                <a href="adminroom.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                            </center>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -94,46 +91,12 @@ if ($_SESSION['mt_lv_id'] == 4) {
                                 <div class="card-body mb-0">
                                     <div id="showDate"></div>
                                     <div id="today" class="mt-2"></div>
+
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 col-md-12 ">
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body mb-0">
-                                    <div class="form-group row">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">คำนำหน้า :</label>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" value="" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ชื่อ - นามสกุล :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" value=" " readonly />
-                                            </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">แผนก :</label>
-                                            <div class="col-md">
-
-                                                <input type="text" class="form-control " id="de_name" name="de_name" value=" " readonly />
-                                            </div>
-                                            <label class=" col-form-label">ตำแหน่ง :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" value=" " readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                        
                     </div>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-6 col-md-12 ">
@@ -176,8 +139,6 @@ if ($_SESSION['mt_lv_id'] == 4) {
     </div>
     <!-- ./wrapper -->
     <?php require_once '../footer.php'; ?>
-
-
     <!-- jQuery -->
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script src="../plugins/bootstrap5/js/bootstrap.min.js"></script>
@@ -200,6 +161,8 @@ if ($_SESSION['mt_lv_id'] == 4) {
     <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- Summernote -->
     <script src="../plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- Sweetalert2 -->
+    <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
     <!-- fullCalendar 2.2.5 -->
@@ -224,61 +187,48 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 format: 'L'
             });
         });
-
-        function viewdetail(id) {
-            //    console.log(id);
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
-            $.ajax({
-                type: "POST",
-                url: path + "/event/calendar",
-                dataType: 'json',
-                data: {
-                    id: id
-                },
-                success: function(results) {
-
-                    for (i in results) {
-                        if (results[i].ev_id == id) {
-                            var title = results[i].ev_title;
-                            var room = results[i].ro_name;
-                            var style = results[i].st_name;
-                            var start = results[i].ev_startdate;
-                            var end = results[i].ev_enddate;
-                            var starttime = results[i].ev_starttime;
-                            var endtime = results[i].ev_endtime;
-                            var people = results[i].ev_people;
-                            var name = results[i].firstname;
-                            var lastname = results[i].lastname;
-                            var dename = results[i].de_name;
-                            var dephone = results[i].de_phone;
-                        }
-                    }
-                    $("#calendarmodal").modal("show");
-
-                    $("#calendarmodal-title").html(title);
-                    $("#calendarmodal-detail").html(room);
-                    $("#calendarmodal-style").html(style);
-                    //$("#calendarmodal-detail").html(event.extendedProps.detail);
-                    $("#calendarmodal-start").html(start.split('T')[0]);
-                    $("#calendarmodal-end").html(end.split('T')[0]);
-                    $("#calendarmodal-starttime").html(starttime);
-                    $("#calendarmodal-endtime").html(endtime);
-                    $("#calendarmodal-people").html(people);
-                    $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(dename);
-                    $("#calendarmodal-dephone").html(dephone);
-                },
-            });
-        }
     </script>
-
     <script>
         $(document).ready(function() {
-            var path = '<?php echo $_SESSION['mt_path']; ?>',
-                id = '<?php echo $_SESSION['mt_id']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
 
+            var path = "<?php echo $_SESSION['mt_path']; ?>";
+            var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>'
+            var id = '<?php echo $_SESSION['mt_id']; ?>';
+
+            // แสดงข้อมูลส่วนตัว
+            var prefix = '';
+            if(<?php echo $_SESSION['mt_prefix']; ?> == 1){
+                prefix = 'นาย';
+            }else if (<?php echo $_SESSION['mt_prefix']; ?> == 2){
+                prefix = 'นาง';
+            }
+            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
+            $('#prefix').val(prefix);
+            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['position']; ?>");
+            //     }
+            // $.ajax({
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     url: path + "/user",
+            //     data: {
+            //         id: id,
+            //     },
+            //     success: function(results) {
+            //         for (i in results) {
+            //             var prefix = results[i].prefix;
+            //             var fname = results[i].firstname;
+            //             var lname = results[i].lastname;
+            //             var pos = results[i].position;
+            //             var dename = results[i].de_name;
+            //             var level = results[i].level;
+            //         }
+            //         $('#name').val(fname + ' ' + lname);
+            //         $('#prefix').val(prefix);
+            //         $('#de_name').val(dename);
+            //         $('#position').val(pos + "/" + level);
+            //     }
+            // })
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -295,30 +245,11 @@ if ($_SESSION['mt_lv_id'] == 4) {
                         }
                     }
                     $("#bage").html(bage);
+
                 }
+
             });
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/user",
-                data: {
-                    id: id,
-                },
-                success: function(results) {
-                    for (i in results) {
-                        var prefix = results[i].prefix;
-                        var fname = results[i].firstname;
-                        var lname = results[i].lastname;
-                        var pos = results[i].position;
-                        var dename = results[i].de_name;
-                        var level = results[i].level;
-                    }
-                    $('#name').val(fname + ' ' + lname);
-                    $('#prefix').val(prefix);
-                    $('#de_name').val(dename);
-                    $('#position').val(pos + "/" + level);
-                }
-            })
+
 
             $.ajax({
                 type: 'GET',
@@ -416,12 +347,12 @@ if ($_SESSION['mt_lv_id'] == 4) {
             let date1 = new Date();
             var button = '<center><button class="col-md-4 btn btn-info btn-block">' + toThaiDateString(date1) + '</button></center>'
             $('#showDate').html(button);
+
             var datetoday = new Date();
             var today2 = datetoday.toISOString("EN-AU", {
                     timeZone: "Australia/Melbourne"
                 })
                 .slice(0, 10);
-
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -429,7 +360,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
                 success: function(results) {
                     var today = ''
                     for (i in results) {
-                        console.log(today2)
+
                         if (results[i].ev_startdate == today2 || results[i].ev_enddate == today2) {
 
                             today +=
@@ -446,7 +377,55 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
                 }
             })
+
         });
+
+        function viewdetail(id) {
+            //    console.log(id);
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
+            $.ajax({
+                type: "POST",
+                url: path + "/event/calendar",
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                success: function(results) {
+
+                    for (i in results) {
+                        if (results[i].ev_id == id) {
+                            var title = results[i].ev_title;
+                            var room = results[i].ro_name;
+                            var style = results[i].st_name;
+                            var start = results[i].ev_startdate;
+                            var end = results[i].ev_enddate;
+                            var starttime = results[i].ev_starttime;
+                            var endtime = results[i].ev_endtime;
+                            var people = results[i].ev_people;
+                            var name = results[i].firstname;
+                            var lastname = results[i].lastname;
+                            var dename = results[i].de_name;
+                            var dephone = results[i].de_phone;
+                        }
+                    }
+                    $("#calendarmodal").modal("show");
+
+                    $("#calendarmodal-title").html(title);
+                    $("#calendarmodal-detail").html(room);
+                    $("#calendarmodal-style").html(style);
+                    //$("#calendarmodal-detail").html(event.extendedProps.detail);
+                    $("#calendarmodal-start").html(start.split('T')[0]);
+                    $("#calendarmodal-end").html(end.split('T')[0]);
+                    $("#calendarmodal-starttime").html(starttime);
+                    $("#calendarmodal-endtime").html(endtime);
+                    $("#calendarmodal-people").html(people);
+                    $("#calendarmodal-name").html(name + ' ' + lastname);
+                    $("#calendarmodal-dename").html(dename);
+                    $("#calendarmodal-dephone").html(dephone);
+                },
+            });
+        }
     </script>
 
 </body>

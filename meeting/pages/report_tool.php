@@ -152,15 +152,15 @@ require_once "../login/check_session.php";
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
-            var de_id = "<?php echo $_SESSION['mt_de_id']; ?>";
-           
+            var duty_id = "<?php echo $_SESSION['mt_duty_id']; ?>";
+            var ward_id = "<?php echo $_SESSION['mt_ward_id']; ?>";
+
             $.ajax({
                 type: "get",
                 dataType: "json",
                 url: path + "/event/count",
                 data: {
-                    level: lv_id,
+                    level: duty_id,
                 },
                 success: function(result) {
                     var bage = 0;
@@ -187,7 +187,7 @@ require_once "../login/check_session.php";
                 url: path + "/tools/tools_request",
                 data: {
                     date: today2,
-                    de_id: de_id,
+                    ward_id: ward_id,
                 },
                 success: function(data) {
                     var i = 0;
@@ -304,12 +304,12 @@ require_once "../login/check_session.php";
                                                 to_name += '<div class="col-form-label d-inline-flex ">🔎 ' + tool[i].to_name + '  </div>'
 
                                             }
-                                            if (to_name == '') {
+                                            if(to_name == ''){
                                                 $("#modal2_tool").html('<span style="color:blue;">ไม่มีอุปกรณ์ที่ต้องเตรียม</span>');
-                                            } else {
+                                            }else{
                                                 $("#modal2_tool").html(to_name);
                                             }
-
+                                          
                                         }
                                     });
 

@@ -20,7 +20,7 @@ const sql = express.Router();
 // select tool with deprt
 sql.get("/tools_request", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
-  var ward_id = query01.de_id;
+  var ward_id = query01.ward_id;
   var datetoday = query01.date;
 
   if (!ward_id) {

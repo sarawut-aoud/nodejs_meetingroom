@@ -1,13 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_lv_id'] == 4) {
-} else {
-    echo "<script>
-            window.setTimeout(function() {
-                window.location = '../page-404.html';
-            }, 0);
-        </script>";
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,7 +132,7 @@ if ($_SESSION['mt_lv_id'] == 4) {
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>';
-            var lv_id = '<?php echo $_SESSION['mt_lv_id']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
 
             $.ajax({
                 type: "get",

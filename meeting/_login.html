@@ -239,16 +239,13 @@
 						'ward_name': ward_name
 					},
 					function () {
-						if ( ward_id == 48 ) { //todo => ธุรการทั่วไป
-							location.href = 'staff/_index.php';
-						// } else if (duty_id == 2) {
-						// 	location.href = 'admin/_index.php';
+						if (id) {
+							location.href = 'pages/_index.php';
 						} else {
-							location.href = 'users/_index.php';
-							// $("#loginAlert").show(0).html(
-							// 		"<div align='center' class='alert alert-danger'>" + result.message + "</div>"
-							// 	)
-							// 	.delay(2500).fadeOut('fast');
+							$("#loginAlert").show(0).html(
+									"<div align='center' class='alert alert-danger'>" + result.message + "</div>"
+								)
+								.delay(2500).fadeOut('fast');
 						}
 					}
 				);
