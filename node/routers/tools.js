@@ -104,21 +104,21 @@ sql.get("/", async (req, res) => {
         res.json(results);
       }
     );
-  } else if (to_id && ward_id) {
+  } else if (to_id ) {
     con.query(
-      "SELECT t.to_id ,t.to_name ,w.ward_id ,w.ward_name ," +
-        " f.faction_id ,f.faction_name , d.depart_id , d.depart_name  " +
+      "SELECT t.to_id ,t.to_name  " +
+        // " f.faction_id ,f.faction_name , d.depart_id , d.depart_name  " +
         "FROM tbl_tools AS t " +
-        "INNER JOIN " +
-        pbh +
-        " hr_ward  AS w ON (t.ward_id = w.ward_id) " +
-        "INNER JOIN "+pbh+"hr_faction AS f "+
-        "ON (w.faction_id = f.faction_id)"+
-        "INNER JOIN "+pbh+"hr_depart AS d "+
-        "ON (w.depart_id = d.depart_id)"+
-        "WHERE t.to_id = ? AND w.ward_id = ? " +
+        // "INNER JOIN " +
+        // pbh +
+        // " hr_ward  AS w ON (t.ward_id = w.ward_id) " +
+        // "INNER JOIN "+pbh+"hr_faction AS f "+
+        // "ON (w.faction_id = f.faction_id)"+
+        // "INNER JOIN "+pbh+"hr_depart AS d "+
+        // "ON (w.depart_id = d.depart_id)"+
+        "WHERE t.to_id = ? " +
         " ORDER BY t.to_id ASC ",
-      [to_id,ward_id],
+      [to_id],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -142,17 +142,19 @@ sql.get("/", async (req, res) => {
 // //? Insert Data
 sql.post("/", async (req, res) => {
   var to_name = req.body.to_name; //todo : req -> Form .... data -> body
-  var de_id = req.body.de_id;
+  var depart_id = req.body.depart_id;
+  var ward_id = req.body.ward_id;
+  var factiocn_id = req.body.faction_id;
 
   //! validation -> ไม่มีข้อมูลนั้นแหละ
-  if (!to_name || !de_id) {
+  if (!to_name || !depart_id || !ward_id || !factiocn_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "INSERT INTO tbl_tools (to_name,de_id) VALUES(?,?)",
-      [to_name, de_id],
+      "INSERT INTO tbl_tools (to_name,ward_id,de_id,faction_id) VALUES(?,?,?,?)",
+      [to_name, ward_id,depart_id,factiocn_id],
       (error, results, fields) => {
         if (error) throw error;
 
@@ -169,18 +171,20 @@ sql.post("/", async (req, res) => {
 // //? update
 sql.put("/", async (req, res) => {
   let to_name = req.body.to_name;
-  let de_id = req.body.de_id;
   let to_id = req.body.to_id;
+  let depart_id = req.body.depart_id;
+  let faction_id = req.body.faction_id;
+  let ward_id = req.body.ward_id;
   // validation
 
-  if (!to_name || !de_id) {
+  if (!to_name || !depart_id || !faction_id ||!ward_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "UPDATE tbl_tools SET to_name = ?, de_id = ? WHERE to_id = ?",
-      [to_name, de_id, to_id],
+      "UPDATE tbl_tools SET to_name = ?,ward_id = ? , de_id=?, factiocn_id = ? WHERE to_id = ?",
+      [to_name, ward_id,depart_id,faction_id, to_id],
       (error, results, fields) => {
         if (error) throw error;
         return res.send({

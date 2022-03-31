@@ -241,9 +241,9 @@ if ($_SESSION['mt_duty_id'] == 2) {
         $(document).ready(function() {
 
             $('.my-colorpicker1').colorpicker();
-             $('.select2').select2();
-           
-            
+            $('.select2').select2();
+
+
             var prefix = ''
             if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
                 prefix = 'นาย'
@@ -254,7 +254,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
             $('#prefix').val(prefix);
             $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
             $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
-            $('#posiotion').val('');
+            $('#posiotion').val('<?php echo $_SESSION['mt_duty_name'] ?>');
 
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>'
             var path = "<?php echo $_SESSION['mt_path'] ?>";
@@ -647,7 +647,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                             url: path + "/tools",
                             data: {
                                 to_id: to_id,
-                                ward_id: ward_id,
+                               
                             },
                             success: function(result) {
                                 for (ii in result) {
@@ -668,7 +668,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                     url: path + "/depart",
                                     success: function(result) {
                                         var depart = '';
-                                        
+
                                         for (ii in result) {
                                             if (result[ii].depart_id == depart_id) {
                                                 depart += '<option selected value="' + result[ii].depart_id + '" selected >' + result[ii]
@@ -692,7 +692,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                     success: function(fac) {
                                         var fact = '';
                                         for (ii in fac) {
-                                            
+
                                             if (fac[ii].faction_id == fac_id) {
                                                 fact += '<option selected value="' + fac[ii].faction_id + '" selected >' + fac[ii]
                                                     .faction_name +

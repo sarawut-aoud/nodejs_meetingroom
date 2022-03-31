@@ -96,7 +96,47 @@ require_once "../login/check_session.php";
                             </div>
 
                         </div>
+<<<<<<< HEAD:meeting/pages/_index.php
                         
+=======
+                        <!-- <div class="col-xl-4 col-md-12 ">
+                            <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body mb-0">
+                                    <div class="form-group row">
+                                        <div class="input-group">
+                                            <label class=" col-form-label">คำนำหน้า :</label>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control " id="prefix" name="prefix" value="" readonly />
+                                            </div>
+                                            <label class=" col-form-label">ชื่อ - นามสกุล :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="name" name="name" value=" " readonly />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <div class="input-group">
+                                            <label class=" col-form-label">แผนก :</label>
+                                            <div class="col-md">
+
+                                                <input type="text" class="form-control " id="de_name" name="de_name" value=" " readonly />
+                                            </div>
+                                            <label class=" col-form-label">ตำแหน่ง :</label>
+                                            <div class="col-md">
+                                                <input type="text" class="form-control " id="position" name="position" value=" " readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+>>>>>>> b141e502c8fa8699cad6c66b10c5591a71d1f529:meeting/admin/_index.php
                     </div>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-6 col-md-12 ">

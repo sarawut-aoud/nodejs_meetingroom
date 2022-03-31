@@ -193,7 +193,7 @@ router.get("/COUNT", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   // let de_id = query01.de_id;
   let level = query01.level;
-  let office_id = query01.office_id;
+  let ward_id = query01.ward_id;
   if (level == "2") {
     con.query(
       "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
@@ -212,7 +212,7 @@ router.get("/COUNT", async (req, res) => {
         res.json(results);
       }
     );
-  } else if (office_id == "48") {
+  } else if (ward_id == "48") {
     con.query(
       "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
         "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
@@ -355,13 +355,13 @@ router.post("/calendar", async (req, res) => {
       "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
       " ro.ro_name, ro.ro_color," +
       "st.st_name," +
-      "users.firstname,users.lastname, users.position," +
-      "dept.de_name, dept.de_phone " +
+      "users.person_firstname,users.person_lastname," +
+      "dept.depart_name, dept.depart_id " +
       "FROM tbl_event AS ev " +
       " " +
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-      "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
+      "INNER JOIN  "+pbh+"hr_personal AS users ON (ev.id = users.person_id)" +
       "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
       "WHERE ev.ev_status = '3' AND ev.ev_id = ? GROUP BY ev.event_id",
     [id],
