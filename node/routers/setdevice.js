@@ -23,14 +23,19 @@ router.get("/detail", async (req, res) => {
       "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
       "ro.ro_id, ro.ro_name, " +
       "st.st_id, st.st_name," +
-      "users.id, users.firstname,users.lastname, users.position," +
-      "dept.de_id, dept.de_name, dept.de_phone " +
+      " users.person_firstname,users.person_lastname, " +
+      "dept.depart_id, dept.depart_name, " +
+      "f.faction_id , f.faction_name, w.ward_id ,w.ward_name "+
       "FROM tbl_event AS ev " +
       " " +
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-      "INNER JOIN  tbl_user AS users ON (ev.id = users.id)" +
-      "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) WHERE ev.ev_id = ? ;",
+      "INNER JOIN  "+pbh+"hr_personal AS users ON (ev.id = users.person_id)" +
+      "INNER JOIN  "+pbh+"hr_level AS l ON(users.person_id = l.person_id)"+
+      "INNER JOIN  "+pbh+"hr_depart AS dept ON (l.depart_id = dept.depart_id)"+
+      "INNER JOIN  "+pbh+"hr_ward AS w ON (l.ward_id = w.ward_id)"+
+      "INNER JOIN  "+pbh+"hr_faction AS f ON (l.faction_id = f.faction_id)"+
+      " WHERE ev.ev_id = ? ;",
     [ev_id],
     (error, results, fields) => {
       if (error) throw error;
@@ -42,7 +47,7 @@ router.get("/detail", async (req, res) => {
 //?  SELECT Request Tool
 router.get("/requesttool", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
-  let de_id = query01.de_id;
+  let ward_id = query01.ward_id;
   let ev_id = query01.ev_id;
   con.query(
     " SELECT tools.to_name " +
@@ -51,10 +56,10 @@ router.get("/requesttool", async (req, res) => {
       "ON (acc.to_id=tools.to_id) " +
       "INNER JOIN tbl_event AS ev " +
       "ON (acc.ev_id = ev.ev_id ) " +
-      "INNER JOIN tbl_department AS dept " +
-      "ON (tools.de_id = dept.de_id) " +
-      "WHERE ev.ev_id = ? AND dept.de_id = ?",
-    [ev_id, de_id],
+      "INNER JOIN "+pbh+"hr_ward AS w " +
+      "ON (tools.ward_id = w.ward_id) " +
+      "WHERE ev.ev_id = ? AND w.ward_id = ?",
+    [ev_id, ward_id],
     (error, results, fields) => {
       if (error) throw error;
 

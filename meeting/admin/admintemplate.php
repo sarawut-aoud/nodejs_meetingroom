@@ -1,13 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_duty_id'] ) {
-} else {
-    echo "<script>
-            window.setTimeout(function() {
-                window.location = '../page-404.html';
-            }, 0);
-        </script>";
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -339,9 +332,9 @@ if ($_SESSION['mt_duty_id'] ) {
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
-            var depart_id ='<?php echo $_SESSION['mt_de_id']; ?>';
-            var ward_id ='<?php echo $_SESSION['mt_ward_id']; ?>';
-            var fac_id ='<?php echo $_SESSION['mt_faction_id']; ?>';
+            var depart_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+            var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
+            var fac_id = '<?php echo $_SESSION['mt_faction_id']; ?>';
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
@@ -379,7 +372,7 @@ if ($_SESSION['mt_duty_id'] ) {
                 url: path + "/depart",
                 success: function(result) {
                     var depart = '';
-                   
+
                     for (ii in result) {
                         if (result[ii].depart_id == depart_id) {
                             depart += '<option selected value="' + result[ii].depart_id + '" selected >' + result[ii]
@@ -512,14 +505,18 @@ if ($_SESSION['mt_duty_id'] ) {
                 // $('#btnTools').click(function(e) {
                 e.preventDefault();
                 var to_name = $('#to_name').val();
-                var de_id = $('#de_id').val();
+                var depart_id = $('#de_id').val();
+                var ward_id = $('#ward_id').val();
+                var faction_id = $('#fac_id').val();
                 $.ajax({
                     type: "POST",
                     url: path + "/tools",
                     dataType: "json",
                     data: {
                         to_name: to_name,
-                        de_id: de_id,
+                        depart_id: depart_id,
+                        ward_id: ward_id,
+                        faction_id: faction_id,
                     },
                     success: function(result) {
                         const Toast = Swal.mixin({

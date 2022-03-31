@@ -96,7 +96,7 @@ require_once "../login/check_session.php";
                             </div>
 
                         </div>
-                        <div class="col-xl-4 col-md-12 ">
+                        <!-- <div class="col-xl-4 col-md-12 ">
                             <div class="card shadow">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
@@ -132,7 +132,7 @@ require_once "../login/check_session.php";
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-6 col-md-12 ">

@@ -1,13 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_duty_id'] == 2) {
-} else {
-    echo "<script>
-            window.setTimeout(function() {
-                window.location = '../page-404.html';
-            }, 0);
-        </script>";
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -289,18 +282,20 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                     var people = result[ii].ev_people;
                                     var starttime = result[ii].ev_starttime;
                                     var endtime = result[ii].ev_endtime;
-                                    var firstname = result[ii].firstname;
-                                    var lastname = result[ii].lastname;
-                                    var position = result[ii].position;
-                                    var depart = result[ii].de_name;
-                                    var phone = result[ii].de_phone;
+                                    var firstname = result[ii].person_firstname;
+                                    var lastname = result[ii].person_lastname;
+                                    var ward_id = result[ii].ward_id;
+                                    var ward_name = result[ii].ward_name;
+                                    var depart = result[ii].depart_name;
+                                    var fac_name = result[ii].faction_name;
+                                   
 
                                     $.ajax({
                                         type: 'get',
                                         dataType: 'json',
                                         url: path + '/setdevice/requesttool',
                                         data: {
-                                            de_id: de_id,
+                                            ward_id: ward_id,
                                             ev_id: ev_id,
                                         },
                                         success: function(tool) {
@@ -343,9 +338,8 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                 $("#modal2_starttime").html(starttime);
                                 $("#modal2_endtime").html(endtime);
                                 $("#modal2_name").html(firstname + " " + lastname);
-                                $("#modal2_dept").html(depart);
-                                $("#modal2_pos").html(position);
-                                $("#modal2_phone").html(phone);
+                                $("#modal2_dept").html(ward_name+'<br>'+fac_name+'<br>'+depart);
+                                $("#modal2_pos").html('<?php echo $_SESSION['mt_duty_name'];?>')
                             }
                         });
                     });
