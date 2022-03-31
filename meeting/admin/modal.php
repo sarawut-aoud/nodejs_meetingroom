@@ -1,6 +1,6 @@
 <!-- Modal Rooms -->
 <form action="" method="POST">
-    <div class="modal fade" id="ModalRoom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalRoom"  style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center text-white edit-head">
@@ -74,7 +74,7 @@
 <!-- Modal Rooms -->
 <!-- Modal Style -->
 <form action="" method="POST">
-    <div class="modal fade" id="ModalStyle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalStyle"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center text-white edit-head">
@@ -108,7 +108,7 @@
 <!-- Modal Style -->
 <!-- Modal tools -->
 <form action="" method="POST">
-    <div class="modal fade" id="ModalTool" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalTool" style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center text-white edit-head">

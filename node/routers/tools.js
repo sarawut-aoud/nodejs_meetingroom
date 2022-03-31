@@ -20,7 +20,7 @@ const sql = express.Router();
 // select tool with deprt
 sql.get("/tools_request", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
-  var ward_id = query01.ward_id;
+  var ward_id = query01.de_id;
   var datetoday = query01.date;
 
   if (!ward_id) {
@@ -48,7 +48,7 @@ sql.get("/tools_request", async (req, res) => {
         "INNER JOIN " +
         pbh +
         " hr_ward AS w " +
-        "ON (tool.de_id = w.ward_id) " +
+        "ON (tool.ward_id = w.ward_id) " +
         "INNER JOIN tbl_style AS st " +
         "ON (ev.st_id = st.st_id ) " +
         "INNER JOIN tbl_rooms AS ro " +

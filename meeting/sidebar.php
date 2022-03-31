@@ -103,7 +103,7 @@ if ($_SESSION['mt_duty_id'] == 2) { // admin
     </aside>
 
 <?php
-} else if ($_SESSION['mt_office_id'] == 48) { //todo : staff || office_id == 48 && faction_id == 6 && de_id == 41 & ward_id == 222
+} else if ($_SESSION['mt_ward_id'] == 48) { //todo : staff || office_id == 48 && faction_id == 6 && de_id == 41 & ward_id == 222
 ?>
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-white  elevation-4 " style="background-color: #008622;">

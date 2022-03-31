@@ -24,22 +24,10 @@ sql.get("/", async (req, res) => {
   let depart_id = query01.depart_id;
   // if (!depart_id) {
     con.query(
-      "SELECT ward_id,ward_name ," +
-        "f.faction_name, f.faction_id, " +
-        "d.depart_id , d.depart_name " +
-        "FROM " +
-        pbh +
-        "hr_ward AS w " +
-        "INNER JOIN " +
-        pbh +
-        " hr_faction AS f " +
-        "ON (w.faction_id = f.faction_id)" +
-        "INNER JOIN " +
-        pbh +
-        " hr_depart AS d " +
-        "ON(w.depart_id = d.depart_id)" +
-        // "WHERE d.depart_id = ? ",[depart_id],
-        "ORDER BY d.depart_id ASC",
+      "SELECT d.depart_id ,  d.depart_name "+
+      "FROM "+pbh+"hr_depart AS d "+
+      "ORDER BY d.depart_id ASC",
+      
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -69,17 +57,28 @@ sql.get("/faction", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   var faction_id = query01.faction_id;
   con.query(
-    "SELECT f.faction_id,f.faction_name, " +
-      "dep.depart_id,dep.depart_name " +
+    "SELECT f.faction_id,f.faction_name "+
       "FROM " +
       pbh +
       "hr_faction AS f " +
-      "INNER JOIN " +
+      " ORDER BY f.faction_id ASC",
+    
+    (error, results, fields) => {
+      if (error) throw error;
+      res.status(200);
+      res.json(results);
+    }
+  );
+});
+sql.get("/ward", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  var faction_id = query01.faction_id;
+  con.query(
+    "SELECT w.ward_id,w.ward_name "+
+      "FROM " +
       pbh +
-      "hr_depart AS dep " +
-      "ON (dep.faction_id = f.faction_id ) " +
-      "WHERE f.faction_id = ?"+
-      " ORDER BY f.faction_id ASC",[faction_id],
+      "hr_ward AS w " +
+      " ORDER BY w.ward_id ASC",
     
     (error, results, fields) => {
       if (error) throw error;

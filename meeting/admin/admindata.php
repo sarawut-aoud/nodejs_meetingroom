@@ -210,6 +210,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
     <script src="../plugins/fontawesome-pro6/js/all.min.js"></script>
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
+    <script src="../plugins/select2/js/select2.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -240,20 +241,21 @@ if ($_SESSION['mt_duty_id'] == 2) {
         $(document).ready(function() {
 
             $('.my-colorpicker1').colorpicker();
-            $('.select2').select2();
-            $(document).ready(function() {
-                var prefix = ''
-                if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
-                    prefix = 'นาย'
-                } else {
-                    prefix = 'นาง'
+             $('.select2').select2();
+           
+            
+            var prefix = ''
+            if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
+                prefix = 'นาย'
+            } else {
+                prefix = 'นาง'
 
-                }
-                $('#prefix').val(prefix);
-                $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
-                $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
-                $('#posiotion').val('');
-            })
+            }
+            $('#prefix').val(prefix);
+            $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
+            $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
+            $('#posiotion').val('');
+
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>'
             var path = "<?php echo $_SESSION['mt_path'] ?>";
             var ward_id = "<?php echo $_SESSION['mt_ward_id'] ?>";
@@ -634,6 +636,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         .appendTo("#tb_Tools_wrapper .col-md-6:eq(0)");
 
                     $(document).on('click', '.btnToolEdit', function(e) {
+
                         // $(".btnToolEdit").click(function(e) {
                         e.preventDefault();
                         var to_id = $(this).attr('id');
@@ -665,8 +668,9 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                     url: path + "/depart",
                                     success: function(result) {
                                         var depart = '';
+                                        
                                         for (ii in result) {
-                                            if (result[ii].depart_id == depart_id && result[ii].faction_id == fac_id ) {
+                                            if (result[ii].depart_id == depart_id) {
                                                 depart += '<option selected value="' + result[ii].depart_id + '" selected >' + result[ii]
                                                     .depart_name +
                                                     '</option>'
@@ -677,8 +681,6 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                             }
 
                                         }
-
-
                                         $('#modal_depart_id').html(depart);
                                     }
                                 })
@@ -686,24 +688,46 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                     type: "get",
                                     dataType: "json",
                                     url: path + "/depart/faction",
-                                    data: {
-                                        faction_id: fac_id,
-                                    },
+
                                     success: function(fac) {
                                         var fact = '';
-                                        for (ii in result) {
-                                            if (result[ii].faction_id == fac_id) {
-                                                fact += '<option selected value="' + result[ii].faction_id + '" selected >' + result[ii]
+                                        for (ii in fac) {
+                                            
+                                            if (fac[ii].faction_id == fac_id) {
+                                                fact += '<option selected value="' + fac[ii].faction_id + '" selected >' + fac[ii]
                                                     .faction_name +
                                                     '</option>'
                                             } else {
-                                                fact += '<option value="' + result[ii].faction_id + '">' + result[ii]
+                                                fact += '<option value="' + fac[ii].faction_id + '">' + fac[ii]
                                                     .faction_name +
                                                     '</option>';
                                             }
 
                                         }
                                         $('#modal_fac_id').html(fact);
+                                    }
+
+                                })
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/depart/ward",
+
+                                    success: function(result) {
+                                        var ward = '';
+                                        for (ii in result) {
+                                            if (result[ii].ward_id == ward_id) {
+                                                ward += '<option selected value="' + result[ii].ward_id + '" selected >' + result[ii]
+                                                    .ward_name +
+                                                    '</option>'
+                                            } else {
+                                                ward += '<option value="' + result[ii].ward_id + '">' + result[ii]
+                                                    .ward_name +
+                                                    '</option>';
+                                            }
+
+                                        }
+                                        $('#modal_ward_id').html(ward);
                                     }
 
                                 })

@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_duty_id'] == 2) {
+if ($_SESSION['mt_duty_id'] ) {
 } else {
     echo "<script>
             window.setTimeout(function() {
@@ -83,11 +83,11 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                         <div class="input-group">
                                             <label class=" col-form-label">คำนำหน้า :</label>
                                             <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix"  readonly />
+                                                <input type="text" class="form-control " id="prefix" name="prefix" readonly />
                                             </div>
                                             <label class=" col-form-label">ชื่อ - นามสกุล :</label>
                                             <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name"  readonly />
+                                                <input type="text" class="form-control " id="name" name="name" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                             <label class=" col-form-label">แผนก :</label>
                                             <div class="col-md">
 
-                                                <input type="text" class="form-control " id="de_name" name="de_name"  readonly />
+                                                <input type="text" class="form-control " id="de_name" name="de_name" readonly />
                                             </div>
                                             <label class=" col-form-label">ตำแหน่ง :</label>
                                             <div class="col-md">
@@ -166,7 +166,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                             <div class="input-group">
                                                 <label class="col-md-3 col-form-label">สถานะ :</label>
                                                 <div class="col-md-9">
-                                                <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="ro_public" name="ro_public">
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="ro_public" name="ro_public">
                                                         <option value="Y">Online</option>
                                                         <option value="N">Offline</option>
                                                     </select>
@@ -211,20 +211,20 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                         <!-- //? Input People -->
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-3 col-form-label">duty :</label>
+                                                <label class="col-md-3 col-form-label">ward :</label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="">
-                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="ward_id">
+
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="input-group">
-                                                <label class="col-md-3 col-form-label">ward :</label>
+                                                <label class="col-md-3 col-form-label">faction :</label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="">
-                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="fac_id">
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -234,7 +234,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                                 <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="de_id">
-                                                        <option value="">-- เลือกแผนกที่ดูแล --</option>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -339,12 +339,14 @@ if ($_SESSION['mt_duty_id'] == 2) {
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
-
+            var depart_id ='<?php echo $_SESSION['mt_de_id']; ?>';
+            var ward_id ='<?php echo $_SESSION['mt_ward_id']; ?>';
+            var fac_id ='<?php echo $_SESSION['mt_faction_id']; ?>';
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
-            if(<?php echo $_SESSION['mt_prefix']; ?> == 1){
+            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
                 prefix = 'นาย';
-            }else if (<?php echo $_SESSION['mt_prefix']; ?> == 2){
+            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
                 prefix = 'นาง';
             }
             $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
@@ -376,13 +378,65 @@ if ($_SESSION['mt_duty_id'] == 2) {
                 dataType: "json",
                 url: path + "/depart",
                 success: function(result) {
-                    var depart = '<option value="0" selected disabled>-- เลือกแผนกที่ดูแล --</option>';
+                    var depart = '';
+                   
                     for (ii in result) {
-                        depart += '<option value="' + result[ii].de_id + '">' + result[ii]
-                            .de_name +
-                            '</option>';
+                        if (result[ii].depart_id == depart_id) {
+                            depart += '<option selected value="' + result[ii].depart_id + '" selected >' + result[ii]
+                                .depart_name +
+                                '</option>'
+                        } else {
+                            depart += '<option value="' + result[ii].depart_id + '">' + result[ii]
+                                .depart_name +
+                                '</option>';
+                        }
+
                     }
                     $('#de_id').html(depart);
+
+                }
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/depart/faction",
+                success: function(result) {
+                    var fact = '';
+                    for (ii in result) {
+                        if (result[ii].faction_id == fac_id) {
+                            fact += '<option selected value="' + result[ii].faction_id + '" selected >' + result[ii]
+                                .faction_name +
+                                '</option>'
+                        } else {
+                            fact += '<option value="' + result[ii].faction_id + '">' + result[ii]
+                                .faction_name +
+                                '</option>';
+                        }
+
+                    }
+                    $('#fac_id').html(fact);
+
+                }
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/depart/ward",
+                success: function(result) {
+                    var ward = '';
+                    for (ii in result) {
+                        if (result[ii].ward_id == ward_id) {
+                            ward += '<option selected value="' + result[ii].ward_id + '" selected >' + result[ii]
+                                .ward_name +
+                                '</option>'
+                        } else {
+                            ward += '<option value="' + result[ii].ward_id + '">' + result[ii]
+                                .ward_name +
+                                '</option>';
+                        }
+
+                    }
+                    $('#ward_id').html(ward);
 
                 }
             });
@@ -450,59 +504,8 @@ if ($_SESSION['mt_duty_id'] == 2) {
                     $("#ro_detail")[0].reset();
                 }
             });
-            // department
-            $(document).on('click', '#btnDept', function(e) {
-                // $('#btnDept').click(function(e) {
-                e.preventDefault();
-                var de_name = $('#de_name2').val();
-                var de_phone = $('#de_phone2').val();
-                $.ajax({
-                    type: "POST",
-                    url: path + "/depart",
-                    dataType: "json",
-                    data: {
-                        de_name: de_name,
-                        de_phone: de_phone,
-                    },
-                    success: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'บันทึกข้อมูลแผนกสำเร็จ'
-
-                        }).then((result) => {
-                            $("#de_name")[0].focus();
-                        })
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-                        Toast.fire({
-                            icon: 'warning',
-                            title: 'ไม่สามารถบันทึกข้อมูลแผนกได้'
-
-                        }).then((result) => {
-
-                            $("#de_name")[0].focus();
-
-                        })
-
-                    }
-                });
 
 
-
-            });
 
             /// Tools
             $(document).on('click', '#btnTools', function(e) {
