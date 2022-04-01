@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 const dbname = require("../function/database");
+const { json } = require("body-parser");
 const ho = dbname.ho + ".";
 const pbh = dbname.pbh + ".";
 
@@ -106,7 +107,15 @@ sql.get("/", async (req, res) => {
   } else if (to_id ) {
     con.query(
       "SELECT t.to_id ,t.to_name  " +
+        // " f.faction_id ,f.faction_name , d.depart_id , d.depart_name  " +
         "FROM tbl_tools AS t " +
+        // "INNER JOIN " +
+        // pbh +
+        // " hr_ward  AS w ON (t.ward_id = w.ward_id) " +
+        // "INNER JOIN "+pbh+"hr_faction AS f "+
+        // "ON (w.faction_id = f.faction_id)"+
+        // "INNER JOIN "+pbh+"hr_depart AS d "+
+        // "ON (w.depart_id = d.depart_id)"+
         "WHERE t.to_id = ? " +
         " ORDER BY t.to_id ASC ",
       [to_id],

@@ -71,7 +71,7 @@ require_once "../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <?php  require_once '../infomation.php' ?>
+                    <?php require_once '../infomation.php' ?>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
@@ -149,7 +149,19 @@ require_once "../login/check_session.php";
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
+            var prefix = ''
+            if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
+                prefix = 'นาย'
+            } else {
+                prefix = 'นาง'
 
+            }
+            $('#prefix').val(prefix);
+            $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
+            $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
+            $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
+            $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
@@ -176,14 +188,14 @@ require_once "../login/check_session.php";
 
             });
 
-          
+
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
                 url: path + "/event",
-                data:{
-                    ward_id:ward_id,
+                data: {
+                    ward_id: ward_id,
                 },
                 success: function(data) {
                     var i = 0;

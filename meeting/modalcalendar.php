@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade " id="calendarmodal" tabindex="-1" role="dialog">
     <!--กำหนด id ให้กับ modal-->
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header justify-content-center text-white edit-head">
                     <div class="text-center">

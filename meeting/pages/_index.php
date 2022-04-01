@@ -96,7 +96,7 @@ require_once "../login/check_session.php";
                             </div>
 
                         </div>
-                        
+
                     </div>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-6 col-md-12 ">
@@ -197,38 +197,16 @@ require_once "../login/check_session.php";
 
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
-            if(<?php echo $_SESSION['mt_prefix']; ?> == 1){
+            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
                 prefix = 'นาย';
-            }else if (<?php echo $_SESSION['mt_prefix']; ?> == 2){
+            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
                 prefix = 'นาง';
             }
             $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
             $('#prefix').val(prefix);
             $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
             $('#position').val("<?php echo $_SESSION['position']; ?>");
-            //     }
-            // $.ajax({
-            //     type: 'GET',
-            //     dataType: 'json',
-            //     url: path + "/user",
-            //     data: {
-            //         id: id,
-            //     },
-            //     success: function(results) {
-            //         for (i in results) {
-            //             var prefix = results[i].prefix;
-            //             var fname = results[i].firstname;
-            //             var lname = results[i].lastname;
-            //             var pos = results[i].position;
-            //             var dename = results[i].de_name;
-            //             var level = results[i].level;
-            //         }
-            //         $('#name').val(fname + ' ' + lname);
-            //         $('#prefix').val(prefix);
-            //         $('#de_name').val(dename);
-            //         $('#position').val(pos + "/" + level);
-            //     }
-            // })
+          
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -251,59 +229,59 @@ require_once "../login/check_session.php";
             });
 
 
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/rooms",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + '</option>';
-                    }
-                    $('#ro_name').html(data);
+            // $.ajax({
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     url: path + "/rooms",
+            //     success: function(result) {
+            //         var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
+            //         for (i in result) {
+            //             data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + '</option>';
+            //         }
+            //         $('#ro_name').html(data);
 
-                    $("#ro_name").change(function() {
-                        $('#people').prop('disabled', false);
-                        var ro_id = $(this).val();
-                        $.ajax({
-                            type: "GET",
-                            dataType: "json",
-                            url: path + "/rooms",
-                            data: {
-                                ro_id: ro_id,
-                            },
-                            success: function(result) {
-                                var row = '';
-                                for (ii in result) {
-                                    if (result[ii].ro_id == ro_id) {
-                                        var people = result[ii].ro_people;
-                                        var detail = result[ii].ro_detail;
-                                        for (x = 1; x <= people; x++) {
-                                            row += '<option value="' + x + '" > ' + x + '</option>';
-                                        }
-                                    }
-                                }
-                                $('#ro_people').val(people);
-                                $('#ro_detail').val(detail);
-                                $('#people').html(row);
-                            }
-                        });
-                    });
-                }
-            });
+            //         $("#ro_name").change(function() {
+            //             $('#people').prop('disabled', false);
+            //             var ro_id = $(this).val();
+            //             $.ajax({
+            //                 type: "GET",
+            //                 dataType: "json",
+            //                 url: path + "/rooms",
+            //                 data: {
+            //                     ro_id: ro_id,
+            //                 },
+            //                 success: function(result) {
+            //                     var row = '';
+            //                     for (ii in result) {
+            //                         if (result[ii].ro_id == ro_id) {
+            //                             var people = result[ii].ro_people;
+            //                             var detail = result[ii].ro_detail;
+            //                             for (x = 1; x <= people; x++) {
+            //                                 row += '<option value="' + x + '" > ' + x + '</option>';
+            //                             }
+            //                         }
+            //                     }
+            //                     $('#ro_people').val(people);
+            //                     $('#ro_detail').val(detail);
+            //                     $('#people').html(row);
+            //                 }
+            //             });
+            //         });
+            //     }
+            // });
 
-            $.ajax({
-                type: 'GET',
-                dataType: 'json',
-                url: path + "/style",
-                success: function(result) {
-                    var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
-                    for (i in result) {
-                        data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
-                    }
-                    $('#style').html(data);
-                }
-            });
+            // $.ajax({
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     url: path + "/style",
+            //     success: function(result) {
+            //         var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
+            //         for (i in result) {
+            //             data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
+            //         }
+            //         $('#style').html(data);
+            //     }
+            // });
 
             $.ajax({
                 type: 'GET',
@@ -405,8 +383,9 @@ require_once "../login/check_session.php";
                             var people = results[i].ev_people;
                             var name = results[i].firstname;
                             var lastname = results[i].lastname;
-                            var dename = results[i].de_name;
-                            var dephone = results[i].de_phone;
+                            var dename = results[i].depart_name;
+                            var ward_name = results[i].ward_name;
+                            var fac_name = results[i].faction_name;
                         }
                     }
                     $("#calendarmodal").modal("show");
@@ -421,8 +400,8 @@ require_once "../login/check_session.php";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(dename);
-                    $("#calendarmodal-dephone").html(dephone);
+                    $("#calendarmodal-dename").html(ward_name+'<br>'+fac_name+'<br>'+dename);
+                    // $("#calendarmodal-dephone").html(dephone);
                 },
             });
         }

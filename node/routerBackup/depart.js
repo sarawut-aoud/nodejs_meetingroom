@@ -1,10 +1,14 @@
 const express = require("express");
 const path = require("path");
+
 const app = express();
 const bodyParser = require("body-parser");
+
 const cors = require("cors");
 const con = require("../config/config");
+
 const dbname = require("../function/database");
+const { json } = require("body-parser");
 const ho = dbname.ho + ".";
 const pbh = dbname.pbh + ".";
 
@@ -18,7 +22,7 @@ const sql = express.Router();
 sql.get("/", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   let depart_id = query01.depart_id;
-
+  // if (!depart_id) {
     con.query(
       "SELECT d.depart_id ,  d.depart_name "+
       "FROM "+pbh+"hr_depart AS d "+

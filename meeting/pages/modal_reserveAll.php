@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">ตั้งแต่ :</label> <span class="col-form-label col-md-5 modal1_starttime" id="modal1_starttime"></span>
+                            <label class="col-md-3 col-form-label ">ตั้งแต่ :</label> <span class="col-form-label col-md-5 modal1_starttime" id="modal2_starttime"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
@@ -70,8 +70,8 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">แผนก :</label>
-                            <span class="col-form-label col-md-5" id="modal2_dept"></span>
+                            <label class="col-md-3 col-form-label ">ward <br> faction <br> depart :</label>
+                            <span class="col-form-label col-md" id="modal2_dept"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">

@@ -74,46 +74,7 @@ require_once "../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-8 col-md-12 ">
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body mb-0">
-                                    <div class="form-group row">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">คำนำหน้า :</label>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ชื่อ - นามสกุล :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" readonly />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">แผนก :</label>
-                                            <div class="col-md">
-
-                                                <input type="text" class="form-control " id="de_name" name="de_name" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ตำแหน่ง :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                    <?php require_once '../infomation.php'; ?>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
@@ -197,7 +158,7 @@ require_once "../login/check_session.php";
     <script src="../public/javascript/adminlte.js"></script>
     <script>
         $(document).ready(function() {
-           
+
             cache_clear();
 
             setInterval(function() {
@@ -252,29 +213,19 @@ require_once "../login/check_session.php";
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>',
                 de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
 
-            // $.ajax({
-            //     type: 'GET',
-            //     dataType: 'json',
-            //     url: path + "/user",
-            //     data: {
-            //         id: id,
-            //     },
-            //     success: function(results) {
-            //         for (i in results) {
-            //             var prefix = results[i].prefix;
-            //             var fname = results[i].firstname;
-            //             var lname = results[i].lastname;
-            //             var pos = results[i].position;
-            //             var dename = results[i].de_name;
-            //             var level = results[i].level;
-            //         }
-            //         $('#name').val(fname + ' ' + lname);
-            //         $('#prefix').val(prefix);
-            //         $('#de_name').val(dename);
-            //         $('#position').val(pos + "/" + level);
-            //     }
-            // })
-
+            // แสดงข้อมูลส่วนตัว
+            var prefix = '';
+            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
+                prefix = 'นาย';
+            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
+                prefix = 'นาง';
+            }
+            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
+            $('#prefix').val(prefix);
+            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
+            $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
+            $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
             $.ajax({
                 type: "get",

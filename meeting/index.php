@@ -359,7 +359,7 @@ $path = "http://127.0.0.1:4200";
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = '<?php echo $path; ?>';
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
@@ -382,8 +382,9 @@ $path = "http://127.0.0.1:4200";
                             var people = results[i].ev_people;
                             var name = results[i].firstname;
                             var lastname = results[i].lastname;
-                            var dename = results[i].de_name;
-                            var dephone = results[i].de_phone;
+                            var dename = results[i].depart_name;
+                            var ward_name = results[i].ward_name;
+                            var fac_name = results[i].faction_name;
                         }
                     }
                     $("#calendarmodal").modal("show");
@@ -398,8 +399,8 @@ $path = "http://127.0.0.1:4200";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(dename);
-                    $("#calendarmodal-dephone").html(dephone);
+                    $("#calendarmodal-dename").html(ward_name+'<br>'+fac_name+'<br>'+dename);
+                    // $("#calendarmodal-dephone").html(dephone);
                 },
             });
         }

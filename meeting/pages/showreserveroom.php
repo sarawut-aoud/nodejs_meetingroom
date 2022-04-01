@@ -73,62 +73,9 @@ require_once "../login/check_session.php";
             <div class="content-header">
                 <div class="container-fluid ">
                     <div class="row ">
-                        <div class="col-xl-6 col-md-12 ">
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body mb-0">
-                                    <div class="form-group row">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">คำนำหน้า :</label>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ชื่อ - นามสกุล :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" readonly />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">แผนก :</label>
-                                            <div class="col-md">
-
-                                                <input type="text" class="form-control " id="de_name" name="de_name"  readonly />
-                                            </div>
-                                            <label class=" col-form-label">ตำแหน่ง :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position"  readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-xl-6 col-md-12 ">
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4><i class="fa-solid fa-fill-drip"></i> สีประจำห้องประชุม</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body mb-0">
-                                    <div id="showcolor">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
-                            <div class="card shadow">
+                            <div class="card shadow mt-3">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
                                         <h4><i class=" fa-regular fa-calendar-check"></i> เลือกห้องประชุม เพื่อทำการจอง</h4>
@@ -260,10 +207,7 @@ require_once "../login/check_session.php";
                                                         <span style="font-size: 14px;">( ZOOM ,Google Meetroom , Microsoft Team ,อื่นๆ )</span>
                                                     </div>
                                                 </div>
-
                                             </div>
-
-
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
@@ -279,8 +223,21 @@ require_once "../login/check_session.php";
                             </div>
                             <!-- /.card -->
                         </div>
-                        <!-- ./col -->
                         <div class="col-xl-6 col-md-12 ">
+                            <div class="card shadow">
+                                <div class="card-header text-white card-head ">
+                                    <div class="text-center">
+                                        <h4><i class="fa-solid fa-fill-drip"></i> สีประจำห้องประชุม</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body mb-0">
+                                    <div id="showcolor">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                        <!-- ./col -->
+                        <div class="col-xl-12 col-md-12 ">
                             <div class="card ">
                                 <div class="card-header text-white card-head ">
                                     <div class="text-center">
@@ -297,6 +254,9 @@ require_once "../login/check_session.php";
                         </div>
                         <!-- /.col -->
                     </div>
+                        </div>
+                    </div>
+                    
                     <?php require_once '../modalcalendar.php'; ?>
                 </div><!-- /.container-fluid -->
             </div>
@@ -544,7 +504,7 @@ require_once "../login/check_session.php";
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = "<?php echo $_SESSION['mt_path']; ?>";
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
@@ -567,8 +527,9 @@ require_once "../login/check_session.php";
                             var people = results[i].ev_people;
                             var name = results[i].firstname;
                             var lastname = results[i].lastname;
-                            var dename = results[i].de_name;
-                            var dephone = results[i].de_phone;
+                            var dename = results[i].depart_name;
+                            var ward_name = results[i].ward_name;
+                            var fac_name = results[i].faction_name;
                         }
                     }
                     $("#calendarmodal").modal("show");
@@ -583,8 +544,8 @@ require_once "../login/check_session.php";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(dename);
-                    $("#calendarmodal-dephone").html(dephone);
+                    $("#calendarmodal-dename").html(ward_name+'<br>'+fac_name+'<br>'+dename);
+                    // $("#calendarmodal-dephone").html(dephone);
                 },
             });
         }
