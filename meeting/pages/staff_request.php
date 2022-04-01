@@ -101,7 +101,7 @@ require_once "../login/check_session.php";
                     <!-- ./row form -->
 
 
-                    <?php require_once './modal_approve.php'; ?>
+                    <?php require_once './modal_stuff_req.php'; ?>
 
                 </div><!-- /.container-fluid -->
             </div>
@@ -145,25 +145,6 @@ require_once "../login/check_session.php";
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script>
-        $(document).ready(function() {
-            cache_clear();
-
-            setInterval(function() {
-                cache_clear()
-            }, 5000);
-        });
-
-
-        function cache_clear() {
-
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-
-
-        }
-    </script>
 
     <script>
         $(document).ready(function() {
@@ -184,8 +165,9 @@ require_once "../login/check_session.php";
             $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
             var path = '<?php echo $_SESSION['mt_path'] ?>',
-                level = '<?php echo $_SESSION['mt_lv_id']; ?>',
+                level = '<?php echo $_SESSION['mt_duty_id']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>';
+                ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
 
             $.ajax({
                 type: "get",
@@ -203,6 +185,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
+                    $("#bage1").html(bage);
 
                 }
 
@@ -226,6 +209,7 @@ require_once "../login/check_session.php";
                 url: path + "/event/status",
                 data: {
                     level: level,
+                    ward_id: ward_id,
                 },
                 success: function(data) {
                     var i = 0;
@@ -337,31 +321,32 @@ require_once "../login/check_session.php";
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
                                         var to_name = result[ii].to_name;
-
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
-                                        var de_phone = result[ii].de_phone;
-                                        var id = result[ii].id;
+                                        var de_name = result[ii].depart_name;
+                                        var ward_name = result[ii].ward_name;
+                                        var fac_name = result[ii].faction_name;
+
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
+                                        var pos = result[ii].duty_name;
+                                        var toolmore = result[ii].ev_toolmore;
+
                                         $.ajax({
                                             type: 'get',
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
                                             success: function(tool) {
                                                 // console.log(result[ii].event_id)
                                                 var to_name = ''
                                                 for (i in tool) {
-
                                                     if (tool[i].ev_id == ev_id) {
-
                                                         to_name += '<div class="col-form-label d-inline mr-3 ml-3">📢 ' + tool[i].to_name + '  </div>'
-
                                                     }
-
                                                     $("#modal2_tool").html(to_name);
                                                 }
 
@@ -386,16 +371,21 @@ require_once "../login/check_session.php";
                                 $("#modal2_ev_id").html(ev_id);
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
-                                $("#modal2_title").html(ev_title);
+                                $("#modal1_title").html(ev_title);
                                 $("#modal2_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
                                 $("#modal2_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
 
-                                $("#modal2_people").html(ev_people + '  คน');
+                                $("#modal1_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(de_name);
+                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
                                 $("#modal2_pos").html(pos);
-                                $("#modal2_phone").html(de_phone);
+                                if (toolmore == null) {
+                                    $("#modal2_toolmore").html('<span style="color:red;">ไม่มี</span>');
+                                } else {
+                                    $("#modal2_toolmore").html(toolmore);
+                                }
+
                             }
                         });
                     });
@@ -436,10 +426,14 @@ require_once "../login/check_session.php";
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
+                                        var toolmore = result[ii].ev_toolmore;
                                         $.ajax({
                                             type: 'get',
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
                                             success: function(tool) {
 
                                                 var x = 0;
@@ -462,7 +456,7 @@ require_once "../login/check_session.php";
                                     }
                                 }
 
-                                $("#modalStatus").modal("show");
+                                $("#modalStatusStaff").modal("show");
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
                                 $("#modal_timeEnd").val(ev_endtime);
@@ -474,7 +468,11 @@ require_once "../login/check_session.php";
                                 $("#modal_ev_id").val(event_id);
                                 $("#modal_ro_id").val(ro_id);
                                 $("#modal_st_id").val(st_id);
-
+                                if (toolmore == null) {
+                                    $("#modal_toolmore").html('<span style="color:red;">ไม่มี</span>');
+                                } else {
+                                    $("#modal_toolmore").html(toolmore);
+                                }
 
                             }
                         });

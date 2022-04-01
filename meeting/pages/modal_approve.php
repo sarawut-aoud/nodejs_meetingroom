@@ -1,3 +1,5 @@
+
+
 <!-- Modal Status -->
 <form action="" method="POST">
     <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -14,19 +16,19 @@
                     <div class="form-group row  mb-2">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label ">สถานที่ประชุม :</label>
-                            <span class="col-form-label col-md-5" id="modal_roName"></span>
+                            <span class="col-form-label col-md-5" id="modal2_roname"></span>
                             <label class=" col-form-label  col-md-2">รูปแบบห้อง :</label>
                             <span class="col-form-label" id="modal_style"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">หัวข้อเรื่องประชุม :</label> <span class="col-form-label col-md-5" id="modal_title"></span>
+                            <label class="col-md-3 col-form-label ">หัวข้อเรื่องประชุม :</label> <span class="col-form-label col-md-5" id="modal2_title"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">จำนวนผู้เข้าประชุม :</label> <span class="col-form-label col-md-5" id="modal_people"></span>
+                            <label class="col-md-3 col-form-label ">จำนวนผู้เข้าประชุม :</label> <span class="col-form-label col-md-5" id="modal2_people"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
@@ -47,6 +49,12 @@
                             <span class="col-form-label col-md" id="modal_tool"></span>
                         </div>
                     </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">อื่น ๆ : </label>
+                            <span class="col-form-label col-md" id="modal_toolmore"></span>
+                        </div>
+                    </div>
                     <hr style="size: 10px; color:black">
                     <div class="form-group row  mb-2">
                         <div class="input-group">
@@ -56,8 +64,8 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">แผนก :</label>
-                            <span class="col-form-label col-md-5" id="modal_dept"></span>
+                            <label class="col-md-3 col-form-label ">ward : <br> faction : <br>แผนก :</label>
+                            <span class="col-form-label col-md" id="modal_dept"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
@@ -119,12 +127,12 @@
                     <!-- style="overflow-x: scroll;" -->
                     <!--//? /.html data -->
                     <div class="form-group row  mb-2 ">
-                       
-                            <center style="font-size: 22px;">
-                                <label class="col-form-label ">สถานะ :</label>
-                                <span  class="col-form-label" id="modal2_status"></span>
-                            </center>
-                        
+
+                        <center style="font-size: 22px;">
+                            <label class="col-form-label ">สถานะ :</label>
+                            <span class="col-form-label" id="modal2_status"></span>
+                        </center>
+
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
@@ -136,12 +144,12 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">หัวข้อเรื่องประชุม :</label> <span class="col-form-label col-md-5" id="modal2_title"></span>
+                            <label class="col-md-3 col-form-label ">หัวข้อเรื่องประชุม :</label> <span class="col-form-label col-md-5" id="modal1_title"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">จำนวนผู้เข้าประชุม :</label> <span class="col-form-label col-md-5" id="modal2_people"></span>
+                            <label class="col-md-3 col-form-label ">จำนวนผู้เข้าประชุม :</label> <span class="col-form-label col-md-5" id="modal1_people"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
@@ -161,6 +169,14 @@
                             <label class="col-md-3 col-form-label ">อุปกรณ์โสตทัศนูปกรณ์ : </label>
                             <span class="col-form-label col-md" id="modal2_tool"></span>
                         </div>
+
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">อื่น ๆ : </label>
+                            <span class="col-form-label col-md" id="modal2_toolmore"></span>
+                        </div>
+
                     </div>
                     <hr style="size: 10px; color:black">
                     <div class="form-group row  mb-2">
@@ -171,8 +187,8 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">แผนก :</label>
-                            <span class="col-form-label col-md-5" id="modal2_dept"></span>
+                            <label class="col-md-3 col-form-label ">ward : <br> faction : <br>แผนก :</label>
+                            <span class="col-form-label col-md" id="modal2_dept"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">

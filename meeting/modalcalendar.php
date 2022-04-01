@@ -9,7 +9,7 @@
                     </div>
                 </div>
             <br>
-            <div class="col-lg-9">
+            <div class="col-lg-9 ml-4">
                 <div class="form-group row">
                     <b class="col-lg-6">สถานที่ประชุม :</b>
                     <div class="col-lg-6">

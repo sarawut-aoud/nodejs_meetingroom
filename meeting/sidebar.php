@@ -69,13 +69,13 @@ function appove($ward, $duty)
         $link = '  <li class="nav-item  ">
                     <a href="room_approve.php" class="nav-link active">
                         <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                        <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-primary "></span>
+                        <p>รายการที่ต้องอนุมัติ</p> <span id="bage" class="badge badge-primary "></span><center>(หัวหน้า)</center>
                     </a>
                  </li>
                  <li class="nav-item">
                     <a href="staff_request.php" class="nav-link active">
                         <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                        <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-primary" id="bage"></span>
+                        <p>รายการที่ต้องอนุมัติ</p> <span id="bage1" class="badge badge-primary" ></span><center>(ผู้ปฏิบัติงาน) </center>
                     </a>
                  </li>  
                  <li class="nav-item  ">

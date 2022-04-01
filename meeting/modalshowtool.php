@@ -24,11 +24,15 @@
                     <h4 class=" rounded w-50 bg-primary ">ต้องเตรียม<h4>
                 </center>
                 <div class="form-group row  mb-2">
-
-
                     <div class="input-group">
                         <label class="col-md-3 col-form-label ">อุปกรณ์โสตทัศนูปกรณ์ : </label>
                         <span class="col-form-label col-md" id="modal2_tool"></span>
+                    </div>
+                </div>
+                <div class="form-group row  mb-2">
+                    <div class="input-group">
+                        <label class="col-md-3 col-form-label ">อื่น ๆ : </label>
+                        <span class="col-form-label col-md" id="modal2_toolmore"></span>
                     </div>
                 </div>
                 <hr style="size: 10px; color:black">

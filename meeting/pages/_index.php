@@ -76,7 +76,7 @@ require_once "../login/check_session.php";
                     <div class="row mb-4 justify-content-center">
                         <div class="col-xl-2 col-md-12 ">
                             <center>
-                                <a href="adminroom.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
+                                <a href="showreserveroom.php" style="font-size: 25px;" class="btn btn-lg btn-info"><i style="font-size: 25px;" class=" fa-regular fa-calendar-check"></i> จองห้องประชุม</a>
                             </center>
                         </div>
                     </div>
@@ -223,6 +223,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
+                    $("#bage1").html(bage);
 
                 }
 
@@ -331,6 +332,7 @@ require_once "../login/check_session.php";
                     timeZone: "Australia/Melbourne"
                 })
                 .slice(0, 10);
+               
             $.ajax({
                 type: "get",
                 dataType: "json",

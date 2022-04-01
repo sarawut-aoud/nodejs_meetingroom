@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
   if (!id && !ward_id) {
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-        "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name " +
+        "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN " +
@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
     if (!ward_id) {
       con.query(
         "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-          "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name,users.person_id " +
+          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore ,ro.ro_id, ro.ro_name,users.person_id " +
           "FROM tbl_event AS ev " +
           "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
           "INNER JOIN " +
@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
     } else {
       con.query(
         "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-          "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name, w.ward_name  " +
+          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name, w.ward_name  " +
           "FROM tbl_event AS ev " +
           "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
           "INNER JOIN " +
@@ -86,6 +86,8 @@ router.get("/", async (req, res) => {
 });
 //? SELECT Today
 router.get("/today", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  var today = query01.today;
   con.query(
     "SELECT ev.ev_title,  ev.ev_starttime,ev.ev_endtime , ro.ro_color, " +
       "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
@@ -104,7 +106,7 @@ router.get("/today", async (req, res) => {
 router.get("/", async (req, res) => {
   con.query(
     "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-      "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name " +
+      "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
       "FROM tbl_event AS ev " +
       "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN " +
@@ -127,7 +129,7 @@ router.get("/request", async (req, res) => {
         "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
         "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,  " +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,ev_toolmore,  " +
         "ro.ro_id, ro.ro_name, ro.ro_people, " +
         "st.st_id, st.st_name," +
         " users.person_firstname AS firstname ,users.person_lastname AS lastname, " +
@@ -141,9 +143,15 @@ router.get("/request", async (req, res) => {
       "INNER JOIN " +
         pbh +
         "hr_level AS l ON (l.person_id = users.person_id)" +
-        "INNER JOIN "+pbh+"hr_duty as du ON (l.duty_id = du.duty_id )"+
-        "INNER JOIN "+pbh+"hr_ward as w ON (l.ward_id = w.ward_id )"+
-        "INNER JOIN "+pbh+"hr_faction as f ON (l.faction_id = f.faction_id )"+
+        "INNER JOIN " +
+        pbh +
+        "hr_duty as du ON (l.duty_id = du.duty_id )" +
+        "INNER JOIN " +
+        pbh +
+        "hr_ward as w ON (l.ward_id = w.ward_id )" +
+        "INNER JOIN " +
+        pbh +
+        "hr_faction as f ON (l.faction_id = f.faction_id )" +
         "INNER JOIN  " +
         pbh +
         "hr_depart AS dept ON (l.depart_id = dept.depart_id) ",
@@ -160,7 +168,7 @@ router.get("/request", async (req, res) => {
         "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
         "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, " +
+        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,ev_toolmore, " +
         "ro.ro_id, ro.ro_name, ro.ro_people, " +
         "st.st_id, st.st_name," +
         " users.person_firstname AS firstname ,users.person_lastname AS lastname, " +
@@ -174,13 +182,19 @@ router.get("/request", async (req, res) => {
         "INNER JOIN " +
         pbh +
         "hr_level AS l ON (l.person_id = users.person_id)" +
-        "INNER JOIN "+pbh+"hr_duty as du ON (l.duty_id = du.duty_id )"+
-        "INNER JOIN "+pbh+"hr_ward as w ON (l.ward_id = w.ward_id )"+
-        "INNER JOIN "+pbh+"hr_faction as f ON (l.faction_id = f.faction_id )"+
+        "INNER JOIN " +
+        pbh +
+        "hr_duty as du ON (l.duty_id = du.duty_id )" +
+        "INNER JOIN " +
+        pbh +
+        "hr_ward as w ON (l.ward_id = w.ward_id )" +
+        "INNER JOIN " +
+        pbh +
+        "hr_faction as f ON (l.faction_id = f.faction_id )" +
         "INNER JOIN  " +
         pbh +
-        "hr_depart AS dept ON (l.depart_id = dept.depart_id) "+
-      "WHERE ev.ev_id = ?",
+        "hr_depart AS dept ON (l.depart_id = dept.depart_id) " +
+        "WHERE ev.ev_id = ?",
       [ev_id],
       (error, results, fields) => {
         if (error) throw error;
@@ -265,7 +279,7 @@ router.get("/count/user", async (req, res, next) => {
     [id],
     (error, results, fields) => {
       if (error) throw error;
-      
+
       if (results.length > 0) {
         for (var i = 0; i < results.length; i++) {
           var ev_id = results[i].ev_id;
@@ -307,7 +321,7 @@ router.post("/calendar", async (req, res) => {
     "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
       "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
       "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
-      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate,ev_toolmore, " +
       " ro.ro_name, ro.ro_color," +
       "st.st_name," +
       "users.person_firstname as firstname ,users.person_lastname as lastname," +
@@ -542,7 +556,7 @@ router.post("/status", async (req, res) => {
         "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
         " ev.ev_status,ev.ev_starttime, " +
-        "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name " +
+        "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN " +
@@ -561,11 +575,14 @@ router.post("/status", async (req, res) => {
         res.json(results);
       }
     );
-  } else if (ward_id == "48") {
+  } else if (ward_id == "48" && level == 1) {
     // STAFF
     con.query(
-      "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-        "ev.ev_endtime, ev.ev_people,ev.ev_createdate, ro.ro_id, ro.ro_name " +
+      "SELECT ev.ev_id , ev.event_id, ev.ev_title, " +
+        "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
+        "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
+        " ev.ev_status,ev.ev_starttime, " +
+        "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN " +

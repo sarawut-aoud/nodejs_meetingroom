@@ -182,7 +182,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-
+                    $("#bage1").html(bage);
                 }
 
             });
@@ -294,7 +294,7 @@ require_once "../login/check_session.php";
                             success: function(result) {
                                 for (ii in result) {
                                     if (result[ii].ev_id == ev_id) {
-
+                                        var evid = result[ii].ev_id;
                                         var event_id = result[ii].event_id;
                                         var ev_title = result[ii].ev_title;
                                         var ev_startdate = result[ii].ev_startdate;
@@ -309,17 +309,21 @@ require_once "../login/check_session.php";
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
-                                        var de_phone = result[ii].de_phone;
+                                        var de_name = result[ii].depart_name;
                                         var id = result[ii].id;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
-
+                                        var pos = result[ii].duty_name;
+                                        var ward_name = result[ii].ward_name;
+                                        var fac_name = result[ii].faction_name;
+                                        var toolmore = result[ii].ev_toolmore;
                                         $.ajax({
                                             type: 'get',
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
+                                            data: {
+                                                ev_id: evid,
+                                            },
                                             success: function(tool) {
                                                 // console.log(result[ii].event_id)
                                                 var to_name = ''
@@ -355,16 +359,21 @@ require_once "../login/check_session.php";
                                 $("#modal2_ev_id").html(ev_id);
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
-                                $("#modal2_title").html(ev_title);
+                                $("#modal1_title").html(ev_title);
                                 $("#modal2_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
                                 $("#modal2_endtime").html(ev_enddate + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
 
-                                $("#modal2_people").html(ev_people + '  คน');
+                                $("#modal1_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(de_name);
+                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
                                 $("#modal2_pos").html(pos);
-                                $("#modal2_phone").html(de_phone);
+                                // $("#modal2_phone").html(de_phone);
+                                if (toolmore == null) {
+                                    $("#modal2_toolmore").html('<span style="color:red;">ไม่มี</span>');
+                                } else {
+                                    $("#modal2_toolmore").html(toolmore);
+                                }
                             }
                         });
                     });
@@ -384,7 +393,7 @@ require_once "../login/check_session.php";
                             success: function(result) {
                                 for (ii in result) {
                                     if (result[ii].ev_id == ev_id) {
-
+                                        var evid = result[ii].ev_id;
                                         var event_id = result[ii].event_id;
                                         var ev_title = result[ii].ev_title;
                                         var ev_startdate = result[ii].ev_startdate;
@@ -394,35 +403,35 @@ require_once "../login/check_session.php";
                                         var ev_endtime = result[ii].ev_endtime;
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
-                                        var to_name = result[ii].to_name;
-
+                                      
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
-                                        var de_phone = result[ii].de_phone;
+                                        var de_name = result[ii].depart_name;
                                         var id = result[ii].id;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
-                                        $.ajax({
+                                        var pos = result[ii].duty_name;
+                                        var ward_name = result[ii].ward_name;
+                                        var fac_name = result[ii].faction_name;
+                                        var toolmore = result[ii].ev_toolmore;
+                                       $.ajax({
                                             type: 'get',
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
+                                            data: {
+                                                ev_id: evid,
+                                            },
                                             success: function(tool) {
                                                 // console.log(result[ii].event_id)
                                                 var to_name = ''
                                                 for (i in tool) {
 
                                                     if (tool[i].ev_id == ev_id) {
-
                                                         to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
-
                                                     }
-
                                                     $("#modal_tool").html(to_name);
                                                 }
-
                                             }
                                         });
                                     }
@@ -440,19 +449,24 @@ require_once "../login/check_session.php";
                                 } else if (ev_status == 5) {
                                     var status = 'ยกเลิก'
                                 }
+                               
                                 $("#modalStatus").modal("show");
                                 $("#modal_ev_id").html(ev_id);
-                                $("#modal_roName").html(ro_name);
-                                $("#modal_title").html(ev_title);
-                                $("#modal_starttime").html(ev_startdate.split('T')[0] + ' เวลา ' + ev_starttime);
-                                $("#modal_endtime").html(ev_enddate.split('T')[0] + ' เวลา ' + ev_endtime);
+                                $("#modal2_roname").html(ro_name);
+                                $("#modal2_title").html(ev_title);
+                                $("#modal_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
+                                $("#modal_endtime").html(ev_enddate + ' เวลา ' + ev_endtime);
                                 $("#modal_style").html(st_name);
-                                // $("#modal_tool").html(to_name);
-                                $("#modal_people").html(ev_people + '  คน');
+                                $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal_name").html(firstname + ' ' + lastname);
-                                $("#modal_dept").html(de_name);
+                                $("#modal_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
                                 $("#modal_pos").html(pos);
-                                $("#modal_phone").html(de_phone);
+                                // $("#modal_phone").html(de_phone);
+                                if (toolmore == null) {
+                                    $("#modal_toolmore").html('<span style="color:red;">ไม่มี</span>');
+                                } else {
+                                    $("#modal_toolmore").html(toolmore);
+                                }
                             }
                         });
                     });

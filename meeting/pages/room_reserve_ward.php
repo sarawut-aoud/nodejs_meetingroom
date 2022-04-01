@@ -71,7 +71,7 @@ require_once "../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <?php  require_once '../infomation.php' ?>
+                    <?php require_once '../infomation.php' ?>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
@@ -149,7 +149,25 @@ require_once "../login/check_session.php";
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
-
+            $('#radioPrimary2').change(function() {
+                $("#tool_request").prop('disabled', false);
+                $('#radioPrimary1').change(function() {
+                    $("#tool_request").prop('disabled', true);
+                })
+            })
+            // แสดงข้อมูลส่วนตัว
+            var prefix = '';
+            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
+                prefix = 'นาย';
+            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
+                prefix = 'นาง';
+            }
+            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
+            $('#prefix').val(prefix);
+            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
+            $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
+            $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
@@ -171,19 +189,18 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-
+                    $("#bage1").html(bage);
                 }
-
             });
 
-          
+
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
                 url: path + "/event",
-                data:{
-                    ward_id:ward_id,
+                data: {
+                    ward_id: ward_id,
                 },
                 success: function(data) {
                     var i = 0;
@@ -307,12 +324,13 @@ require_once "../login/check_session.php";
                                         var fac_name = result[ii].faction_name;
                                         var ward_name = result[ii].ward_name;
                                         var position = result[ii].duty_name;
+                                        var toolmore = result[ii].ev_toolmore;
                                         $.ajax({
                                             type: 'get',
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
-                                            data:{
-                                                ev_id : evid,
+                                            data: {
+                                                ev_id: evid,
                                             },
                                             success: function(tool) {
                                                 // console.log(result[ii].event_id)
@@ -320,11 +338,8 @@ require_once "../login/check_session.php";
                                                 for (i in tool) {
 
                                                     if (tool[i].ev_id == ev_id) {
-
                                                         to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
-
                                                     }
-
                                                     $("#modal2_tool").html(to_name);
                                                 }
 
@@ -356,9 +371,13 @@ require_once "../login/check_session.php";
                                 $("#modal2_style").html(st_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(ward_name+'<br>'+fac_name+'<br>'+de_name);
+                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
                                 $("#modal2_pos").html(position);
-
+                                if (toolmore == null) {
+                                    $('#modal2_toolmore').html('<span style="color:red;">ไม่มี</span>');;
+                                } else {
+                                    $('#modal2_toolmore').html(toolmore);
+                                }
                             }
                         });
                     });

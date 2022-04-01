@@ -345,6 +345,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
+                    $("#bage1").html(bage);
 
                 }
 

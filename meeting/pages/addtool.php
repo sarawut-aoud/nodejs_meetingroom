@@ -197,7 +197,27 @@ require_once "../login/check_session.php";
             $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
             $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
             $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
 
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
+
+                }
+
+            });
 
 
             $.ajax({

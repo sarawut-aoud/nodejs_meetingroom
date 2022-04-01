@@ -107,7 +107,7 @@
 </form>
 <!-- Modal Style -->
 <!-- Modal tools -->
-<form action="" method="POST">
+<form action="" method="POST" id="modaltools">
     <div class="modal fade" id="ModalTool" style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -123,7 +123,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_to_name" />
+                                <input type="text" class="form-control " id="modal_to_name" name="to_name"/>
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">ward :</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_ward_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_ward_id"name="ward_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>
@@ -143,7 +143,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">facion :</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_fac_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_fac_id" name="faction_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>
@@ -153,7 +153,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">depart:</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_depart_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_depart_id"name="depart_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>
@@ -169,51 +169,7 @@
         </div>
     </div>
     </div>
-    <input type="hidden" id="modal_to_id" value="">
+    <input type="hidden" id="modal_to_id" name="to_id"value="">
 </form>
 <!-- Modal tool -->
 <!-- Modal tools -->
-<form action="" method="POST">
-    <div class="modal fade" id="ModalDepart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center text-white edit-head">
-                    <div class="text-center">
-                        <h1> แก้ไข ข้อมูลแผนก </h1>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <!--//? /.Tool Name -->
-                    <div class="form-group row">
-                        <div class="input-group">
-                            <label class="col-md-3 col-form-label">ชื่อแผนก :</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_de_name" />
-                            </div>
-                        </div>
-                    </div>
-                    <!--//? /.Tool Name -->
-                    <!-- //? Input People -->
-                    <div class="form-group row">
-                        <div class="input-group">
-                            <label class="col-md-3 col-form-label">เบอร์โทรติดต่อสายตรง :</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_de_phone" />
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- //? Input People -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    <button type="button" class="btn btn-primary btnSaveDepart">ยืนยันการแก้ไข</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- <input type="hidden" id="modal_de_id" value="" > -->
-    <input type="hidden" id="modal2_de_id" value="">
-
-</form>
-<!-- Modal tool -->

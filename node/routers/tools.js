@@ -174,7 +174,7 @@ sql.put("/", async (req, res) => {
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "UPDATE tbl_tools SET to_name = ?,ward_id = ? , de_id=?, factiocn_id = ? WHERE to_id = ?",
+      "UPDATE tbl_tools SET to_name = ?,ward_id = ? , de_id=?, faction_id = ? WHERE to_id = ?",
       [to_name, ward_id,depart_id,faction_id, to_id],
       (error, results, fields) => {
         if (error) throw error;

@@ -145,7 +145,12 @@ require_once "../login/check_session.php";
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
-
+            $('#radioPrimary2').change(function() {
+                $("#tool_request").prop('disabled', false);
+                $('#radioPrimary1').change(function() {
+                    $("#tool_request").prop('disabled', true);
+                })
+            })
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
@@ -159,6 +164,7 @@ require_once "../login/check_session.php";
             $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
             $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
             $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
+
             var path = '<?php echo $_SESSION['mt_path']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_duty_id']; ?>'
@@ -179,7 +185,10 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
+                    $("#bage1").html(bage);
+
                 }
+
             });
 
             $.ajax({
@@ -312,7 +321,7 @@ require_once "../login/check_session.php";
                             success: function(result) {
                                 for (ii in result) {
                                     if (result[ii].ev_id == ev_id) {
-
+                                        var evid = result[ii].ev_id;
                                         var event_id = result[ii].event_id;
                                         var ev_title = result[ii].ev_title;
                                         var ev_startdate = result[ii].ev_startdate;
@@ -326,16 +335,21 @@ require_once "../login/check_session.php";
                                         var ro_name = result[ii].ro_name;
                                         var to_name = result[ii].to_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
-                                        var de_phone = result[ii].de_phone;
-                                        var id = result[ii].id;
+                                        var de_name = result[ii].depart_name;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
+                                        var pos = result[ii].duty_name;
+                                        var ward_name = result[ii].ward_name;
+                                        var fac_name = result[ii].faction_name;
+                                        var toolmore = result[ii].ev_toolmore;
+
                                         $.ajax({
                                             type: 'get',
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
+                                            data: {
+                                                ev_id: evid,
+                                            },
                                             success: function(tool) {
                                                 // console.log(result[ii].event_id)
                                                 var to_name = ''
@@ -344,7 +358,6 @@ require_once "../login/check_session.php";
                                                     if (tool[i].ev_id == ev_id) {
 
                                                         to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
-
                                                     }
 
                                                     $("#modal2_tool").html(to_name);
@@ -354,6 +367,7 @@ require_once "../login/check_session.php";
                                         });
                                     }
                                 }
+                                console.log(toolmore)
                                 if (ev_status == 0) {
                                     var status = 'รออนุมัติจากหัวหน้า'
                                 } else if (ev_status == 1) {
@@ -379,9 +393,14 @@ require_once "../login/check_session.php";
                                 $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(de_name);
+                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
                                 $("#modal2_pos").html(pos);
-                                $("#modal2_phone").html(de_phone);
+                                // $("#modal2_phone").html(de_phone);
+                                if (toolmore == null) {
+                                    $("#modal2_toolmore").html('<span style="color:red;">ไม่มี</span>');
+                                } else {
+                                    $("#modal2_toolmore").html(toolmore);
+                                }
 
                             }
                         });
@@ -402,7 +421,7 @@ require_once "../login/check_session.php";
                             success: function(result) {
                                 for (ii in result) {
                                     if (result[ii].ev_id == ev_id) {
-
+                                        var evid = result[ii].ev_id;
                                         var event_id = result[ii].event_id;
                                         var ev_title = result[ii].ev_title;
                                         var ev_startdate = result[ii].ev_startdate;
@@ -416,12 +435,13 @@ require_once "../login/check_session.php";
                                         var st_id = result[ii].st_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
-                                        var de_phone = result[ii].de_phone;
-                                        var id = result[ii].id;
+                                        var de_name = result[ii].depart_name;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
+                                        var pos = result[ii].duty_name;
+                                        var ward_name = result[ii].ward_name;
+                                        var fac_name = result[ii].faction_name;
+
                                         $.ajax({
                                             type: "get",
                                             dataType: "json",
@@ -429,20 +449,23 @@ require_once "../login/check_session.php";
                                             data: {
                                                 ev_id: ev_id,
                                             },
-                                            success: function(result) {
+                                            success: function(tool) {
                                                 var data = ' <div class="form-group  ">';
                                                 var x = 0;
-                                                var check = '';
-                                                for (i in result) {
+                                                for (i in tool) {
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
 
+                                                        chk = 'checked="checked"'
+
+                                                    }
                                                     x++
-                                                    data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
-                                                    data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
+                                                    data += '<div class="d-block form-check"><input class="form-check-input" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
                                                     data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                                                 }
                                                 data += '</div>';
                                                 $('#modaltool').html(data);
-
                                             }
                                         });
                                     }

@@ -165,7 +165,7 @@ require_once "../login/check_session.php";
             var path = "<?php echo $_SESSION['mt_path'] ?>";
             var ward_id = "<?php echo $_SESSION['mt_ward_id'] ?>";
             var office_id = "<?php echo $_SESSION['mt_office_id'] ?>";
-            var depert_id = "<?php echo $_SESSION['mt_de_id'] ?>";
+            var depart_id = "<?php echo $_SESSION['mt_de_id'] ?>";
             var fac_id = "<?php echo $_SESSION['mt_faction_id'] ?>";
 
             $.ajax({
@@ -184,6 +184,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
+                    $("#bage1").html(bage);
 
                 }
 
@@ -208,8 +209,8 @@ require_once "../login/check_session.php";
                         table += ('<td width="30%">' + cell.to_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td width="30%">' + cell.ward_name + '</td>');
-                        table += ('<td  align="center"width="20%"><a id="' + cell.to_id + '"data_id="' + cell.ward_id + '"  class="btn btn-info btnToolEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a></td>');
-                        // + ' <a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
+                        table += ('<td align="center"width="20%"><a id="' + cell.to_id + '"data_id="' + cell.ward_id + '"  class="btn btn-info btnToolEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>  ' +
+                            '<a id="' + cell.to_id + '" class="btn btn-danger btnToolDels"title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -257,15 +258,14 @@ require_once "../login/check_session.php";
                             url: path + "/tools",
                             data: {
                                 to_id: to_id,
-
                             },
                             success: function(result) {
                                 for (ii in result) {
                                     if (result[ii].to_id == to_id) {
                                         var to_name = result[ii].to_name;
-                                        var ward_id = result[ii].ward_id;
-                                        var fac_id = result[ii].faction_id;
-                                        var depart_id = result[ii].depart_id;
+                                        // var ward_id = result[ii].ward_id;
+                                        // var fac_id = result[ii].faction_id;
+                                        // var depart_id = result[ii].depart_id;
 
                                     }
                                 }
@@ -357,7 +357,9 @@ require_once "../login/check_session.php";
 
                 var to_id = $("#modal_to_id").val();
                 var to_name = $("#modal_to_name").val();
-                var de_id = $("#modal_de_id").val();
+                var de_id = $("#modal_depart_id").val();
+                var w_id = $("#modal_ward_id").val();
+                var f_id = $("#modal_fac_id").val();
 
                 // console.log(to_id);
                 $.ajax({
@@ -366,7 +368,9 @@ require_once "../login/check_session.php";
                     data: {
                         to_id: to_id,
                         to_name: to_name,
-                        de_id: de_id,
+                        depart_id: de_id,
+                        faction_id: f_id,
+                        ward_id: w_id,
                     },
                     dataType: "json",
                     success: function(result) {

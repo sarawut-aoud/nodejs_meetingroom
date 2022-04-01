@@ -130,88 +130,7 @@ $path = "http://127.0.0.1:4200";
         </div>
         <!-- /.content-wrapper -->
 
-        <!-- Modal -->
-        <div class="modal fade " id="calendarmodal" tabindex="-1" role="dialog">
-            <!--กำหนด id ให้กับ modal-->
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header justify-content-center text-white edit-head">
-                        <div class="text-center">
-                            <h4 id="calendarmodal-title"> </h4>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-lg-9">
-                        <div class="form-group row">
-                            <b class="col-lg-6">สถานที่ประชุม :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-detail"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <b class="col-lg-6">ชื่อผู้ขอใช้ห้องประชุม:</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-name"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <b class="col-lg-6">กลุ่มงาน/ฝ่าย/แผนก :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-dename"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <b class="col-lg-6">เบอร์ติดต่อสายตรง :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-dephone"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <b class="col-lg-6">วันที่เริ่ม :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-start"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <b class="col-lg-6">ถึงวันที่ :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-end"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <b class="col-lg-6">เวลาเริ่ม :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-starttime"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <b class="col-lg-6">ถึงเวลา :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-endtime"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <b class="col-lg-6">จำนวนคน :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-people"></div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <b class="col-lg-6">รูปแบบการจัดห้อง :</b>
-                            <div class="col-lg-6">
-                                <div id="calendarmodal-style"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal -->
+        <?php require_once 'modalcalendar.php'; ?>
 
 
         <!-- Main Footer -->
@@ -329,11 +248,14 @@ $path = "http://127.0.0.1:4200";
                     timeZone: "Australia/Melbourne"
                 })
                 .slice(0, 10);
-
+                console.log(today2)
             $.ajax({
                 type: "get",
                 dataType: "json",
                 url: path + "/event/today",
+                data:{
+                    today:today2,
+                },
                 success: function(results) {
                     var today = ''
                     for (i in results) {
@@ -359,7 +281,7 @@ $path = "http://127.0.0.1:4200";
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var path = '<?php echo $path ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
@@ -399,7 +321,7 @@ $path = "http://127.0.0.1:4200";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(ward_name+'<br>'+fac_name+'<br>'+dename);
+                    $("#calendarmodal-dename").html(ward_name + '<br>' + fac_name + '<br>' + dename);
                     // $("#calendarmodal-dephone").html(dephone);
                 },
             });

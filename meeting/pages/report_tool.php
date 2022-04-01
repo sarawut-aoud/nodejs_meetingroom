@@ -171,6 +171,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
+                    $("#bage1").html(bage);
 
                 }
 
@@ -288,6 +289,7 @@ require_once "../login/check_session.php";
                                     var ward_name = result[ii].ward_name;
                                     var depart = result[ii].depart_name;
                                     var fac_name = result[ii].faction_name;
+                                    var toolmore = result[ii].ev_toolmore;
                                    
 
                                     $.ajax({
@@ -340,6 +342,13 @@ require_once "../login/check_session.php";
                                 $("#modal2_name").html(firstname + " " + lastname);
                                 $("#modal2_dept").html(ward_name+'<br>'+fac_name+'<br>'+depart);
                                 $("#modal2_pos").html('<?php echo $_SESSION['mt_duty_name'];?>')
+                                
+                                if(toolmore == null){
+                                    $("#modal2_toolmore").html('ไม่มี');
+                                }else{
+                                    $("#modal2_toolmore").html(toolmore);
+                                }
+                                
                             }
                         });
                     });

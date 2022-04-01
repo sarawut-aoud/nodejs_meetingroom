@@ -61,6 +61,12 @@
                             <span class="col-form-label col-md" id="modal2_tool"></span>
                         </div>
                     </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">อื่น ๆ : </label>
+                            <span class="col-form-label col-md" id="modal2_toolmore"></span>
+                        </div>
+                    </div>
                     <hr style="size: 10px; color:black">
                     <div class="form-group row  mb-2">
                         <div class="input-group">
@@ -127,7 +133,7 @@
                             <label class="col-md-2 col-form-label">เวลา :</label>
                             <div class="col-md-4">
                                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="modal_timeStart"name="timeStart" />
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="00:00" id="modal_timeStart" name="timeStart" />
                                     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="far fa-clock"></i>
                                         </div>
@@ -137,7 +143,7 @@
                             <label class="col-md-2 col-form-label">ถึงเวลา :</label>
                             <div class="col-md-4">
                                 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="modal_timeEnd"name="timeEnd" />
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="00:00" id="modal_timeEnd" name="timeEnd" />
                                     <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="far fa-clock"></i>
                                         </div>
@@ -153,7 +159,7 @@
                             <label class="col-md-2 col-form-label">วันที่ :</label>
                             <div class="col-md-4">
                                 <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="modal_dateStart"name="dateStart" />
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" placeholder="00/00/0000" id="modal_dateStart" name="dateStart" />
                                     <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i>
                                         </div>
@@ -163,7 +169,7 @@
                             <label class="col-md-2 col-form-label">ถึงวันที่ :</label>
                             <div class="col-md-4">
                                 <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="modal_dateEnd"name="dateEnd"/>
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" placeholder="00/00/0000" id="modal_dateEnd" name="dateEnd" />
                                     <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i>
                                         </div>
@@ -178,7 +184,7 @@
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">ห้องประชุม : </label>
                             <div class="col-md-10">
-                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="modal_ro_name" name="ro_name"/>
+                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="modal_ro_name" name="ro_name" />
                                 </select>
                             </div>
                         </div>
@@ -189,7 +195,7 @@
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">จำนวนคนที่เข้าประชุม : </label>
                             <div class="col-md">
-                                <input type="number" class="form-control " id="modal_people" name="people"min="0" />
+                                <input type="number" class="form-control " id="modal_people" name="people" min="0" />
                             </div>
                             <label class="col-md-2 col-form-label">รูปแบบห้อง : </label>
                             <div class="col-md">
@@ -204,7 +210,33 @@
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">อุปกรณ์ :</label>
                             <div id="modaltool"></div>
-                        
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group">
+                            <label class="col-md-2 col-form-label">อื่น ๆ : </label>
+                            <div class="d-flex col-form-label ">
+                                <div class="form-group clearfix mr-3">
+                                    <div class="icheck-success d-inline">
+                                        <input type="radio" id="radioPrimary1" name="r1" checked>
+                                        <label for="radioPrimary1">ไม่ต้องการ</label>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div class="icheck-success d-inline">
+                                        <input type="radio" id="radioPrimary2" name="r1">
+                                        <label for="radioPrimary2">ต้องการ</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-3 col-md">
+                                <input type="text" class="form-control " id="tool_request" name="" disabled />
+                                <div class="ml-3 col-md">
+                                    <span style="font-size: 14px;">( ZOOM ,Google Meetroom , Microsoft Team ,อื่นๆ )</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!--? Tool -->
@@ -218,13 +250,13 @@
             </div>
         </div>
     </div>
-    <input type="hidden" value="" id="modal_ev_id" name="ev_id"/>
-    <input type="hidden" value="" id="modal_eventid" name="eventid"/>
-    <input type="hidden" value="" id="modal_status" name="evstatus"/>
+    <input type="hidden" value="" id="modal_ev_id" name="ev_id" />
+    <input type="hidden" value="" id="modal_eventid" name="eventid" />
+    <input type="hidden" value="" id="modal_status" name="evstatus" />
     <!-- <input type="hidden" value="" id="modal_ro_id" name="ro_id"/>
     <input type="hidden" value="" id="modal_st_id" name="st_id"/> -->
-    <input type="hidden" value="<?php echo $_SESSION['mt_id'];?>"   name="id" />
-    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id'];?>" name="level" />
+    <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
+    <input type="hidden" value="<?php echo $_SESSION['mt_duty_id']; ?>" name="level" />
 
 </form>
 <!-- Modal Edit -->
