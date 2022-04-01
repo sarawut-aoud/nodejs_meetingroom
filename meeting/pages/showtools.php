@@ -344,6 +344,57 @@ require_once "../login/check_session.php";
                             }
                         });
                     });
+                    $(document).on('click', '.btnToolDels', function(e) {
+                        // $(".btnToolDels").click(function(e) {
+                        e.preventDefault();
+
+                        var to_id = $(this).attr('id');
+                        var _row = $(this).parent();
+                        // console.log(to_id);
+                        Swal.fire({
+                            title: 'คุณต้องการลบข้อมูลอุปกรณ์<br>ใช่หรือไม่ ?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: "ยืนยัน",
+                            cancelButtonText: "ยกเลิก",
+                        }).then((btn) => {
+                            if (btn.isConfirmed) {
+                                $.ajax({
+                                    dataType: 'JSON',
+                                    type: "DELETE",
+                                    url: path + "/tools",
+                                    data: {
+                                        to_id: to_id
+                                    },
+                                    success: function(result) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: result.message,
+                                        })
+                                        _row.closest('tr').remove();
+                                    },
+                                    error: function(result) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 2000,
+                                        })
+                                        Toast.fire({
+                                            icon: 'warning',
+                                            title: 'ไม่สามารถลบข้อมูลได้'
+
+                                        }).then((result) => {
+                                            location.reload();
+
+                                        })
+                                    }
+                                });
+                            }
+                        })
+                    });
 
                 }
 
