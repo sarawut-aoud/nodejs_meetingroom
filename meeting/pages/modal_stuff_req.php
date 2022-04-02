@@ -121,7 +121,7 @@
                     <div class="form-group row ">
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">อื่น ๆ :</label>
-                            <span class="col-form-label col-md" id="modal_toolmore"></span>
+                            <span class="col-form-label col-md" id="modal_toolmore" name="modal_toolmore"></span>
                         </div>
                     </div>
                     <!--? Tool -->

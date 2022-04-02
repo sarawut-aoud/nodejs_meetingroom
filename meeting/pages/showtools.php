@@ -171,10 +171,10 @@ require_once "../login/check_session.php";
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: path + "/event/count",
-                data: {
-                    level: lv_id,
-                },
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
                 success: function(result) {
                     var bage = 0;
 
@@ -189,6 +189,27 @@ require_once "../login/check_session.php";
                 }
 
             });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                   
+                }
+
+            });
+
 
             //todo: table tools
             $.ajax({

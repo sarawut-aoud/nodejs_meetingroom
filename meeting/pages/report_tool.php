@@ -158,10 +158,10 @@ require_once "../login/check_session.php";
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: path + "/event/count",
-                data: {
-                    level: duty_id,
-                },
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
                 success: function(result) {
                     var bage = 0;
 
@@ -176,6 +176,26 @@ require_once "../login/check_session.php";
                 }
 
             });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: duty_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+            });
+
             var datetoday = new Date();
             var today2 = datetoday.toISOString("EN-AU", {
                     timeZone: "Australia/Melbourne"
@@ -290,7 +310,7 @@ require_once "../login/check_session.php";
                                     var depart = result[ii].depart_name;
                                     var fac_name = result[ii].faction_name;
                                     var toolmore = result[ii].ev_toolmore;
-                                   
+
 
                                     $.ajax({
                                         type: 'get',
@@ -308,12 +328,12 @@ require_once "../login/check_session.php";
                                                 to_name += '<div class="col-form-label d-inline-flex ">🔎 ' + tool[i].to_name + '  </div>'
 
                                             }
-                                            if(to_name == ''){
+                                            if (to_name == '') {
                                                 $("#modal2_tool").html('<span style="color:blue;">ไม่มีอุปกรณ์ที่ต้องเตรียม</span>');
-                                            }else{
+                                            } else {
                                                 $("#modal2_tool").html(to_name);
                                             }
-                                          
+
                                         }
                                     });
 
@@ -340,15 +360,15 @@ require_once "../login/check_session.php";
                                 $("#modal2_starttime").html(starttime);
                                 $("#modal2_endtime").html(endtime);
                                 $("#modal2_name").html(firstname + " " + lastname);
-                                $("#modal2_dept").html(ward_name+'<br>'+fac_name+'<br>'+depart);
-                                $("#modal2_pos").html('<?php echo $_SESSION['mt_duty_name'];?>')
-                                
-                                if(toolmore == null){
+                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + depart);
+                                $("#modal2_pos").html('<?php echo $_SESSION['mt_duty_name']; ?>')
+
+                                if (toolmore == null) {
                                     $("#modal2_toolmore").html('ไม่มี');
-                                }else{
+                                } else {
                                     $("#modal2_toolmore").html(toolmore);
                                 }
-                                
+
                             }
                         });
                     });

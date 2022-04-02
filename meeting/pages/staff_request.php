@@ -167,16 +167,15 @@ require_once "../login/check_session.php";
             var path = '<?php echo $_SESSION['mt_path'] ?>',
                 level = '<?php echo $_SESSION['mt_duty_id']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>';
-                ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
+            ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
 
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: path + "/event/count",
-                data: {
-                    level: level,
-                    ward_id:ward_id,
-                },
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
                 success: function(result) {
                     var bage = 0;
 
@@ -191,6 +190,26 @@ require_once "../login/check_session.php";
                 }
 
             });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: level,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                }
+
+            });
+
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
@@ -203,11 +222,11 @@ require_once "../login/check_session.php";
             $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
             $('#position').val("<?php echo $_SESSION['position']; ?>");
 
-            
+
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: path + "/event/stutusstaff",
+                url: path + "/event/statusstaff",
                 data: {
                     level: level,
                     ward_id: ward_id,
@@ -549,7 +568,7 @@ require_once "../login/check_session.php";
                     url: path + '/event_post/updatestatus',
                     data: formdata,
                     success: function(results) {
-                        if (results.status == 0) {
+                        if (results.status != 200) {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',

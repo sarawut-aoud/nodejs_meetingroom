@@ -266,6 +266,27 @@ if ($_SESSION['mt_duty_id'] == 2) {
             $.ajax({
                 type: "get",
                 dataType: "json",
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
+
+                }
+
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
                 url: path + "/event/count",
                 data: {
                     level: lv_id,
@@ -279,7 +300,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         }
                     }
                     $("#bage").html(bage);
-                    $("#bage1").html(bage);
+                  
 
                 }
 
@@ -648,7 +669,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                             url: path + "/tools",
                             data: {
                                 to_id: to_id,
-                               
+
                             },
                             success: function(result) {
                                 for (ii in result) {

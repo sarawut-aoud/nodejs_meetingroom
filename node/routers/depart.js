@@ -30,24 +30,7 @@ sql.get("/", async (req, res) => {
         res.json(results);
       }
     );
-  // } else {
-  //   return res.json({ status: 200, message: "ไม่พบข้อมูล" });
-  // }
-  // else {
-  //   con.query(
-  //     "SELECT ward_id,ward_name " +
-  //       "FROM " +
-  //       pbh +
-  //       "hr_ward AS w " +
-  //       "ORDER BY w.ward_id ASC",
-  //     [ward_id],
-  //     (error, results, fields) => {
-  //       if (error) throw error;
-  //       res.status(200);
-  //       res.json(results);
-  //     }
-  //   );
-  // }
+  
 });
 sql.get("/faction", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;

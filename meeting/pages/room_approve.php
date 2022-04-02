@@ -169,6 +169,27 @@ require_once "../login/check_session.php";
             $.ajax({
                 type: "get",
                 dataType: "json",
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
+
+                }
+
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
                 url: path + "/event/count",
                 data: {
                     level: level,
@@ -182,10 +203,12 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                    $("#bage1").html(bage);
+                  
+
                 }
 
             });
+
             //todo: table room
             $.ajax({
                 type: 'post',
@@ -403,7 +426,7 @@ require_once "../login/check_session.php";
                                         var ev_endtime = result[ii].ev_endtime;
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
-                                      
+
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
@@ -415,7 +438,7 @@ require_once "../login/check_session.php";
                                         var ward_name = result[ii].ward_name;
                                         var fac_name = result[ii].faction_name;
                                         var toolmore = result[ii].ev_toolmore;
-                                       $.ajax({
+                                        $.ajax({
                                             type: 'get',
                                             dataType: 'json',
                                             url: path + '/event/requesttool',
@@ -449,7 +472,7 @@ require_once "../login/check_session.php";
                                 } else if (ev_status == 5) {
                                     var status = 'ยกเลิก'
                                 }
-                               
+
                                 $("#modalStatus").modal("show");
                                 $("#modal_ev_id").html(ev_id);
                                 $("#modal2_roname").html(ro_name);

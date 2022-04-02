@@ -231,10 +231,11 @@ router.put("/updatestatus", async (req, res) => {
   var ev_status = req.body.ev_status;
   var event_id = req.body.event_id;
   var ro_id = req.body.ro_id;
-  var ev_startdate = req.body.ev_startdate;
-  var ev_enddate = req.body.ev_enddate;
-  var ev_starttime = req.body.ev_starttime;
-  var ev_endtime = req.body.ev_endtime;
+  var ev_startdate = req.body.dateStart;
+  var ev_enddate = req.body.dateEnd;
+  var ev_starttime = req.body.timeStart;
+  var ev_endtime = req.body.timeEnd;
+  var toolmore = req.body.modal_toolmore;
   var status_yes;
   var status_no;
 
@@ -267,7 +268,7 @@ router.put("/updatestatus", async (req, res) => {
       [status_yes, event_id],
       (error, results, field) => {
         if (error) throw error;
-
+      
         if (results) {
           var chk = 0;
           var datediff = DATE_DIFF(ev_startdate, ev_enddate, "D").output;
@@ -280,7 +281,7 @@ router.put("/updatestatus", async (req, res) => {
               (date_ev_startdate.getMonth() + 1) +
               "-" +
               date_ev_startdate.getDate();
-
+              console.log('2')
             for (var i = 0; i <= datediff; i++) {
               con.query(
                 "SELECT ev_id,event_id, substr(ev_starttime,1,5) AS ev_starttime," +
@@ -288,13 +289,14 @@ router.put("/updatestatus", async (req, res) => {
                   "FROM tbl_event WHERE event_id != ? AND ro_id = ? AND ev_startdate = ? AND ev_status != '3' ",
                 [event_id, ro_id, dateCheck],
                 (error, results_x, field) => {
+                 
                   for (var x = 0; x < results.length; x++) {
                     var theDateStart = Date.parse(dateStart) + 3600 * 1000 * 24;
                     const date = new Date(theDateStart);
                     dateStart = date
                       .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
                       .slice(0, 10);
-
+                     
                     if (results_x[x].ev_starttime == ev_starttime) {
                       con.query(
                         "UPDATE tbl_event SET ev_status = ? WHERE event_id = ? ",

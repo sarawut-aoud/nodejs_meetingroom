@@ -236,27 +236,27 @@ require_once "../login/check_session.php";
                                 </div>
                             </div>
                             <div class="row mt-3">
-                        <!-- ./col -->
-                        <div class="col-xl-12 col-md-12 ">
-                            <div class="card ">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4><i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                <!-- ./col -->
+                                <div class="col-xl-12 col-md-12 ">
+                                    <div class="card ">
+                                        <div class="card-header text-white card-head ">
+                                            <div class="text-center">
+                                                <h4><i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <!-- THE CALENDAR -->
+                                            <div id="calendar"></div>
+                                        </div>
+                                        <!-- /.card-body -->
                                     </div>
+                                    <!-- /.card -->
                                 </div>
-                                <div class="card-body p-0">
-                                    <!-- THE CALENDAR -->
-                                    <div id="calendar"></div>
-                                </div>
-                                <!-- /.card-body -->
+                                <!-- /.col -->
                             </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
                         </div>
                     </div>
-                    
+
                     <?php require_once '../modalcalendar.php'; ?>
                 </div><!-- /.container-fluid -->
             </div>
@@ -332,10 +332,10 @@ require_once "../login/check_session.php";
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: path + "/event/count",
-                data: {
-                    level: lv_id,
-                },
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
                 success: function(result) {
                     var bage = 0;
 
@@ -350,6 +350,27 @@ require_once "../login/check_session.php";
                 }
 
             });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: lv_id,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+            
+                }
+
+            });
+
 
             $(document).on('click', '#btnAproveRoom', function(e) {
                 // $('#btnAproveRoom').click(function(e) {
@@ -545,7 +566,7 @@ require_once "../login/check_session.php";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(ward_name+'<br>'+fac_name+'<br>'+dename);
+                    $("#calendarmodal-dename").html(ward_name + '<br>' + fac_name + '<br>' + dename);
                     // $("#calendarmodal-dephone").html(dephone);
                 },
             });

@@ -137,6 +137,25 @@ require_once "../login/check_session.php";
             $.ajax({
                 type: "get",
                 dataType: "json",
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
+                }
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
                 url: path + "/event/count",
                 data: {
                     level: lv_id,
@@ -150,10 +169,10 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                    $("#bage1").html(bage);
+                 
                 }
-
             });
+
             $.ajax({
                 type: 'get',
                 dataType: 'json',
@@ -164,21 +183,21 @@ require_once "../login/check_session.php";
                         '<table id="tbRoom"with="100%" class="table table-hover text-nowrap ">' +
                         '<thead  align="center"><tr><th>ID</th><th>ชื่อห้อง</th><th>จำนวนคนที่เข้าประชุมได้</th><th>รายละเอียด</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
-                        var txt='';
+                        var txt = '';
                         var badge = '';
-                        if(cell.ro_public == 'Y'){
+                        if (cell.ro_public == 'Y') {
                             txt = 'Online';
-                            badge ='badge-online';
-                            var connect =  '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
-                            '<span class="visually-hidden">New alerts</span></span></span></div>';
-                        }else{
+                            badge = 'badge-online';
+                            var connect = '<span class="waitingForConnection"><span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">' +
+                                '<span class="visually-hidden">New alerts</span></span></span></div>';
+                        } else {
                             txt = 'Offline';
-                            badge ='badge-offline';
-                            connect =''
+                            badge = 'badge-offline';
+                            connect = ''
                         }
                         var icon =
-                            ' <div class="'+badge +' rounded-pill   position-relative">'+txt +connect
-                           
+                            ' <div class="' + badge + ' rounded-pill   position-relative">' + txt + connect
+
 
                         table += ('<tr align="center">');
                         table += ('<td>' + cell.ro_id + '</td>');

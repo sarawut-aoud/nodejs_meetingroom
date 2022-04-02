@@ -206,7 +206,28 @@ require_once "../login/check_session.php";
             $('#prefix').val(prefix);
             $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
             $('#position').val("<?php echo $_SESSION['position']; ?>");
-          
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
+
+                }
+
+            });
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -223,66 +244,14 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                    $("#bage1").html(bage);
-
                 }
 
             });
 
 
-            // $.ajax({
-            //     type: 'GET',
-            //     dataType: 'json',
-            //     url: path + "/rooms",
-            //     success: function(result) {
-            //         var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
-            //         for (i in result) {
-            //             data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + '</option>';
-            //         }
-            //         $('#ro_name').html(data);
 
-            //         $("#ro_name").change(function() {
-            //             $('#people').prop('disabled', false);
-            //             var ro_id = $(this).val();
-            //             $.ajax({
-            //                 type: "GET",
-            //                 dataType: "json",
-            //                 url: path + "/rooms",
-            //                 data: {
-            //                     ro_id: ro_id,
-            //                 },
-            //                 success: function(result) {
-            //                     var row = '';
-            //                     for (ii in result) {
-            //                         if (result[ii].ro_id == ro_id) {
-            //                             var people = result[ii].ro_people;
-            //                             var detail = result[ii].ro_detail;
-            //                             for (x = 1; x <= people; x++) {
-            //                                 row += '<option value="' + x + '" > ' + x + '</option>';
-            //                             }
-            //                         }
-            //                     }
-            //                     $('#ro_people').val(people);
-            //                     $('#ro_detail').val(detail);
-            //                     $('#people').html(row);
-            //                 }
-            //             });
-            //         });
-            //     }
-            // });
 
-            // $.ajax({
-            //     type: 'GET',
-            //     dataType: 'json',
-            //     url: path + "/style",
-            //     success: function(result) {
-            //         var data = '<option value="" selected disabled>--เลือกรูปแบบห้องประชุม--</option>';
-            //         for (i in result) {
-            //             data += '<option value="' + result[i].st_id + '" > ' + result[i].st_name + '</option>';
-            //         }
-            //         $('#style').html(data);
-            //     }
-            // });
+
 
             $.ajax({
                 type: 'GET',
@@ -332,7 +301,7 @@ require_once "../login/check_session.php";
                     timeZone: "Australia/Melbourne"
                 })
                 .slice(0, 10);
-               
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -402,7 +371,7 @@ require_once "../login/check_session.php";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(ward_name+'<br>'+fac_name+'<br>'+dename);
+                    $("#calendarmodal-dename").html(ward_name + '<br>' + fac_name + '<br>' + dename);
                     // $("#calendarmodal-dephone").html(dephone);
                 },
             });

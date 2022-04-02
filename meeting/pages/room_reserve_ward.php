@@ -176,6 +176,27 @@ require_once "../login/check_session.php";
             $.ajax({
                 type: "get",
                 dataType: "json",
+                url: path + "/event/count/staff",
+                // data: {
+                //     level: lv_id,
+                // },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
+
+                }
+
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
                 url: path + "/event/count",
                 data: {
                     level: lv_id,
@@ -189,9 +210,12 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                    $("#bage1").html(bage);
+                   
+
                 }
+
             });
+
 
 
             //todo: table room

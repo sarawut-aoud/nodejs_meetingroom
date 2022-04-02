@@ -170,15 +170,13 @@ require_once "../login/check_session.php";
         function cache_clear() {
 
             var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+            var id = '<?php echo $_SESSION['mt_id']; ?>';
 
             $.ajax({
                 type: "get",
                 url: path + "/event/count/user",
                 data: {
                     id: id,
-                    de_id: de_id,
                 },
                 success: function(result) {
                     if (result.ev_status > 0) {
@@ -249,10 +247,9 @@ require_once "../login/check_session.php";
             $.ajax({
                 type: 'get',
                 dataType: 'json',
-                url: path + "/seting",
+                url: path + "/seting/notified",
                 data: {
                     id: id,
-                    de_id: de_id,
                 },
                 success: function(data) {
                     var i = 0;
@@ -339,20 +336,28 @@ require_once "../login/check_session.php";
                             },
                             success: function(result) {
                                 for (ii in result) {
-                                    var ev_id = result[ii].ev_id;
+                                    var event_id = result[ii].event_id;
+                                    var ev_title = result[ii].ev_title;
+                                    var ev_startdate = result[ii].ev_startdate;
+                                    var ev_enddate = result[ii].ev_enddate;
                                     var ev_status = result[ii].ev_status;
-                                    var roname = result[ii].ro_name;
-                                    var stname = result[ii].st_name;
-                                    var title = result[ii].ev_title;
-                                    var people = result[ii].ev_people;
-                                    var create = result[ii].ev_createdate;
-                                    var starttime = result[ii].ev_starttime;
-                                    var endtime = result[ii].ev_endtime;
+                                    var ev_starttime = result[ii].ev_starttime;
+                                    var ev_endtime = result[ii].ev_endtime;
+                                    var ev_people = result[ii].ev_people;
+                                    var ev_createdate = result[ii].ev_createdate;
+                                    var to_name = result[ii].to_name;
+                                    var ro_id = result[ii].ro_id;
+                                    var ro_name = result[ii].ro_name;
+                                    var st_name = result[ii].st_name;
+                                    var de_name = result[ii].depart_name;
+                                    var ward_name = result[ii].ward_name;
+                                    var fac_name = result[ii].faction_name;
+
                                     var firstname = result[ii].firstname;
                                     var lastname = result[ii].lastname;
-                                    var position = result[ii].position;
-                                    var depart = result[ii].de_name;
-                                    var phone = result[ii].de_phone;
+                                    var pos = result[ii].duty_name;
+                                    var toolmore = result[ii].ev_toolmore;
+
 
                                     $.ajax({
                                         type: 'get',
@@ -392,17 +397,21 @@ require_once "../login/check_session.php";
                                 $("#modalDetail").modal("show");
                                 $("#modal2_status").html(status);
                                 $("#modal2_evid").html(ev_id);
-                                $("#modal2_cre_date").html(create.split('T')[0]);
-                                $("#modal2_roName").html(roname);
-                                $("#modal2_style").html(stname);
-                                $("#modal2_title").html(title);
-                                $("#modal2_people").html(people);
-                                $("#modal2_starttime").html(starttime);
-                                $("#modal2_endtime").html(endtime);
+                                $("#modal2_cre_date").html(ev_createdate);
+                                $("#modal2_roName").html(ro_name);
+                                $("#modal2_style").html(st_name);
+                                $("#modal2_title").html(ev_title);
+                                $("#modal2_people").html(ev_people);
+                                $("#modal2_starttime").html(ev_startdate+'<span style="color:red;"> เวลา </span> '+ev_starttime);
+                                $("#modal2_endtime").html(ev_enddate+'<span style="color:red;"> เวลา </span> '+ev_endtime);
                                 $("#modal2_name").html(firstname + " " + lastname);
-                                $("#modal2_dept").html(depart);
-                                $("#modal2_pos").html(position);
-                                $("#modal2_phone").html(phone);
+                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
+                                $("#modal2_pos").html(pos);
+                                if (toolmore == null) {
+                                    $("#modal2_toolmore").html('<span style="color:red;">ไม่มี</span>');
+                                } else {
+                                    $("#modal2_toolmore").html(toolmore);
+                                }
                             }
                         });
                     });

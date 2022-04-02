@@ -18,18 +18,34 @@ router.get("/detail", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   let ev_id = query01.ev_id;
   con.query(
-    "SELECT ev.ev_id, ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate," +
-      "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
+      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+      "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
+      "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,  " +
       "ro.ro_id, ro.ro_name, " +
       "st.st_id, st.st_name," +
-      "  users.person_firstname AS firstname ,users.person_lastname AS lastname " +
-      // "dept.de_id, dept.de_name, dept.de_phone " +
+      "users.person_firstname as firstname ,users.person_lastname as lastname," +
+      "dept.depart_name, dept.depart_id ,w.ward_name,f.faction_name,du.duty_name " +
       "FROM tbl_event AS ev " +
-      " " +
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-      "INNER JOIN  "+pbh+"hr_personal AS users ON (ev.id = users.person_id)" +
-      // "INNER JOIN  tbl_department AS dept ON (users.de_id = dept.de_id) " +
+      "INNER JOIN  " +
+      pbh +
+      "hr_personal AS users ON (ev.id = users.person_id)" +
+      "INNER JOIN " +
+      pbh +
+      "hr_level AS l ON(l.person_id = users.person_id)" +
+      "INNER JOIN " +
+      pbh +
+      "hr_ward AS w ON (l.ward_id = w.ward_id)" +
+      "INNER JOIN " +
+      pbh +
+      "hr_faction AS f ON (l.faction_id = f.faction_id)" +
+      "INNER JOIN  " +
+      pbh +
+      "hr_depart AS dept ON (l.depart_id = dept.depart_id) " +
+      "INNER JOIN "+pbh+"hr_duty AS du ON (l.duty_id = du.duty_id)"+
       "WHERE ev.ev_id = ? ;",
     [ev_id],
     (error, results, fields) => {
@@ -53,6 +69,39 @@ router.get("/requesttool", async (req, res) => {
     }
   );
 });
+
+router.get("/notified", async (req, res, next) => {
+  var query01 = require("url").parse(req.url, true).query;
+  let id = query01.id;
+  if (!id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "เกิดข้อผิดพลาด" });
+  } else {
+    con.query(
+      "SELECT ev.ev_id , ev.ev_createdate, ev.ev_title ," +
+        "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+        "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
+        "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
+        " ev.ev_starttime ,ev.ev_endtime, ev.ev_status ,ev.ev_people," +
+        "ro.ro_id,ro.ro_name , users.person_id " +
+        "FROM tbl_event AS ev " +
+        "INNER JOIN tbl_rooms AS ro " +
+        "ON (ev.ro_id = ro.ro_id) " +
+        "INNER JOIN " +
+        pbh +
+        " hr_personal AS users " +
+        "ON (ev.id = users.person_id ) " +
+        "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('password', 512)))" +
+        "AND (ev.ev_status = '3' OR ev.ev_status = '4')  GROUP BY ev.event_id",
+      [id],
+      (error, results, fields) => {
+        if (error) throw error;
+        res.json(results);
+      }
+    );
+  }
+});
 router.get("/", async (req, res, next) => {
   var query01 = require("url").parse(req.url, true).query;
   let id = query01.id;
@@ -69,7 +118,9 @@ router.get("/", async (req, res, next) => {
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro " +
         "ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN "+pbh +" hr_personal AS users " +
+        "INNER JOIN " +
+        pbh +
+        " hr_personal AS users " +
         "ON (ev.id = users.person_id ) " +
         "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('password', 512)))" +
         "GROUP BY ev.event_id",
