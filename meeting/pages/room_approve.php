@@ -558,7 +558,7 @@ require_once "../login/check_session.php";
                             })
                             Toast.fire({
                                     icon: 'warning',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();
@@ -572,7 +572,7 @@ require_once "../login/check_session.php";
                             })
                             Toast.fire({
                                     icon: 'success',
-                                    title: result.message
+                                    title: results.message
                                 })
                                 .then((result) => {
                                     location.reload();

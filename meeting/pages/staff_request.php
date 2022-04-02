@@ -175,6 +175,7 @@ require_once "../login/check_session.php";
                 url: path + "/event/count",
                 data: {
                     level: level,
+                    ward_id:ward_id,
                 },
                 success: function(result) {
                     var bage = 0;
@@ -202,11 +203,11 @@ require_once "../login/check_session.php";
             $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
             $('#position').val("<?php echo $_SESSION['position']; ?>");
 
-            //todo: table room
+            
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: path + "/event/status",
+                url: path + "/event/stutusstaff",
                 data: {
                     level: level,
                     ward_id: ward_id,
@@ -541,7 +542,7 @@ require_once "../login/check_session.php";
                 var ev_enddate = $('#modal_ev_enddate_h').val();
                 var ev_starttime = $('#modal_ev_starttime_h').val();
                 var ev_endtime = $('#modal_ev_endtime_h').val();
-                var formdata = $('#ModalStatus').serializeArray();
+                var formdata = $('#ModalStatusstaff').serializeArray();
                 $.ajax({
                     type: "PUT",
                     dataType: "JSON",
@@ -574,7 +575,7 @@ require_once "../login/check_session.php";
                                     title: results.message
                                 })
                                 .then((result) => {
-                                    $("#modalStatus").modal("hide");
+                                    $("#ModalStatusstaff").modal("hide");
                                     location.reload();
                                 })
                         }

@@ -5,7 +5,6 @@ const key = require("../function/key");
 const app = express();
 
 const dbname = require("../function/database");
-const { json } = require("body-parser");
 const ho = dbname.ho + ".";
 const pbh = dbname.pbh + ".";
 
@@ -14,8 +13,6 @@ const bodyParser = require("body-parser");
 const moment = require("moment");
 const cors = require("cors");
 const con = require("../config/config");
-const { text } = require("body-parser");
-const { parse } = require("path");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,16 +23,16 @@ const router = express.Router();
 router.post("/adddata", async (req, res) => {
   // chk = req.chk;
   // diff = req.date_diff;
-
+  var ward_id = req.body.ward_id; // ระดับสิทธิการเข้าถึง
   var level = req.body.level; // ระดับสิทธิการเข้าถึง
   var statusRoom;
   //เริ่มการจอง status == 0==รออนุมัติจากหัวหน้า  , 1 -> รออนุมัติ , 2== ไม่อนุมัติจากหัวหน้า ,3 == อนุมัติ ,4==ไม่อนุมัติ,5==ยกเลิก
-  if (level == "1" || level == "4") {
+  if (level == "2") {
     statusRoom = "3";
-  } else if (level == "3") {
+  } else if (ward_id == "48" && level != "2") {
     // ธุรการ
     statusRoom = "1";
-  } else if (level == "2") {
+  } else if (level != "2") {
     // ผู้ใช้
     statusRoom = "0";
   }
@@ -49,10 +46,16 @@ router.post("/adddata", async (req, res) => {
   var st_id = req.body.style; // id_style
   var id = req.body.id; // id_users
   var ro_id = req.body.ro_name; // id_rooms
+  var toolmore = req.body.tool_request;
   var chk = 0;
   var date_ev_startdate = new Date(ev_startdate);
-  var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
-  
+  var dateCheck =
+    date_ev_startdate.getFullYear() +
+    "-" +
+    (date_ev_startdate.getMonth() + 1) +
+    "-" +
+    date_ev_startdate.getDate();
+
   if (
     !ev_title ||
     !ev_people ||
@@ -85,7 +88,7 @@ router.post("/adddata", async (req, res) => {
             for (var x = 0; x < results.length; x++) {
               var timestart = results[x].ev_starttime;
               var timeend = results[x].ev_endtime;
-              
+
               if (timestart != "" && timeend != "") {
                 if (ev_starttime >= timestart && ev_starttime <= timeend) {
                   // console.log("a");
@@ -172,24 +175,26 @@ router.post("/adddata", async (req, res) => {
 
                 //todo : INSERT data
                 con.query(
-                  "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,id)" +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                  "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate," +
+                    "ev_starttime,ev_endtime,ev_status,event_id,ev_toolmore,id)" +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2('password', 512))))",
                   [
                     ev_title,
                     ev_people,
                     ro_id,
                     st_id,
-                    id,
                     dateStart,
                     dateEnd,
                     ev_starttime,
                     ev_endtime,
                     statusRoom,
                     event_id.substring(2),
+                    toolmore,
+                    id,
                   ],
                   (error, results, field) => {
                     if (error) throw error;
-                    if (to_id != "") {
+                    if (to_id != null) {
                       for (var x = 0; x <= to_id.length; x++) {
                         var toid = to_id[x];
 
@@ -230,7 +235,6 @@ router.put("/updatestatus", async (req, res) => {
   var ev_enddate = req.body.ev_enddate;
   var ev_starttime = req.body.ev_starttime;
   var ev_endtime = req.body.ev_endtime;
-
   var status_yes;
   var status_no;
 
@@ -270,8 +274,13 @@ router.put("/updatestatus", async (req, res) => {
           if (datediff >= 0) {
             var dateStart = ev_startdate;
             var date_ev_startdate = new Date(ev_startdate);
-            var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
-           
+            var dateCheck =
+              date_ev_startdate.getFullYear() +
+              "-" +
+              (date_ev_startdate.getMonth() + 1) +
+              "-" +
+              date_ev_startdate.getDate();
+
             for (var i = 0; i <= datediff; i++) {
               con.query(
                 "SELECT ev_id,event_id, substr(ev_starttime,1,5) AS ev_starttime," +
@@ -379,9 +388,13 @@ router.put("/updatestatus/staff", async (req, res) => {
             var dateStart = ev_startdate;
 
             var date_ev_startdate = new Date(ev_startdate);
-            var dateCheck = date_ev_startdate.getFullYear() + "-" + (date_ev_startdate.getMonth() +1)+ "-" + date_ev_startdate.getDate();
-          
-            
+            var dateCheck =
+              date_ev_startdate.getFullYear() +
+              "-" +
+              (date_ev_startdate.getMonth() + 1) +
+              "-" +
+              date_ev_startdate.getDate();
+
             for (var i = 0; i <= datediff; i++) {
               con.query(
                 "SELECT if (ev_starttime = '00:00:00','', substr(ev_starttime,1,5)) AS ev_starttime , " +

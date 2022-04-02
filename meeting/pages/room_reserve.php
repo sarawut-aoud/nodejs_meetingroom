@@ -643,7 +643,8 @@ require_once "../login/check_session.php";
                                 title: result.message
 
                             }).then((result) => {
-
+                                $("#modalEdit").modal("hide");
+                                location.reload();
                                 $('#frm_modalEditRoom')[0].reset();
                                 $('#title').focus();
                             })

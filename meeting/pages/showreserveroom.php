@@ -202,7 +202,7 @@ require_once "../login/check_session.php";
                                                     </div>
                                                 </div>
                                                 <div class="ml-3 col-md">
-                                                    <input type="text" class="form-control " id="tool_request" name="" disabled />
+                                                    <input type="text" class="form-control " id="tool_request" name="tool_request" disabled />
                                                     <div class="ml-3 col-md">
                                                         <span style="font-size: 14px;">( ZOOM ,Google Meetroom , Microsoft Team ,อื่นๆ )</span>
                                                     </div>
@@ -218,7 +218,7 @@ require_once "../login/check_session.php";
                                         </div>
                                     </div>
                                     <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
-                                    <input type="hidden" value="<?php echo $_SESSION['mt_lv_id']; ?>" name="level" />
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_duty_id']; ?>" name="level" />
                                 </form>
                             </div>
                             <!-- /.card -->

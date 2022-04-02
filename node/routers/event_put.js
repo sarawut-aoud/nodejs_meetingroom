@@ -10,7 +10,6 @@ const { text } = require("body-parser");
 const { parse } = require("path");
 
 const dbname = require("../function/database");
-const { json } = require("body-parser");
 const ho = dbname.ho + ".";
 const pbh = dbname.pbh + ".";
 
@@ -36,6 +35,7 @@ router.put("/updatedata", async (req, res) => {
   var st_id = req.body.style; // id_style
   var id = req.body.id; // id_users
   var ro_id = req.body.ro_name; // id_rooms
+  var toolmore = req.body.tool_request;
   var chk = 0;
   var date_diff = DATE_DIFF(ev_startdate, ev_enddate, "D").output;
 
@@ -54,8 +54,13 @@ router.put("/updatedata", async (req, res) => {
         if (date_diff >= 0) {
           var dateStart = ev_startdate;
           var date_ev_startdate = new Date(ev_startdate);
-          var dateCheck = date_ev_startdate.getFullYear() + "-" + date_ev_startdate.getMonth() + "-" + date_ev_startdate.getDate();
-         
+          var dateCheck =
+            date_ev_startdate.getFullYear() +
+            "-" +
+            date_ev_startdate.getMonth() +
+            "-" +
+            date_ev_startdate.getDate();
+
           for (var i = 0; i <= date_diff; i++) {
             con.query(
               "SELECT IF (ev_starttime = '00:00:00', '', substr(ev_starttime, 1, 5)) as ev_starttime, " +
@@ -108,11 +113,8 @@ router.put("/updatedata", async (req, res) => {
             message: "ไม่สามารถแก้ไขรายการจองได้",
           });
         } else {
-         
           if (date_diff >= 0) {
-           
             if (results_evid.length > 0) {
-             
               con.query(
                 "DELETE FROM tbl_event WHERE event_id = ? ",
                 [event_id],
@@ -122,7 +124,7 @@ router.put("/updatedata", async (req, res) => {
                     "ALTER TABLE tbl_event AUTO_INCREMENT = 1 ",
                     (error, results_alter, field) => {
                       if (error) throw error;
-                     
+
                       for (var ii = 0; ii <= date_diff; ii++) {
                         var dateStart = ev_startdate;
 
@@ -133,7 +135,7 @@ router.put("/updatedata", async (req, res) => {
                         var dateEnd = date2
                           .toISOString("th-TH", { timeZone: "UTC" })
                           .slice(0, 10);
-                        
+
                         for ($d = 0; $d <= date_diff; $d++) {
                           var theDateStart =
                             Date.parse(dateStart) + 3600 * 1000 * 24;
@@ -146,24 +148,26 @@ router.put("/updatedata", async (req, res) => {
 
                           //todo : INSERT data
                           con.query(
-                            "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,id,ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id)" +
-                              "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                            "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id," +
+                              "ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,ev_toolmore,id)" +
+                              "VALUES(?,?,?,?,?,?,?,?,?,?,?,AES_ENCRYPT(?, UNHEX(SHA2('password', 512))))",
                             [
                               ev_title,
                               ev_people,
                               ro_id,
                               st_id,
-                              id,
                               dateStart,
                               dateEnd,
                               ev_starttime,
                               ev_endtime,
                               ev_status,
                               event_id,
+                              toolmore,
+                              id,
                             ],
                             (error, results, field) => {
                               if (error) throw error;
-                            
+
                               //   if (to_id != undefined) {
                               con.query(
                                 "DELETE FROM tbl_acces WHERE ev_id = ?  ",

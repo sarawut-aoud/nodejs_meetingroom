@@ -26,7 +26,10 @@ router.get("/", async (req, res) => {
   // console.log(id);
   if (!id && !ward_id) {
     con.query(
-      "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+      "SELECT ev.ev_id , ev.event_id, ev.ev_title," +
+        "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
+        "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
+        " ev.ev_status,ev.ev_starttime, " +
         "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
@@ -42,7 +45,10 @@ router.get("/", async (req, res) => {
   } else {
     if (!ward_id) {
       con.query(
-        "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+        "SELECT ev.ev_id , ev.event_id, ev.ev_title, " +
+          "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
+          "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
+          " ev.ev_status,ev.ev_starttime, " +
           "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore ,ro.ro_id, ro.ro_name,users.person_id " +
           "FROM tbl_event AS ev " +
           "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
@@ -60,7 +66,10 @@ router.get("/", async (req, res) => {
       );
     } else {
       con.query(
-        "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
+        "SELECT ev.ev_id , ev.event_id, ev.ev_title, " +
+          "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
+          "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
+          " ev.ev_status,ev.ev_starttime, " +
           "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name, w.ward_name  " +
           "FROM tbl_event AS ev " +
           "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
@@ -543,7 +552,26 @@ router.get("/list", async (req, res) => {
     }
   );
 });
-
+router.post("/stutusstaff", async (req, res) => {
+  var ward_id = req.body.ward_id;
+  con.query(
+    "SELECT ev.ev_id , ev.event_id, ev.ev_title, " +
+      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
+      "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
+      " ev.ev_status,ev.ev_starttime, " +
+      "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
+      "FROM tbl_event AS ev " +
+      "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN " +
+      pbh +
+      "hr_personal AS users ON (ev.id = users.person_id) WHERE ev.ev_status = '0' GROUP BY ev.event_id",
+    (error, results, fields) => {
+      if (error) throw error;
+      // console.log(error);
+      res.json(results);
+    }
+  );
+});
 // SELECT status
 router.post("/status", async (req, res) => {
   var level = req.body.level;
@@ -575,7 +603,7 @@ router.post("/status", async (req, res) => {
         res.json(results);
       }
     );
-  } else if (ward_id == "48" && level == 1) {
+  } else if (ward_id == "48" && level != "2") {
     // STAFF
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, " +
