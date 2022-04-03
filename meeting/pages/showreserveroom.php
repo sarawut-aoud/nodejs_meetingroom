@@ -366,7 +366,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-            
+
                 }
 
             });
@@ -467,7 +467,9 @@ require_once "../login/check_session.php";
                 success: function(result) {
                     var data = '<option value="" selected disabled>-- เลือกห้องประชุม --</option>';
                     for (i in result) {
-                        data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+                        if (result[i].ro_public == "Y") {
+                            data += '<option value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+                        }
                     }
                     $('#ro_name').html(data);
                 }

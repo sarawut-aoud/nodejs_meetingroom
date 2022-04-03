@@ -280,9 +280,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                     }
                     $("#bage").html(bage);
                     $("#bage1").html(bage);
-
                 }
-
             });
             $.ajax({
                 type: "get",
@@ -300,10 +298,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         }
                     }
                     $("#bage").html(bage);
-                  
-
                 }
-
             });
 
 
