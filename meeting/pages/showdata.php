@@ -237,6 +237,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
+   
     <script>
         $(document).ready(function() {
 

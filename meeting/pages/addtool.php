@@ -170,9 +170,36 @@ require_once "../login/check_session.php";
     <script>
         $(document).ready(function() {
 
-        });
-    </script>
+            cache_clear();
 
+            setInterval(function() {
+                cache_clear()
+            }, 5000);
+        });
+
+
+        function cache_clear() {
+
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var id = '<?php echo $_SESSION['mt_id']; ?>';
+
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/user",
+                data: {
+                    id: id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
 
     <script>
         $(document).ready(function() {
