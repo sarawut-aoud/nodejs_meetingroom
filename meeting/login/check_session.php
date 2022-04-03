@@ -1,5 +1,5 @@
 <?php
-  error_reporting(~E_NOTICE);
+error_reporting(~E_NOTICE);
 session_start();
 if (isset($_SESSION["mt_id"]) && isset($_SESSION["mt_user"])&& isset($_SESSION["mt_ward_id"]) ) {
 } else {
