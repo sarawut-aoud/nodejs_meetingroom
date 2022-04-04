@@ -71,7 +71,7 @@ require_once "../login/check_session.php";
                     <div class="row justify-content-center mt-5">
                         <div class="col-xl-8 col-md-12 ">
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h4> ห้องประชุมโรงพยาบาลเพชรบูรณ์</h5>
                                     </div>
@@ -131,6 +131,7 @@ require_once "../login/check_session.php";
         function cache_clear() {
 
             var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>';
 
             $.ajax({
@@ -161,7 +162,8 @@ require_once "../login/check_session.php";
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
-
+            var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
+           
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -197,7 +199,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                 
+
                 }
             });
 

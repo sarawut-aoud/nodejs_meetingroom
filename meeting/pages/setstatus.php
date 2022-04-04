@@ -73,7 +73,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>เปิด-ปิด สิทธิ์การเพิ่มข้อมูล</h1>
                                     </div>
@@ -108,7 +108,7 @@ require_once "../login/check_session.php";
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2" id="btnreset">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnRooms">เพิ่มสิทธิ์การเพิ่มอุปรณ์</button>
+                                            <button type="submit" id="btnRooms">เพิ่มสิทธิ์การเพิ่มอุปรณ์</button>
                                         </div>
                                     </div>
                                 </form>
@@ -118,7 +118,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header card-head ">
                                     <div class="text-center">
                                         <h1>ward ที่เปิดสถานะ</h1>
                                     </div>
@@ -186,18 +186,15 @@ require_once "../login/check_session.php";
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker()
             $('.select2').select2();
-            $(document).on('click', '#btnreset', function(e) {
-                e.preventDefault();
-                $('#btnRooms').removeClass();
-                $('#btnRooms').addClass('col-md-4 btn btn-success mt-2');
-                $('#btnRooms').html('เพิ่มสิทธิ์การเพิ่มอุปรณ์');
-
-            })
+            $('#btnRooms').addClass('col-md-4 btn bg-color mt-2 saveroom');
+            $('#btnRooms').html('เพิ่มสิทธิ์การเพิ่มอุปรณ์');
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
             var depart_id = '<?php echo $_SESSION['mt_de_id']; ?>';
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
             var fac_id = '<?php echo $_SESSION['mt_faction_id']; ?>';
+
+
             // แสดงข้อมูลส่วนตัว
             var prefix = ''
             if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
@@ -323,7 +320,59 @@ require_once "../login/check_session.php";
 
                 }
             });
+            $(document).on('click', '#btnreset', function(e) {
+                e.preventDefault();
+                $('#btnRooms').removeClass();
+                $('#btnRooms').addClass('col-md-4 btn bg-color mt-2 saveroom');
+                $('#btnRooms').html('เพิ่มสิทธิ์การเพิ่มอุปรณ์');
 
+            });
+            $(document).on('click', '.saveroom', function(e) {
+                e.preventDefault();
+                var ward_id = $('#ward_id').val();
+                var setstatus = $('#setstatus').val();
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: path + "/setstatus",
+                    data: {
+                        ward_id: ward_id,
+                        setstatus: setstatus,
+                    },
+                    success: function(result) {
+                        if (result.status == 200) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+                            })
+
+                            location.reload();
+
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                            Toast.fire({
+                                icon: 'warning',
+                                title: result.message
+                            })
+
+                            location.reload();
+
+                        }
+                    }
+                })
+
+            })
             $.ajax({
                 type: 'get',
                 dataType: 'json',
@@ -346,7 +395,7 @@ require_once "../login/check_session.php";
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td width="10%" align="center">' + msg + '</td>');
                         table += ('<td  align="center"width="20%"><a id="' + cell.dv_id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
-                            ' <a id="' + cell.dv_id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
+                            ' <a id="' + cell.dv_id + '" class="btn btn-danger btnDels" title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -441,14 +490,16 @@ require_once "../login/check_session.php";
                             dataType: "json",
                             url: path + "/setstatus",
                             data: {
-                                ward_id : ward_id,
-                                setstatus:setstatus,
+                                ward_id: ward_id,
+                                setstatus: setstatus,
                             },
                             success: function(result) {
                                 if (result.status == '200') {
                                     Swal.fire({
                                         icon: 'success',
                                         title: result.message,
+                                    }).then((result) => {
+                                        location.reload();
                                     })
                                 } else {
                                     const Toast = Swal.mixin({
@@ -461,12 +512,50 @@ require_once "../login/check_session.php";
                                         icon: 'warning',
                                         title: result.message,
 
+                                    }).then((result) => {
+                                        location.reload();
                                     })
                                 }
                             }
                         })
                     })
+                    $(document).on('click', '.btnDels', function(e) {
+                        e.preventDefault();
+                        var dv_id = $(this).attr('id');
 
+                        $.ajax({
+                            type: "delete",
+                            dataType: "json",
+                            url: path + "/setstatus",
+                            data: {
+                                dv_id: dv_id
+                            },
+                            success: function(result) {
+                                if (result.status == '200') {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: result.message,
+                                    }).then((result) => {
+                                        location.reload();
+                                    })
+                                } else {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                    })
+                                    Toast.fire({
+                                        icon: 'warning',
+                                        title: result.message,
+
+                                    }).then((result) => {
+                                        location.reload();
+                                    })
+                                }
+                            }
+                        })
+                    })
 
 
 

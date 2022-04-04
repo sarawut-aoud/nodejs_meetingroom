@@ -14,14 +14,17 @@ unset($_SESSION['mt_name']);
 // unset($_SESSION['mt_lv_id']);
 // unset($_SESSION['mt_lv_name']); 
 unset($_SESSION['mt_page']);
-unset($_SESSION['mt_faction_id'] );
-unset($_SESSION['mt_office_name'] );
+unset($_SESSION['mt_faction_id']);
+unset($_SESSION['mt_office_name']);
 unset($_SESSION['mt_duty_id']);
 unset($_SESSION['mt_duty_name']);
 unset($_SESSION['mt_faction_id']);
 unset($_SESSION['mt_faction_name']);
 unset($_SESSION['mt_de_id']);
 unset($_SESSION['mt_de_name']);
+unset($_SESSION['mt_ward_id']);
+unset($_SESSION['mt_ward_name']);
+
 
 echo "<script>
 	window.setTimeout(function() {

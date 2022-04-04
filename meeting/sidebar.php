@@ -1,7 +1,7 @@
 <?php
 function adddata($ward, $duty)
 {
-    if ($ward == 48 ) {
+    if ($ward == 48) {
         $adddata = '  <hr class="mt-3" style="background-color:#fff">
                         <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
                         <li class="nav-item ">
@@ -22,21 +22,6 @@ function adddata($ward, $duty)
                                 <p>แก้ไขข้อมูล & ลบข้อมูล</p>
                             </a>
                         </li>';
-    } else {
-        $adddata = '  <hr class="mt-3" style="background-color:#fff">
-                    <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
-                    <li class="nav-item ">
-                        <a href="addtool.php" class="nav-link active">
-                            <i class="nav-icon fas fa-plus-circle"></i>
-                            <p>เพิ่มข้อมูลอุปกรณ์</p>
-                        </a>
-                    </li> 
-                    <li class="nav-item  ">
-                        <a href="showtools.php" class="nav-link active">
-                            <i class="nav-icon  fa-solid fa-table"></i>
-                            <p>แก้ไขข้อมูลอุปกรณ์</p>
-                        </a>
-                    </li>';
     }
     return $adddata;
 }
@@ -109,12 +94,16 @@ function appove($ward, $duty)
 // หัวหน้า
 ?>
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-light-white  elevation-4 " style="background-color: #008622;">
+<aside class="main-sidebar sidebar-light-white  elevation-4 " style="background: rgb(111,190,255);
+background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 100%);">
 
     <!-- Brand Logo -->
     <a href="_index.php" class="brand-link">
-        <img src="../public/images/logo.png" alt="Logo" class="w-75" style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
+        <center>
+            <img src="../public/images/logo.png" alt="Logo" class="w-75 rounded-3 elevation-3 bg-white">
+            <span class="brand-text font-weight-light" style="font-size: 28px;"></span>
+        </center>
+
     </a>
     <!-- Sidebar -->
     <div class="sidebar mt-3 ">
@@ -144,6 +133,9 @@ function appove($ward, $duty)
 
                 <?php echo  adddata($_SESSION['mt_ward_id'], $_SESSION['mt_duty_id']); ?>
 
+                <li class="nav-item" id="menu">
+
+                </li>
                 <hr class="mt-3 mb-3" style="background-color:#fff">
                 <li class="mb-2 nav-header text-white"> จองห้องประชุม</li>
 
@@ -175,3 +167,39 @@ function appove($ward, $duty)
     </div>
     <!-- /.sidebar -->
 </aside>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var path = '<?php echo $_SESSION['mt_path']; ?>';
+        var ward_id = "<?php echo $_SESSION['mt_ward_id']; ?>";
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: path + "/setstatus/menu",
+            data: {
+                ward_id: ward_id,
+            },
+            success: function(result) {
+                var msg1 = '<hr class="mt-3" style="background-color:#fff">' +
+                    '<li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>';
+                var menu = '';
+                for (i in result) {
+                    var status = result[i].setstatus;
+                }
+                if (status == "Y") {
+                    menu = '<a href="addtool.php" class="nav-link active">' +
+                        '<i class="nav-icon fas fa-plus-circle"></i> ' +
+                        "<p>เพิ่มข้อมูลอุปกรณ์</p>" +
+                        " </a>" +
+                        ' <a href="showtools.php" class="nav-link active">' +
+                        '<i class="nav-icon  fa-solid fa-table"></i>' +
+                        " <p>แก้ไขข้อมูลอุปกรณ์</p>" +
+                        " </a>";
+                } else {
+                    msg1 = "";
+                }
+                $("#menu").html(msg1 + menu);
+            }
+        });
+    })
+</script>

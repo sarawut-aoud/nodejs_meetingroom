@@ -78,7 +78,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>รายการที่ต้องอนุมัติ</h1>
                                     </div>
@@ -166,9 +166,9 @@ require_once "../login/check_session.php";
 
             var path = '<?php echo $_SESSION['mt_path'] ?>',
                 level = '<?php echo $_SESSION['mt_duty_id']; ?>',
-                id = '<?php echo $_SESSION['mt_id']; ?>';
-            ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
-
+                id = '<?php echo $_SESSION['mt_id']; ?>',
+                ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
+               
             $.ajax({
                 type: "get",
                 dataType: "json",

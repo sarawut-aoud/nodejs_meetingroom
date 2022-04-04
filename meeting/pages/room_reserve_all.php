@@ -76,7 +76,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>รายการจองทั้งหมด</h1>
                                     </div>
@@ -173,7 +173,7 @@ require_once "../login/check_session.php";
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
-
+          
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -211,7 +211,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                 
+
 
                 }
 
@@ -607,7 +607,7 @@ require_once "../login/check_session.php";
                 var st_id = $('#style').val();
                 var sumnum = $('#sumnum').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
-                var level = <?php echo $_SESSION['mt_lv_id']; ?>;
+                var level = <?php echo $_SESSION['mt_duty_id']; ?>;
 
                 var formdata = $('#frm_modalEditRoom').serializeArray();
 

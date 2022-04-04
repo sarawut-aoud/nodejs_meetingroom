@@ -83,7 +83,7 @@ require_once "../login/check_session.php";
                     <div class="row justify-content-center">
                         <div class="col-xl-6 col-md-12 ">
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h4> <i class="fa-regular fa-calendar-days"></i> การประชุมประจำวัน</h4>
                                     </div>
@@ -101,7 +101,7 @@ require_once "../login/check_session.php";
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-6 col-md-12 ">
                             <div class="card">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h4> <i class="fa-regular fa-calendars"></i>ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
                                     </div>
@@ -117,7 +117,7 @@ require_once "../login/check_session.php";
                         <!-- /.col -->
                         <div class="col-xl-4 col-md-12 ">
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h4><i class="fa-solid fa-fill-drip"></i> สีประจำห้องประชุม</h4>
                                     </div>
@@ -227,7 +227,9 @@ require_once "../login/check_session.php";
             var path = "<?php echo $_SESSION['mt_path']; ?>";
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>'
             var id = '<?php echo $_SESSION['mt_id']; ?>';
+            var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
 
+           
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {

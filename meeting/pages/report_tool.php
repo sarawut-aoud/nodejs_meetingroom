@@ -75,7 +75,7 @@ require_once "../login/check_session.php";
                     <div class="row justify-content-center mt-5">
                         <div class="col-xl-12 col-md-12 ">
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h4> จัดเตรียมอุปกรณ์</h5>
                                     </div>
@@ -182,6 +182,8 @@ require_once "../login/check_session.php";
             var id = '<?php echo $_SESSION['mt_id']; ?>';
             var duty_id = "<?php echo $_SESSION['mt_duty_id']; ?>";
             var ward_id = "<?php echo $_SESSION['mt_ward_id']; ?>";
+            
+           
 
             $.ajax({
                 type: "get",

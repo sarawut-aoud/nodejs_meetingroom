@@ -13,7 +13,29 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const router = express.Router();
-
+router.get("/menu", async (req, res) => {
+   var query01 = require("url").parse(req.url, true).query;
+  let ward_id = query01.ward_id;
+  if (!ward_id) {
+    return res.send({ error: true, status: "0", message: "เกิดข้อผิดพลาด" });
+  } else {
+    con.query(
+      "SELECT sd.ward_id,sd.setstatus ,w.ward_name " +
+        "FROM tbl_setdevice AS sd " +
+        "INNER JOIN " +
+        pbh +
+        "hr_ward AS w " +
+        "ON (sd.ward_id = w.ward_id )" +
+        "WHERE sd.ward_id = ?" +
+        "ORDER BY sd.dv_id",
+      [ward_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res.json(results);
+      }
+    );
+  }
+});
 router.get("/", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   let id = query01.dv_id;
@@ -63,7 +85,7 @@ router.post("/", async (req, res) => {
       (error, results, fields) => {
         if (error) throw error;
         return res
-          .status(400)
+          .status(200)
           .send({ error: true, status: "200", message: "บันทึกข้อมูลสำเร็จ" });
       }
     );
@@ -74,7 +96,7 @@ router.put("/", async (req, res) => {
   var ward_id = req.body.ward_id;
   var setstatus = req.body.setstatus;
 
-  if ( !ward_id || !setstatus) {
+  if (!ward_id || !setstatus) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "เกิดข้อผิดพลาด" });
@@ -90,28 +112,26 @@ router.put("/", async (req, res) => {
       }
     );
   }
-})
+});
 router.delete("/", async (req, res) => {
-    var dv_id = req.body.dv_id;
+  var dv_id = req.body.dv_id;
 
-    if (!dv_id ) {
-      return res
-        .status(400)
-        .send({ error: true, status: "0", message: "เกิดข้อผิดพลาด" });
-    } else {
-      con.query(
-        "DELETE FROM tbl_setdevice  WHERE ward_id = ?",
-        [ ward_id],
-        (error, results, fields) => {
-          if (error) throw error;
-          return res
-            .status(200)
-            .send({ error: true, status: "200", message: "ลบข้อมูลสำเร็จ" });
-        }
-      );
-    }
-  })
-
-
+  if (!dv_id) {
+    return res
+      .status(400)
+      .send({ error: true, status: "0", message: "เกิดข้อผิดพลาด" });
+  } else {
+    con.query(
+      "DELETE FROM tbl_setdevice  WHERE dv_id = ?",
+      [dv_id],
+      (error, results, fields) => {
+        if (error) throw error;
+        return res
+          .status(200)
+          .send({ error: true, status: "200", message: "ลบข้อมูลสำเร็จ" });
+      }
+    );
+  }
+});
 
 module.exports = router;

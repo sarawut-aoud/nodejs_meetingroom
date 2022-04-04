@@ -3,7 +3,7 @@
     <div class="modal fade" id="ModalRoom" style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header justify-content-center text-white edit-head">
+                <div class="modal-header justify-content-center  edit-head">
                     <div class="text-center">
                         <h1> แก้ไข ข้อมูลห้อง </h1>
                     </div>
@@ -85,7 +85,7 @@
     <div class="modal fade" id="ModalStyle" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header justify-content-center text-white edit-head">
+                <div class="modal-header justify-content-center  edit-head">
                     <div class="text-center">
                         <h1> แก้ไข ข้อมูลรูปแบบห้อง </h1>
                     </div>
@@ -119,7 +119,7 @@
     <div class="modal fade" id="ModalTool" style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header justify-content-center text-white edit-head">
+                <div class="modal-header justify-content-center  edit-head">
                     <div class="text-center">
                         <h1> แก้ไข ข้อมูลอุปกรณ์ </h1>
                     </div>

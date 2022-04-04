@@ -1,6 +1,6 @@
 <?php
 require_once "../login/check_session.php";
-if ($_SESSION['mt_duty_id'] == 2) {
+if ($_SESSION['mt_ward_id'] == 48) {
 } else {
 
     echo "<script>
@@ -81,7 +81,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>ห้องประชุม</h1>
                                     </div>
@@ -104,7 +104,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>รูปแบบห้อง</h1>
                                     </div>
@@ -133,7 +133,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         <div class="col-xl-12 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>อุปกรณ์</h1>
                                     </div>

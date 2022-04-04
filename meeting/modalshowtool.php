@@ -3,7 +3,7 @@
 <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header justify-content-center text-white edit-head">
+            <div class="modal-header justify-content-center  edit-head">
                 <div class="text-center">
                     <h1> รายละเอียด </h1>
                 </div>

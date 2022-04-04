@@ -75,7 +75,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>แก้ไขข้อมูลอุปกรณ์</h1>
                                     </div>
@@ -200,7 +200,7 @@ require_once "../login/check_session.php";
             var office_id = "<?php echo $_SESSION['mt_office_id'] ?>";
             var depart_id = "<?php echo $_SESSION['mt_de_id'] ?>";
             var fac_id = "<?php echo $_SESSION['mt_faction_id'] ?>";
-
+            
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -238,7 +238,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                   
+
                 }
 
             });

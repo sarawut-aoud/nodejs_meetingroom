@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-xl-10 col-md-12 ">
         <div class="card shadow">
-            <div class="card-header text-white card-head ">
+            <div class="card-header  card-head ">
                 <div class="text-center">
                     <h4><i class="fa-solid fa-id-card"></i> ข้อมูลส่วนตัว</h4>
                 </div>

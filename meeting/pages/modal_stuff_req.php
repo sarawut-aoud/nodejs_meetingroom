@@ -3,7 +3,7 @@
     <div class="modal fade" id="modalStatusStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header justify-content-center text-white edit-head">
+                <div class="modal-header justify-content-center  edit-head">
                     <div class="text-center">
                         <h1> อนุมัติแบบฟอร์มขออนุญาตใช้ห้องประชุม </h1>
                     </div>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    <button type="submit" id="btnsaveRoom" name="btnsaveRoom" class="col-md-4 btn btn-success mt-2 ">ส่งแบบฟอร์ม</button>
+                    <button type="submit" id="btnsaveRoom" name="btnsaveRoom" class="col-md-4 btn bg-color mt-2 ">ส่งแบบฟอร์ม</button>
                 </div>
             </div>
         </div>
@@ -149,7 +149,7 @@
     <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header justify-content-center text-white edit-head">
+                <div class="modal-header justify-content-center  edit-head">
                     <div class="text-center">
                         <h1> รายละเอียดการขอใช้ห้องประชุม </h1>
                     </div>

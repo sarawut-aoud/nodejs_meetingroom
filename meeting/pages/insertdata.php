@@ -63,12 +63,12 @@ require_once "../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                <?php require_once '../infomation.php';?>
+                    <?php require_once '../infomation.php'; ?>
                     <div class="row mt-3">
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>เพิ่มห้องประชุม</h1>
                                     </div>
@@ -141,7 +141,7 @@ require_once "../login/check_session.php";
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnRooms">ยืนยันเพิ่มห้องประชุม</button>
+                                            <button type="submit" class="col-md-4 btn bg-color mt-2" id="btnRooms">ยืนยันเพิ่มห้องประชุม</button>
                                         </div>
                                     </div>
                                 </form>
@@ -153,7 +153,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>เพิ่มอุปกรณ์</h1>
                                     </div>
@@ -208,7 +208,7 @@ require_once "../login/check_session.php";
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnTools" name="btnTools">ยืนยันเพิ่มอุปกรณ์</button>
+                                            <button type="submit" class="col-md-4 btn bg-color mt-2" id="btnTools" name="btnTools">ยืนยันเพิ่มอุปกรณ์</button>
                                         </div>
                                     </div>
                                 </form>
@@ -224,7 +224,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h1>เพิ่มรูปแบบห้อง</h1>
                                     </div>
@@ -247,7 +247,7 @@ require_once "../login/check_session.php";
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" class="col-md-4 btn btn-success mt-2" id="btnStyle">ยืนยันเพิ่มรูปแบบห้อง</button>
+                                            <button type="submit" class="col-md-4 btn bg-color mt-2" id="btnStyle">ยืนยันเพิ่มรูปแบบห้อง</button>
                                         </div>
                                     </div>
                                 </form>
@@ -305,6 +305,8 @@ require_once "../login/check_session.php";
             var depart_id = '<?php echo $_SESSION['mt_de_id']; ?>';
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
             var fac_id = '<?php echo $_SESSION['mt_faction_id']; ?>';
+            
+
             // แสดงข้อมูลส่วนตัว
             var prefix = ''
             if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
@@ -356,7 +358,7 @@ require_once "../login/check_session.php";
                         }
                     }
                     $("#bage").html(bage);
-                  
+
 
                 }
 

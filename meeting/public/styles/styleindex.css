@@ -39,6 +39,7 @@
     width: 4rem;
     background-color: #00b8c5;
 }
+
 .badge-offline {
     font-size: .75em;
     color: white;
@@ -51,14 +52,15 @@
 }
 
 .edit-head {
-    background: rgb(0, 193, 33);
-    background: linear-gradient(180deg, rgba(0, 193, 33, 1) 0%, rgba(14, 74, 0, 1) 100%);
+    background: rgb(161,198,255);
+    background: linear-gradient(180deg, rgba(161,198,255,1) 0%, rgba(131,255,125,1) 100%);
+    color: rgb(94, 17, 145);
 }
 
 .card-head {
-    background: rgb(83, 163, 15);
-    background: linear-gradient(0deg, rgba(83, 163, 15, 1) 14%, rgba(0, 129, 34, 1) 100%);
-    color: white;
+    background: rgb(161,198,255);
+    background: linear-gradient(180deg, rgba(161,198,255,1) 0%, rgba(131,255,125,1) 100%);
+    color: rgb(94, 17, 145);
 }
 
 .login-btn {
@@ -79,7 +81,7 @@ button.login-btn:hover {
 
 .btn-moph {
     color: white;
-    background-color: rgb(41, 204, 0);
+    background-color: rgb(0, 95, 204);
     width: 220px;
     border-radius: 10px;
     border-color: white;
@@ -89,11 +91,17 @@ button.login-btn:hover {
 .btn-moph:active,
 .btn-moph:hover {
     color: white;
-    background-color: rgb(0, 139, 19);
+    background-color: rgb(0, 50, 107);
 
 }
 
-.card-head {
-    background: rgb(32, 159, 0);
-    background: linear-gradient(180deg, rgba(32, 159, 0, 1) 25%, rgba(2, 50, 8, 1) 84%);
+.bg-color {
+    background: rgb(114, 239, 255);
+    background: linear-gradient(22deg, rgba(114, 239, 255, 1) 0%, rgba(101, 255, 123, 1) 100%);
+}
+
+.bg-color:hover,
+.bg-color:active {
+    background: rgb(7, 206, 233);
+    background: linear-gradient(22deg, rgb(0, 195, 221) 0%, rgb(3, 224, 36) 100%);
 }

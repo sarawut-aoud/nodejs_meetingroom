@@ -76,7 +76,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow mt-3">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h4><i class=" fa-regular fa-calendar-check"></i> เลือกห้องประชุม เพื่อทำการจอง</h4>
                                     </div>
@@ -214,7 +214,7 @@ require_once "../login/check_session.php";
                                     <div class="card-footer ">
                                         <div class="row justify-content-between ">
                                             <button type="reset" class="col-md-4 btn btn-secondary mt-2">ยกเลิก</button>
-                                            <button type="submit" id="btnAproveRoom" name="btnAproveRoom" class="col-md-4 btn btn-success mt-2 ">ลงทะเบียนการจอง</button>
+                                            <button type="submit" id="btnAproveRoom" name="btnAproveRoom" class="col-md-4 btn bg-color mt-2 ">ลงทะเบียนการจอง</button>
                                         </div>
                                     </div>
                                     <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
@@ -225,7 +225,7 @@ require_once "../login/check_session.php";
                         </div>
                         <div class="col-xl-6 col-md-12 ">
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header  card-head ">
                                     <div class="text-center">
                                         <h4><i class="fa-solid fa-fill-drip"></i> สีประจำห้องประชุม</h4>
                                     </div>
@@ -239,7 +239,7 @@ require_once "../login/check_session.php";
                                 <!-- ./col -->
                                 <div class="col-xl-12 col-md-12 ">
                                     <div class="card ">
-                                        <div class="card-header text-white card-head ">
+                                        <div class="card-header  card-head ">
                                             <div class="text-center">
                                                 <h4><i class="fa-regular fa-calendars"></i> ปฏิทินการใช้ห้องประชุม โรงพยาบาลเพชรบูรณ์</h4>
                                             </div>
@@ -354,7 +354,9 @@ require_once "../login/check_session.php";
 
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
-
+            var ward_id = "<?php echo $_SESSION['mt_ward_id'] ?>";
+            
+           
             $('#radioPrimary2').change(function() {
                 $("#tool_request").prop('disabled', false);
                 $('#radioPrimary1').change(function() {
@@ -418,7 +420,7 @@ require_once "../login/check_session.php";
                 var st_id = $('#style').val();
                 var sumnum = $('#sumnum').val();
                 var id = <?php echo $_SESSION['mt_id']; ?>;
-                var level = <?php echo $_SESSION['mt_lv_id']; ?>;
+                var level = <?php echo $_SESSION['mt_duty_id']; ?>;
 
                 var formdata = $('#frm_Addroom').serializeArray();
 
@@ -604,7 +606,7 @@ require_once "../login/check_session.php";
                 url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
-                    id: id
+                    id: id,
                 },
                 success: function(results) {
 

@@ -79,7 +79,7 @@ require_once "../login/check_session.php";
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
-                                <div class="card-header text-white card-head ">
+                                <div class="card-header card-head ">
                                     <div class="text-center">
                                         <h1>รายการจอง</h1>
                                     </div>
@@ -209,8 +209,9 @@ require_once "../login/check_session.php";
             var path = '<?php echo $_SESSION['mt_path'] ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 level = '<?php echo $_SESSION['mt_lv_id']; ?>',
-                de_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-
+                de_id = '<?php echo $_SESSION['mt_de_id']; ?>',
+                ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
+           
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
@@ -402,8 +403,8 @@ require_once "../login/check_session.php";
                                 $("#modal2_style").html(st_name);
                                 $("#modal2_title").html(ev_title);
                                 $("#modal2_people").html(ev_people);
-                                $("#modal2_starttime").html(ev_startdate+'<span style="color:red;"> เวลา </span> '+ev_starttime);
-                                $("#modal2_endtime").html(ev_enddate+'<span style="color:red;"> เวลา </span> '+ev_endtime);
+                                $("#modal2_starttime").html(ev_startdate + '<span style="color:red;"> เวลา </span> ' + ev_starttime);
+                                $("#modal2_endtime").html(ev_enddate + '<span style="color:red;"> เวลา </span> ' + ev_endtime);
                                 $("#modal2_name").html(firstname + " " + lastname);
                                 $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
                                 $("#modal2_pos").html(pos);
