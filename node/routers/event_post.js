@@ -190,7 +190,7 @@ router.post("/adddata", async (req, res) => {
                     statusRoom,
                     event_id.substring(2),
                     toolmore,
-                    id,,
+                    id,
                     key,
                   ],
                   (error, results, field) => {

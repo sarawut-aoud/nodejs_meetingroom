@@ -428,24 +428,60 @@ require_once "../login/check_session.php";
                     dataType: "json",
                     data: formdata,
 
-                    success: function(result) {
-                        if (result.status != 0) {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                            })
-                            Toast.fire({
-                                    icon: 'success',
-                                    title: result.message
+                    success: function(results) {
 
-                                })
-                                .then((result) => {
-                                    $('#frm_Addroom')[0].reset();
-                                    $("#title")[0].focus();
-                                    location.href = 'room_reserve.php';
-                                })
+                        if (results.status != 0) {
+
+                            $.ajax({
+                                type: "get",
+                                dataType: "json",
+                                url: path + '/rooms',
+                                data: {
+                                    ro_id: ro_id,
+                                },
+                                success: function(result) {
+                                    for (j in result) {
+                                        if (result[j].ro_id == ro_id) {
+                                            if (ev_people < result[j].ro_peoplemini) {
+                                                const Toast = Swal.mixin({
+                                                    toast: true,
+                                                    position: 'top-end',
+                                                    showConfirmButton: false,
+                                                    timer: 1500,
+                                                })
+                                                Toast.fire({
+                                                    icon: 'warning',
+                                                    title: results.message,
+                                                    text: 'จำนวนคนน้อยกว่าปกติ'
+                                                }).then((result) => {
+                                                    $('#frm_Addroom')[0].reset();
+                                                    $("#title")[0].focus();
+                                                    location.href = 'room_reserve.php';
+                                                })
+
+                                            } else {
+                                                const Toast = Swal.mixin({
+                                                    toast: true,
+                                                    position: 'top-end',
+                                                    showConfirmButton: false,
+                                                    timer: 1500,
+                                                })
+                                                Toast.fire({
+                                                        icon: 'success',
+                                                        title: results.message
+                                                    })
+                                                    .then((result) => {
+                                                        $('#frm_Addroom')[0].reset();
+                                                        $("#title")[0].focus();
+                                                        location.href = 'room_reserve.php';
+                                                    })
+
+                                            }
+
+                                        }
+                                    }
+                                }
+                            });
 
                         } else {
                             const Toast = Swal.mixin({
@@ -456,10 +492,10 @@ require_once "../login/check_session.php";
                             })
                             Toast.fire({
                                 icon: 'warning',
-                                title: result.message
+                                title: results.message
 
                             })
-                            $('#frm_Addroom')[0].reset();
+
                             $("#title")[0].focus();
 
                         }
@@ -478,7 +514,7 @@ require_once "../login/check_session.php";
 
                             })
                             .then((result) => {
-                                $('#frm_Addroom')[0].reset();
+
                                 $("#title")[0].focus();
                             })
 

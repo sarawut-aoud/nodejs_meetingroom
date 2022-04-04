@@ -76,46 +76,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-8 col-md-12 ">
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4>ข้อมูลส่วนตัว</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body mb-0">
-                                    <div class="form-group row">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">คำนำหน้า :</label>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ชื่อ - นามสกุล :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" readonly />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">แผนก :</label>
-                                            <div class="col-md">
-
-                                                <input type="text" class="form-control " id="de_name" name="de_name" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ตำแหน่ง :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                    <?php require_once '../infomation.php';?>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
@@ -255,7 +216,9 @@ if ($_SESSION['mt_duty_id'] == 2) {
             $('#prefix').val(prefix);
             $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
             $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
-            $('#posiotion').val('<?php echo $_SESSION['mt_duty_name'] ?>');
+            $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
+            $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>'
             var path = "<?php echo $_SESSION['mt_path'] ?>";
@@ -317,7 +280,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         table += ('<td>' + cell.ro_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
-                        table += ('<td>' + cell.ro_people + '</td>');
+                        table += ('<td>' + cell.ro_people + ' คน  ชั้นต่ำ <span style="color:red;">(' + cell.ro_peoplemini +')</span> </td>');
                         table += ('<td>' + cell.ro_detail + '</td>');
                         table += ('<td align="center" width="20%"><a id="' + cell.ro_id + '" class="btn btn-info btnRoomEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
                             ' <a id="' + cell.ro_id + '" class="btn btn-danger btnRoomDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a></td>');
@@ -374,6 +337,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                     if (result[ii].ro_id == ro_id) {
                                         var ro_name = result[ii].ro_name;
                                         var ro_people = result[ii].ro_people;
+                                        var ro_peoplemini = result[ii].ro_peoplemini;
                                         var ro_color = result[ii].ro_color;
                                         var ro_detail = result[ii].ro_detail;
                                         break;
@@ -383,6 +347,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                                 $("#modal_ro_id").val(ro_id);
                                 $("#modal_ro_name").val(ro_name);
                                 $("#modal_ro_people").val(ro_people);
+                                $("#ro_peoplemini").val(ro_peoplemini);
                                 $("#modal_ro_color").val(ro_color);
                                 $("#modal_ro_detail").val(ro_detail);
                             }
@@ -818,6 +783,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                 var ro_color = $("#modal_ro_color").val();
                 var ro_detail = $("#modal_ro_detail").val();
                 var ro_public = $('#ro_public').val();
+                var ro_peoplemini = $('#ro_peoplemini').val();
 
                 $.ajax({
                     type: "PUT",
@@ -826,6 +792,7 @@ if ($_SESSION['mt_duty_id'] == 2) {
                         ro_id: ro_id,
                         ro_name: ro_name,
                         ro_people: ro_people,
+                        ro_peoplemini: ro_peoplemini,
                         ro_color: ro_color,
                         ro_detail: ro_detail,
                         ro_public: ro_public

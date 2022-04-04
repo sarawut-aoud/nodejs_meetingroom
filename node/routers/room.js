@@ -18,7 +18,7 @@ sql.get("/", async (req, res) => {
   let ro_id = req.body.ro_id;
   if (!ro_id) {
     con.query(
-      "SELECT ro_id,ro_name ,ro_people,ro_color,ro_detail ,ro_public FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
+      "SELECT ro_id,ro_name ,ro_people,ro_peoplemini,ro_color,ro_detail ,ro_public FROM tbl_rooms ORDER BY tbl_rooms.ro_id ASC",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -27,7 +27,9 @@ sql.get("/", async (req, res) => {
     );
   } else {
     con.query(
-      "SELECT ro_id,ro_name ,ro_people,ro_color,ro_detail,ro_public FROM tbl_rooms WHERE ro_id = " + ro_id + "  ORDER BY tbl_rooms.ro_id ASC",
+      "SELECT ro_id,ro_name ,ro_people,ro_peoplemini,ro_color,ro_detail,ro_public FROM tbl_rooms WHERE ro_id = " +
+        ro_id +
+        "  ORDER BY tbl_rooms.ro_id ASC",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -37,7 +39,6 @@ sql.get("/", async (req, res) => {
   }
 });
 
-
 //? Insert Data
 sql.post("/", async (req, res) => {
   var ro_name = req.body.ro_name; //todo : req -> Form .... data -> body
@@ -45,6 +46,7 @@ sql.post("/", async (req, res) => {
   var ro_color = req.body.ro_color;
   var ro_detail = req.body.ro_detail; // id_style
   var ro_public = req.body.ro_public; // id_style
+  var ro_peoplemini = req.body.ro_peoplemini; // id_style
 
   //? validation
   if (!ro_name || !ro_people || !ro_detail) {
@@ -53,8 +55,8 @@ sql.post("/", async (req, res) => {
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "INSERT INTO tbl_rooms (ro_name, ro_people, ro_color,ro_detail,ro_public) VALUES(?, ?,?, ?,?)",
-      [ro_name, ro_people, ro_color, ro_detail,ro_public],
+      "INSERT INTO tbl_rooms (ro_name, ro_people, ro_peoplemini,ro_color,ro_detail,ro_public) VALUES(?,?,?,?, ?,?)",
+      [ro_name, ro_people, ro_peoplemini, ro_color, ro_detail, ro_public],
       (error, results, fields) => {
         if (error) throw error;
         return res.send({
@@ -75,17 +77,25 @@ sql.put("/", async (req, res) => {
   let ro_color = req.body.ro_color;
   let ro_detail = req.body.ro_detail; // id_style
   var ro_public = req.body.ro_public; // id_style
-
+  var ro_peoplemini = req.body.ro_peoplemini; //
   // validation
 
-  if (!ro_name || !ro_people || !ro_detail) {
+  if (!ro_name || !ro_people || !ro_detail || !ro_peoplemini) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
-      "UPDATE tbl_rooms SET ro_name = ?, ro_people = ? ,  ro_color = ? ,ro_detail = ?,ro_public = ? WHERE ro_id = ?",
-      [ro_name, ro_people, ro_color, ro_detail,ro_public, ro_id],
+      "UPDATE tbl_rooms SET ro_name = ?, ro_people = ? ,ro_peoplemini = ?,  ro_color = ? ,ro_detail = ?,ro_public = ? WHERE ro_id = ?",
+      [
+        ro_name,
+        ro_people,
+        ro_peoplemini,
+        ro_color,
+        ro_detail,
+        ro_public,
+        ro_id,
+      ],
       (error, results, fields) => {
         if (error) throw error;
         return res.send({

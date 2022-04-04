@@ -1,9 +1,15 @@
 <?php
 function adddata($ward, $duty)
 {
-    if ($ward == 69 && $duty == 2) {
+    if ($ward == 48 ) {
         $adddata = '  <hr class="mt-3" style="background-color:#fff">
                         <li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>
+                        <li class="nav-item ">
+                        <a href="setstatus.php" class="nav-link active">
+                            <i class="nav-icon  fa-solid fa-unlock"></i>
+                            <p>เปิดสิทธ์การเพิ่มอุปกรณ์</p>
+                        </a>
+                    </li> 
                         <li class="nav-item ">
                             <a href="insertdata.php" class="nav-link active">
                                 <i class="nav-icon fas fa-plus-circle"></i>

@@ -1,6 +1,6 @@
 <!-- Modal Rooms -->
 <form action="" method="POST">
-    <div class="modal fade" id="ModalRoom"  style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalRoom" style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center text-white edit-head">
@@ -26,6 +26,14 @@
                             <label class="col-md-3 col-form-label">จำห้องคนที่บรรจุ :</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control " id="modal_ro_people" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label">จำห้องคนขั้นต่ำ :</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control " id="ro_peoplemini" name="ro_peoplemini" />
                             </div>
                         </div>
                     </div>
@@ -74,7 +82,7 @@
 <!-- Modal Rooms -->
 <!-- Modal Style -->
 <form action="" method="POST">
-    <div class="modal fade" id="ModalStyle"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalStyle" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center text-white edit-head">
@@ -123,7 +131,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">อุปกรณ์ :</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control " id="modal_to_name" name="to_name"/>
+                                <input type="text" class="form-control " id="modal_to_name" name="to_name" />
                             </div>
                         </div>
                     </div>
@@ -133,7 +141,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">ward :</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_ward_id"name="ward_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_ward_id" name="ward_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>
@@ -153,7 +161,7 @@
                         <div class="input-group">
                             <label class="col-md-3 col-form-label">depart:</label>
                             <div class="col-md-9">
-                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_depart_id"name="depart_id">
+                                <select class="form-control select2  select2-info " data-dropdown-css-class="select2-success" id="modal_depart_id" name="depart_id">
                                     <!-- <option value="">-- เลือกแผนกที่ดูแล --</option> -->
                                 </select>
                             </div>
@@ -161,15 +169,15 @@
                     </div>
                 </div>
                 <!-- //? Input People -->
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                <button type="button" class="btn btn-primary btnSaveTool">ยืนยันการแก้ไข</button>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
+                    <button type="button" class="btn btn-primary btnSaveTool">ยืนยันการแก้ไข</button>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-    <input type="hidden" id="modal_to_id" name="to_id"value="">
+    <input type="hidden" id="modal_to_id" name="to_id" value="">
 </form>
 <!-- Modal tool -->
 <!-- Modal tools -->

@@ -63,45 +63,7 @@ require_once "../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-8 col-md-12 ">
-                            <div class="card shadow">
-                                <div class="card-header text-white card-head ">
-                                    <div class="text-center">
-                                        <h4>ข้อมูลส่วนตัว</h4>
-                                    </div>
-                                </div>
-                                <div class="card-body mb-0">
-                                    <div class="form-group row">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">คำนำหน้า :</label>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control " id="prefix" name="prefix" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ชื่อ - นามสกุล :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="name" name="name" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row ">
-                                        <div class="input-group">
-                                            <label class=" col-form-label">แผนก :</label>
-                                            <div class="col-md">
-
-                                                <input type="text" class="form-control " id="de_name" name="de_name" readonly />
-                                            </div>
-                                            <label class=" col-form-label">ตำแหน่ง :</label>
-                                            <div class="col-md">
-                                                <input type="text" class="form-control " id="position" name="position" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                <?php require_once '../infomation.php';?>
                     <div class="row mt-3">
                         <div class="col-xl-6 col-md-12 col-sm-12">
                             <!-- general form elements -->
@@ -130,6 +92,14 @@ require_once "../login/check_session.php";
                                                 <label class="col-md-3 col-form-label">จำห้องคนที่บรรจุ :</label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control " id="ro_people" name="ro_people" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">จำห้องคนขั้นต่ำ :</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control " id="ro_peoplemini" name="ro_peoplemini" />
                                                 </div>
                                             </div>
                                         </div>
@@ -336,17 +306,19 @@ require_once "../login/check_session.php";
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
             var fac_id = '<?php echo $_SESSION['mt_faction_id']; ?>';
             // แสดงข้อมูลส่วนตัว
-            var prefix = '';
-            if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
-                prefix = 'นาย';
-            } else if (<?php echo $_SESSION['mt_prefix']; ?> == 2) {
-                prefix = 'นาง';
-            }
-            $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
-            $('#prefix').val(prefix);
-            $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['position']; ?>");
+            var prefix = ''
+            if (<?php echo $_SESSION['mt_prefix'] ?> == 1) {
+                prefix = 'นาย'
+            } else {
+                prefix = 'นาง'
 
+            }
+            $('#prefix').val(prefix);
+            $('#name').val('<?php echo $_SESSION['mt_name'] ?>');
+            $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
+            $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
+            $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
+            $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -467,6 +439,7 @@ require_once "../login/check_session.php";
                 var ro_color = $('#ro_color').val();
                 var ro_detail = $('#ro_detail').val();
                 var ro_public = $('#ro_public').val();
+                var ro_peoplemini = $('#ro_peoplemini').val();
                 $.ajax({
                     type: "POST",
                     url: path + "/rooms",
@@ -474,6 +447,7 @@ require_once "../login/check_session.php";
                     data: {
                         ro_name: ro_name,
                         ro_people: ro_people,
+                        ro_peoplemini: ro_peoplemini,
                         ro_color: ro_color,
                         ro_detail: ro_detail,
                         ro_public: ro_public,
@@ -493,6 +467,7 @@ require_once "../login/check_session.php";
                         $("#frmRoom")[0].reset();
                         $("#ro_name")[0].focus();
                         $("#ro_people")[0].reset();
+                        $("#ro_peoplemini")[0].reset();
                         $("#ro_detail")[0].reset();
                     },
                     error: function(result) {

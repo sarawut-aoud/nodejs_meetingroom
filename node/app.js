@@ -38,7 +38,7 @@ const event_post = require("./routers/event_post");
 const event_put = require("./routers/event_put");
 const seting = require("./routers/seting");
 const setdevice = require("./routers/setdevice");
-
+const setstatus = require("./routers/setstatus")
 
 app.use("/event",event);
 app.use("/seting",seting);
@@ -52,6 +52,7 @@ app.use("/meeting", meeting);
 app.use("/tools", tools);
 app.use("/rooms", rooms);
 app.use("/style", style);
+app.use("/setstatus",setstatus);
 ////! END ////
 
 // const server = https.createServer(options, app);
