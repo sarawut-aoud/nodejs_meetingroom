@@ -92,9 +92,9 @@ router.get("/notified", async (req, res, next) => {
         pbh +
         " hr_personal AS users " +
         "ON (ev.id = users.person_id ) " +
-        "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('password', 512)))" +
+        "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('?', 512)))" +
         "AND (ev.ev_status = '3' OR ev.ev_status = '4')  GROUP BY ev.event_id",
-      [id],
+      [id,key],
       (error, results, fields) => {
         if (error) throw error;
         res.json(results);
@@ -122,9 +122,9 @@ router.get("/", async (req, res, next) => {
         pbh +
         " hr_personal AS users " +
         "ON (ev.id = users.person_id ) " +
-        "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('password', 512)))" +
+        "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('?', 512)))" +
         "GROUP BY ev.event_id",
-      [id],
+      [id,key],
       (error, results, fields) => {
         if (error) throw error;
         res.json(results);

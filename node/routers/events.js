@@ -55,9 +55,9 @@ router.get("/", async (req, res) => {
           "INNER JOIN " +
           pbh +
           " hr_personal AS users ON (ev.id = users.person_id) " +
-          "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('password', 512))) " +
+          "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2('?', 512))) " +
           "GROUP BY ev.event_id",
-        [id],
+        [id,key],
 
         (error, results, fields) => {
           if (error) throw error;
@@ -302,9 +302,9 @@ router.get("/count/user", async (req, res, next) => {
       "INNER JOIN " +
       pbh +
       "hr_personal AS users ON (ev.id = users.person_id) " +
-      "WHERE users.person_id =  AES_ENCRYPT(?, UNHEX(SHA2('password', 512))) " + //? เปลี่ยน key ด้วย
+      "WHERE users.person_id =  AES_ENCRYPT(?, UNHEX(SHA2('?', 512))) " + //? เปลี่ยน key ด้วย
       "AND  (ev.ev_status = '3' OR ev.ev_status = '4')  GROUP BY ev.ev_title",
-    [id],
+    [id,key],
     (error, results, fields) => {
       if (error) throw error;
       arr = {

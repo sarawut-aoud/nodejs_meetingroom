@@ -177,7 +177,7 @@ router.post("/adddata", async (req, res) => {
                 con.query(
                   "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate," +
                     "ev_starttime,ev_endtime,ev_status,event_id,ev_toolmore,id)" +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2('password', 512))))",
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2('?', 512))))",
                   [
                     ev_title,
                     ev_people,
@@ -190,7 +190,8 @@ router.post("/adddata", async (req, res) => {
                     statusRoom,
                     event_id.substring(2),
                     toolmore,
-                    id,
+                    id,,
+                    key,
                   ],
                   (error, results, field) => {
                     if (error) throw error;
