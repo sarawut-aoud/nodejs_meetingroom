@@ -157,7 +157,7 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
 
                 <hr class="mt-4 mb-4" style="background-color:#fff">
                 <li class="nav-item ">
-                    <a href="../login/logout.php" class="btn btn-block btn-moph text-white ">
+                    <a href="../login/logout.php" class=" fixed-bottom mb-2 ml-3 btn btn-block btn-moph text-white ">
                         <i class="nav-icon fas fa-sign-out"></i>ออกจากระบบ
                     </a>
                 </li>

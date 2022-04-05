@@ -3,9 +3,9 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
+const key = require("../function/key");
 
 const dbname = require("../function/database");
-const { json } = require("body-parser");
 const ho = dbname.ho + ".";
 const pbh = dbname.pbh + ".";
 

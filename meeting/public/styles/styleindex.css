@@ -48,9 +48,13 @@
 }
 
 .body_index {
-    background-color: #086b02;
+    background-color: #85e2f7;
 }
-
+.edit-login {
+    background: rgb(161, 244, 255);
+    background: linear-gradient(0, rgb(161, 244, 255) 0%, rgba(131,255,125,1) 100%);
+    color: rgb(94, 17, 145);
+}
 .edit-head {
     background: rgb(161,198,255);
     background: linear-gradient(180deg, rgba(161,198,255,1) 0%, rgba(131,255,125,1) 100%);
