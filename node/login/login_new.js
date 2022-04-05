@@ -1,6 +1,6 @@
 const express = require("express");
 const crypto = require("crypto");
-// const fn = require('../function/function');
+
 const key = require("../function/key");
 const con = require("../config/config");
 
@@ -8,7 +8,7 @@ const app = express();
 const router = express.Router();
 
 const dbname = require("../function/database");
-const { json } = require("body-parser");
+
 const ho = dbname.ho + ".";
 const pbh = dbname.pbh + ".";
 
@@ -57,16 +57,14 @@ router.post("/login", async (req, res) => {
   req.username;
   req.firstname;
   req.lastname;
-  var key = "password";
+  
   con.query(
     "SELECT ps.person_username, ps.person_prefix," +
       "AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, " +
-
       "ps.person_firstname, " +
       "ps.person_lastname, " +
       "ps.person_right, " +
       "ps.person_page, " +
-      "ps.person_token, " +
       "ofs.office_id, " +
       "ofs.office_name " +
       // "s.sign_id, " +
@@ -76,8 +74,10 @@ router.post("/login", async (req, res) => {
       "FROM " +
       pbh +
       "hr_personal AS ps  " +
-      "LEFT JOIN "+pbh+"hr_office_sit AS ofs " +
-      "ON (ps.office_id = ofs.office_id ) "+
+      "LEFT JOIN " +
+      pbh +
+      "hr_office_sit AS ofs " +
+      "ON (ps.office_id = ofs.office_id ) " +
       // "LEFT JOIN " +pbh +" hr_position AS po " +
       // "ON (ps.position_id = po.position_id) " +
       // "LEFT JOIN " +pbh +" hr_sign AS s " +
@@ -86,7 +86,7 @@ router.post("/login", async (req, res) => {
       // "ON (ps.ac_id = a.ac_id) " +
       // "JOIN " +pbh +"hr_state_work AS sw " +
       // "ON (ps.person_state = sw.person_state) " +
-      "WHERE person_username = ? ",
+      "WHERE ps.person_username = ? ",
     // "AND password = ? ";
     // "AND sw.sw_action = 'Y' " +
     // "ORDER BY s.sign_id DESC LIMIT 1 ";
@@ -94,13 +94,18 @@ router.post("/login", async (req, res) => {
     (error, results, fields) => {
       if (error) throw error;
       if (results.length > 0) {
-       
+        var personid = "";
+        if (!results[0].person_id) {
+          personid = "";
+        } else {
+          personid = results[0].person_id.toString("utf8");
+        }
         return res.json({
           person_username: results[0].person_username,
           person_prefix: results[0].person_prefix,
           person_firstname: results[0].person_firstname,
           person_lastname: results[0].person_lastname,
-          person_id: results[0].person_id.toString('utf8'),
+          person_id: personid,
           person_menu: results[0].person_menu,
           person_page: results[0].person_page,
           person_photo: results[0].person_photo,
@@ -120,7 +125,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/level", async (req, res) => {
   var q = req.body;
-
+  var key2 = 'password';
   const sql =
     "SELECT l.level_id, " +
     "IF (d.duty_lv IS NULL, 0, d.duty_lv) AS duty_id, " +
@@ -150,8 +155,8 @@ router.post("/level", async (req, res) => {
     pbh +
     " hr_ward AS w " +
     "ON (l.ward_id = w.ward_id) " +
-    "WHERE l.person_id =  AES_ENCRYPT(?, UNHEX(SHA2('password', 512)))"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
-  const params = [q.id];
+    "WHERE l.person_id =  AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
+  const params = [q.id,key];
 
   con.query(sql, params, (err, rows) => {
     if (err) {
