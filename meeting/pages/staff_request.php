@@ -184,7 +184,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
+                   
                     $("#bage1").html(bage);
 
                 }
@@ -220,7 +220,7 @@ require_once "../login/check_session.php";
             $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
             $('#prefix').val(prefix);
             $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['position']; ?>");
+            $('#positions').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
 
             $.ajax({
@@ -442,7 +442,7 @@ require_once "../login/check_session.php";
                                         var st_name = result[ii].st_name;
                                         var de_name = result[ii].de_name;
                                         var de_phone = result[ii].de_phone;
-                                        var id = result[ii].id;
+                                        var id = result[ii].person_id;;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
                                         var pos = result[ii].position;
@@ -488,6 +488,8 @@ require_once "../login/check_session.php";
                                 $("#modal_ev_id").val(event_id);
                                 $("#modal_ro_id").val(ro_id);
                                 $("#modal_st_id").val(st_id);
+                                $("#modal_mt_id").val(id);
+
                                 if (toolmore == null) {
                                     $("#modal_toolmore").html('<span style="color:red;">ไม่มี</span>');
                                 } else {
@@ -565,7 +567,7 @@ require_once "../login/check_session.php";
                 $.ajax({
                     type: "PUT",
                     dataType: "JSON",
-                    url: path + '/event_post/updatestatus',
+                    url: path + '/event_post/updatestatus/staff',
                     data: formdata,
                     success: function(results) {
                         if (results.status != 200) {

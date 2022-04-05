@@ -200,7 +200,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
+                   
                     $("#bage1").html(bage);
 
                 }
@@ -335,11 +335,12 @@ require_once "../login/check_session.php";
                                     var endtime = result[ii].ev_endtime;
                                     var firstname = result[ii].person_firstname;
                                     var lastname = result[ii].person_lastname;
-                                    var ward_id = result[ii].ward_id;
+                                    // var ward_id = result[ii].ward_id;
                                     var ward_name = result[ii].ward_name;
                                     var depart = result[ii].depart_name;
                                     var fac_name = result[ii].faction_name;
                                     var toolmore = result[ii].ev_toolmore;
+                                    var duty_name = result[ii].duty_name;
 
 
                                     $.ajax({
@@ -352,16 +353,16 @@ require_once "../login/check_session.php";
                                         },
                                         success: function(tool) {
                                             // console.log(result[ii].event_id)
-                                            var to_name = ''
+                                            var toolname = ''
                                             for (i in tool) {
 
-                                                to_name += '<div class="col-form-label d-inline-flex ">🔎 ' + tool[i].to_name + '  </div>'
+                                                toolname += '<div class="col-form-label d-inline-flex ">🔎 ' + tool[i].to_name + '  </div>'
 
                                             }
-                                            if (to_name == '') {
+                                            if (toolname == '') {
                                                 $("#modal2_tool").html('<span style="color:blue;">ไม่มีอุปกรณ์ที่ต้องเตรียม</span>');
                                             } else {
-                                                $("#modal2_tool").html(to_name);
+                                                $("#modal2_tool").html(toolname);
                                             }
 
                                         }
@@ -391,7 +392,7 @@ require_once "../login/check_session.php";
                                 $("#modal2_endtime").html(endtime);
                                 $("#modal2_name").html(firstname + " " + lastname);
                                 $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + depart);
-                                $("#modal2_pos").html('<?php echo $_SESSION['mt_duty_name']; ?>')
+                                $("#modal2_pos").html(duty_name)
 
                                 if (toolmore == null) {
                                     $("#modal2_toolmore").html('ไม่มี');

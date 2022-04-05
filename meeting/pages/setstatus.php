@@ -46,7 +46,7 @@ require_once "../login/check_session.php";
                     <a href="_index.php" class="nav-link">หน้าแรก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link active">เพิ่มข้อมูล</a>
+                    <a class="nav-link active">เปิด-ปิด สิทธิ์การเพิ่มข้อมูล</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -208,7 +208,8 @@ require_once "../login/check_session.php";
             $('#de_name').val('<?php echo $_SESSION['mt_de_name'] ?>');
             $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
             $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
+            $('#positions').val("<?php echo $_SESSION['mt_duty_name'] ?>");
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -224,7 +225,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
+                   
                     $("#bage1").html(bage);
 
                 }

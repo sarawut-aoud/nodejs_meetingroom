@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
   req.username;
   req.firstname;
   req.lastname;
-  
+ 
   con.query(
     "SELECT ps.person_username, ps.person_prefix," +
       "AES_DECRYPT(ps.person_id, UNHEX(SHA2(?, 512))) AS person_id, " +
@@ -67,10 +67,6 @@ router.post("/login", async (req, res) => {
       "ps.person_page, " +
       "ofs.office_id, " +
       "ofs.office_name " +
-      // "s.sign_id, " +
-      // "s.sign_pic, " +
-      // "a.ac_id, " +
-      // "a.ac_name " +
       "FROM " +
       pbh +
       "hr_personal AS ps  " +
@@ -78,19 +74,8 @@ router.post("/login", async (req, res) => {
       pbh +
       "hr_office_sit AS ofs " +
       "ON (ps.office_id = ofs.office_id ) " +
-      // "LEFT JOIN " +pbh +" hr_position AS po " +
-      // "ON (ps.position_id = po.position_id) " +
-      // "LEFT JOIN " +pbh +" hr_sign AS s " +
-      // "ON (ps.person_id = s.sign_cid AND s.sign_active = '1')" +
-      // "LEFT JOIN  " +pbh +" hr_academic AS a " +
-      // "ON (ps.ac_id = a.ac_id) " +
-      // "JOIN " +pbh +"hr_state_work AS sw " +
-      // "ON (ps.person_state = sw.person_state) " +
       "WHERE ps.person_username = ? ",
-    // "AND password = ? ";
-    // "AND sw.sw_action = 'Y' " +
-    // "ORDER BY s.sign_id DESC LIMIT 1 ";
-    [key, req.username],
+    [''+key+'', req.username],
     (error, results, fields) => {
       if (error) throw error;
       if (results.length > 0) {
@@ -125,7 +110,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/level", async (req, res) => {
   var q = req.body;
-  var key2 = 'password';
+ 
   const sql =
     "SELECT l.level_id, " +
     "IF (d.duty_lv IS NULL, 0, d.duty_lv) AS duty_id, " +
@@ -156,7 +141,7 @@ router.post("/level", async (req, res) => {
     " hr_ward AS w " +
     "ON (l.ward_id = w.ward_id) " +
     "WHERE l.person_id =  AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))"; //AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))
-  const params = [q.id,key];
+  const params = [q.id,''+key+''];
 
   con.query(sql, params, (err, rows) => {
     if (err) {

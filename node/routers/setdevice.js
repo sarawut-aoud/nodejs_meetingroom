@@ -24,7 +24,7 @@ router.get("/detail", async (req, res) => {
       "ro.ro_id, ro.ro_name, " +
       "st.st_id, st.st_name," +
       " users.person_firstname,users.person_lastname, " +
-      "dept.depart_id, dept.depart_name, " +
+      "dept.depart_id, dept.depart_name,du.duty_name, " +
       "f.faction_id , f.faction_name, w.ward_id ,w.ward_name "+
       "FROM tbl_event AS ev " +
       " " +
@@ -35,6 +35,7 @@ router.get("/detail", async (req, res) => {
       "INNER JOIN  "+pbh+"hr_depart AS dept ON (l.depart_id = dept.depart_id)"+
       "INNER JOIN  "+pbh+"hr_ward AS w ON (l.ward_id = w.ward_id)"+
       "INNER JOIN  "+pbh+"hr_faction AS f ON (l.faction_id = f.faction_id)"+
+      "INNER JOIN "+pbh+"hr_duty AS du ON (l.duty_id = du.duty_id ) "+
       " WHERE ev.ev_id = ? ;",
     [ev_id],
     (error, results, fields) => {

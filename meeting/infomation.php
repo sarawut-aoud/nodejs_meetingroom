@@ -19,7 +19,7 @@
                         </div>
                         <label class=" col-form-label">ตำแหน่ง :</label>
                         <div class="col-md">
-                            <input type="text" class="form-control " id="position" readonly />
+                            <input type="text" class="form-control " id="positions" readonly />
                         </div>
                     </div>
                 </div>

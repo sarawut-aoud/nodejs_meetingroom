@@ -139,7 +139,7 @@
     <input type="hidden" value="" id="modal_ro_id" name="ro_id" />
     <input type="hidden" value="" id="modal_st_id" name="st_id" />
 
-    <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
+    <input type="hidden" value="" name="id" id="modal_mt_id" />
     <input type="hidden" value="<?php echo $_SESSION['mt_ward_id']; ?>" name="ward_id" />
     <input type="hidden" value="<?php echo $_SESSION['mt_duty_id']; ?>" name="level" />
 

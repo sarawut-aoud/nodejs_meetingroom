@@ -240,7 +240,7 @@ require_once "../login/check_session.php";
             $('#name').val("<?php echo $_SESSION['mt_name']; ?>");
             $('#prefix').val(prefix);
             $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['position']; ?>");
+            $('#positions').val("<?php echo $_SESSION['position']; ?>");
 
             $.ajax({
                 type: "get",
@@ -257,9 +257,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
                     $("#bage1").html(bage);
-
                 }
 
             });
@@ -280,13 +278,7 @@ require_once "../login/check_session.php";
                     }
                     $("#bage").html(bage);
                 }
-
             });
-
-
-
-
-
 
             $.ajax({
                 type: 'GET',

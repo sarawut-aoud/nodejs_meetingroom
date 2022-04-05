@@ -161,7 +161,7 @@ require_once "../login/check_session.php";
             $('#de_name').val("<?php echo $_SESSION['mt_de_name']; ?>");
             $('#ward_name').val("<?php echo $_SESSION['mt_ward_name']; ?>");
             $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
-            $('#position').val("<?php echo $_SESSION['mt_duty_name']; ?>");
+            $('#positions').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
             var path = '<?php echo $_SESSION['mt_path']; ?>',
                 level = '<?php echo $_SESSION['mt_duty_id']; ?>';
@@ -182,7 +182,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
+                    
                     $("#bage1").html(bage);
 
                 }
