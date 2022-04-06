@@ -427,7 +427,6 @@ require_once "../login/check_session.php";
                                         var ev_endtime = result[ii].ev_endtime;
                                         var ev_people = result[ii].ev_people;
                                         var ev_createdate = result[ii].ev_createdate;
-
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
@@ -439,6 +438,7 @@ require_once "../login/check_session.php";
                                         var ward_name = result[ii].ward_name;
                                         var fac_name = result[ii].faction_name;
                                         var toolmore = result[ii].ev_toolmore;
+                                        
                                         $.ajax({
                                             type: 'get',
                                             dataType: 'json',
