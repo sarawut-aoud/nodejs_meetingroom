@@ -27,12 +27,12 @@ router.post("/adddata", async (req, res) => {
   var level = req.body.level; // ระดับสิทธิการเข้าถึง
   var statusRoom;
   //เริ่มการจอง status == 0==รออนุมัติจากหัวหน้า  , 1 -> รออนุมัติ , 2== ไม่อนุมัติจากหัวหน้า ,3 == อนุมัติ ,4==ไม่อนุมัติ,5==ยกเลิก
-  if (level == "2") {
+  if (level >= 2) {
     statusRoom = "3";
   } else if (ward_id == "48" && level != "2") {
     // ธุรการ
     statusRoom = "1";
-  } else if (level != "2") {
+  } else if (level <= 2) {
     // ผู้ใช้
     statusRoom = "0";
   }
@@ -47,6 +47,10 @@ router.post("/adddata", async (req, res) => {
   var id = req.body.id; // id_users
   var ro_id = req.body.ro_name; // id_rooms
   var toolmore = req.body.tool_request;
+  var ward_id = req.body.ward_id;
+  var faction_id =req.body.faction_id;
+  var depart_id = req.body.depart_id;
+
   var chk = 0;
   var date_ev_startdate = new Date(ev_startdate);
   var dateCheck =
@@ -176,8 +180,8 @@ router.post("/adddata", async (req, res) => {
                 //todo : INSERT data
                 con.query(
                   "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate," +
-                    "ev_starttime,ev_endtime,ev_status,event_id,ev_toolmore,id)" +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
+                    "ev_starttime,ev_endtime,ev_status,event_id,ward_id,faction_id,depart_id,ev_toolmore,id)" +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
                   [
                     ev_title,
                     ev_people,
@@ -189,6 +193,9 @@ router.post("/adddata", async (req, res) => {
                     ev_endtime,
                     statusRoom,
                     event_id.substring(2),
+                    ward_id,
+                    faction_id,
+                    depart_id,
                     toolmore,
                     id,
                     "" + key + "",
@@ -369,6 +376,9 @@ router.put("/updatestatus/staff", async (req, res) => {
   var st_id = req.body.st_id;
   var to_id = req.body.to_id;
   var toolmore = req.body.modal_toolmore;
+  var ward_id = req.body.ward_id;
+  var faction_id = req.body.faction_id;
+  var depart_id = req.body.depart_id;
 
   if (!event_id || !ev_status) {
     return res.json({
@@ -468,8 +478,8 @@ router.put("/updatestatus/staff", async (req, res) => {
 
                         for (var x = 0; x <= datediff; x++) {
                           con.query(
-                            "INSERT INTO tbl_event (ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,ev_toolmore,id)" +
-                              "VALUES (?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
+                            "INSERT INTO tbl_event (ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,ward_id,faction_id,depart_id,ev_toolmore,id)" +
+                              "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
                             [
                               ev_title,
                               ev_people,
@@ -481,6 +491,9 @@ router.put("/updatestatus/staff", async (req, res) => {
                               ev_endtime,
                               ev_status,
                               event_id,
+                              ward_id,
+                              faction_id,
+                              depart_id,
                               toolmore,
                               id,
                               "" + key + "",

@@ -19,6 +19,11 @@ require_once "../login/check_session.php";
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <!-- colorpic -->
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
+<!-- DataTables -->
+<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- DataTables -->
@@ -29,12 +34,10 @@ require_once "../login/check_session.php";
 <!-- Theme style -->
 <link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
@@ -43,10 +46,10 @@ require_once "../login/check_session.php";
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="./_index.php" class="nav-link ">หน้าแรก</a>
+                    <a href="_index.php" class="nav-link ">หน้าหลัก</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link  active">รายการจอง</a>
+                    <a class="nav-link  active">รายการจองทั้งหมด</a>
                 </li>
             </ul>
             <!-- Right navbar links -->
@@ -68,19 +71,18 @@ require_once "../login/check_session.php";
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid ">
-                    <?php require_once '../infomation.php'; ?>
+                    <?php require_once '../infomation.php' ?>
                     <div class="row mt-3 justify-content-center">
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
                                 <div class="card-header  card-head ">
                                     <div class="text-center">
-                                        <h1>รายการจอง</h1>
+                                        <h1>รายการจองของกลุ่มงาน</h1>
                                     </div>
                                 </div>
                                 <!-- form start -->
-                                <form method="" action="" id="frmTable">
-
+                                <form method="" action="" id="">
                                     <div class="card-body table-responsive p-2">
                                         <!--//? tableRoom -->
                                         <div id="tableRooms">
@@ -137,43 +139,12 @@ require_once "../login/check_session.php";
     <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
     <!-- Sweetalert2 -->
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-    <script>
-        $(document).ready(function() {
 
-            cache_clear();
-
-            setInterval(function() {
-                cache_clear()
-            }, 60000);
-        });
-
-
-        function cache_clear() {
-
-            var path = '<?php echo $_SESSION['mt_path'] ?>';
-            var id = '<?php echo $_SESSION['mt_id']; ?>';
-
-            $.ajax({
-                type: "get",
-                url: path + "/event/count/user",
-                data: {
-                    id: id,
-                },
-                success: function(result) {
-                    if (result.ev_status > 0) {
-                        $("#uun1").html(
-                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
-                        );
-                    }
-                },
-            });
-            // window.location.reload(); use this if you do not remove cache
-        }
-    </script>
     <script>
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
@@ -198,12 +169,12 @@ require_once "../login/check_session.php";
             $('#fac_name').val("<?php echo $_SESSION['mt_faction_name']; ?>");
             $('#positions').val("<?php echo $_SESSION['mt_duty_name']; ?>");
 
-            var path = '<?php echo $_SESSION['mt_path']; ?>',
-                id = '<?php echo $_SESSION['mt_id']; ?>',
-                level = '<?php echo $_SESSION['mt_duty_id']; ?>';
+            var path = '<?php echo $_SESSION['mt_path']; ?>';
+            var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
-
-            
+            var fac_id = '<?php echo $_SESSION['mt_faction_id']; ?>';
+            var depart_id = '<?php echo $_SESSION['mt_de_id']; ?>';
+           
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -219,16 +190,18 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    
+                  
                     $("#bage1").html(bage);
+
                 }
+
             });
             $.ajax({
                 type: "get",
                 dataType: "json",
                 url: path + "/event/count",
                 data: {
-                    level: level,
+                    level: lv_id,
                 },
                 success: function(result) {
                     var bage = 0;
@@ -240,41 +213,28 @@ require_once "../login/check_session.php";
                     }
                     $("#bage").html(bage);
 
+
                 }
+
             });
 
 
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/tools",
-                success: function(result) {
-                    var data = ' <div class="form-group  ">';
-                    var x = 0;
-                    for (i in result) {
-                        x++
-                        data += '<div class="d-block form-check"><input class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + result[i].to_id + '"  >  '
-                        data += ' <label class="form-check-label" for="' + x + '" >' + result[i].to_name + '</label> </div>'
-                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-                    }
-                    data += '</div>';
-                    $('#modaltool').html(data);
 
-                }
-            });
-            // var id = $('#mtID').val();
             //todo: table room
             $.ajax({
                 type: 'get',
                 dataType: 'json',
-                url: path + "/event",
+                url: path + "/setstatus/reserve_ward",
                 data: {
-                    id: id,
+                    ward_id: ward_id,
+                    fac_id: fac_id,
+                    depart_id: depart_id,
                 },
                 success: function(data) {
+                    var i = 0;
 
                     var table = '<table id="tb_RoomAll" with="100%" class="table table-hover text-nowrap">' +
-                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th><th></th></thead></tr>';
+                        '<thead><tr><th>ลำดับ</th><th>สถานที่ประชุม</th><th>หัวข้อเรื่องประชุม</th><th>ตั้งแต่เวลา</th><th>ถึงเวลา</th><th>สถานะ</th><th></th></thead></tr>';
                     $.each(data, function(idx, cell) {
                         if (cell.ev_status == 5) {
                             var bage3 = '<span class="badge rounded-pill bg-dark">ยกเลิก</span>';
@@ -284,42 +244,41 @@ require_once "../login/check_session.php";
                         } else if (cell.ev_status == 4) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels" title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 3) {
                             var bage3 = '<span class="badge rounded-pill bg-success">อนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="d-none"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 2) { //staff
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 1) { // user
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"  title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 0) { //staff
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไขรายการจอง"><i class="fas fa-edit"></i></a>'
-                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูลรายการจอง"><i class="fas fa-trash-alt"></i></a>'
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit" title="แก้ไข"><i class="fas fa-edit"></i></a>'
+                            var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels" title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         }
-
-
 
                         table += ('<tr>');
                         table += ('<td>' + cell.ev_id + '</td>');
                         table += ('<td>' + cell.ro_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td>' + cell.ev_title + '</td>');
-                        table += ('<td>' + cell.ev_startdate.split('T')[0] + ' <span style="color:red;"> เวลา </span> ' + cell.ev_starttime + '</td>');
-                        table += ('<td>' + cell.ev_enddate.split('T')[0] + ' <span style="color:red;"> เวลา </span>' + cell.ev_endtime + '</td>');
-                        table += ('<td align="center">' + bage3 + '</td>');
+                        table += ('<td>' + cell.ev_startdate + '<span style="color:red;"> เวลา </span> ' + cell.ev_starttime + '</td>');
+                        table += ('<td>' + cell.ev_enddate + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
+                        table += ('<td align="center" width="10%">' + bage3 + '</td>');
                         table += ('<td align="right" width="10%">' + info + '</td>');
-                        table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');
+                        // table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');
+                        // table += ('<td align="center" width="20%">' + del + '</td>');
                         table += ('</tr>');
                     });
                     table += '</table>';
@@ -386,16 +345,14 @@ require_once "../login/check_session.php";
                                         var ev_createdate = result[ii].ev_createdate;
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
-                                        var to_name = result[ii].to_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].depart_name;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].duty_name;
-                                        var ward_name = result[ii].ward_name;
+                                        var de_name = result[ii].depart_name;
                                         var fac_name = result[ii].faction_name;
+                                        var ward_name = result[ii].ward_name;
+                                        var position = result[ii].duty_name;
                                         var toolmore = result[ii].ev_toolmore;
-
                                         $.ajax({
                                             type: 'get',
                                             dataType: 'json',
@@ -409,10 +366,8 @@ require_once "../login/check_session.php";
                                                 for (i in tool) {
 
                                                     if (tool[i].ev_id == ev_id) {
-
                                                         to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
                                                     }
-
                                                     $("#modal2_tool").html(to_name);
                                                 }
 
@@ -420,7 +375,6 @@ require_once "../login/check_session.php";
                                         });
                                     }
                                 }
-                                console.log(toolmore)
                                 if (ev_status == 0) {
                                     var status = 'รออนุมัติจากหัวหน้า'
                                 } else if (ev_status == 1) {
@@ -440,26 +394,23 @@ require_once "../login/check_session.php";
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
                                 $("#modal2_title").html(ev_title);
-                                $(".modal1_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
+                                $("#modal2_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
                                 $("#modal2_endtime").html(ev_enddate + ' เวลา ' + ev_endtime);
                                 $("#modal2_style").html(st_name);
-                                $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
                                 $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
-                                $("#modal2_pos").html(pos);
-                                // $("#modal2_phone").html(de_phone);
+                                $("#modal2_pos").html(position);
                                 if (toolmore == null) {
-                                    $("#modal2_toolmore").html('<span style="color:red;">ไม่มี</span>');
+                                    $('#modal2_toolmore').html('<span style="color:red;">ไม่มี</span>');;
                                 } else {
-                                    $("#modal2_toolmore").html(toolmore);
+                                    $('#modal2_toolmore').html(toolmore);
                                 }
-
                             }
                         });
                     });
-
                     $(document).on('click', '.btnEdit', function(e) {
+
                         // $(".btnEdit").click(function(e) {
                         e.preventDefault();
                         var ev_id = $(this).attr('id');
@@ -474,7 +425,7 @@ require_once "../login/check_session.php";
                             success: function(result) {
                                 for (ii in result) {
                                     if (result[ii].ev_id == ev_id) {
-                                        var evid = result[ii].ev_id;
+
                                         var event_id = result[ii].event_id;
                                         var ev_title = result[ii].ev_title;
                                         var ev_startdate = result[ii].ev_startdate;
@@ -488,12 +439,12 @@ require_once "../login/check_session.php";
                                         var st_id = result[ii].st_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].depart_name;
+                                        var de_name = result[ii].de_name;
+                                        var de_phone = result[ii].de_phone;
+                                        var id = result[ii].id;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].duty_name;
-                                        var ward_name = result[ii].ward_name;
-                                        var fac_name = result[ii].faction_name;
+                                        var pos = result[ii].position;
 
                                         $.ajax({
                                             type: "get",
@@ -503,6 +454,7 @@ require_once "../login/check_session.php";
                                                 ev_id: ev_id,
                                             },
                                             success: function(tool) {
+                                                // var chk = '';
                                                 var data = ' <div class="form-group  ">';
                                                 var x = 0;
                                                 for (i in tool) {
@@ -513,7 +465,7 @@ require_once "../login/check_session.php";
 
                                                     }
                                                     x++
-                                                    data += '<div class="d-block form-check"><input class="form-check-input" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
                                                     data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
                                                     data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                                                 }
@@ -638,6 +590,7 @@ require_once "../login/check_session.php";
                             }
                         })
                     });
+
                 }
             });
             /// modal ///
@@ -697,7 +650,6 @@ require_once "../login/check_session.php";
 
                             }).then((result) => {
                                 $("#modalEdit").modal("hide");
-                                location.reload();
                                 $('#frm_modalEditRoom')[0].reset();
                                 $('#title').focus();
                             })

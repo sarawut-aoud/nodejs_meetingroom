@@ -364,11 +364,7 @@ router.get("/count/user", async (req, res, next) => {
   con.query(
     "SELECT count(ev.ev_id) as ev_status " +
       "FROM tbl_event  AS ev " +
-      "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-      "INNER JOIN " +
-      pbh +
-      "hr_personal AS users ON (ev.id = users.person_id) " +
-      "WHERE users.person_id =  AES_ENCRYPT(?, UNHEX(SHA2(?, 512))) " + //? เปลี่ยน key ด้วย
+      "WHERE ev.id =  AES_ENCRYPT(?, UNHEX(SHA2(?, 512))) " + //? เปลี่ยน key ด้วย
       "AND  (ev.ev_status = '3' OR ev.ev_status = '4')  GROUP BY ev.ev_title",
     [id, "" + key + ""],
     (error, results, fields) => {

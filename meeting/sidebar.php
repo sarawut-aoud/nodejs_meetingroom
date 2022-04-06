@@ -1,5 +1,5 @@
 <?php
-function adddata($ward, $duty)
+function adddata($ward)
 {
     if ($ward == 48) {
         $adddata = '  <hr class="mt-3" style="background-color:#fff">
@@ -29,7 +29,7 @@ function adddata($ward, $duty)
 
 function status($ward, $duty)
 {
-    if ($duty == 2 && $ward != 48) {
+    if ($duty >= 2  && $ward != 48) {
         $stm = ' <li class="nav-item  ">
                 <a href="room_reserve_ward.php" class="nav-link active">
                     <i class="nav-icon fas fa-ballot"></i>
@@ -37,26 +37,28 @@ function status($ward, $duty)
                 </a>
             </li>';
     } else if ($duty != 2 && $ward != 48) {
-        $stm = ' <hr class="mt-4 mb-4" style="background-color:#fff">
+        $stm = ' <hr class="mt-3 mb-3" style="background-color:#fff">
             <li class="nav-item mt-3 ">
                 <a href="user_status.php" class="nav-link active">
                     <i class="nav-icon fa-regular fa-bells"></i>
                     <p>แจ้งเตือน </p> <span id="uun1"></span>
                 </a>
             </li>';
+    } else if ($duty < 2 && $ward != 48) {
+        $stm = '';
     }
     return $stm;
 }
 function appove($ward, $duty)
 {
-    if ($ward != 48 && $duty == 2) {
+    if ($ward != 48 && $duty >= 2) {
         $link = '  <li class="nav-item  ">
                     <a href="room_approve.php" class="nav-link active">
                         <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
                         <p>รายการที่ต้องอนุมัติ </p> <span id="bage" class="badge badge-primary "></span>
                     </a>
                 </li>';
-    } else if ($ward == 48 && $duty == 2) {
+    } else if ($ward == 48 && $duty >= 2) {
         $link = '  <li class="nav-item  ">
                     <a href="room_approve.php" class="nav-link active">
                         <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
@@ -131,7 +133,7 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
                     </a>
                 </li>
 
-                <?php echo  adddata($_SESSION['mt_ward_id'], $_SESSION['mt_duty_id']); ?>
+                <?php echo  adddata($_SESSION['mt_ward_id']); ?>
 
                 <li class="nav-item" id="menu">
 
@@ -151,7 +153,7 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
                         <p>รายการจอง</p>
                     </a>
                 </li>
-
+                <li class="nav-item " id="menuward"></li>
                 <?php echo appove($_SESSION['mt_ward_id'], $_SESSION['mt_duty_id']); ?>
                 <?php echo status($_SESSION['mt_ward_id'], $_SESSION['mt_duty_id']); ?>
 
@@ -172,6 +174,8 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
     $(document).ready(function() {
         var path = '<?php echo $_SESSION['mt_path']; ?>';
         var ward_id = "<?php echo $_SESSION['mt_ward_id']; ?>";
+        var de_id = "<?php echo $_SESSION['mt_de_id']; ?>";
+        var fac_id = "<?php echo $_SESSION['mt_faction_id']; ?>";
         $.ajax({
             type: "get",
             dataType: "json",
@@ -181,7 +185,7 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
             },
             success: function(result) {
                 var msg1 = '<hr class="mt-3" style="background-color:#fff">' +
-                    '<li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> ตั้งค่า</li>';
+                    '<li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> เพิ่มอุปกรณ์</li>';
                 var menu = '';
                 for (i in result) {
                     var status = result[i].setstatus;
@@ -201,5 +205,33 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
                 $("#menu").html(msg1 + menu);
             }
         });
+
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: path + "/setstatus/menuward",
+            data: {
+                ward_id: ward_id,
+                fac_id: fac_id,
+                depart_id: de_id,
+            },
+            success: function(result) {
+                var msg1 = '<hr class="mt-3" style="background-color:#fff"><li class="mb-2 nav-header text-white"><i class="fa-solid fa-folder-gear"></i> รายการจองของกลุ่มงาน</li>';
+                var menu = '';
+                for (i in result) {
+                    var status = result[i].status;
+                }
+                if (status > 0) {
+                    menu = '<a href="room_reserveward.php" class="nav-link active">' +
+                        '<i class="nav-icon fas fa-plus-circle"></i> ' +
+                        "<p>รายการจองของกลุ่มงาน</p>" +
+                        " </a>";
+                } else {
+                    msg1 = "";
+                }
+                $("#menuward").html(msg1 + menu);
+            }
+        })
+
     })
 </script>

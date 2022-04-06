@@ -94,7 +94,7 @@ require_once "../login/check_session.php";
                                                 <label class="col-md-3 col-form-label">ward :</label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="ward_id">
-
+                                                        <option value="0"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -104,7 +104,7 @@ require_once "../login/check_session.php";
                                                 <label class="col-md-3 col-form-label">faction :</label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="fac_id">
-
+                                                        <option value="0"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -114,7 +114,7 @@ require_once "../login/check_session.php";
                                                 <label class="col-md-3 col-form-label">แผนกที่ดูแล :</label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="de_id">
-
+                                                        <option value="0"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -174,7 +174,7 @@ require_once "../login/check_session.php";
 
             setInterval(function() {
                 cache_clear()
-            }, 5000);
+            }, 60000);
         });
 
 
@@ -211,7 +211,7 @@ require_once "../login/check_session.php";
             var depart_id = '<?php echo $_SESSION['mt_de_id']; ?>';
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
             var fac_id = '<?php echo $_SESSION['mt_faction_id']; ?>';
-            
+
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
@@ -281,7 +281,7 @@ require_once "../login/check_session.php";
                                 .depart_name +
                                 '</option>'
                         } else {
-                            depart += '<option value="' + result[ii].depart_id + '">' + result[ii]
+                            depart += '<option value="0"></option><option value="' + result[ii].depart_id + '">' + result[ii]
                                 .depart_name +
                                 '</option>';
                         }
@@ -303,7 +303,7 @@ require_once "../login/check_session.php";
                                 .faction_name +
                                 '</option>'
                         } else {
-                            fact += '<option value="' + result[ii].faction_id + '">' + result[ii]
+                            fact += '<option value="0"></option><option value="' + result[ii].faction_id + '">' + result[ii]
                                 .faction_name +
                                 '</option>';
                         }
@@ -325,7 +325,7 @@ require_once "../login/check_session.php";
                                 .ward_name +
                                 '</option>'
                         } else {
-                            ward += '<option value="' + result[ii].ward_id + '">' + result[ii]
+                            ward += '<option value="0"></option><option value="' + result[ii].ward_id + '">' + result[ii]
                                 .ward_name +
                                 '</option>';
                         }

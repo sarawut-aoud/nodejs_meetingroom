@@ -21,11 +21,9 @@ const router = express.Router();
 //? update event
 router.put("/updatedata", async (req, res) => {
   var level = req.body.level; // ระดับสิทธิการเข้าถึง
-  var ev_status = req.body.evstatus; // ระดับสิทธิการเข้าถึง
-
+  var ev_status = req.body.evstatus;
   var event_id = req.body.eventid;
-
-  var ev_title = req.body.title; //todo : req -> Form .... data -> body
+  var ev_title = req.body.title;
   var ev_startdate = req.body.dateStart;
   var ev_enddate = req.body.dateEnd;
   var ev_starttime = req.body.timeStart;
@@ -36,6 +34,11 @@ router.put("/updatedata", async (req, res) => {
   var id = req.body.id; // id_users
   var ro_id = req.body.ro_name; // id_rooms
   var toolmore = req.body.tool_request;
+
+  var ward_id = req.body.ward_id;
+  var faction_id = req.body.faction_id;
+  var depart_id = req.body.depart_id;
+
   var chk = 0;
   var date_diff = DATE_DIFF(ev_startdate, ev_enddate, "D").output;
 
@@ -149,8 +152,8 @@ router.put("/updatedata", async (req, res) => {
                           //todo : INSERT data
                           con.query(
                             "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id," +
-                              "ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,ev_toolmore,id)" +
-                              "VALUES(?,?,?,?,?,?,?,?,?,?,?,AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
+                              "ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,ward_id,faction_id,depart_id,ev_toolmore,id)" +
+                              "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
                             [
                               ev_title,
                               ev_people,
@@ -162,9 +165,12 @@ router.put("/updatedata", async (req, res) => {
                               ev_endtime,
                               ev_status,
                               event_id,
+                              ward_id,
+                              faction_id,
+                              depart_id,
                               toolmore,
                               id,
-                              ''+key+'',
+                              "" + key + "",
                             ],
                             (error, results, field) => {
                               if (error) throw error;

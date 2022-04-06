@@ -140,7 +140,7 @@ require_once "../login/check_session.php";
 
             setInterval(function() {
                 cache_clear()
-            }, 5000);
+            }, 60000);
         });
 
 
