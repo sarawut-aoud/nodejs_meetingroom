@@ -367,7 +367,7 @@ router.put("/updatestatus/staff", async (req, res) => {
   var ev_endtime = req.body.timeEnd;
   var ev_people = req.body.people;
   var st_id = req.body.st_id;
-  var to_id = req.body.sumnum;
+  var to_id = req.body.to_id;
   var toolmore = req.body.modal_toolmore;
 
   if (!event_id || !ev_status) {
@@ -454,7 +454,7 @@ router.put("/updatestatus/staff", async (req, res) => {
             if (datediff >= 0) {
               dateStart = ev_startdate;
 
-              if (results_row.length > 0) {
+              if (results_row.length >= 0) {
                 con.query(
                   "DELETE FROM tbl_event where event_id = ? ",
                   [event_id],
@@ -467,15 +467,6 @@ router.put("/updatestatus/staff", async (req, res) => {
                         if (error) throw error;
 
                         for (var x = 0; x <= datediff; x++) {
-                          var theDateStart =
-                            Date.parse(dateStart) + 3600 * 1000 * 24;
-                          const date = new Date(theDateStart);
-                          dateStart = date
-                            .toISOString("EN-AU", {
-                              timeZone: "Australia/Melbourne",
-                            })
-                            .slice(0, 10);
-
                           con.query(
                             "INSERT INTO tbl_event (ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate,ev_starttime,ev_endtime,ev_status,event_id,ev_toolmore,id)" +
                               "VALUES (?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
@@ -511,6 +502,14 @@ router.put("/updatestatus/staff", async (req, res) => {
                               }
                             }
                           );
+                          var theDateStart =
+                            Date.parse(dateStart) + 3600 * 1000 * 24;
+                          const date = new Date(theDateStart);
+                          dateStart = date
+                            .toISOString("EN-AU", {
+                              timeZone: "Australia/Melbourne",
+                            })
+                            .slice(0, 10);
                         } //for x
                       }
                     );

@@ -379,7 +379,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
+                   
                     $("#bage1").html(bage);
 
                 }
@@ -419,9 +419,7 @@ require_once "../login/check_session.php";
                 var ev_people = $('#people').val();
                 var st_id = $('#style').val();
                 var sumnum = $('#sumnum').val();
-                var id = <?php echo $_SESSION['mt_id']; ?>;
-                var level = <?php echo $_SESSION['mt_duty_id']; ?>;
-
+            
                 var formdata = $('#frm_Addroom').serializeArray();
 
                 $.ajax({

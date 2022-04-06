@@ -168,7 +168,7 @@ require_once "../login/check_session.php";
                 level = '<?php echo $_SESSION['mt_duty_id']; ?>',
                 id = '<?php echo $_SESSION['mt_id']; ?>',
                 ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
-               
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -184,7 +184,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                   
+
                     $("#bage1").html(bage);
 
                 }
@@ -448,29 +448,29 @@ require_once "../login/check_session.php";
                                         var pos = result[ii].position;
                                         var toolmore = result[ii].ev_toolmore;
                                         $.ajax({
-                                            type: 'get',
-                                            dataType: 'json',
-                                            url: path + '/event/requesttool',
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/tools",
                                             data: {
                                                 ev_id: ev_id,
                                             },
                                             success: function(tool) {
-
-                                                var x = 0;
                                                 var data = ' <div class="form-group  ">';
+                                                var x = 0;
                                                 for (i in tool) {
-                                                    if (tool[i].ev_id == ev_id) {
-                                                        x++
-                                                        data += '<div class="d-block form-check"><input checked disabled  class="form-check-input" type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
-                                                        data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
-                                                        data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-                                                    }
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
 
+                                                        chk = 'checked="checked"'
+
+                                                    }
+                                                    x++
+                                                    data += '<div  class="d-block form-check"><input disabled class="form-check-input" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label  class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
                                                 }
                                                 data += '</div>';
                                                 $('#modaltool').html(data);
-
-
                                             }
                                         });
                                     }
