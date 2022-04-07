@@ -44,5 +44,5 @@ $_SESSION['mt_de_name'] = $_POST['de_name'];
 $_SESSION['mt_ward_id'] = $_POST['ward_id'];
 $_SESSION['mt_ward_name'] = $_POST['ward_name'];
 
-//$_SESSION['mt_path'] = "https://pbhapi.moph.go.th:4200";
-$_SESSION['mt_path'] = "http://127.0.0.1:4200";
+$_SESSION['mt_path'] = "https://pbhapi.moph.go.th:4200";
+//$_SESSION['mt_path'] = "http://127.0.0.1:4200";

@@ -1,6 +1,6 @@
 <?php
-$path = "http://127.0.0.1:4200";
-//$path = "https://pbhapi.moph.go.th:4200";
+//$path = "http://127.0.0.1:4200";
+$path = "https://pbhapi.moph.go.th:4200";
 
 ?>
 <!DOCTYPE html>
