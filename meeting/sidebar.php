@@ -182,6 +182,8 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
             url: path + "/setstatus/menu",
             data: {
                 ward_id: ward_id,
+                fac_id: fac_id,
+                depart_id: de_id,
             },
             success: function(result) {
                 var msg1 = '<hr class="mt-3" style="background-color:#fff">' +

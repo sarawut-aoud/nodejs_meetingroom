@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const con = require("../config/config");
 const dbname = require("../function/database");
+const key = require("../function/key");
 const ho = dbname.ho + ".";
 const pbh = dbname.pbh + ".";
 
@@ -43,6 +44,27 @@ sql.get("/", async (req, res) => {
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
+        res.json(results);
+      }
+    );
+  }
+});
+
+sql.get("/de_faction", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  var faction_id = query01.faction_id;
+  if (!faction_id) {
+    return res.json({ status: 0, error: true, message: "เกิดข้อผิดพลาด" });
+  } else {
+    con.query(
+      "SELECT depart_id ,depart_name,faction_id " +
+        "FROM " +
+        pbh +
+        "hr_depart " +
+        "WHERE faction_id = ? ",
+      [faction_id],
+      (error, results, fields) => {
+        if (error) throw error;
         res.json(results);
       }
     );
@@ -117,4 +139,38 @@ sql.get("/ward", async (req, res) => {
     );
   }
 });
+
+sql.get("/personal", async (req, res) => {
+  var query01 = require("url").parse(req.url, true).query;
+  var id = query01.id;
+
+  if (!id) {
+    con.query(
+      "SELECT person_firstname , person_lastname , " +
+        "FROM " +
+        pbh +
+        "hr_perssonal  ",
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  } else {
+    con.query(
+      "SELECT person_firstname , person_lastname , " +
+        "FROM " +
+        pbh +
+        "hr_perssonal  " +
+        "WHERE person_id =  AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))",
+      [id, ''+key+''],
+      (error, results, fields) => {
+        if (error) throw error;
+        res.status(200);
+        res.json(results);
+      }
+    );
+  }
+});
+
 module.exports = sql;

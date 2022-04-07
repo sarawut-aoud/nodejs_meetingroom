@@ -30,12 +30,11 @@ router.get("/", async (req, res) => {
         "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
         " ev.ev_status,ev.ev_starttime, " +
-        "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
+        "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name, " +
+        "AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id "+
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN " +
-        pbh +
-        " hr_personal AS users ON (ev.id = users.person_id)  GROUP BY ev.event_id",
+        "  GROUP BY ev.event_id",[''+key+''],
 
       (error, results, fields) => {
         if (error) throw error;
@@ -49,15 +48,13 @@ router.get("/", async (req, res) => {
           "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
           "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
           " ev.ev_status,ev.ev_starttime, " +
-          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore ,ro.ro_id, ro.ro_name,users.person_id " +
+          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore ,ro.ro_id, ro.ro_name," +
+          " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id " +
           "FROM tbl_event AS ev " +
           "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-          "INNER JOIN " +
-          pbh +
-          " hr_personal AS users ON (ev.id = users.person_id) " +
-          "WHERE users.person_id = AES_ENCRYPT(?, UNHEX(SHA2(?, 512))) " +
+          "WHERE ev.id = AES_ENCRYPT(?, UNHEX(SHA2(?, 512))) " +
           "GROUP BY ev.event_id",
-        [id, "" + key + ""],
+        ["" + key + "", id, "" + key + ""],
 
         (error, results, fields) => {
           if (error) throw error;
@@ -70,19 +67,10 @@ router.get("/", async (req, res) => {
           "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
           "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
           " ev.ev_status,ev.ev_starttime, " +
-          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name, w.ward_name  " +
+          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name  " +
           "FROM tbl_event AS ev " +
           "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-          "INNER JOIN " +
-          pbh +
-          " hr_personal AS users ON (ev.id = users.person_id) " +
-          "INNER JOIN " +
-          pbh +
-          "hr_level AS l ON (l.person_id = users.person_id)" +
-          "INNER JOIN " +
-          pbh +
-          "hr_ward AS w ON (l.ward_id = w.ward_id) " +
-          " WHERE w.ward_id = ?  GROUP BY ev.event_id",
+          " WHERE ev.ward_id = ?  GROUP BY ev.event_id",
         [ward_id],
 
         (error, results, fields) => {
@@ -111,23 +99,7 @@ router.get("/today", async (req, res) => {
     }
   );
 });
-//? SELECT all
-// router.get("/", async (req, res) => {
-//   con.query(
-//     "SELECT ev.ev_id , ev.event_id, ev.ev_title, ev.ev_startdate, ev.ev_enddate, ev.ev_status,ev.ev_starttime, " +
-//       "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
-//       "FROM tbl_event AS ev " +
-//       "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-//       "INNER JOIN " +
-//       pbh +
-//       " hr_personal AS users ON (ev.id = users.person_id)  GROUP BY ev. event_id",
-//     (error, results, fields) => {
-//       if (error) throw error;
-//       // console.log(error);
-//       res.json(results);
-//     }
-//   );
-// });
+
 //? SELECT Request
 router.get("/request", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
@@ -141,29 +113,11 @@ router.get("/request", async (req, res) => {
         "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,ev_toolmore,  " +
         "ro.ro_id, ro.ro_name, ro.ro_people, " +
         "st.st_id, st.st_name," +
-        " AES_DECRYPT(users.person_id, UNHEX(SHA2(?, 512))) AS person_id,users.person_firstname AS firstname ,users.person_lastname AS lastname, " +
-        "dept.depart_id, dept.depart_name,du.duty_name,w.ward_name, f.faction_name " +
+        " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id, " +
+        "ev.depart_id,ev.ward_id, ev.faction_id " +
         "FROM tbl_event AS ev " +
         "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-        "INNER JOIN  " +
-        pbh +
-        "hr_personal AS users ON (ev.id = users.person_id)",
-      "INNER JOIN " +
-        pbh +
-        "hr_level AS l ON (l.person_id = users.person_id)" +
-        "INNER JOIN " +
-        pbh +
-        "hr_duty as du ON (l.duty_id = du.duty_id )" +
-        "INNER JOIN " +
-        pbh +
-        "hr_ward as w ON (l.ward_id = w.ward_id )" +
-        "INNER JOIN " +
-        pbh +
-        "hr_faction as f ON (l.faction_id = f.faction_id )" +
-        "INNER JOIN  " +
-        pbh +
-        "hr_depart AS dept ON (l.depart_id = dept.depart_id) ",
+        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)",
 
       (error, results, fields) => {
         if (error) throw error;
@@ -175,32 +129,32 @@ router.get("/request", async (req, res) => {
           } else {
             personid = results[0].person_id.toString("utf8");
           }
-          return res.json([{
-            ev_id: results[0].ev_id,
-            event_id: results[0].event_id,
-            ev_title: results[0].ev_title,
-            ev_startdate: results[0].ev_startdate,
-            ev_enddate: results[0].ev_enddate,
-            ev_createdate: results[0].ev_createdate,
-            person_id: personid,
-            ev_starttime: results[0].ev_starttime,
-            ev_endtime: results[0].ev_endtime,
-            ev_status: results[0].ev_status,
-            ev_people: results[0].ev_people,
-            ev_toolmore: results[0].ev_toolmore,
-            ro_id: results[0].ro_id,
-            ro_name: results[0].ro_name,
-            ro_people: results[0].ro_people,
-            st_id: results[0].st_id,
-            st_name: results[0].st_name,
-            firstname: results[0].firstname,
-            lastname: results[0].lastname,
-            depart_id: results[0].depart_id,
-            depart_name: results[0].depart_name,
-            duty_name: results[0].duty_name,
-            ward_name: results[0].ward_name,
-            faction_name: results[0].faction_name,
-          }]);
+          return res.json([
+            {
+              ev_id: results[0].ev_id,
+              event_id: results[0].event_id,
+              ev_title: results[0].ev_title,
+              ev_startdate: results[0].ev_startdate,
+              ev_enddate: results[0].ev_enddate,
+              ev_createdate: results[0].ev_createdate,
+              person_id: personid,
+              ev_starttime: results[0].ev_starttime,
+              ev_endtime: results[0].ev_endtime,
+              ev_status: results[0].ev_status,
+              ev_people: results[0].ev_people,
+              ev_toolmore: results[0].ev_toolmore,
+              ro_id: results[0].ro_id,
+              ro_name: results[0].ro_name,
+              ro_people: results[0].ro_people,
+              st_id: results[0].st_id,
+              st_name: results[0].st_name,
+              // firstname: results[0].firstname,
+              // lastname: results[0].lastname,
+              depart_id: results[0].depart_id,
+              ward_id: results[0].ward_id,
+              faction_id: results[0].faction_id,
+            },
+          ]);
         }
       }
     );
@@ -213,29 +167,11 @@ router.get("/request", async (req, res) => {
         "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,ev_toolmore, " +
         "ro.ro_id, ro.ro_name, ro.ro_people, " +
         "st.st_id, st.st_name," +
-        "AES_DECRYPT(users.person_id, UNHEX(SHA2(?, 512))) AS person_id, users.person_firstname AS firstname ,users.person_lastname AS lastname, " +
-        "dept.depart_id, dept.depart_name,du.duty_name,w.ward_name, f.faction_name " +
+        " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id, " +
+        "ev.depart_id,ev.ward_id, ev.faction_id " +
         "FROM tbl_event AS ev " +
         "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-        "INNER JOIN  " +
-        pbh +
-        "hr_personal AS users ON (ev.id = users.person_id)" +
-        "INNER JOIN " +
-        pbh +
-        "hr_level AS l ON (l.person_id = users.person_id)" +
-        "INNER JOIN " +
-        pbh +
-        "hr_duty as du ON (l.duty_id = du.duty_id )" +
-        "INNER JOIN " +
-        pbh +
-        "hr_ward as w ON (l.ward_id = w.ward_id )" +
-        "INNER JOIN " +
-        pbh +
-        "hr_faction as f ON (l.faction_id = f.faction_id )" +
-        "INNER JOIN  " +
-        pbh +
-        "hr_depart AS dept ON (l.depart_id = dept.depart_id) " +
         "WHERE ev.ev_id = ?",
       ["" + key + "", ev_id],
       (error, results, fields) => {
@@ -247,32 +183,32 @@ router.get("/request", async (req, res) => {
           } else {
             personid = results[0].person_id.toString("utf8");
           }
-          return res.json([{
-            ev_id: results[0].ev_id,
-            event_id: results[0].event_id,
-            ev_title: results[0].ev_title,
-            ev_startdate: results[0].ev_startdate,
-            ev_enddate: results[0].ev_enddate,
-            ev_createdate: results[0].ev_createdate,
-            person_id: personid,
-            ev_starttime: results[0].ev_starttime,
-            ev_endtime: results[0].ev_endtime,
-            ev_status: results[0].ev_status,
-            ev_people: results[0].ev_people,
-            ev_toolmore: results[0].ev_toolmore,
-            ro_id: results[0].ro_id,
-            ro_name: results[0].ro_name,
-            ro_people: results[0].ro_people,
-            st_id: results[0].st_id,
-            st_name: results[0].st_name,
-            firstname: results[0].firstname,
-            lastname: results[0].lastname,
-            depart_id: results[0].depart_id,
-            depart_name: results[0].depart_name,
-            duty_name: results[0].duty_name,
-            ward_name: results[0].ward_name,
-            faction_name: results[0].faction_name,
-          }]);
+          return res.json([
+            {
+              ev_id: results[0].ev_id,
+              event_id: results[0].event_id,
+              ev_title: results[0].ev_title,
+              ev_startdate: results[0].ev_startdate,
+              ev_enddate: results[0].ev_enddate,
+              ev_createdate: results[0].ev_createdate,
+              person_id: personid,
+              ev_starttime: results[0].ev_starttime,
+              ev_endtime: results[0].ev_endtime,
+              ev_status: results[0].ev_status,
+              ev_people: results[0].ev_people,
+              ev_toolmore: results[0].ev_toolmore,
+              ro_id: results[0].ro_id,
+              ro_name: results[0].ro_name,
+              ro_people: results[0].ro_people,
+              st_id: results[0].st_id,
+              st_name: results[0].st_name,
+              // firstname: results[0].firstname,
+              // lastname: results[0].lastname,
+              depart_id: results[0].depart_id,
+              ward_id: results[0].ward_id,
+              faction_id: results[0].faction_id,
+            },
+          ]);
         }
       }
     );
@@ -295,19 +231,34 @@ router.get("/requesttool", async (req, res) => {
 router.get("/count/staff", async (req, res) => {
   con.query(
     "SELECT COUNT(ev.ev_id) AS bage, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-      "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
-      "ro.ro_id, ro.ro_name " +
-      "FROM tbl_event  AS ev" +
-      " " +
+      "ev.ev_starttime, ev.ev_endtime,  " +
+      "ro.ro_id, ro.ro_name,AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id " +
+      "FROM tbl_event  AS ev " +
       " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-      "INNER JOIN " +
-      pbh +
-      "hr_personal AS users ON (ev.id = users.person_id) " +
       "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
+    ["" + key + ""],
     (error, results, fields) => {
       if (error) throw error;
-      // console.log(error);
-      res.json(results);
+      if (results.length > 0) {
+        var personid = "";
+        if (!results[0].person_id) {
+          personid = "";
+        } else {
+          personid = results[0].person_id.toString("utf8");
+        }
+        return res.json([
+          {
+            bage: results[0].bage,
+            ev_title: results[0].ev_title,
+            ev_startdate: results[0].ev_startdate,
+            ev_enddate: results[0].ev_enddate,
+            person_id: personid,
+            ev_starttime: results[0].ev_starttime,
+            ev_endtime: results[0].ev_endtime,
+            ev_status: results[0].ev_status,
+          },
+        ]);
+      }
     }
   );
 });
@@ -319,38 +270,68 @@ router.get("/COUNT", async (req, res) => {
   let ward_id = query01.ward_id;
   if (level == "2") {
     con.query(
-      "SELECT COUNT(ev.ev_id) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
-        "ro.ro_id, ro.ro_name  " +
+      "SELECT COUNT(ev.ev_id) AS bage, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
+        "ev.ev_starttime, ev.ev_endtime,  " +
+        "ro.ro_id, ro.ro_name,AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id  " +
         "FROM tbl_event  AS ev" +
-        " " +
         " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN " +
-        pbh +
-        "hr_personal AS users ON (ev.id = users.person_id) " +
         "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
+      ["" + key + ""],
       (error, results, fields) => {
         if (error) throw error;
-        // console.log(error);
-        res.json(results);
+        if (results.length > 0) {
+          var personid = "";
+          if (!results[0].person_id) {
+            personid = "";
+          } else {
+            personid = results[0].person_id.toString("utf8");
+          }
+          return res.json([
+            {
+              bage: results[0].bage,
+              ev_title: results[0].ev_title,
+              ev_startdate: results[0].ev_startdate,
+              ev_enddate: results[0].ev_enddate,
+              person_id: personid,
+              ev_starttime: results[0].ev_starttime,
+              ev_endtime: results[0].ev_endtime,
+              ev_status: results[0].ev_status,
+            },
+          ]);
+        }
       }
     );
   } else if (ward_id == "48") {
     con.query(
-      "SELECT COUNT(ev.ev_status) AS bage, ev.ev_id, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate, " +
-        "ro.ro_id, ro.ro_name " +
+      "SELECT COUNT(ev.ev_status) AS bage,  ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
+        "ev.ev_starttime, ev.ev_endtime, " +
+        "ro.ro_id, ro.ro_name,AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id " +
         "FROM tbl_event  AS ev" +
-        " " +
         " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN " +
-        pbh +
-        "hr_personal AS users ON (ev.id = users.person_id) " +
         "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
+      ["" + key + ""],
       (error, results, fields) => {
         if (error) throw error;
-        // console.log(error);
-        res.json(results);
+        if (results.length > 0) {
+          var personid = "";
+          if (!results[0].person_id) {
+            personid = "";
+          } else {
+            personid = results[0].person_id.toString("utf8");
+          }
+          return res.json([
+            {
+              bage: results[0].bage,
+              ev_title: results[0].ev_title,
+              ev_startdate: results[0].ev_startdate,
+              ev_enddate: results[0].ev_enddate,
+              person_id: personid,
+              ev_starttime: results[0].ev_starttime,
+              ev_endtime: results[0].ev_endtime,
+              ev_status: results[0].ev_status,
+            },
+          ]);
+        }
       }
     );
   }

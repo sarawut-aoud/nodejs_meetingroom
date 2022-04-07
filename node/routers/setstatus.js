@@ -17,19 +17,17 @@ const router = express.Router();
 router.get("/menu", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   let ward_id = query01.ward_id;
+  let fac_id = query01.fac_id;
+  let depart_id = query01.depart_id;
   if (!ward_id) {
     return res.send({ error: true, status: "0", message: "เกิดข้อผิดพลาด" });
   } else {
     con.query(
-      "SELECT sd.ward_id,sd.setstatus ,w.ward_name " +
+      "SELECT sd.ward_id,sd.setstatus ,sd.faction_id,sd.depart_id " +
         "FROM tbl_setdevice AS sd " +
-        "INNER JOIN " +
-        pbh +
-        "hr_ward AS w " +
-        "ON (sd.ward_id = w.ward_id )" +
-        "WHERE sd.ward_id = ?" +
+        "WHERE sd.ward_id = ? OR sd.faction_id = ? OR sd.depart_id = ? " +
         "ORDER BY sd.dv_id",
-      [ward_id],
+      [ward_id,fac_id ,depart_id],
       (error, results, fields) => {
         if (error) throw error;
         return res.json(results);
