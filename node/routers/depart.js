@@ -140,16 +140,13 @@ sql.get("/ward", async (req, res) => {
   }
 });
 
-sql.get("/personal", async (req, res) => {
+sql.get("/duty", async (req, res) => {
   var query01 = require("url").parse(req.url, true).query;
   var id = query01.id;
 
   if (!id) {
     con.query(
-      "SELECT person_firstname , person_lastname , " +
-        "FROM " +
-        pbh +
-        "hr_perssonal  ",
+      "SELECT duty_name  " + "FROM " + pbh + "hr_duty  ",
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);
@@ -158,12 +155,18 @@ sql.get("/personal", async (req, res) => {
     );
   } else {
     con.query(
-      "SELECT person_firstname , person_lastname , " +
+      "SELECT du.duty_name  " +
         "FROM " +
         pbh +
-        "hr_perssonal  " +
-        "WHERE person_id =  AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))",
-      [id, ''+key+''],
+        "hr_personal as u " +
+        "INNER JOIN " +
+        pbh +
+        "hr_level as l ON (l.person_id = u.person_id)" +
+        "INNER JOIN " +
+        pbh +
+        "hr_duty as du ON(l.duty_id = du.duty_id)" +
+        "WHERE l.person_id =  AES_ENCRYPT(?, UNHEX(SHA2(?, 512)))",
+      [id, "" + key + ""],
       (error, results, fields) => {
         if (error) throw error;
         res.status(200);

@@ -344,13 +344,13 @@ require_once "../login/check_session.php";
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].depart_name;
-                                        var ward_name = result[ii].ward_name;
-                                        var fac_name = result[ii].faction_name;
-
+                                        var de_id = result[ii].depart_id;
+                                        var ward_id = result[ii].ward_id;
+                                        var fac_id = result[ii].faction_id;
+                                        
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].duty_name;
+
                                         var toolmore = result[ii].ev_toolmore;
 
                                         $.ajax({
@@ -372,6 +372,65 @@ require_once "../login/check_session.php";
 
                                             }
                                         });
+
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart/ward',
+                                            data: {
+                                                ward_id: ward_id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var ward = result[i].ward_name;
+                                                }
+                                                $("#modal2_ward").html(ward);
+                                            }
+                                        })
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart/faction',
+                                            data: {
+                                                faction_id: fac_id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var fac = result[i].faction_name;
+                                                }
+                                                $("#modal2_fac").html(fac);
+                                            }
+                                        })
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart',
+                                            data: {
+                                                depart_id: de_id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var de = result[i].depart_name;
+                                                }
+                                                $("#modal2_depart").html(de);
+                                            }
+                                        })
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart/duty',
+                                            data: {
+                                                id: id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var position = result[i].duty_name;
+                                                }
+                                                $("#modal2_pos").html(position);
+                                            }
+                                        })
+
+
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -398,8 +457,7 @@ require_once "../login/check_session.php";
 
                                 $("#modal1_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
-                                $("#modal2_pos").html(pos);
+                               
                                 if (toolmore == null) {
                                     $("#modal2_toolmore").html('<span style="color:red;">ไม่มี</span>');
                                 } else {
@@ -440,12 +498,14 @@ require_once "../login/check_session.php";
                                         var ro_id = result[ii].ro_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
+
                                         var de_phone = result[ii].de_phone;
                                         var id = result[ii].person_id;;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
+                                        var de_id = result[ii].depart_id;
+                                        var fac_id = result[ii].faction_id;
+                                        var ward_id = result[ii].ward_id;
                                         var toolmore = result[ii].ev_toolmore;
                                         $.ajax({
                                             type: "get",
@@ -489,7 +549,9 @@ require_once "../login/check_session.php";
                                 $("#modal_ro_id").val(ro_id);
                                 $("#modal_st_id").val(st_id);
                                 $("#modal_mt_id").val(id);
-
+                                $("#modal_fac").val(fac_id);
+                                $("#modal_ward").val(ward_id);
+                                $("#modal_depart").val(de_id);
                                 if (toolmore == null) {
                                     $("#modal_toolmore").html('<span style="color:red;">ไม่มี</span>');
                                 } else {

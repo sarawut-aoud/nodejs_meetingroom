@@ -32,7 +32,7 @@ router.post("/adddata", async (req, res) => {
   } else if (ward_id == "48" && level != "2") {
     // ธุรการ
     statusRoom = "1";
-  } else if (level <= 2) {
+  } else if (level < 2) {
     // ผู้ใช้
     statusRoom = "0";
   }

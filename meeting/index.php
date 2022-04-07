@@ -248,13 +248,13 @@ $path = "http://127.0.0.1:4200";
                     timeZone: "Australia/Melbourne"
                 })
                 .slice(0, 10);
-                console.log(today2)
+
             $.ajax({
                 type: "get",
                 dataType: "json",
                 url: path + "/event/today",
-                data:{
-                    today:today2,
+                data: {
+                    today: today2,
                 },
                 success: function(results) {
                     var today = ''
@@ -281,7 +281,7 @@ $path = "http://127.0.0.1:4200";
 
         function viewdetail(id) {
             //    console.log(id);
-            var path = '<?php echo $path ?>';
+            var path = '<?php echo $path; ?>';
             // var id = calendar.getEventById(id); // ดึงข้อมูล ผ่าน api
             $.ajax({
                 type: "POST",
@@ -304,10 +304,52 @@ $path = "http://127.0.0.1:4200";
                             var people = results[i].ev_people;
                             var name = results[i].firstname;
                             var lastname = results[i].lastname;
-                            var dename = results[i].depart_name;
-                            var ward_name = results[i].ward_name;
-                            var fac_name = results[i].faction_name;
+                            var deid = results[i].depart_id;
+                            var wardid = results[i].ward_id;
+                            var facid = results[i].faction_id;
                         }
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart/ward',
+                            data: {
+                                ward_id: wardid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var ward = result[i].ward_name;
+                                }
+                                $("#calendarmodal-ward").html(ward);
+                            }
+                        })
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart/faction',
+                            data: {
+                                faction_id: facid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var fac = result[i].faction_name;
+                                }
+                                $("#calendarmodal-fac").html(fac);
+                            }
+                        })
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart',
+                            data: {
+                                depart_id: deid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var de = result[i].depart_name;
+                                }
+                                $("#calendarmodal-dename").html(de);
+                            }
+                        })
                     }
                     $("#calendarmodal").modal("show");
 
@@ -315,13 +357,13 @@ $path = "http://127.0.0.1:4200";
                     $("#calendarmodal-detail").html(room);
                     $("#calendarmodal-style").html(style);
                     //$("#calendarmodal-detail").html(event.extendedProps.detail);
-                    $("#calendarmodal-start").html(start.split('T')[0]);
-                    $("#calendarmodal-end").html(end.split('T')[0]);
+                    $("#calendarmodal-start").html(start);
+                    $("#calendarmodal-end").html(end);
                     $("#calendarmodal-starttime").html(starttime);
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(ward_name + '<br>' + fac_name + '<br>' + dename);
+                   
                     // $("#calendarmodal-dephone").html(dephone);
                 },
             });

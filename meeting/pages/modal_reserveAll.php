@@ -76,8 +76,20 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">ward <br> faction <br> depart :</label>
-                            <span class="col-form-label col-md" id="modal2_dept"></span>
+                            <label class="col-md-3 col-form-label ">ward :</label>
+                            <span class="col-form-label col-md" id="modal2_ward"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">faction :</label>
+                            <span class="col-form-label col-md" id="modal2_fac"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">depart :</label>
+                            <span class="col-form-label col-md" id="modal2_depart"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
@@ -252,9 +264,10 @@
     </div>
     <input type="hidden" value="" id="modal_ev_id" name="ev_id" />
     <input type="hidden" value="" id="modal_eventid" name="eventid" />
+    <input type="hidden" value="" id="modal_ward" name="ward_id" />
+    <input type="hidden" value="" id="modal_fac" name="faction_id" />
+    <input type="hidden" value="" id="modal_depart" name="depart_id" />
     <input type="hidden" value="" id="modal_status" name="evstatus" />
-    <!-- <input type="hidden" value="" id="modal_ro_id" name="ro_id"/>
-    <input type="hidden" value="" id="modal_st_id" name="st_id"/> -->
     <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
     <input type="hidden" value="<?php echo $_SESSION['mt_duty_id']; ?>" name="level" />
 

@@ -26,6 +26,8 @@
                 <div class="form-group row">
                     <b class="col-lg-6">กลุ่มงาน/ฝ่าย/แผนก :</b>
                     <div class="col-lg-6">
+                        <div id="calendarmodal-ward"></div>
+                        <div id="calendarmodal-fac"></div>
                         <div id="calendarmodal-dename"></div>
                     </div>
                 </div>

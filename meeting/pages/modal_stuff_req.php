@@ -140,7 +140,9 @@
     <input type="hidden" value="" id="modal_st_id" name="st_id" />
 
     <input type="hidden" value="" name="id" id="modal_mt_id" />
-    <input type="hidden" value="<?php echo $_SESSION['mt_ward_id']; ?>" name="ward_id" />
+    <input type="hidden" value="" id="modal_ward" name="ward_id" />
+    <input type="hidden" value="" id="modal_fac" name="faction_id" />
+    <input type="hidden" value="" id="modal_depart" name="depart_id" />
     <input type="hidden" value="<?php echo $_SESSION['mt_duty_id']; ?>" name="level" />
 
 </form>
@@ -218,8 +220,20 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">ward : <br> faction : <br>แผนก :</label>
-                            <span class="col-form-label col-md" id="modal2_dept"></span>
+                            <label class="col-md-3 col-form-label ">ward : </label>
+                            <span class="col-form-label col-md" id="modal2_ward"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">faction : </label>
+                            <span class="col-form-label col-md" id="modal2_fac"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">แผนก :</label>
+                            <span class="col-form-label col-md" id="modal2_depart"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">

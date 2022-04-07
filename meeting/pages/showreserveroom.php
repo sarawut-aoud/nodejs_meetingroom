@@ -219,6 +219,9 @@ require_once "../login/check_session.php";
                                     </div>
                                     <input type="hidden" value="<?php echo $_SESSION['mt_id']; ?>" name="id" />
                                     <input type="hidden" value="<?php echo $_SESSION['mt_duty_id']; ?>" name="level" />
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_de_id']; ?>" name="depart_id" />
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_faction_id']; ?>" name="faction_id" />
+                                    <input type="hidden" value="<?php echo $_SESSION['mt_ward_id']; ?>" name="ward_id" />
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -303,7 +306,7 @@ require_once "../login/check_session.php";
 
             setInterval(function() {
                 cache_clear()
-            }, 5000);
+            }, 60000);
         });
 
 
@@ -355,8 +358,8 @@ require_once "../login/check_session.php";
             var path = '<?php echo $_SESSION['mt_path']; ?>';
             var lv_id = '<?php echo $_SESSION['mt_duty_id']; ?>';
             var ward_id = "<?php echo $_SESSION['mt_ward_id'] ?>";
-            
-           
+
+
             $('#radioPrimary2').change(function() {
                 $("#tool_request").prop('disabled', false);
                 $('#radioPrimary1').change(function() {
@@ -379,7 +382,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                   
+
                     $("#bage1").html(bage);
 
                 }
@@ -419,7 +422,7 @@ require_once "../login/check_session.php";
                 var ev_people = $('#people').val();
                 var st_id = $('#style').val();
                 var sumnum = $('#sumnum').val();
-            
+
                 var formdata = $('#frm_Addroom').serializeArray();
 
                 $.ajax({
@@ -604,7 +607,7 @@ require_once "../login/check_session.php";
                 url: path + "/event/calendar",
                 dataType: 'json',
                 data: {
-                    id: id,
+                    id: id
                 },
                 success: function(results) {
 
@@ -620,10 +623,52 @@ require_once "../login/check_session.php";
                             var people = results[i].ev_people;
                             var name = results[i].firstname;
                             var lastname = results[i].lastname;
-                            var dename = results[i].depart_name;
-                            var ward_name = results[i].ward_name;
-                            var fac_name = results[i].faction_name;
+                            var deid = results[i].depart_id;
+                            var wardid = results[i].ward_id;
+                            var facid = results[i].faction_id;
                         }
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart/ward',
+                            data: {
+                                ward_id: wardid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var ward = result[i].ward_name;
+                                }
+                                $("#calendarmodal-ward").html(ward);
+                            }
+                        })
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart/faction',
+                            data: {
+                                faction_id: facid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var fac = result[i].faction_name;
+                                }
+                                $("#calendarmodal-fac").html(fac);
+                            }
+                        })
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart',
+                            data: {
+                                depart_id: deid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var de = result[i].depart_name;
+                                }
+                                $("#calendarmodal-dename").html(de);
+                            }
+                        })
                     }
                     $("#calendarmodal").modal("show");
 
@@ -631,13 +676,13 @@ require_once "../login/check_session.php";
                     $("#calendarmodal-detail").html(room);
                     $("#calendarmodal-style").html(style);
                     //$("#calendarmodal-detail").html(event.extendedProps.detail);
-                    $("#calendarmodal-start").html(start.split('T')[0]);
-                    $("#calendarmodal-end").html(end.split('T')[0]);
+                    $("#calendarmodal-start").html(start);
+                    $("#calendarmodal-end").html(end);
                     $("#calendarmodal-starttime").html(starttime);
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(ward_name + '<br>' + fac_name + '<br>' + dename);
+                   
                     // $("#calendarmodal-dephone").html(dephone);
                 },
             });

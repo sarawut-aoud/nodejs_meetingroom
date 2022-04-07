@@ -388,13 +388,12 @@ require_once "../login/check_session.php";
                                         var ro_name = result[ii].ro_name;
                                         var to_name = result[ii].to_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].depart_name;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].duty_name;
-                                        var ward_name = result[ii].ward_name;
-                                        var fac_name = result[ii].faction_name;
                                         var toolmore = result[ii].ev_toolmore;
+                                        // var de_id = result[ii].depart_id;
+                                        // var fac_id = result[ii].faction_id;
+                                        // var ward_id = result[ii].ward_id;
 
                                         $.ajax({
                                             type: 'get',
@@ -407,20 +406,16 @@ require_once "../login/check_session.php";
                                                 // console.log(result[ii].event_id)
                                                 var to_name = ''
                                                 for (i in tool) {
-
                                                     if (tool[i].ev_id == ev_id) {
-
                                                         to_name += '<div class="col-form-label d-inline mr-3 ml-3"> 📢 ' + tool[i].to_name + '  </div>'
                                                     }
-
                                                     $("#modal2_tool").html(to_name);
                                                 }
-
                                             }
                                         });
                                     }
                                 }
-                                console.log(toolmore)
+                               
                                 if (ev_status == 0) {
                                     var status = 'รออนุมัติจากหัวหน้า'
                                 } else if (ev_status == 1) {
@@ -446,8 +441,10 @@ require_once "../login/check_session.php";
                                 $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
-                                $("#modal2_pos").html(pos);
+                                $("#modal2_depart").html( "<?php echo $_SESSION['mt_de_name']; ?>");
+                                $("#modal2_ward").html("<?php echo $_SESSION['mt_ward_name']; ?>" );
+                                $("#modal2_fac").html( "<?php echo $_SESSION['mt_faction_name']; ?>");
+                                $("#modal2_pos").html("<?php echo $_SESSION['mt_duty_name']; ?>");
                                 // $("#modal2_phone").html(de_phone);
                                 if (toolmore == null) {
                                     $("#modal2_toolmore").html('<span style="color:red;">ไม่มี</span>');
@@ -488,12 +485,11 @@ require_once "../login/check_session.php";
                                         var st_id = result[ii].st_id;
                                         var ro_name = result[ii].ro_name;
                                         var st_name = result[ii].st_name;
-                                        var de_name = result[ii].depart_name;
+                                        var de_id = result[ii].depart_id;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var pos = result[ii].duty_name;
-                                        var ward_name = result[ii].ward_name;
-                                        var fac_name = result[ii].faction_name;
+                                        var ward_id = result[ii].ward_id;
+                                        var fac_id = result[ii].faction_id;
 
                                         $.ajax({
                                             type: "get",
@@ -541,11 +537,13 @@ require_once "../login/check_session.php";
                                 $("#modal_status").val(ev_status);
                                 $("#modal_ro_id").val(ro_id);
                                 $("#modal_st_id").val(st_id);
-                                // $("#modal_ro_name").html(ro_name);
                                 $("#modal_title").val(ev_title);
                                 $("#modal_timeStart").val(ev_starttime);
                                 $("#modal_timeEnd").val(ev_endtime);
                                 $("#modal_people").val(ev_people);
+                                $("#modal_fac").val(fac_id);
+                                $("#modal_ward").val(ward_id);
+                                $("#modal_depart").val(de_id);
                                 $("#modal_dateStart").val(ev_startdate.split('T')[0]);
                                 $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
 
@@ -655,8 +653,6 @@ require_once "../login/check_session.php";
                 var ev_people = $('#people').val();
                 var st_id = $('#style').val();
                 var sumnum = $('#sumnum').val();
-                var id = <?php echo $_SESSION['mt_id']; ?>;
-                var level = <?php echo $_SESSION['mt_duty_id']; ?>;
 
                 var formdata = $('#frm_modalEditRoom').serializeArray();
 

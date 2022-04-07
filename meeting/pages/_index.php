@@ -381,10 +381,52 @@ require_once "../login/check_session.php";
                             var people = results[i].ev_people;
                             var name = results[i].firstname;
                             var lastname = results[i].lastname;
-                            var dename = results[i].depart_name;
-                            var ward_name = results[i].ward_name;
-                            var fac_name = results[i].faction_name;
+                            var deid = results[i].depart_id;
+                            var wardid = results[i].ward_id;
+                            var facid = results[i].faction_id;
                         }
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart/ward',
+                            data: {
+                                ward_id: wardid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var ward = result[i].ward_name;
+                                }
+                                $("#calendarmodal-ward").html(ward);
+                            }
+                        })
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart/faction',
+                            data: {
+                                faction_id: facid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var fac = result[i].faction_name;
+                                }
+                                $("#calendarmodal-fac").html(fac);
+                            }
+                        })
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: path + '/depart',
+                            data: {
+                                depart_id: deid,
+                            },
+                            success: function(result) {
+                                for (i in result) {
+                                    var de = result[i].depart_name;
+                                }
+                                $("#calendarmodal-dename").html(de);
+                            }
+                        })
                     }
                     $("#calendarmodal").modal("show");
 
@@ -398,7 +440,7 @@ require_once "../login/check_session.php";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                    $("#calendarmodal-dename").html(ward_name + '<br>' + fac_name + '<br>' + dename);
+                   
                     // $("#calendarmodal-dephone").html(dephone);
                 },
             });

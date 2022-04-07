@@ -30,11 +30,11 @@ router.get("/", async (req, res) => {
         "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
         " ev.ev_status,ev.ev_starttime, " +
-        "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name, " +
-        "AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id "+
+        "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore, ro.ro_id, ro.ro_name " +
+        " " +
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "  GROUP BY ev.event_id",[''+key+''],
+        "  GROUP BY ev.event_id",
 
       (error, results, fields) => {
         if (error) throw error;
@@ -48,13 +48,13 @@ router.get("/", async (req, res) => {
           "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
           "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate, " +
           " ev.ev_status,ev.ev_starttime, " +
-          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore ,ro.ro_id, ro.ro_name," +
-          " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id " +
+          "ev.ev_endtime, ev.ev_people,ev.ev_createdate,ev_toolmore ,ro.ro_id, ro.ro_name" +
+          " " +
           "FROM tbl_event AS ev " +
           "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
           "WHERE ev.id = AES_ENCRYPT(?, UNHEX(SHA2(?, 512))) " +
           "GROUP BY ev.event_id",
-        ["" + key + "", id, "" + key + ""],
+        [id, "" + key + ""],
 
         (error, results, fields) => {
           if (error) throw error;
@@ -113,11 +113,14 @@ router.get("/request", async (req, res) => {
         "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,ev_toolmore,  " +
         "ro.ro_id, ro.ro_name, ro.ro_people, " +
         "st.st_id, st.st_name," +
-        " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id, " +
+        " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id, user.person_firstname As firstname, user.person_lastname as lastname, " +
         "ev.depart_id,ev.ward_id, ev.faction_id " +
         "FROM tbl_event AS ev " +
         "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)",
+        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+        "INNER JOIN " +
+        pbh +
+        "hr_personal AS user ON (ev.id = user.person_id)",
 
       (error, results, fields) => {
         if (error) throw error;
@@ -148,8 +151,8 @@ router.get("/request", async (req, res) => {
               ro_people: results[0].ro_people,
               st_id: results[0].st_id,
               st_name: results[0].st_name,
-              // firstname: results[0].firstname,
-              // lastname: results[0].lastname,
+              firstname: results[0].firstname,
+              lastname: results[0].lastname,
               depart_id: results[0].depart_id,
               ward_id: results[0].ward_id,
               faction_id: results[0].faction_id,
@@ -167,11 +170,14 @@ router.get("/request", async (req, res) => {
         "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,ev_toolmore, " +
         "ro.ro_id, ro.ro_name, ro.ro_people, " +
         "st.st_id, st.st_name," +
-        " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id, " +
+        " AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id, user.person_firstname As firstname ,user.person_lastname as lastname, " +
         "ev.depart_id,ev.ward_id, ev.faction_id " +
         "FROM tbl_event AS ev " +
         "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+        "INNER JOIN " +
+        pbh +
+        "hr_personal AS user ON (ev.id = user.person_id)" +
         "WHERE ev.ev_id = ?",
       ["" + key + "", ev_id],
       (error, results, fields) => {
@@ -202,8 +208,8 @@ router.get("/request", async (req, res) => {
               ro_people: results[0].ro_people,
               st_id: results[0].st_id,
               st_name: results[0].st_name,
-              // firstname: results[0].firstname,
-              // lastname: results[0].lastname,
+              firstname: results[0].firstname,
+              lastname: results[0].lastname,
               depart_id: results[0].depart_id,
               ward_id: results[0].ward_id,
               faction_id: results[0].faction_id,
@@ -230,35 +236,12 @@ router.get("/requesttool", async (req, res) => {
 });
 router.get("/count/staff", async (req, res) => {
   con.query(
-    "SELECT COUNT(ev.ev_id) AS bage, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-      "ev.ev_starttime, ev.ev_endtime,  " +
-      "ro.ro_id, ro.ro_name,AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id " +
+    "SELECT COUNT(ev.ev_id) AS bage " +
       "FROM tbl_event  AS ev " +
-      " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
-    ["" + key + ""],
     (error, results, fields) => {
       if (error) throw error;
-      if (results.length > 0) {
-        var personid = "";
-        if (!results[0].person_id) {
-          personid = "";
-        } else {
-          personid = results[0].person_id.toString("utf8");
-        }
-        return res.json([
-          {
-            bage: results[0].bage,
-            ev_title: results[0].ev_title,
-            ev_startdate: results[0].ev_startdate,
-            ev_enddate: results[0].ev_enddate,
-            person_id: personid,
-            ev_starttime: results[0].ev_starttime,
-            ev_endtime: results[0].ev_endtime,
-            ev_status: results[0].ev_status,
-          },
-        ]);
-      }
+      return res.json(results);
     }
   );
 });
@@ -268,70 +251,24 @@ router.get("/COUNT", async (req, res) => {
   // let de_id = query01.de_id;
   let level = query01.level;
   let ward_id = query01.ward_id;
-  if (level == "2") {
+  if (level >= "2") {
     con.query(
-      "SELECT COUNT(ev.ev_id) AS bage, ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-        "ev.ev_starttime, ev.ev_endtime,  " +
-        "ro.ro_id, ro.ro_name,AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id  " +
-        "FROM tbl_event  AS ev" +
-        " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "SELECT COUNT(ev.ev_id) AS bage " +
+        "FROM tbl_event  AS ev " +
         "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
-      ["" + key + ""],
       (error, results, fields) => {
         if (error) throw error;
-        if (results.length > 0) {
-          var personid = "";
-          if (!results[0].person_id) {
-            personid = "";
-          } else {
-            personid = results[0].person_id.toString("utf8");
-          }
-          return res.json([
-            {
-              bage: results[0].bage,
-              ev_title: results[0].ev_title,
-              ev_startdate: results[0].ev_startdate,
-              ev_enddate: results[0].ev_enddate,
-              person_id: personid,
-              ev_starttime: results[0].ev_starttime,
-              ev_endtime: results[0].ev_endtime,
-              ev_status: results[0].ev_status,
-            },
-          ]);
-        }
+        return res.json(results);
       }
     );
   } else if (ward_id == "48") {
     con.query(
-      "SELECT COUNT(ev.ev_status) AS bage,  ev.ev_title, ev.ev_startdate, ev.ev_status, ev.ev_enddate," +
-        "ev.ev_starttime, ev.ev_endtime, " +
-        "ro.ro_id, ro.ro_name,AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS person_id " +
-        "FROM tbl_event  AS ev" +
-        " INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "SELECT COUNT(ev.ev_id) AS bage, " +
+        "FROM tbl_event  AS ev " +
         "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
-      ["" + key + ""],
       (error, results, fields) => {
         if (error) throw error;
-        if (results.length > 0) {
-          var personid = "";
-          if (!results[0].person_id) {
-            personid = "";
-          } else {
-            personid = results[0].person_id.toString("utf8");
-          }
-          return res.json([
-            {
-              bage: results[0].bage,
-              ev_title: results[0].ev_title,
-              ev_startdate: results[0].ev_startdate,
-              ev_enddate: results[0].ev_enddate,
-              person_id: personid,
-              ev_starttime: results[0].ev_starttime,
-              ev_endtime: results[0].ev_endtime,
-              ev_status: results[0].ev_status,
-            },
-          ]);
-        }
+        return res.json(results);
       }
     );
   }
@@ -370,25 +307,13 @@ router.post("/calendar", async (req, res) => {
       " ro.ro_name, ro.ro_color," +
       "st.st_name," +
       "users.person_firstname as firstname ,users.person_lastname as lastname," +
-      "dept.depart_name, dept.depart_id ,w.ward_name,f.faction_name " +
+      "ev.depart_id,ev.ward_id,ev.faction_id " +
       "FROM tbl_event AS ev " +
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
       "INNER JOIN  " +
       pbh +
       "hr_personal AS users ON (ev.id = users.person_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_level AS l ON(l.person_id = users.person_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_ward AS w ON (l.ward_id = w.ward_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_faction AS f ON (l.faction_id = f.faction_id)" +
-      "INNER JOIN  " +
-      pbh +
-      "hr_depart AS dept ON (l.depart_id = dept.depart_id) " +
       "WHERE ev.ev_status = '3' AND ev.ev_id = ? GROUP BY ev.event_id",
     [id],
     (error, results, fields) => {
@@ -423,37 +348,20 @@ router.get("/list", async (req, res) => {
 
   const id = [];
   con.query(
-    //DATE_FORMAT(o.l_day,'%Y-%m-%d') as  l_day
-    //l.ls_id,CONCAT (MONTH(l.ls_days), '/', DAY(l.ls_days), '/', (YEAR(l.ls_days))) as ls_days
     "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
       "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
       "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
-      // " CONCAT (YEAR( ev.ev_startdate),'-',MONTH( ev.ev_startdate), '-', (DAY( ev.ev_startdate))) as ev_startdate, ev.ev_enddate," +
-      // "CONCAT (YEAR( ev.ev_starttime),'-',MONTH( ev.ev_starttime), '-', (DAY( ev.ev_starttime))) as ev_starttime," +
       "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
       "ev.ev_bgcolor,ev.ev_color, ev.ev_repeatday," +
       "ro.ro_id, ro.ro_name, ro.ro_color," +
       "st.st_id, st.st_name," +
-      " users.person_firstname,users.person_lastname, " +
-      "dept.depart_id, dept.depart_name  " +
+      " users.person_firstname,users.person_lastname " +
       "FROM tbl_event AS ev " +
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
       "INNER JOIN  " +
       pbh +
       "hr_personal AS users ON (ev.id = users.person_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_level AS l ON (l.person_id = users.person_id) " +
-      "INNER JOIN  " +
-      pbh +
-      "hr_depart AS dept ON (l.depart_id = dept.depart_id) " +
-      "INNER JOIN " +
-      pbh +
-      "hr_faction AS f ON (l.faction_id = f.faction_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_ward AS w ON (l.ward_id = w.ward_id) " +
       "WHERE ev.ev_status = '3' AND   ev.ev_startdate BETWEEN  ?  AND ? " +
       "GROUP BY ev.event_id ",
     [start2, end2],
@@ -612,9 +520,8 @@ router.post("/statusstaff", async (req, res) => {
 router.post("/status", async (req, res) => {
   var level = req.body.level;
   var ward_id = req.body.ward_id;
-  if (level == "2") {
+  if (level >= "2") {
     // admin /  manage
-
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title," +
         "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate ," +
@@ -626,12 +533,6 @@ router.post("/status", async (req, res) => {
         "INNER JOIN " +
         pbh +
         "hr_personal AS users ON (ev.id = users.person_id) " +
-        "INNER JOIN " +
-        pbh +
-        "hr_level AS l ON (l.person_id = users.person_id) " +
-        "INNER JOIN " +
-        pbh +
-        "hr_ward AS w ON (l.ward_id = w.ward_id) " +
         "WHERE ev.ev_status = '1' GROUP BY ev.event_id",
       (error, results, fields) => {
         if (error) throw error;

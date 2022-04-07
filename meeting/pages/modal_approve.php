@@ -1,5 +1,3 @@
-
-
 <!-- Modal Status -->
 <form action="" method="POST">
     <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -64,14 +62,26 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">ward : <br> faction : <br>แผนก :</label>
+                            <label class="col-md-3 col-form-label ">ward : </label>
+                            <span class="col-form-label col-md" id="modal_ward"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">faction : </label>
+                            <span class="col-form-label col-md" id="modal_fac"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">แผนก :</label>
                             <span class="col-form-label col-md" id="modal_dept"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label ">ตำแหน่ง :</label>
-                            <span class="col-form-label col-md-5" id="modal_pos"></span>
+                            <span class="col-form-label col-md-5" id="modal_pos2"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
@@ -187,14 +197,26 @@
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
-                            <label class="col-md-3 col-form-label ">ward : <br> faction : <br>แผนก :</label>
+                            <label class="col-md-3 col-form-label ">ward : </label>
+                            <span class="col-form-label col-md" id="modal2_ward"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label "> faction : </label>
+                            <span class="col-form-label col-md" id="modal2_fac"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">แผนก :</label>
                             <span class="col-form-label col-md" id="modal2_dept"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label ">ตำแหน่ง :</label>
-                            <span class="col-form-label col-md-5" id="modal2_pos"></span>
+                            <span class="col-form-label col-md-5" id="modal_pos"></span>
                         </div>
                     </div>
                     <div class="form-group row  mb-2">

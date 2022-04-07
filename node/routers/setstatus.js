@@ -69,13 +69,13 @@ router.get("/reserve_ward", async (req, res) => {
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
         "ev.ev_starttime, ev.ev_endtime, ev.ev_people, ev.ev_createdate,ev_toolmore, " +
         "ev.ev_status,ro.ro_name, ro.ro_color, " +
-        "st.st_name,AES_DECRYPT(ev.id, UNHEX(SHA2(?, 512))) AS id, " +
+        "st.st_name, " +
         "ev.depart_id ,ev.ward_id,ev.faction_id " +
         "FROM tbl_event AS ev " +
         "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id) " +
         "WHERE ev.ward_id = ? OR ev.faction_id = ? OR ev.depart_id = ?   GROUP BY ev.event_id",
-      [key,ward_id, fac_id, depart_id],
+      [ward_id, fac_id, depart_id],
       (error, results, fields) => {
         if (error) throw error;
         return res.json(results);

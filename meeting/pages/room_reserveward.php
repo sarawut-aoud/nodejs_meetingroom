@@ -174,7 +174,7 @@ require_once "../login/check_session.php";
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
             var fac_id = '<?php echo $_SESSION['mt_faction_id']; ?>';
             var depart_id = '<?php echo $_SESSION['mt_de_id']; ?>';
-           
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -190,7 +190,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                  
+
                     $("#bage1").html(bage);
 
                 }
@@ -348,10 +348,10 @@ require_once "../login/check_session.php";
                                         var st_name = result[ii].st_name;
                                         var firstname = result[ii].firstname;
                                         var lastname = result[ii].lastname;
-                                        var de_name = result[ii].depart_name;
-                                        var fac_name = result[ii].faction_name;
-                                        var ward_name = result[ii].ward_name;
-                                        var position = result[ii].duty_name;
+                                        var id = result[ii].person_id;
+                                        var de_id = result[ii].depart_id;
+                                        var fac_id = result[ii].faction_id;
+                                        var ward_id = result[ii].ward_id;
                                         var toolmore = result[ii].ev_toolmore;
                                         $.ajax({
                                             type: 'get',
@@ -370,9 +370,64 @@ require_once "../login/check_session.php";
                                                     }
                                                     $("#modal2_tool").html(to_name);
                                                 }
-
                                             }
                                         });
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart/ward',
+                                            data: {
+                                                ward_id: ward_id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var ward = result[i].ward_name; 
+                                                }
+                                                $("#modal2_ward").html(ward);
+                                            }
+                                        })
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart/faction',
+                                            data: {
+                                                faction_id: fac_id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var fac = result[i].faction_name;
+                                                }
+                                                $("#modal2_fac").html( fac );
+                                            }
+                                        })
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart',
+                                            data: {
+                                                depart_id: de_id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var de = result[i].depart_name;
+                                                }
+                                                $("#modal2_depart").html( de );
+                                            }
+                                        })
+                                        $.ajax({
+                                            type: 'get',
+                                            dataType: 'json',
+                                            url: path + '/depart/duty',
+                                            data: {
+                                                id: id,
+                                            },
+                                            success: function(result) {
+                                                for (i in result) {
+                                                    var position = result[i].duty_name;
+                                                }
+                                                $("#modal2_pos").html(position);
+                                            }
+                                        })
                                     }
                                 }
                                 if (ev_status == 0) {
@@ -399,8 +454,8 @@ require_once "../login/check_session.php";
                                 $("#modal2_style").html(st_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_dept").html(ward_name + '<br>' + fac_name + '<br>' + de_name);
-                                $("#modal2_pos").html(position);
+                              
+
                                 if (toolmore == null) {
                                     $('#modal2_toolmore').html('<span style="color:red;">ไม่มี</span>');;
                                 } else {
@@ -409,277 +464,10 @@ require_once "../login/check_session.php";
                             }
                         });
                     });
-                    $(document).on('click', '.btnEdit', function(e) {
-
-                        // $(".btnEdit").click(function(e) {
-                        e.preventDefault();
-                        var ev_id = $(this).attr('id');
-
-                        $.ajax({
-                            type: "get",
-                            dataType: "json",
-                            url: path + "/event/request",
-                            data: {
-                                ev_id: ev_id,
-                            },
-                            success: function(result) {
-                                for (ii in result) {
-                                    if (result[ii].ev_id == ev_id) {
-
-                                        var event_id = result[ii].event_id;
-                                        var ev_title = result[ii].ev_title;
-                                        var ev_startdate = result[ii].ev_startdate;
-                                        var ev_enddate = result[ii].ev_enddate;
-                                        var ev_status = result[ii].ev_status;
-                                        var ev_starttime = result[ii].ev_starttime;
-                                        var ev_endtime = result[ii].ev_endtime;
-                                        var ev_people = result[ii].ev_people;
-                                        var ev_createdate = result[ii].ev_createdate;
-                                        var ro_id = result[ii].ro_id;
-                                        var st_id = result[ii].st_id;
-                                        var ro_name = result[ii].ro_name;
-                                        var st_name = result[ii].st_name;
-                                        var de_name = result[ii].de_name;
-                                        var de_phone = result[ii].de_phone;
-                                        var id = result[ii].id;
-                                        var firstname = result[ii].firstname;
-                                        var lastname = result[ii].lastname;
-                                        var pos = result[ii].position;
-
-                                        $.ajax({
-                                            type: "get",
-                                            dataType: "json",
-                                            url: path + "/tools",
-                                            data: {
-                                                ev_id: ev_id,
-                                            },
-                                            success: function(tool) {
-                                                // var chk = '';
-                                                var data = ' <div class="form-group  ">';
-                                                var x = 0;
-                                                for (i in tool) {
-                                                    var chk = '';
-                                                    if (tool[i].acc_toid != null) {
-
-                                                        chk = 'checked="checked"'
-
-                                                    }
-                                                    x++
-                                                    data += '<div class="d-block form-check"><input class="form-check-input chk" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
-                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
-                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
-                                                }
-                                                data += '</div>';
-                                                $('#modaltool').html(data);
-                                            }
-                                        });
-                                    }
-                                }
-                                if (ev_status == 0) {
-                                    var status = 'รออนุมัติจากหัวหน้า'
-                                } else if (ev_status == 1) {
-                                    var status = 'รออนุมัติ'
-                                } else if (ev_status == 2) {
-                                    var status = 'ไม่อนุมัติจากหัวหน้า'
-                                } else if (ev_status == 3) {
-                                    var status = 'อนุมัติ'
-                                } else if (ev_status == 4) {
-                                    var status = 'ไม่อนุมัติ'
-                                } else if (ev_status == 5) {
-                                    var status = 'ยกเลิก'
-                                }
-                                $("#modalEdit").modal("show");
-                                $("#modal_eventid").val(event_id);
-                                $("#modal_status").val(ev_status);
-                                $("#modal_ro_id").val(ro_id);
-                                $("#modal_st_id").val(st_id);
-                                // $("#modal_ro_name").html(ro_name);
-                                $("#modal_title").val(ev_title);
-                                $("#modal_timeStart").val(ev_starttime);
-                                $("#modal_timeEnd").val(ev_endtime);
-                                $("#modal_people").val(ev_people);
-                                $("#modal_dateStart").val(ev_startdate.split('T')[0]);
-                                $("#modal_dateEnd").val(ev_enddate.split('T')[0]);
-
-                                $.ajax({
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    url: path + "/rooms",
-                                    success: function(result) {
-                                        var room = '';
-                                        for (i in result) {
-                                            if (result[i].ro_id == ro_id) {
-                                                room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
-
-                                            } else {
-                                                room += '<option  value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
-                                            }
-
-                                        }
-                                        $('#modal_ro_name').html(room);
-                                    }
-                                });
-                                $.ajax({
-                                    type: 'GET',
-                                    dataType: 'json',
-                                    url: path + "/style",
-                                    success: function(result) {
-                                        var style = '';
-
-                                        for (k in result) {
-                                            if (result[k].st_id == st_id) {
-                                                style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
-                                            } else {
-                                                style += '<option  value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
-                                            }
-
-                                        }
-                                        $('#modal_style').html(style);
-                                    }
-                                });
-                            }
-                        });
-                    });
-
-                    $(document).on('click', '.btnDels', function(e) {
-                        // $(".btnDels").click(function(e) {
-                        e.preventDefault();
-
-                        var ev_id = $(this).attr('id');
-                        var event_id = $(this).attr('data-id');
-                        var _row = $(this).parent();
-                        Swal.fire({
-                            title: 'คุณต้องการลบข้อมูลใช่หรือไม่ ?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: "ยืนยัน",
-                            cancelButtonText: "ยกเลิก",
-                        }).then((btn) => {
-                            if (btn.isConfirmed) {
-                                $.ajax({
-                                    dataType: 'JSON',
-                                    type: "DELETE",
-                                    url: path + "/event",
-                                    data: {
-                                        ev_id: ev_id,
-                                        event_id: event_id,
-                                    },
-                                    success: function(result) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: result.message,
-                                        })
-                                        _row.closest('tr').remove();
-                                    },
-                                    error: function(result) {
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 1500,
-                                        })
-                                        Toast.fire({
-                                            icon: 'warning',
-                                            title: 'ไม่สามารถลบข้อมูลได้'
-
-                                        })
-                                    }
-                                });
-                            }
-                        })
-                    });
 
                 }
             });
             /// modal ///
-
-            $(document).on('click', '#btnsaveRoom', function(e) {
-                /// modal ///
-                // $('#btnsaveRoom').click(function(e) {
-                e.preventDefault();
-                var ev_title = $('#title').val();
-                var ev_starttime = $('#timeStart').val();
-                var ev_endtime = $('#timeEnd').val();
-                var ev_startdate = $('#dateStart').val();
-                var ev_enddate = $('#dateEnd').val();
-                var ro_id = $('#ro_name').val();
-                var ev_people = $('#people').val();
-                var st_id = $('#style').val();
-                var sumnum = $('#sumnum').val();
-                var id = <?php echo $_SESSION['mt_id']; ?>;
-                var level = <?php echo $_SESSION['mt_duty_id']; ?>;
-
-                var formdata = $('#frm_modalEditRoom').serializeArray();
-
-                $.ajax({
-                    type: "PUT",
-                    url: path + "/event_put/updatedata",
-                    dataType: "json",
-                    data: formdata,
-
-                    success: function(result) {
-                        if (result.status == 0) {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                            })
-                            Toast.fire({
-                                    icon: 'warning',
-                                    title: result.message
-
-                                })
-                                .then((result) => {
-                                    $("#modalEdit").modal("hide");
-                                    location.reload();
-
-                                })
-                        } else {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                            })
-                            Toast.fire({
-                                icon: 'success',
-                                title: result.message
-
-                            }).then((result) => {
-                                $("#modalEdit").modal("hide");
-                                $('#frm_modalEditRoom')[0].reset();
-                                $('#title').focus();
-                            })
-                        }
-
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-                        Toast.fire({
-                                icon: 'warning',
-                                title: 'ไม่สามารถบันทึกข้อมูลได้'
-
-                            })
-                            .then((result) => {
-                                location.reload();
-
-                            })
-
-                    }
-                });
-
-
-
-            });
         });
     </script>
 

@@ -25,27 +25,14 @@ router.get("/detail", async (req, res) => {
       "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people,  " +
       "ro.ro_id, ro.ro_name, " +
       "st.st_id, st.st_name," +
-      "users.person_firstname as firstname ,users.person_lastname as lastname," +
-      "dept.depart_name, dept.depart_id ,w.ward_name,f.faction_name,du.duty_name " +
+      "users.person_id, users.person_firstname as firstname ,users.person_lastname as lastname," +
+      "ev.depart_id ,ev.ward_id,ev.faction_id " +
       "FROM tbl_event AS ev " +
       "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
       "INNER JOIN  " +
       pbh +
       "hr_personal AS users ON (ev.id = users.person_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_level AS l ON(l.person_id = users.person_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_ward AS w ON (l.ward_id = w.ward_id)" +
-      "INNER JOIN " +
-      pbh +
-      "hr_faction AS f ON (l.faction_id = f.faction_id)" +
-      "INNER JOIN  " +
-      pbh +
-      "hr_depart AS dept ON (l.depart_id = dept.depart_id) " +
-      "INNER JOIN "+pbh+"hr_duty AS du ON (l.duty_id = du.duty_id)"+
       "WHERE ev.ev_id = ? ;",
     [ev_id],
     (error, results, fields) => {
@@ -84,7 +71,7 @@ router.get("/notified", async (req, res, next) => {
         "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
         "DATE_FORMAT(ev.ev_createdate,'%Y-%m-%d') as  ev_createdate ," +
         " ev.ev_starttime ,ev.ev_endtime, ev.ev_status ,ev.ev_people," +
-        "ro.ro_id,ro.ro_name , users.person_id " +
+        "ro.ro_id,ro.ro_name  " +
         "FROM tbl_event AS ev " +
         "INNER JOIN tbl_rooms AS ro " +
         "ON (ev.ro_id = ro.ro_id) " +
