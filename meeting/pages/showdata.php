@@ -242,8 +242,8 @@ if ($_SESSION['mt_ward_id'] == 48) {
                             bage++;
                         }
                     }
+                    
                     $("#bage").html(bage);
-                    $("#bage1").html(bage);
                 }
             });
             $.ajax({
@@ -261,7 +261,7 @@ if ($_SESSION['mt_ward_id'] == 48) {
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
                 }
             });
 

@@ -216,8 +216,8 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
                     $("#bage1").html(bage);
+                   
 
                 }
 

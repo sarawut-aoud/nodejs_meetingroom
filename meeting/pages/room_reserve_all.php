@@ -223,9 +223,7 @@ require_once "../login/check_session.php";
                 type: 'get',
                 dataType: 'json',
                 url: path + "/event",
-                data: {
-                    ward_id: ward_id,
-                },
+             
                 success: function(data) {
                     var i = 0;
 

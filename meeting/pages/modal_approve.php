@@ -1,6 +1,6 @@
 <!-- Modal Status -->
 <form action="" method="POST">
-    <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalStatusApp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center  edit-head">
@@ -11,6 +11,20 @@
                 <div class="modal-body" id="modaldata">
                     <!-- style="overflow-x: scroll;" -->
                     <!--//? /.html data -->
+                    <div class="form-group row  mb-2">
+                        <div class="input-group">
+                            <label class="col-md-3 col-form-label ">การอนมุัติ :</label>
+                            <div class="col-md-9">
+                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="modal_id_status" data-placeholder="สถานะการจอง">
+                                    <option value=""></option>
+                                    <option value="1">อนุมัติ</option>
+                                    <option value="2">ไม่อนุมัติ</option>
+                                    <option value="0">รอธุระการอนุมัติ</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="size: 10px; color:black">
                     <div class="form-group row  mb-2">
                         <div class="input-group">
                             <label class="col-md-3 col-form-label ">สถานที่ประชุม :</label>
@@ -90,24 +104,13 @@
                             <span class="col-form-label col-md-5" id="modal_phone"></span>
                         </div>
                     </div>
-                    <hr style="size: 10px; color:black">
-                    <div class="form-group row  mb-2">
-                        <div class="input-group">
-                            <label class="col-md-3 col-form-label ">การอนมุัติ :</label>
-                            <div class="col-md-9">
-                                <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" id="modal_id_status" data-placeholder="สถานะการจอง">
-                                    <option value=""></option>
-                                    <option value="3">อนุมัติ</option>
-                                    <option value="4">ไม่อนุมัติ</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+
+
                     <!--//? /.html data -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    <button type="button" class="btn btn-primary btnSave">ยืนยันการแก้ไข</button>
+                    <button type="button" class="btn btn-primary btnSave">ส่งแบบฟอร์ม</button>
                 </div>
             </div>
         </div>
@@ -125,7 +128,7 @@
 
 <!-- Modal detail -->
 <form action="" method="">
-    <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalDetailAppo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center  edit-head">

@@ -238,7 +238,7 @@ router.get("/count/staff", async (req, res) => {
   con.query(
     "SELECT COUNT(ev.ev_id) AS bage " +
       "FROM tbl_event  AS ev " +
-      "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
+      "WHERE ev.ev_status IN ('0','1')  GROUP BY ev.ev_title",
     (error, results, fields) => {
       if (error) throw error;
       return res.json(results);
@@ -255,7 +255,7 @@ router.get("/COUNT", async (req, res) => {
     con.query(
       "SELECT COUNT(ev.ev_id) AS bage " +
         "FROM tbl_event  AS ev " +
-        "WHERE ev.ev_status = '1' GROUP BY ev.ev_title",
+        "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
       (error, results, fields) => {
         if (error) throw error;
         return res.json(results);
@@ -265,7 +265,7 @@ router.get("/COUNT", async (req, res) => {
     con.query(
       "SELECT COUNT(ev.ev_id) AS bage, " +
         "FROM tbl_event  AS ev " +
-        "WHERE ev.ev_status = '0' GROUP BY ev.ev_title",
+        "WHERE ev.ev_status IN ('0','1') GROUP BY ev.ev_title",
       (error, results, fields) => {
         if (error) throw error;
         return res.json(results);
@@ -508,7 +508,7 @@ router.post("/statusstaff", async (req, res) => {
       "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
       "INNER JOIN " +
       pbh +
-      "hr_personal AS users ON (ev.id = users.person_id) WHERE ev.ev_status = '0' GROUP BY ev.event_id",
+      "hr_personal AS users ON (ev.id = users.person_id) WHERE ev.ev_status IN('1') GROUP BY ev.event_id",
     (error, results, fields) => {
       if (error) throw error;
       // console.log(error);
@@ -533,14 +533,14 @@ router.post("/status", async (req, res) => {
         "INNER JOIN " +
         pbh +
         "hr_personal AS users ON (ev.id = users.person_id) " +
-        "WHERE ev.ev_status = '1' GROUP BY ev.event_id",
+        "WHERE ev.ev_status IN('0') GROUP BY ev.event_id",
       (error, results, fields) => {
         if (error) throw error;
         // console.log(error);
         res.json(results);
       }
     );
-  } else if (ward_id == "48" && level != "2") {
+  } else if (ward_id == "48" && level < "2") {
     // STAFF
     con.query(
       "SELECT ev.ev_id , ev.event_id, ev.ev_title, " +
@@ -552,7 +552,7 @@ router.post("/status", async (req, res) => {
         "INNER JOIN tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
         "INNER JOIN " +
         pbh +
-        "hr_personal AS users ON (ev.id = users.person_id) WHERE ev.ev_status = '0' GROUP BY ev.event_id",
+        "hr_personal AS users ON (ev.id = users.person_id) WHERE ev.ev_status = '1' GROUP BY ev.event_id",
       (error, results, fields) => {
         if (error) throw error;
         // console.log(error);

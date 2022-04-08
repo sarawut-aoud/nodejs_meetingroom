@@ -57,7 +57,7 @@ sql.get("/tools_request", async (req, res) => {
         "hr_personal AS user " +
         "ON (ev.id = user.person_id )" +
         "WHERE w.ward_id = ? " +
-        "AND (ev.ev_status = '1' OR ev.ev_status = '3') AND " +
+        "AND ev.ev_status IN('3') AND " +
         "ev.ev_startdate BETWEEN  ?  AND ?" +
         "GROUP BY  ev.event_id ORDER BY ev.event_id ASC ",
       [ward_id, datetoday, date_after],
@@ -103,7 +103,7 @@ sql.get("/", async (req, res) => {
         res.json(results);
       }
     );
-  } else if (to_id ) {
+  } else if (to_id) {
     con.query(
       "SELECT t.to_id ,t.to_name  " +
         "FROM tbl_tools AS t " +
@@ -145,7 +145,7 @@ sql.post("/", async (req, res) => {
   } else {
     con.query(
       "INSERT INTO tbl_tools (to_name,ward_id,de_id,faction_id) VALUES(?,?,?,?)",
-      [to_name, ward_id,depart_id,factiocn_id],
+      [to_name, ward_id, depart_id, factiocn_id],
       (error, results, fields) => {
         if (error) throw error;
 
@@ -168,14 +168,14 @@ sql.put("/", async (req, res) => {
   let ward_id = req.body.ward_id;
   // validation
 
-  if (!to_name || !depart_id || !faction_id ||!ward_id) {
+  if (!to_name || !depart_id || !faction_id || !ward_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "ไม่สามารถบันทึกได้" });
   } else {
     con.query(
       "UPDATE tbl_tools SET to_name = ?,ward_id = ? , de_id=?, faction_id = ? WHERE to_id = ?",
-      [to_name, ward_id,depart_id,faction_id, to_id],
+      [to_name, ward_id, depart_id, faction_id, to_id],
       (error, results, fields) => {
         if (error) throw error;
         return res.send({

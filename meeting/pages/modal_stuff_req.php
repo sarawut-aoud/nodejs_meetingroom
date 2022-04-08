@@ -17,9 +17,8 @@
                             <div class="col-md-10">
                                 <select class="form-control select2 select2-success" data-dropdown-css-class="select2-success" data-placeholder="สถานะการอนุมัติ" id="ev_status" name="ev_status">
                                     <option value=""></option>
-                                    <option value="0">รออนุมัติจากหัวหน้า</option>
-                                    <option value="1">อนุมัติ</option>
-                                    <option value="2">ไม่อนุมัติ</option>
+                                    <option value="3">อนุมัติ</option>
+                                    <option value="4">ไม่อนุมัติ</option>
                                 </select>
                             </div>
                         </div>
@@ -114,7 +113,7 @@
                     <div class="form-group row ">
                         <div class="input-group">
                             <label class="col-md-2 col-form-label">อุปกรณ์โสตทัศนูปกรณ์ :</label>
-                            <div id="modaltool"></div>
+                            <div id="modal_tool"></div>
 
                         </div>
                     </div>
@@ -130,7 +129,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิดหน้านี้</button>
-                    <button type="submit" id="btnsaveRoom" name="btnsaveRoom" class="col-md-4 btn bg-color mt-2 ">ส่งแบบฟอร์ม</button>
+                    <button type="submit" id="btnsaveRoom" name="btnsaveRoom" class="col-md-4 btn bg-color mt-2 ">ยืนยันการอนุมัติ</button>
                 </div>
             </div>
         </div>
