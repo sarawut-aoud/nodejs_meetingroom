@@ -91,7 +91,24 @@ require_once "../login/check_session.php";
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">faction :</label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="fac_id" name="faction_id"></select>
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="input-group">
+                                                <label class="col-md-3 col-form-label">deaprt :</label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select2 select2-info " data-dropdown-css-class="select2-success" id="depart_id" name="depart_id"></select>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <div class="input-group">
                                                 <label class="col-md-3 col-form-label">สถานะ :</label>
@@ -111,6 +128,7 @@ require_once "../login/check_session.php";
                                             <button type="submit" id="btnRooms">เพิ่มสิทธิ์การเพิ่มอุปรณ์</button>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="dv_id" value="" name="dv_id">
                                 </form>
                             </div>
                             <!-- /.card -->
@@ -225,7 +243,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                   
+
                     $("#bage1").html(bage);
 
                 }
@@ -253,30 +271,6 @@ require_once "../login/check_session.php";
 
             });
 
-
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/depart",
-                success: function(result) {
-                    var depart = '';
-
-                    for (ii in result) {
-                        if (result[ii].depart_id == depart_id) {
-                            depart += '<option selected value="' + result[ii].depart_id + '" selected >' + result[ii]
-                                .depart_name +
-                                '</option>'
-                        } else {
-                            depart += '<option value="' + result[ii].depart_id + '">' + result[ii]
-                                .depart_name +
-                                '</option>';
-                        }
-
-                    }
-                    $('#de_id').html(depart);
-
-                }
-            });
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -284,21 +278,40 @@ require_once "../login/check_session.php";
                 success: function(result) {
                     var fact = '';
                     for (ii in result) {
-                        if (result[ii].faction_id == fac_id) {
-                            fact += '<option selected value="' + result[ii].faction_id + '" selected >' + result[ii]
-                                .faction_name +
-                                '</option>'
-                        } else {
-                            fact += '<option value="' + result[ii].faction_id + '">' + result[ii]
-                                .faction_name +
-                                '</option>';
-                        }
+
+                        fact += '<option value="' + result[ii].faction_id + '">' + result[ii]
+                            .faction_name +
+                            '</option>';
 
                     }
                     $('#fac_id').html(fact);
+                    $(document).on('change', '#fac_id', function() {
+                        var factionid = $('#fac_id').val();
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: path + "/depart/de_faction",
+                            data: {
+                                faction_id: factionid,
+                            },
+                            success: function(result) {
+                                var depart = '';
 
+                                for (ii in result) {
+
+                                    depart += '<option value="' + result[ii].depart_id + '">' + result[ii]
+                                        .depart_name +
+                                        '</option>';
+                                    // }
+
+                                }
+                                $('#depart_id').html(depart);
+                            }
+                        });
+                    })
                 }
             });
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -390,15 +403,18 @@ require_once "../login/check_session.php";
                         } else {
                             msg = '<span style="font-size:16px" class="badge rounded-pill bg-danger">ปิด</span>';
                         }
+
                         table += ('<tr>');
                         table += ('<td width="10%">' + cell.dv_id + '</td>');
-                        table += ('<td width="30%">' + cell.ward_name + '</td>');
+                        table += ('<td width="30%" id="wardname">' + cell.ward_name + '</td>');
                         // table += ('<td><img src="' + obj.ImageURLs.Thumb + '"></td>');
                         table += ('<td width="10%" align="center">' + msg + '</td>');
                         table += ('<td  align="center"width="20%"><a id="' + cell.dv_id + '" class="btn btn-info btnEdit"title="แก้ไขข้อมูล"><i class="fas fa-edit"></i></a>' +
                             ' <a id="' + cell.dv_id + '" class="btn btn-danger btnDels" title="ลบข้อมูล"><i class="fa fa-trash-alt " ></i></a></td>');
                         table += ('</tr>');
+
                     });
+
                     table += '</table>';
                     $("#tableward").html(table);
 
@@ -445,12 +461,15 @@ require_once "../login/check_session.php";
                             },
                             success: function(result) {
                                 for (i in result) {
+                                    var dvid = result[i].dv_id;
                                     var ward_id = result[i].ward_id;
+                                    var fac_id = result[i].faction_id;
+                                    var de_id = result[i].depart_id;
                                 }
                                 $('#btnRooms').removeClass();
                                 $('#btnRooms').addClass('col-md-4 btn btn-warning mt-2 btnsaveEdit');
                                 $('#btnRooms').html('ยืนยันแก้ไขสิทธิ์');
-
+                                $('#dv_id').val(dvid);
                                 $.ajax({
                                     type: "get",
                                     dataType: "json",
@@ -467,16 +486,55 @@ require_once "../login/check_session.php";
                                                     .ward_name +
                                                     '</option>';
                                             }
-
                                         }
                                         $('#ward_id').html(ward);
-
                                     }
                                 });
-
-
-                                $('#btnRooms').val(result.ward_name);
-
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/depart/faction",
+                                    success: function(results) {
+                                        var fact = '';
+                                        for (ii in results) {
+                                            if (results[ii].faction_id == fac_id) {
+                                                fact += '<option selected value="' + results[ii].faction_id + '" selected >' + results[ii]
+                                                    .faction_name +
+                                                    '</option>'
+                                            } else {
+                                                fact += '<option value="' + results[ii].faction_id + '">' + results[ii]
+                                                    .faction_name +
+                                                    '</option>';
+                                            }
+                                        }
+                                        $('#fac_id').html(fact);
+                                    }
+                                });
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + "/depart/de_faction",
+                                    data: {
+                                        faction_id: fac_id,
+                                    },
+                                    success: function(results) {
+                                        var dep = '';
+                                        for (ii in results) {
+                                            if (results[ii].depart_id == de_id) {
+                                                dep += '<option selected value="' + results[ii].depart_id + '" selected >' + results[ii]
+                                                    .depart_name +
+                                                    '</option>'
+                                            } else {
+                                                dep += '<option value="' + results[ii].depart_id + '">' + results[ii]
+                                                    .depart_name +
+                                                    '</option>';
+                                            }
+                                        }
+                                        $('#depart_id').html(dep);
+                                    }
+                                });
+                               
+                                // $('#btnRooms').val(result.ward_name);
                             }
                         })
                     })
@@ -484,15 +542,23 @@ require_once "../login/check_session.php";
 
                     $(document).on('click', '.btnsaveEdit', function(e) {
                         e.preventDefault();
+                        var dv_id = $('#dv_id').val();
                         var ward_id = $('#ward_id').val();
+                        var dept_id = $('#depart_id').val();
+                        var fac_id = $('#fac_id').val();
                         var setstatus = $('#setstatus').val();
+                      
                         $.ajax({
                             type: "put",
                             dataType: "json",
                             url: path + "/setstatus",
                             data: {
+                                dv_id: dv_id,
                                 ward_id: ward_id,
+                                faction_id: fac_id,
+                                depart_id: dept_id,
                                 setstatus: setstatus,
+                                
                             },
                             success: function(result) {
                                 if (result.status == '200') {

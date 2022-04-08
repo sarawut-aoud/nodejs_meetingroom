@@ -27,7 +27,7 @@ router.get("/menu", async (req, res) => {
         "FROM tbl_setdevice AS sd " +
         "WHERE sd.ward_id = ? OR sd.faction_id = ? OR sd.depart_id = ? " +
         "ORDER BY sd.dv_id",
-      [ward_id,fac_id ,depart_id],
+      [ward_id, fac_id, depart_id],
       (error, results, fields) => {
         if (error) throw error;
         return res.json(results);
@@ -92,8 +92,7 @@ router.get("/", async (req, res) => {
         "FROM tbl_setdevice AS sd " +
         "INNER JOIN " +
         pbh +
-        "hr_ward AS w " +
-        "ON (sd.ward_id = w.ward_id )" +
+        "hr_ward as w ON (sd.ward_id = w.ward_id)" +
         "ORDER BY sd.dv_id",
       (error, results, fields) => {
         if (error) throw error;
@@ -102,13 +101,10 @@ router.get("/", async (req, res) => {
     );
   } else {
     con.query(
-      "SELECT sd.dv_id,sd.ward_id,sd.setstatus ,w.ward_name " +
+      "SELECT sd.dv_id,sd.ward_id,sd.depart_id,sd.setstatus ,sd.faction_id " +
         "FROM tbl_setdevice AS sd " +
-        "INNER JOIN " +
-        pbh +
-        "hr_ward AS w " +
-        "ON (sd.ward_id = w.ward_id )" +
-        "WHERE sd.dv_id = ? ORDER BY sd.dv_id",
+        "WHERE sd.dv_id = ? " +
+        "ORDER BY sd.dv_id",
       [id],
       (error, results, fields) => {
         if (error) throw error;
@@ -141,16 +137,18 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   var dv_id = req.body.dv_id;
   var ward_id = req.body.ward_id;
+  var depart_id = req.body.depart_id;
+  var faction_id = req.body.faction_id;
   var setstatus = req.body.setstatus;
 
-  if (!ward_id || !setstatus) {
+  if (!ward_id || !setstatus || !depart_id || !faction_id) {
     return res
       .status(400)
       .send({ error: true, status: "0", message: "เกิดข้อผิดพลาด" });
   } else {
     con.query(
-      "UPDATE tbl_setdevice SET setstatus = ? WHERE ward_id = ?",
-      [setstatus, ward_id],
+      "UPDATE tbl_setdevice SET setstatus = ? , ward_id = ? , depart_id = ? , faction_id = ? WHERE dv_id = ?",
+      [setstatus, ward_id, depart_id, faction_id, dv_id],
       (error, results, fields) => {
         if (error) throw error;
         return res

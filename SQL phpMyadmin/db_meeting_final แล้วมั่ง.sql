@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2022 at 07:43 PM
+-- Generation Time: Apr 08, 2022 at 04:33 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -352,7 +352,7 @@ CREATE TABLE `tbl_setdevice` (
 --
 
 INSERT INTO `tbl_setdevice` (`dv_id`, `ward_id`, `faction_id`, `depart_id`, `setstatus`) VALUES
-(2, 69, 0, 0, 'Y'),
+(2, 69, 4, 114, 'Y'),
 (13, 218, 0, 0, 'Y');
 
 -- --------------------------------------------------------
