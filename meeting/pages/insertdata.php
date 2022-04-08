@@ -337,7 +337,7 @@ require_once "../login/check_session.php";
                         }
                     }
                    
-                    $("#bage1").html(bage);
+                    $("#bage").html(bage);
 
                 }
 
@@ -357,7 +357,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    $("#bage").html(bage);
+                    $("#bage1").html(bage);
 
 
                 }

@@ -100,6 +100,8 @@ require_once "../login/check_session.php";
                     <!-- ./row form -->
 
 
+                    <?php require_once './modal_update.php'; ?>
+
                     <?php require_once './modal_approve.php'; ?>
 
                 </div><!-- /.container-fluid -->
@@ -149,6 +151,12 @@ require_once "../login/check_session.php";
         $(document).ready(function() {
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
+            $('#radioPrimary2').change(function() {
+                $("#tool_request").prop('disabled', false);
+                $('#radioPrimary1').change(function() {
+                    $("#tool_request").prop('disabled', true);
+                })
+            })
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
@@ -242,17 +250,20 @@ require_once "../login/check_session.php";
                         } else if (cell.ev_status == 2) {
                             var bage3 = '<span class="badge rounded-pill bg-danger">ไม่อนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
+                            var update = '<a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"title="แก้ไขรายการจองอนุมัติ"><i class="fas fa-edit"></i></a>';
                             var edit = ' <a id="' + cell.ev_id + '" class="btn btn-warning btnEdit"title="แก้ไขสถานะอนุมัติ"><i class="fas fa-edit"></i></a>'
                             var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 1) {
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติ</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-primary btnEdit"title="แก้ไขสถานะอนุมัติ"><i class="fas fa-edit"></i> แก้ไขสถานะ</a>'
+                            var update = '<a id="' + cell.ev_id + '" class="btn btn-warning btnUpdate"title="แก้ไขรายการจองอนุมัติ"><i class="fas fa-edit"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-success btnEdit"title="แก้ไขสถานะอนุมัติ"><i class="fas fa-edit"></i> ฟอร์มอนุมัติ</a>'
                             var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         } else if (cell.ev_status == 0) {
                             var bage3 = '<span class="badge rounded-pill bg-warning">รออนุมัติจากหัวหน้า</span>';
                             var info = '<a id="' + cell.ev_id + '" class="btn btn-info btnDetail" title="รายละเอียด"><i class="fa-solid fa-eye"></i></a>';
-                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-primary btnEdit" title="แก้ไขสถานะอนุมัติ"><i class="fas fa-edit"></i> แก้ไขสถานะ</a>'
+                            var update = '<a id="' + cell.ev_id + '" class="btn btn-warning btnUpdate"title="แก้ไขรายการจองอนุมัติ"><i class="fas fa-edit"></i></a>';
+                            var edit = ' <a id="' + cell.ev_id + '" class="btn btn-success btnEdit" title="แก้ไขสถานะอนุมัติ"><i class="fas fa-edit"></i> ฟอร์มอนุมัติ</a>'
                             var del = ' <a id="' + cell.ev_id + '"data-id="' + cell.event_id + '" class="btn btn-danger btnDels"title="ลบข้อมูล"><i class="fas fa-trash-alt"></i></a>'
                         }
 
@@ -264,7 +275,7 @@ require_once "../login/check_session.php";
                         table += ('<td>' + cell.ev_startdate + ' <span style="color:red;"> เวลา </span>  ' + cell.ev_starttime + '</td>');
                         table += ('<td>' + cell.ev_enddate + ' <span style="color:red;"> เวลา </span> ' + cell.ev_endtime + '</td>');
                         table += ('<td align="center" width="10%">' + bage3 + '</td>');
-                        table += ('<td align="right" width="10%">' + info + '</td>');
+                        table += ('<td  width="10%">' + info + " " + update + '</td>');
                         table += ('<td align="right" width="10%">' + edit + " " + del + '</td>');
                         // table += ('<td align="center" width="20%">' + del + '</td>');
                         table += ('</tr>');
@@ -371,7 +382,7 @@ require_once "../login/check_session.php";
                                                 for (i in result) {
                                                     var ward = result[i].ward_name;
                                                 }
-                                                $("#modal_ward").html(ward);
+                                                $("#modal2_ward").html(ward);
                                             }
                                         })
                                         $.ajax({
@@ -385,7 +396,7 @@ require_once "../login/check_session.php";
                                                 for (i in result) {
                                                     var fac = result[i].faction_name;
                                                 }
-                                                $("#modal_fac").html(fac);
+                                                $("#modal2_fac").html(fac);
                                             }
                                         })
                                         $.ajax({
@@ -399,7 +410,7 @@ require_once "../login/check_session.php";
                                                 for (i in result) {
                                                     var de = result[i].depart_name;
                                                 }
-                                                $("#modal_depart").html(de);
+                                                $("#modal2_dept").html(de);
                                             }
                                         })
                                         $.ajax({
@@ -433,7 +444,7 @@ require_once "../login/check_session.php";
                                 } else if (ev_status == 5) {
                                     var status = 'ยกเลิก'
                                 }
-                                $("#modalDetail").modal("show");
+                                $("#modalDetailAppo").modal("show");
                                 $("#modal2_ev_id").html(ev_id);
                                 $("#modal2_status").html(status);
                                 $("#modal2_roName").html(ro_name);
@@ -522,7 +533,7 @@ require_once "../login/check_session.php";
                                                 for (i in result) {
                                                     var ward = result[i].ward_name;
                                                 }
-                                                $("#modal2_ward").html(ward);
+                                                $("#modal_ward").html(ward);
                                             }
                                         })
                                         $.ajax({
@@ -536,7 +547,7 @@ require_once "../login/check_session.php";
                                                 for (i in result) {
                                                     var fac = result[i].faction_name;
                                                 }
-                                                $("#modal2_fac").html(fac);
+                                                $("#modal_fac").html(fac);
                                             }
                                         })
                                         $.ajax({
@@ -550,7 +561,7 @@ require_once "../login/check_session.php";
                                                 for (i in result) {
                                                     var de = result[i].depart_name;
                                                 }
-                                                $("#modal2_depart").html(de);
+                                                $("#modal_dept").html(de);
                                             }
                                         })
                                         $.ajax({
@@ -583,8 +594,8 @@ require_once "../login/check_session.php";
                                     var status = 'ยกเลิก'
                                 }
 
-                                $("#modalStatus").modal("show");
-                                $("#modal_ev_id").html(ev_id);
+                                $("#modalStatusApp").modal("show");
+
                                 $("#modal2_roname").html(ro_name);
                                 $("#modal2_title").html(ev_title);
                                 $("#modal_starttime").html(ev_startdate + ' เวลา ' + ev_starttime);
@@ -592,6 +603,8 @@ require_once "../login/check_session.php";
                                 $("#modal_style").html(st_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal_name").html(firstname + ' ' + lastname);
+                                $('#modal_eventid_h').val(event_id);
+                                $("#modal_ev_id").val(ev_id);
 
                                 // $("#modal_phone").html(de_phone);
                                 if (toolmore == null) {
@@ -602,7 +615,136 @@ require_once "../login/check_session.php";
                             }
                         });
                     });
+                    $(document).on('click', '.btnUpdate', function(e) {
+                        // $(".btnEdit").click(function(e) {
+                        e.preventDefault();
+                        var ev_id = $(this).attr('id');
 
+                        $.ajax({
+                            type: "get",
+                            dataType: "json",
+                            url: path + "/event/request",
+                            data: {
+                                ev_id: ev_id,
+                            },
+                            success: function(result) {
+                                for (ii in result) {
+                                    if (result[ii].ev_id == ev_id) {
+                                        var evid = result[ii].ev_id;
+                                        var event_id = result[ii].event_id;
+                                        var ev_title = result[ii].ev_title;
+                                        var ev_startdate = result[ii].ev_startdate;
+                                        var ev_enddate = result[ii].ev_enddate;
+                                        var ev_status = result[ii].ev_status;
+                                        var ev_starttime = result[ii].ev_starttime;
+                                        var ev_endtime = result[ii].ev_endtime;
+                                        var ev_people = result[ii].ev_people;
+                                        var ev_createdate = result[ii].ev_createdate;
+                                        var ro_id = result[ii].ro_id;
+                                        var st_id = result[ii].st_id;
+                                        var ro_name = result[ii].ro_name;
+                                        var st_name = result[ii].st_name;
+                                        var de_id = result[ii].depart_id;
+                                        var firstname = result[ii].firstname;
+                                        var lastname = result[ii].lastname;
+                                        var ward_id = result[ii].ward_id;
+                                        var fac_id = result[ii].faction_id;
+
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: "json",
+                                            url: path + "/tools",
+                                            data: {
+                                                ev_id: ev_id,
+                                            },
+                                            success: function(tool) {
+                                                var data = ' <div class="form-group  ">';
+                                                var x = 0;
+                                                for (i in tool) {
+                                                    var chk = '';
+                                                    if (tool[i].acc_toid != null) {
+
+                                                        chk = 'checked="checked"'
+
+                                                    }
+                                                    x++
+                                                    data += '<div class="d-block form-check"><input class="form-check-input" ' + chk + ' type="checkbox" name="to_id[]" id="' + x + '"  value="' + tool[i].to_id + '"  >  '
+                                                    data += ' <label class="form-check-label" for="' + x + '" >' + tool[i].to_name + '</label> </div>'
+                                                    data += '<input type="hidden"  id="sunnum" name="sumnum" value="' + (x) + '">'
+                                                }
+                                                data += '</div>';
+                                                $('#modaltool').html(data);
+                                            }
+                                        });
+                                    }
+                                }
+                                if (ev_status == 0) {
+                                    var status = 'รออนุมัติจากหัวหน้า'
+                                } else if (ev_status == 1) {
+                                    var status = 'รออนุมัติ'
+                                } else if (ev_status == 2) {
+                                    var status = 'ไม่อนุมัติจากหัวหน้า'
+                                } else if (ev_status == 3) {
+                                    var status = 'อนุมัติ'
+                                } else if (ev_status == 4) {
+                                    var status = 'ไม่อนุมัติ'
+                                } else if (ev_status == 5) {
+                                    var status = 'ยกเลิก'
+                                }
+                                $("#modalEditupdate").modal("show");
+                                $("#modal3_eventid").val(event_id);
+                                $("#modal3_status").val(ev_status);
+                                $("#modal3_ro_id").val(ro_id);
+                                $("#modal3_st_id").val(st_id);
+                                $("#modal3_title").val(ev_title);
+                                $("#modal3_timeStart").val(ev_starttime);
+                                $("#modal3_timeEnd").val(ev_endtime);
+                                $("#modal3_people").val(ev_people);
+                                $("#modal3_fac").val(fac_id);
+                                $("#modal3_ward").val(ward_id);
+                                $("#modal3_depart").val(de_id);
+                                $("#modal3_dateStart").val(ev_startdate.split('T')[0]);
+                                $("#modal3_dateEnd").val(ev_enddate.split('T')[0]);
+
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    url: path + "/rooms",
+                                    success: function(result) {
+                                        var room = '';
+                                        for (i in result) {
+                                            if (result[i].ro_id == ro_id) {
+                                                room += '<option selected value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+
+                                            } else {
+                                                room += '<option  value="' + result[i].ro_id + '" > ' + result[i].ro_name + ' (จำนวน ' + result[i].ro_people + ' คน)</option>';
+                                            }
+
+                                        }
+                                        $('#modal3_ro_name').html(room);
+                                    }
+                                });
+                                $.ajax({
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    url: path + "/style",
+                                    success: function(result) {
+                                        var style = '';
+
+                                        for (k in result) {
+                                            if (result[k].st_id == st_id) {
+                                                style += '<option selected value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
+                                            } else {
+                                                style += '<option  value="' + result[k].st_id + '" > ' + result[k].st_name + '</option>';
+                                            }
+
+                                        }
+                                        $('#modal3_style').html(style);
+                                    }
+                                });
+                            }
+                        });
+                    });
                     $(document).on('click', '.btnDels', function(e) {
                         // $(".btnDels").click(function(e) {
                         e.preventDefault();
@@ -655,6 +797,8 @@ require_once "../login/check_session.php";
 
                 }
             });
+
+
             /// modal
             $(document).on('click', '.btnSave', function(e) {
                 // $('.btnSave').click(function(e) {
@@ -674,11 +818,7 @@ require_once "../login/check_session.php";
                     data: {
                         ev_status: ev_status,
                         event_id: event_id,
-                        ro_id: ro_id,
-                        ev_startdate: ev_startdate,
-                        ev_enddate: ev_enddate,
-                        ev_starttime: ev_starttime,
-                        ev_endtime: ev_endtime,
+
                     },
                     success: function(results) {
                         if (results.status == 0) {
@@ -715,7 +855,89 @@ require_once "../login/check_session.php";
                 })
             })
             /// modal
+            $(document).on('click', '#btnsaveupdate', function(e) {
+                /// modal ///
+                // $('#btnsaveRoom').click(function(e) {
+                e.preventDefault();
+                var ev_title = $('#title').val();
+                var ev_starttime = $('#timeStart').val();
+                var ev_endtime = $('#timeEnd').val();
+                var ev_startdate = $('#dateStart').val();
+                var ev_enddate = $('#dateEnd').val();
+                var ro_id = $('#ro_name').val();
+                var ev_people = $('#people').val();
+                var st_id = $('#style').val();
+                var sumnum = $('#sumnum').val();
 
+                var formdata = $('#frm_modalEditRoom').serializeArray();
+
+                $.ajax({
+                    type: "PUT",
+                    url: path + "/event_put/updatedata",
+                    dataType: "json",
+                    data: formdata,
+
+                    success: function(result) {
+                        if (result.status == 0) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                            Toast.fire({
+                                    icon: 'warning',
+                                    title: result.message
+
+                                })
+                                .then((result) => {
+                                    $("#modalEdit").modal("hide");
+                                    location.reload();
+
+                                })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: result.message
+
+                            }).then((result) => {
+                                $("#modalEdit").modal("hide");
+                                location.reload();
+                                $('#frm_modalEditRoom')[0].reset();
+                                $('#title').focus();
+                            })
+                        }
+
+
+                    },
+                    error: function(result) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                        Toast.fire({
+                                icon: 'warning',
+                                title: 'ไม่สามารถบันทึกข้อมูลได้'
+
+                            })
+                            .then((result) => {
+                                location.reload();
+
+                            })
+
+                    }
+                });
+
+            });
+            // modal
         });
     </script>
 
