@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const router = express.Router();
 //? update event
-router.put("/updatedata", async (req, res) => {
+router.put("/updatedata", async (req, res,next) => {
   var level = req.body.level; // ระดับสิทธิการเข้าถึง
   var ev_status = req.body.evstatus;
   var event_id = req.body.eventid;
@@ -139,7 +139,7 @@ router.put("/updatedata", async (req, res) => {
                           .toISOString("th-TH", { timeZone: "UTC" })
                           .slice(0, 10);
 
-                        for ($d = 0; $d <= date_diff; $d++) {
+                        for (var d = 0;  d <= date_diff; d++) {
                           var theDateStart =
                             Date.parse(dateStart) + 3600 * 1000 * 24;
                           const date = new Date(theDateStart);

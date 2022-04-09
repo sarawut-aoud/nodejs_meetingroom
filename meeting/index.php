@@ -36,6 +36,7 @@ $path = "http://127.0.0.1:4200";
     <!-- Theme style -->
     <link rel="stylesheet" href="public/styles/adminlte.min.css">
     <link rel="stylesheet" href="public/styles/styleindex.css">
+    
 </head>
 
 <body class="hold-transition layout-top-nav">

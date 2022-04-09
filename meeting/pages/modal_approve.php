@@ -19,7 +19,7 @@
                                     <option value=""></option>
                                     <option value="1">อนุมัติ</option>
                                     <option value="2">ไม่อนุมัติ</option>
-                                    <option value="0">รอธุระการอนุมัติ</option>
+                                   
                                 </select>
                             </div>
                         </div>

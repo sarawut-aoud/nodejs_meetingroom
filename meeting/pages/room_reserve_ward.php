@@ -12,18 +12,19 @@ require_once "../login/check_session.php";
 <link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
 <link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
-<!-- Ionicons -->
-<link rel="stylesheet" href="../public/styles/ionicons.min.css">
+
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- daterange picker -->
+<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- colorpic -->
 <link rel="stylesheet" href="../plugins/colorpicker/colorpicker.css">
-<!-- DataTables -->
-<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
 <!-- DataTables -->
@@ -126,6 +127,14 @@ require_once "../login/check_session.php";
     </script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
+    <!-- InputMask -->
+    <script src="../plugins/moment/moment.min.js"></script>
+    <script src="../plugins/inputmask/inputmask.min.js"></script>
+    <script src="../public/javascript/moment-with-locales.js"></script>
+    <!-- date-range-picker -->
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- DataTables  & Plugins -->
     <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -144,9 +153,28 @@ require_once "../login/check_session.php";
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
+    <script>
+        $(function() {
 
+
+            //timepicker
+            $('#datetimepicker1').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker3').datetimepicker({
+                format: 'L'
+            });
+            $('#datetimepicker4').datetimepicker({
+                format: 'L'
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
+
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
             $('#radioPrimary2').change(function() {
@@ -154,7 +182,8 @@ require_once "../login/check_session.php";
                 $('#radioPrimary1').change(function() {
                     $("#tool_request").prop('disabled', true);
                 })
-            })
+            });
+
             // แสดงข้อมูลส่วนตัว
             var prefix = '';
             if (<?php echo $_SESSION['mt_prefix']; ?> == 1) {
@@ -705,8 +734,7 @@ require_once "../login/check_session.php";
 
                             }).then((result) => {
                                 $("#modalEdit").modal("hide");
-                                $('#frm_modalEditRoom')[0].reset();
-                                $('#title').focus();
+                                location.reload();
                             })
                         }
 

@@ -147,6 +147,7 @@ require_once "../login/check_session.php";
 
     <script>
         $(document).ready(function() {
+            
             $('.my-colorpicker1').colorpicker();
             $('.select2').select2();
             $('#radioPrimary2').change(function() {
