@@ -26,11 +26,7 @@ require_once "../login/check_session.php";
 <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Sweetalert2 -->
 <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
-<!-- DataTables -->
-<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
 <!-- Theme style -->
 <link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">

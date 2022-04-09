@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const router = express.Router();
 
-router.post("/adddata", async (req, res) => {
+router.post("/adddata", async (req, res, next) => {
   // chk = req.chk;
   // diff = req.date_diff;
   var ward_id = req.body.ward_id; // ระดับสิทธิการเข้าถึง
@@ -95,24 +95,21 @@ router.post("/adddata", async (req, res) => {
               if (timestart != "" && timeend != "") {
                 if (ev_starttime >= timestart && ev_starttime <= timeend) {
                   chk++;
-                  
                 } else if (
                   ev_starttime <= timestart &&
                   ev_starttime <= timestart &&
                   ev_endtime >= timeend
                 ) {
-                  chk++; 
+                  chk++;
                 } else if (
                   ev_starttime <= timestart &&
                   ev_endtime >= timestart &&
                   ev_endtime <= timeend
                 ) {
                   chk++;
-                 
                 } else {
                   if (ev_starttime == timestart) {
                     chk++;
-                   
                   }
                 }
               }
@@ -122,124 +119,18 @@ router.post("/adddata", async (req, res) => {
             dateStart = date
               .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
               .slice(0, 10);
-
-            if (chk > 0) {
-              return res.json({
-                status: "0",
-                message: "ไม่สามารถจองห้องได้",
-              });
-            } else {
-              con.query(
-                "select max(event_id) as maxid from tbl_event",
-                (error, results, field) => {
-                  if (error) throw error;
-                  // console.log("event");
-                  //todo : Create Event_id
-                  for (ix = 0; ix < results.length; ix++) {
-                    const d = new Date();
-                    var month = moment(d).format("MM");
-                    var year = d.getFullYear() + 543;
-                    var newmaxid = results[ix].maxid;
-                    var newdate = parseInt(newmaxid); // แปลงค่าเป็น newmaxid ตัวเลข
-
-                    if (newmaxid == "") {
-                      newdate = newdate + 1;
-                      var event_id = year + month + "0000" + newdate;
-                    } else {
-                      var year2 = year.toString().substring(2);
-                      var id_new = newmaxid.substring(0, 4);
-                      if (id_new == year2 + month) {
-                        newdate = newdate + 1;
-                        newdate = newdate.toString().substring(4);
-                        event_id = year + month + newdate;
-                      } else {
-                        event_id = year + month + "00001";
-                      }
-                    } //todo : Create Event_id
-
-                    if (date_diff >= 0) {
-                      var dateStart = ev_startdate;
-
-                      var theDateend =
-                        Date.parse(ev_enddate) + 3600 * 1000 * 24;
-                      const date2 = new Date(theDateend);
-
-                      var dateEnd = date2
-                        .toISOString("th-TH", { timeZone: "UTC" })
-                        .slice(0, 10);
-
-                      for ($d = 0; $d <= date_diff; $d++) {
-                        var theDateStart =
-                          Date.parse(dateStart) + 3600 * 1000 * 24;
-                        const date = new Date(theDateStart);
-                        dateStart = date
-                          .toISOString("EN-AU", {
-                            timeZone: "Australia/Melbourne",
-                          })
-                          .slice(0, 10);
-
-                        //todo : INSERT data
-                        con.query(
-                          "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate," +
-                            "ev_starttime,ev_endtime,ev_status,event_id,ward_id,faction_id,depart_id,ev_toolmore,id)" +
-                            "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?, AES_ENCRYPT(?, UNHEX(SHA2(?, 512))))",
-                          [
-                            ev_title,
-                            ev_people,
-                            ro_id,
-                            st_id,
-                            dateStart,
-                            dateEnd,
-                            ev_starttime,
-                            ev_endtime,
-                            statusRoom,
-                            event_id.substring(2),
-                            ward_id,
-                            faction_id,
-                            depart_id,
-                            toolmore,
-                            id,
-                            "" + key + "",
-                          ],
-                          (error, results, field) => {
-                            if (error) throw error;
-                            if (to_id != null) {
-                              for (var x = 0; x <= to_id.length; x++) {
-                                var toid = to_id[x];
-
-                                if (toid != undefined) {
-                                  con.query(
-                                    "INSERT INTO tbl_acces(ev_id,to_id) VALUES(?,?) ",
-                                    [results.insertId, toid],
-                                    (error, results, field) => {
-                                      if (error) throw error;
-                                    }
-                                  );
-                                }
-                              }
-                              // } //todo : INSERT tbl_acces
-                            }
-                          }
-                        );
-
-                        //todo : INSERT tbl_event
-                      } // for i
-                      return res.json({
-                        status: "200",
-                        message: "บันทึกข้อมูลสำเร็จ",
-                      });
-                    } // todo : ckeck diff
-                  }
-                }
-              );
-            }
           }
         );
       } //for i
     }
+    req.chk =chk;
+    req.dateStart= dateStart;
+    return next();
   }
 });
-
+router.post("/adddata", async (req, res) => {
+ console.log(req.chk);
+})
 router.put("/updatestatus", async (req, res) => {
   var ev_status = req.body.ev_status;
   var event_id = req.body.event_id;
