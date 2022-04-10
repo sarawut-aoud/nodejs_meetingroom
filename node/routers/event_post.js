@@ -80,14 +80,16 @@ router.post("/adddata", async (req, res, next) => {
     var date_diff = DATE_DIFF(ev_startdate, ev_enddate, "D").output;
     if (date_diff >= 0) {
       // var dateStart = ev_startdate;
-      var dateStart = new Date(ev_startdate);
-      var dateCheck =
-        dateStart.getFullYear() +
-        "-" +
-        (dateStart.getMonth() + 1) +
-        "-" +
-        dateStart.getDate();
+
       for (var i = 0; i <= date_diff; i++) {
+        var dateStart = new Date(ev_startdate);
+        const dateCheck =
+          dateStart.getFullYear() +
+          "-" +
+          (dateStart.getMonth() + 1) +
+          "-" +
+          dateStart.getDate();
+       
         con.query(
           "SELECT IF (ev_starttime = '00:00:00', '', substr(ev_starttime, 1, 5)) as ev_starttime, " +
             "IF (ev_endtime = '00:00:00', '', substr(ev_endtime, 1, 5)) as ev_endtime " +
@@ -96,35 +98,38 @@ router.post("/adddata", async (req, res, next) => {
           (error, results, field) => {
             if (error) throw error;
             var x = 0;
-            while (x < results.length) {
-              var timestart = results[x].ev_starttime;
-              var timeend = results[x].ev_endtime;
-             
-              if (timestart != "" && timeend != "") {
-                if (ev_starttime >= timestart && ev_starttime <= timeend) {
-                  chk++;
-                } else if (
-                  ev_starttime <= timestart &&
-                  ev_starttime <= timestart &&
-                  ev_endtime >= timeend
-                ) {
-                  chk++;
-                } else if (
-                  ev_starttime <= timestart &&
-                  ev_endtime >= timestart &&
-                  ev_endtime <= timeend
-                ) {
-                  chk++;
-                } else {
-                  if (ev_starttime == timestart) {
+            // if (results != 0) {
+              while (x < results.length) {
+                var timestart = results[x].ev_starttime;
+                var timeend = results[x].ev_endtime;
+               
+
+                if (timestart != "" && timeend != "") {
+                  if (ev_starttime >= timestart && ev_starttime <= timeend) {
                     chk++;
+                  } else if (
+                    ev_starttime <= timestart &&
+                    ev_starttime <= timestart &&
+                    ev_endtime >= timeend
+                  ) {
+                    chk++;
+                  } else if (
+                    ev_starttime <= timestart &&
+                    ev_endtime >= timestart &&
+                    ev_endtime <= timeend
+                  ) {
+                    chk++;
+                  } else {
+                    if (ev_starttime == timestart) {
+                      chk++;
+                    }
                   }
                 }
+                x++;
               }
-              x++;
-            } //for x
+            // }
+            //for x
 
-            
             if (chk > 0) {
               req.status = 0;
 
@@ -166,7 +171,10 @@ router.post("/adddata", async (req, res) => {
 
   // else {
   if (req.status == 0) {
-    return res.json({ status: "0", message: "เวลาที่ท่านเลือกมีผู้อื่นจองแล้ว ไม่สามารถจองห้องได้" });
+    return res.json({
+      status: "0",
+      message: "เวลาที่ท่านเลือกมีผู้อื่นจองแล้ว ไม่สามารถจองห้องได้",
+    });
   } else {
     con.query(
       "select max(event_id) as maxid from tbl_event",
@@ -174,8 +182,8 @@ router.post("/adddata", async (req, res) => {
         if (error) throw error;
         // console.log("event");
         //todo : Create Event_id
-        for (ix = 0; ix < results.length; ix++) {
-          const d = new Date();
+        for (var ix = 0; ix < results.length; ix++) {
+          var d = new Date();
           var month = moment(d).format("MM");
           var year = d.getFullYear() + 543;
           var newmaxid = results[ix].maxid;
@@ -206,15 +214,15 @@ router.post("/adddata", async (req, res) => {
               .toISOString("th-TH", { timeZone: "UTC" })
               .slice(0, 10);
 
-            for ($d = 0; $d <= date_diff; $d++) {
+            for (var xx = 0; xx <= date_diff; xx++) {
               var theDateStart = Date.parse(dateStart) + 3600 * 1000 * 24;
-              const date = new Date(theDateStart);
+              var date = new Date(theDateStart);
               dateStart = date
                 .toISOString("EN-AU", {
                   timeZone: "Australia/Melbourne",
                 })
                 .slice(0, 10);
-
+            
               //todo : INSERT data
               con.query(
                 "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate," +
@@ -239,6 +247,7 @@ router.post("/adddata", async (req, res) => {
                   "" + key + "",
                 ],
                 (error, results, field) => {
+                  
                   if (error) throw error;
                   if (to_id != null) {
                     for (var x = 0; x <= to_id.length; x++) {
@@ -261,15 +270,15 @@ router.post("/adddata", async (req, res) => {
 
               //todo : INSERT tbl_event
             } // for i
-            return res.json({
-              status: "200",
-              message: "บันทึกข้อมูลสำเร็จ",
-            });
           } // todo : ckeck diff
         }
       }
     );
   }
+  return res.json({
+    status: "200",
+    message: "บันทึกข้อมูลสำเร็จ",
+  });
 });
 router.put("/updatestatus", async (req, res) => {
   var ev_status = req.body.ev_status;

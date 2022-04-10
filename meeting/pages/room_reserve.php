@@ -12,8 +12,12 @@ require_once "../login/check_session.php";
 <link rel="stylesheet" href="../plugins/fontawesome-pro6/css/all.min.css">
 <!-- bt -->
 <link rel="stylesheet" href="../plugins/bootstrap5/css/bootstrap.min.css">
+<!-- daterange picker -->
+<link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
 <!-- Ionicons -->
 <link rel="stylesheet" href="../public/styles/ionicons.min.css">
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- Select2 -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -29,7 +33,6 @@ require_once "../login/check_session.php";
 <!-- Theme style -->
 <link rel="stylesheet" href="../public/styles/adminlte.min.css">
 <link rel="stylesheet" href="../public/styles/styleindex.css">
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -69,7 +72,7 @@ require_once "../login/check_session.php";
             <div class="content-header">
                 <div class="container-fluid ">
                     <?php require_once '../infomation.php'; ?>
-                    <div class="row mt-3 justify-content-center">
+                    <div class="row mt-3 justify-content-center ">
                         <div class="col-xl-10 col-md-12 col-sm-12">
                             <!-- general form elements -->
                             <div class="card shadow">
@@ -89,6 +92,7 @@ require_once "../login/check_session.php";
                                     </div>
                                     <!-- /.card-body -->
                                 </form>
+
                             </div>
                             <!-- /.card -->
                         </div>
@@ -124,6 +128,14 @@ require_once "../login/check_session.php";
     </script>
     <!-- color picker -->
     <script src="../plugins/colorpicker/colorpic.js"></script>
+     <!-- InputMask -->
+     <script src="../plugins/moment/moment.min.js"></script>
+    <script src="../plugins/inputmask/inputmask.min.js"></script>
+    <script src="../public/javascript/moment-with-locales.js"></script>
+    <!-- date-range-picker -->
+    <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <!-- DataTables  & Plugins -->
     <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -141,6 +153,23 @@ require_once "../login/check_session.php";
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
+    <script>
+        $(function() {
+            //timepicker
+            $('#datetimepicker1').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'H:mm'
+            });
+            $('#datetimepicker3').datetimepicker({
+                format: 'L'
+            });
+            $('#datetimepicker4').datetimepicker({
+                format: 'L'
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
 
@@ -203,7 +232,7 @@ require_once "../login/check_session.php";
                 level = '<?php echo $_SESSION['mt_duty_id']; ?>';
             var ward_id = '<?php echo $_SESSION['mt_ward_id']; ?>';
 
-            
+
             $.ajax({
                 type: "get",
                 dataType: "json",
@@ -219,7 +248,7 @@ require_once "../login/check_session.php";
                             bage++;
                         }
                     }
-                    
+
                     $("#bage1").html(bage);
                 }
             });
@@ -415,7 +444,7 @@ require_once "../login/check_session.php";
                                         });
                                     }
                                 }
-                               
+
                                 if (ev_status == 0) {
                                     var status = 'รออนุมัติจากหัวหน้า'
                                 } else if (ev_status == 1) {
@@ -441,9 +470,9 @@ require_once "../login/check_session.php";
                                 $("#modal2_tool").html(to_name);
                                 $("#modal2_people").html(ev_people + '  คน');
                                 $("#modal2_name").html(firstname + ' ' + lastname);
-                                $("#modal2_depart").html( "<?php echo $_SESSION['mt_de_name']; ?>");
-                                $("#modal2_ward").html("<?php echo $_SESSION['mt_ward_name']; ?>" );
-                                $("#modal2_fac").html( "<?php echo $_SESSION['mt_faction_name']; ?>");
+                                $("#modal2_depart").html("<?php echo $_SESSION['mt_de_name']; ?>");
+                                $("#modal2_ward").html("<?php echo $_SESSION['mt_ward_name']; ?>");
+                                $("#modal2_fac").html("<?php echo $_SESSION['mt_faction_name']; ?>");
                                 $("#modal2_pos").html("<?php echo $_SESSION['mt_duty_name']; ?>");
                                 // $("#modal2_phone").html(de_phone);
                                 if (toolmore == null) {
