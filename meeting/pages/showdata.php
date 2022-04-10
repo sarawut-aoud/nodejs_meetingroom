@@ -198,7 +198,75 @@ if ($_SESSION['mt_ward_id'] == 48) {
     <script src="../plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../public/javascript/adminlte.js"></script>
-   
+    <script>
+        $(document).ready(function() {
+
+            cache_clear();
+
+            setInterval(function() {
+                cache_clear()
+            }, 60000);
+        });
+
+
+        function cache_clear() {
+
+            var path = '<?php echo $_SESSION['mt_path'] ?>';
+            var id = '<?php echo $_SESSION['mt_id']; ?>';
+            var level = '<?php echo $_SESSION['mt_duty_id']; ?>';
+            $.ajax({
+                type: "get",
+                url: path + "/event/count/user",
+                data: {
+                    id: id,
+                },
+                success: function(result) {
+                    if (result.ev_status > 0) {
+                        $("#uun1").html(
+                            '<div class="badge badge-danger">' + result.ev_status + "</div>"
+                        );
+                    }
+                },
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count/staff",
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+
+                    $("#bagestaff").html(bage);
+                }
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: level,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+            });
+
+            // window.location.reload(); use this if you do not remove cache
+        }
+    </script>
     <script>
         $(document).ready(function() {
 
@@ -227,43 +295,7 @@ if ($_SESSION['mt_ward_id'] == 48) {
             var depert_id = "<?php echo $_SESSION['mt_de_id'] ?>";
             var fac_id = "<?php echo $_SESSION['mt_faction_id'] ?>";
 
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/event/count/staff",
-                // data: {
-                //     level: lv_id,
-                // },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    
-                    $("#bage").html(bage);
-                }
-            });
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage1").html(bage);
-                }
-            });
+            
 
 
             //todo: table room

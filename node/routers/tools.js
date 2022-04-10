@@ -57,7 +57,7 @@ sql.get("/tools_request", async (req, res) => {
         "hr_personal AS user " +
         "ON (ev.id = user.person_id )" +
         "WHERE w.ward_id = ? " +
-        "AND ev.ev_status IN('3') AND " +
+        "AND ev.ev_status ='3' AND " +
         "ev.ev_startdate BETWEEN  ?  AND ?" +
         "GROUP BY  ev.event_id ORDER BY ev.event_id ASC ",
       [ward_id, datetoday, date_after],

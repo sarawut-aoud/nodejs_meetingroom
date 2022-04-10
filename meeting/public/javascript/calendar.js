@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
       day: "วันนี้",
       list: "กำหนดการ",
     },
+    editable: false,
 
     weekText: "สัปดาห์",
     allDayText: "ตลอดวัน",
@@ -55,10 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
       // เรียกใช้งาน event จาก json ไฟล์ ที่สร้างด้วย php
       // url: "../event01.php?gData=1",
       //url: "https://pbhapi.moph.go.th:4200/event/list",
+      
       url: "http://127.0.0.1:4200/event/list",
       error: function () {},
     },
   });
 
   calendar.render();
+
+  
 });

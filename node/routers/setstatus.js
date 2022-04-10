@@ -25,7 +25,7 @@ router.get("/menu", async (req, res) => {
     con.query(
       "SELECT sd.ward_id,sd.setstatus ,sd.faction_id,sd.depart_id " +
         "FROM tbl_setdevice AS sd " +
-        "WHERE sd.ward_id = ? OR sd.faction_id = ? OR sd.depart_id = ? " +
+        "WHERE sd.ward_id = ? AND sd.faction_id = ? AND sd.depart_id = ? " +
         "ORDER BY sd.dv_id",
       [ward_id, fac_id, depart_id],
       (error, results, fields) => {

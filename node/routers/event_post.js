@@ -29,9 +29,9 @@ router.post("/adddata", async (req, res, next) => {
   //เริ่มการจอง status == 0==รออนุมัติจากหัวหน้า  , 1 -> รออนุมัติ , 2== ไม่อนุมัติจากหัวหน้า ,3 == อนุมัติ ,4==ไม่อนุมัติ,5==ยกเลิก
   if (level >= 2) {
     statusRoom = "1";
-  } else if (ward_id == "48" && level != "2") {
+  } else if (ward_id == "48" && level <= "2") {
     // ธุรการ
-    statusRoom = "3";
+    statusRoom = "0";
   } else if (level < 2) {
     // ผู้ใช้
     statusRoom = "0";

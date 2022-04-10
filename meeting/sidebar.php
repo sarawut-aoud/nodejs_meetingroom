@@ -68,7 +68,7 @@ function appove($ward, $duty)
                  <li class="nav-item">
                     <a href="staff_request.php" class="nav-link active">
                         <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                        <p>รายการที่ต้องอนุมัติ</p> <span id="bage1" class="badge badge-primary" ></span><center>(ผู้ปฏิบัติงาน) </center>
+                        <p>รายการที่ต้องอนุมัติ</p> <span id="bagestaff" class="badge badge-primary" ></span><center>(ผู้ปฏิบัติงาน) </center>
                     </a>
                  </li>  
                  <li class="nav-item  ">
@@ -81,7 +81,7 @@ function appove($ward, $duty)
         $link = '<li class="nav-item">
                     <a href="staff_request.php" class="nav-link active">
                         <i class="nav-icon fa-solid fa-calendar-exclamation"></i>
-                        <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-primary" id="bage1"></span>
+                        <p>รายการที่ต้องอนุมัติ </p> <span class="badge badge-primary" id="bagestaff"></span>
                     </a>
                 </li>  
                 <li class="nav-item  ">
@@ -192,7 +192,7 @@ background: linear-gradient(180deg, rgba(111,190,255,1) 40%, rgba(59,255,103,1) 
                 for (i in result) {
                     var status = result[i].setstatus;
                 }
-                if (status == "Y") {
+                if (status == "Y"  ) {
                     menu = '<a href="addtool.php" class="nav-link active">' +
                         '<i class="nav-icon fas fa-plus-circle"></i> ' +
                         "<p>เพิ่มข้อมูลอุปกรณ์</p>" +

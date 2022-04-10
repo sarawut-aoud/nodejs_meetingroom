@@ -155,7 +155,7 @@ require_once "../login/check_session.php";
 
             var path = '<?php echo $_SESSION['mt_path'] ?>';
             var id = '<?php echo $_SESSION['mt_id']; ?>';
-
+            var level = '<?php echo $_SESSION['mt_duty_id']; ?>';
             $.ajax({
                 type: "get",
                 url: path + "/event/count/user",
@@ -170,6 +170,42 @@ require_once "../login/check_session.php";
                     }
                 },
             });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count/staff",
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+
+                    $("#bagestaff").html(bage);
+                }
+            });
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: path + "/event/count",
+                data: {
+                    level: level,
+                },
+                success: function(result) {
+                    var bage = 0;
+
+                    for (ii in result) {
+                        if (result[ii].bage > 0) {
+                            bage++;
+                        }
+                    }
+                    $("#bage").html(bage);
+
+                }
+            });
+
             // window.location.reload(); use this if you do not remove cache
         }
     </script>
@@ -201,47 +237,7 @@ require_once "../login/check_session.php";
             var depart_id = "<?php echo $_SESSION['mt_de_id'] ?>";
             var fac_id = "<?php echo $_SESSION['mt_faction_id'] ?>";
             
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/event/count/staff",
-                // data: {
-                //     level: lv_id,
-                // },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage1").html(bage);
-                   
-
-                }
-
-            });
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: path + "/event/count",
-                data: {
-                    level: lv_id,
-                },
-                success: function(result) {
-                    var bage = 0;
-
-                    for (ii in result) {
-                        if (result[ii].bage > 0) {
-                            bage++;
-                        }
-                    }
-                    $("#bage").html(bage);
-
-                }
-
-            });
+           
 
 
             //todo: table tools
