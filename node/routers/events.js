@@ -238,7 +238,7 @@ router.get("/count/staff", async (req, res) => {
   con.query(
     "SELECT COUNT(ev.ev_id) AS bage " +
       "FROM tbl_event  AS ev " +
-      "WHERE ev.ev_status IN ('0','1')  GROUP BY ev.ev_title",
+      "WHERE ev.ev_status IN ('1')  GROUP BY ev.ev_title",
     (error, results, fields) => {
       if (error) throw error;
       return res.json(results);
@@ -261,17 +261,20 @@ router.get("/COUNT", async (req, res) => {
         return res.json(results);
       }
     );
-  } else if (ward_id == "48") {
-    con.query(
-      "SELECT COUNT(ev.ev_id) AS bage, " +
-        "FROM tbl_event  AS ev " +
-        "WHERE ev.ev_status IN ('0','1') GROUP BY ev.ev_title",
-      (error, results, fields) => {
-        if (error) throw error;
-        return res.json(results);
-      }
-    );
+  }else{
+    return res.json({"message":"ไม่มีสิทธิ์เข้าถึง"});
   }
+  // } else if (ward_id == "48") {
+  //   con.query(
+  //     "SELECT COUNT(ev.ev_id) AS bage, " +
+  //       "FROM tbl_event  AS ev " +
+  //       "WHERE ev.ev_status IN ('0','1') GROUP BY ev.ev_title",
+  //     (error, results, fields) => {
+  //       if (error) throw error;
+  //       return res.json(results);
+  //     }
+  //   );
+  // }
 });
 //? SELECT COUNT user
 router.get("/count/user", async (req, res, next) => {
@@ -325,177 +328,176 @@ router.post("/calendar", async (req, res) => {
 });
 // select calendar
 router.get("/list", async (req, res) => {
-  
-    var query01 = require("url").parse(req.url, true).query;
-    let start = query01.start;
-    let end = query01.end;
-    const date2 = new Date(start);
-    const date1 = new Date(end);
-    var start2 = date2
-      .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
-      .slice(0, 10);
-    var end2 = date1
-      .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
-      .slice(0, 10);
-    // let id = query01.id;
-    // var start = req.body.start;
+  var query01 = require("url").parse(req.url, true).query;
+  let start = query01.start;
+  let end = query01.end;
+  const date2 = new Date(start);
+  const date1 = new Date(end);
+  var start2 = date2
+    .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+    .slice(0, 10);
+  var end2 = date1
+    .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+    .slice(0, 10);
+  // let id = query01.id;
+  // var start = req.body.start;
 
-    var _start_date = "";
-    var _end_date = "";
-    var _start_time = "";
-    var _end_time = "";
-    var _repeat_day = "";
-    var _all_day = "";
+  var _start_date = "";
+  var _end_date = "";
+  var _start_time = "";
+  var _end_time = "";
+  var _repeat_day = "";
+  var _all_day = "";
 
-    const id = [];
-    con.query(
-      "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
-        "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
-        "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
-        "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
-        "ev.ev_bgcolor,ev.ev_color, ev.ev_repeatday," +
-        "ro.ro_id, ro.ro_name, ro.ro_color," +
-        "st.st_id, st.st_name," +
-        " users.person_firstname,users.person_lastname " +
-        "FROM tbl_event AS ev " +
-        "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
-        "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
-        "INNER JOIN  " +
-        pbh +
-        "hr_personal AS users ON (ev.id = users.person_id)" +
-        "WHERE ev.ev_status = '3' AND   ev.ev_startdate BETWEEN  ?  AND ? " +
-        "GROUP BY ev.event_id ",
-      [start2, end2],
-      (error, row, fields) => {
-        if (error) throw error;
+  const id = [];
+  con.query(
+    "SELECT ev.ev_id, ev.event_id, ev.ev_title, " +
+      "DATE_FORMAT(ev.ev_startdate,'%Y-%m-%d') as  ev_startdate, " +
+      "DATE_FORMAT(ev.ev_enddate,'%Y-%m-%d') as  ev_enddate ," +
+      "ev.ev_starttime, ev.ev_endtime, ev.ev_status, ev.ev_people, ev.ev_createdate, " +
+      "ev.ev_bgcolor,ev.ev_color, ev.ev_repeatday," +
+      "ro.ro_id, ro.ro_name, ro.ro_color," +
+      "st.st_id, st.st_name," +
+      " users.person_firstname,users.person_lastname " +
+      "FROM tbl_event AS ev " +
+      "INNER JOIN  tbl_rooms AS ro ON (ev.ro_id = ro.ro_id) " +
+      "INNER JOIN  tbl_style AS st ON (ev.st_id = st.st_id)" +
+      "INNER JOIN  " +
+      pbh +
+      "hr_personal AS users ON (ev.id = users.person_id)" +
+      "WHERE ev.ev_status = '3' AND   ev.ev_startdate BETWEEN  ?  AND ? " +
+      "GROUP BY ev.event_id ",
+    [start2, end2],
+    (error, row, fields) => {
+      if (error) throw error;
 
-        for (var i = 0; i < row.length; i++) {
-          _start_date = row[i].ev_startdate;
-          _end_date = false;
-          _start_time = false;
-          _end_time = false;
-          _repeat_day = false;
-          //  _all_day = (row['ev_allday']!=0)?true:false;
-          if (row[i].ev_starttime != "00:00:00") {
-            _start_date = row[i].ev_startdate + "T" + row[i].ev_starttime;
-            if (
-              row[i].ev_endtime != "00:00:00" &&
-              (row[i].ev_starttime == row[i].ev_enddate ||
-                row[i].ev_enddate == "0000-00-00")
-            ) {
-              _end_date = row[i].ev_startdate + "T" + row[i].ev_endtime;
-            }
-          }
-          if (row[i].ev_enddate != "0000-00-00") {
-            _end_date = row[i].ev_enddate;
-
-            if (row[i].ev_endtime != "00:00:00") {
-              _end_date = row[i].ev_enddate + "T" + row[i].ev_endtime;
-            } else {
-              var theDate2 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
-
-              const date = new Date(theDate2);
-
-              _end_date = date
-                .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
-                .slice(0, 10);
-            }
-          }
+      for (var i = 0; i < row.length; i++) {
+        _start_date = row[i].ev_startdate;
+        _end_date = false;
+        _start_time = false;
+        _end_time = false;
+        _repeat_day = false;
+        //  _all_day = (row['ev_allday']!=0)?true:false;
+        if (row[i].ev_starttime != "00:00:00") {
+          _start_date = row[i].ev_startdate + "T" + row[i].ev_starttime;
           if (
-            row[i].ev_enddate != "0000-00-00" &&
-            row[i].ev_enddate != row[i].ev_startdate &&
-            row[i].ev_starttime != "00:00:00" &&
-            row[i].ev_endtime != "00:00:00"
+            row[i].ev_endtime != "00:00:00" &&
+            (row[i].ev_starttime == row[i].ev_enddate ||
+              row[i].ev_enddate == "0000-00-00")
           ) {
-            (_start_date = row[i].ev_startdate),
-              (_end_date = row[i].ev_enddate),
-              (_start_time = row[i].ev_starttime),
-              (_end_time = row[i].ev_endtime),
-              (_all_day = false);
-          }
-
-          if (row[i].ev_repeatday != "") {
-            var daysOfWeek = explode(",", row[i].ev_repeatday);
-          }
-          if (
-            row[i].ev_enddate != "0000-00-00" &&
-            row[i].ev_enddate != row[i].ev_startdate &&
-            row[i].ev_starttime != "00:00:00" &&
-            row[i].ev_endtime != "00:00:00"
-          ) {
-            var startRecur = _start_date;
-            var theDate1 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
-
-            const date = new Date(theDate1);
-
-            var endRecur = date
-              .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
-              .slice(0, 10);
-            //  console.log(date.toISOString('EN-AU', { timeZone: 'Australia/Melbourne'}).slice(0, 10))
-            // leave_day : results[i].leave_day01.toISOString('EN-AU', { timeZone: 'Australia/Melbourne'}).slice(0, 10) ,
-            // แปลงเวลาที่รับมาเป็นเวลาไทย โดยการ +7
-            //leave_day : results[i].leave_day01.toLocaleDateString('en-CA', { timeZone: 'Australia/Melbourne'}),
-          }
-
-          // ทำการเปลี่ยน หรือกำหนดการใช้งาน url หรือลิ้งค์ เป็นการเรียกใช้งาน javascript ฟังก์ชั่นF
-          row[i].ev_url = "javascript:viewdetail(" + row[i].ev_id + ");"; // ส่งค่า id ไปในฟังก์ชั่น
-
-          if (row[i].ev_id != undefined) {
-            var ev_startdate2 = row[i].ev_startdate.replace("-", "");
-            var ev_startdate3 = ev_startdate2.replace("-", "");
-
-            if (
-              _end_time == false &&
-              _start_time == false &&
-              startRecur &&
-              endRecur
-            ) {
-              id[i] = {
-                id: row[i].ev_id,
-                groupId: ev_startdate3,
-                allDay: _all_day,
-                start: _start_date,
-                end: _end_date,
-                // startTime: _start_time,
-                // endTime: _end_time,
-                title: row[i].ev_title,
-                url: row[i].ev_url,
-                textColor: row[i].ev_color,
-                backgroundColor: row[i].ro_color,
-                borderColor: row[i].ev_bgcolor,
-                // daysOfWeek: daysOfWeek,
-                // startRecur: startRecur,
-                // endRecur: endRecur,
-              };
-            } else {
-              id[i] = {
-                id: row[i].ev_id,
-                groupId: ev_startdate3,
-                allDay: _all_day,
-                start: _start_date,
-                end: _end_date,
-                startTime: _start_time,
-                endTime: _end_time,
-                title: row[i].ev_title,
-                url: row[i].ev_url,
-                textColor: row[i].ev_color,
-                backgroundColor: row[i].ro_color,
-                borderColor: row[i].ev_bgcolor,
-                daysOfWeek: daysOfWeek,
-                startRecur: startRecur,
-                endRecur: endRecur,
-
-                // };
-              };
-            }
+            _end_date = row[i].ev_startdate + "T" + row[i].ev_endtime;
           }
         }
-        req.id = id;
-        
-        res.json(id);
-        // return next();
+        if (row[i].ev_enddate != "0000-00-00") {
+          _end_date = row[i].ev_enddate;
+
+          if (row[i].ev_endtime != "00:00:00") {
+            _end_date = row[i].ev_enddate + "T" + row[i].ev_endtime;
+          } else {
+            var theDate2 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
+
+            const date = new Date(theDate2);
+
+            _end_date = date
+              .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+              .slice(0, 10);
+          }
+        }
+        if (
+          row[i].ev_enddate != "0000-00-00" &&
+          row[i].ev_enddate != row[i].ev_startdate &&
+          row[i].ev_starttime != "00:00:00" &&
+          row[i].ev_endtime != "00:00:00"
+        ) {
+          (_start_date = row[i].ev_startdate),
+            (_end_date = row[i].ev_enddate),
+            (_start_time = row[i].ev_starttime),
+            (_end_time = row[i].ev_endtime),
+            (_all_day = false);
+        }
+
+        if (row[i].ev_repeatday != "") {
+          var daysOfWeek = explode(",", row[i].ev_repeatday);
+        }
+        if (
+          row[i].ev_enddate != "0000-00-00" &&
+          row[i].ev_enddate != row[i].ev_startdate &&
+          row[i].ev_starttime != "00:00:00" &&
+          row[i].ev_endtime != "00:00:00"
+        ) {
+          var startRecur = _start_date;
+          var theDate1 = Date.parse(row[i].ev_enddate) + 3600 * 1000 * 24;
+
+          const date = new Date(theDate1);
+
+          var endRecur = date
+            .toISOString("EN-AU", { timeZone: "Australia/Melbourne" })
+            .slice(0, 10);
+          //  console.log(date.toISOString('EN-AU', { timeZone: 'Australia/Melbourne'}).slice(0, 10))
+          // leave_day : results[i].leave_day01.toISOString('EN-AU', { timeZone: 'Australia/Melbourne'}).slice(0, 10) ,
+          // แปลงเวลาที่รับมาเป็นเวลาไทย โดยการ +7
+          //leave_day : results[i].leave_day01.toLocaleDateString('en-CA', { timeZone: 'Australia/Melbourne'}),
+        }
+
+        // ทำการเปลี่ยน หรือกำหนดการใช้งาน url หรือลิ้งค์ เป็นการเรียกใช้งาน javascript ฟังก์ชั่นF
+        row[i].ev_url = "javascript:viewdetail(" + row[i].ev_id + ");"; // ส่งค่า id ไปในฟังก์ชั่น
+
+        if (row[i].ev_id != undefined) {
+          var ev_startdate2 = row[i].ev_startdate.replace("-", "");
+          var ev_startdate3 = ev_startdate2.replace("-", "");
+
+          if (
+            _end_time == false &&
+            _start_time == false &&
+            startRecur &&
+            endRecur
+          ) {
+            id[i] = {
+              id: row[i].ev_id,
+              groupId: ev_startdate3,
+              allDay: _all_day,
+              start: _start_date,
+              end: _end_date,
+              // startTime: _start_time,
+              // endTime: _end_time,
+              title: row[i].ev_title,
+              url: row[i].ev_url,
+              textColor: row[i].ev_color,
+              backgroundColor: row[i].ro_color,
+              borderColor: row[i].ev_bgcolor,
+              // daysOfWeek: daysOfWeek,
+              // startRecur: startRecur,
+              // endRecur: endRecur,
+            };
+          } else {
+            id[i] = {
+              id: row[i].ev_id,
+              groupId: ev_startdate3,
+              allDay: _all_day,
+              start: _start_date,
+              end: _end_date,
+              startTime: _start_time,
+              endTime: _end_time,
+              title: row[i].ev_title,
+              url: row[i].ev_url,
+              textColor: row[i].ev_color,
+              backgroundColor: row[i].ro_color,
+              borderColor: row[i].ev_bgcolor,
+              daysOfWeek: daysOfWeek,
+              startRecur: startRecur,
+              endRecur: endRecur,
+
+              // };
+            };
+          }
+        }
       }
-    );
+      req.id = id;
+
+      res.json(id);
+      // return next();
+    }
+  );
   //function
 });
 router.post("/statusstaff", async (req, res) => {
