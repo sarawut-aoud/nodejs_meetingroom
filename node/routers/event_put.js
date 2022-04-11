@@ -142,7 +142,26 @@ router.put("/updatedata", async (req, res) => {
   var ward_id = req.body.ward_id;
   var faction_id = req.body.faction_id;
   var depart_id = req.body.depart_id;
-  if (req.status == 0) {
+
+  const new_date = new Date();
+  const dateChecknow = Date.parse(new_date);
+  const theDate_start = Date.parse(ev_startdate) + 3600 * 1000 * 24;
+
+  const theDate_end = Date.parse(ev_enddate) + 3600 * 1000 * 24;
+
+  if (theDate_start < dateChecknow || theDate_end < dateChecknow) {
+    return res.json({
+      error: true,
+      status: "0",
+      message: "เลือกวันจองย้อนหลังไม่ได้",
+    });
+  } else if (ev_endtime <= ev_starttime) {
+    return res.json({
+      error: true,
+      status: "0",
+      message: "เลือกเวลาให้ถูกต้อง",
+    });
+  } else if (req.status == 0) {
     return res.json({
       status: "0",
       message: "เวลาที่ท่านเลือกมีผู้อื่นจองแล้ว ไม่สามารถจองห้องได้",

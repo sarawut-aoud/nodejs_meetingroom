@@ -89,44 +89,51 @@ router.post("/adddata", async (req, res, next) => {
           (dateStart.getMonth() + 1) +
           "-" +
           dateStart.getDate();
-       
+        var date_end = new Date(ev_enddate);
+        const dateCheckend =
+          date_end.getFullYear() +
+          "-" +
+          (date_end.getMonth() + 1) +
+          "-" +
+          date_end.getDate();
+
         con.query(
           "SELECT IF (ev_starttime = '00:00:00', '', substr(ev_starttime, 1, 5)) as ev_starttime, " +
             "IF (ev_endtime = '00:00:00', '', substr(ev_endtime, 1, 5)) as ev_endtime " +
-            "FROM tbl_event where ev_startdate = ? and ro_id = ?  and ev_status = '3' ",
-          [dateCheck, ro_id],
+            // "FROM tbl_event where ev_startdate = ? and ro_id = ?  and ev_status = '3' ",
+            "FROM tbl_event where ev_startdate BETWEEN ? AND ? and ro_id = ?  and ev_status = '3' ",
+          [dateCheck, dateCheckend, ro_id],
           (error, results, field) => {
             if (error) throw error;
             var x = 0;
             // if (results != 0) {
-              while (x < results.length) {
-                var timestart = results[x].ev_starttime;
-                var timeend = results[x].ev_endtime;
-               
+            while (x < results.length) {
+              var timestart = results[x].ev_starttime;
+              var timeend = results[x].ev_endtime;
 
-                if (timestart != "" && timeend != "") {
-                  if (ev_starttime >= timestart && ev_starttime <= timeend) {
+              if (timestart != "" && timeend != "") {
+                if (ev_starttime >= timestart && ev_starttime <= timeend) {
+                  chk++;
+                } else if (
+                  ev_starttime <= timestart &&
+                  ev_starttime <= timestart &&
+                  ev_endtime >= timeend
+                ) {
+                  chk++;
+                } else if (
+                  ev_starttime <= timestart &&
+                  ev_endtime >= timestart &&
+                  ev_endtime <= timeend
+                ) {
+                  chk++;
+                } else {
+                  if (ev_starttime == timestart) {
                     chk++;
-                  } else if (
-                    ev_starttime <= timestart &&
-                    ev_starttime <= timestart &&
-                    ev_endtime >= timeend
-                  ) {
-                    chk++;
-                  } else if (
-                    ev_starttime <= timestart &&
-                    ev_endtime >= timestart &&
-                    ev_endtime <= timeend
-                  ) {
-                    chk++;
-                  } else {
-                    if (ev_starttime == timestart) {
-                      chk++;
-                    }
                   }
                 }
-                x++;
               }
+              x++;
+            }
             // }
             //for x
 
@@ -168,9 +175,31 @@ router.post("/adddata", async (req, res) => {
   var ward_id = req.body.ward_id;
   var faction_id = req.body.faction_id;
   var depart_id = req.body.depart_id;
+  const date_now = new Date();
 
+  const new_date = new Date();
+  const dateChecknow = Date.parse(new_date);
+  const theDate_start = Date.parse(ev_startdate) + 3600 * 1000 * 24;
+
+  const theDate_end = Date.parse(ev_enddate) + 3600 * 1000 * 24;
+  const date2 = new Date(theDate_end);
+
+  if (theDate_start < dateChecknow || theDate_end < dateChecknow) {
+    return res.json({
+      error: true,
+      status: "0",
+      message: "เลือกวันจองย้อนหลังไม่ได้",
+    });
+   
+  }else if(ev_endtime<=ev_starttime){
+    return res.json({
+      error: true,
+      status: "0",
+      message: "เลือกเวลาให้ถูกต้อง",
+    });
+  }
   // else {
-  if (req.status == 0) {
+  else if (req.status == 0) {
     return res.json({
       status: "0",
       message: "เวลาที่ท่านเลือกมีผู้อื่นจองแล้ว ไม่สามารถจองห้องได้",
@@ -222,7 +251,7 @@ router.post("/adddata", async (req, res) => {
                   timeZone: "Australia/Melbourne",
                 })
                 .slice(0, 10);
-            
+
               //todo : INSERT data
               con.query(
                 "INSERT INTO tbl_event(ev_title,ev_people,ro_id,st_id,ev_startdate,ev_enddate," +
@@ -247,7 +276,6 @@ router.post("/adddata", async (req, res) => {
                   "" + key + "",
                 ],
                 (error, results, field) => {
-                  
                   if (error) throw error;
                   if (to_id != null) {
                     for (var x = 0; x <= to_id.length; x++) {
@@ -452,13 +480,20 @@ router.put("/updatestatus/staff", async (req, res) => {
               (date_ev_startdate.getMonth() + 1) +
               "-" +
               date_ev_startdate.getDate();
+            var date_end = new Date(ev_enddate);
+            const dateCheckend =
+              date_end.getFullYear() +
+              "-" +
+              (date_end.getMonth() + 1) +
+              "-" +
+              date_end.getDate();
 
             for (var i = 0; i <= datediff; i++) {
               con.query(
                 "SELECT if (ev_starttime = '00:00:00','', substr(ev_starttime,1,5)) AS ev_starttime , " +
                   "IF (ev_endtime = '00:00:00','', substr(ev_endtime,1,5)) AS ev_endtime " +
-                  "FROM tbl_event WHERE ev_startdate = ? AND ro_id = ? AND ev_status = '3' ",
-                [dateCheck, ro_id],
+                  "FROM tbl_event WHERE ev_startdate BETWEEN ? AND ? AND ro_id = ? AND ev_status = '3' ",
+                [dateCheck, dateCheckend, ro_id],
                 (error, results, field) => {
                   for (var rs = 0; rs < results.length; rs++) {
                     var timestart = results[rs].ev_starttime;
