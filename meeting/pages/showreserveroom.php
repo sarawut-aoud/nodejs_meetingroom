@@ -403,7 +403,7 @@ require_once "../login/check_session.php";
                 })
             })
 
-           
+
 
 
             $(document).on('click', '#btnAproveRoom', function(e) {
@@ -420,69 +420,101 @@ require_once "../login/check_session.php";
                 var sumnum = $('#sumnum').val();
 
                 var formdata = $('#frm_Addroom').serializeArray();
+                if (ev_enddate < ev_startdate) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'เลือกเวลาให้ถูกต้อง',
 
-                $.ajax({
-                    type: "POST",
-                    url: path + "/event_post/adddata",
-                    dataType: "json",
-                    data: formdata,
+                    }).then((result) => {
+                        $('#dateEnd').focus();
+                    })
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: path + "/event_post/adddata",
+                        dataType: "json",
+                        data: formdata,
 
-                    success: function(results) {
+                        success: function(results) {
 
-                        if (results.status != 0) {
+                            if (results.status != 0) {
 
-                            $.ajax({
-                                type: "get",
-                                dataType: "json",
-                                url: path + '/rooms',
-                                data: {
-                                    ro_id: ro_id,
-                                },
-                                success: function(result) {
-                                    for (j in result) {
-                                        if (result[j].ro_id == ro_id) {
-                                            if (ev_people < result[j].ro_peoplemini) {
-                                                const Toast = Swal.mixin({
-                                                    toast: true,
-                                                    position: 'top-end',
-                                                    showConfirmButton: false,
-                                                    timer: 1500,
-                                                })
-                                                Toast.fire({
-                                                    icon: 'warning',
-                                                    title: results.message,
-                                                    text: 'จำนวนคนน้อยกว่าปกติ'
-                                                }).then((result) => {
-                                                    $('#frm_Addroom')[0].reset();
-                                                    $("#title")[0].focus();
-                                                    location.href = 'room_reserve.php';
-                                                })
-
-                                            } else {
-                                                const Toast = Swal.mixin({
-                                                    toast: true,
-                                                    position: 'top-end',
-                                                    showConfirmButton: false,
-                                                    timer: 1500,
-                                                })
-                                                Toast.fire({
-                                                        icon: 'success',
-                                                        title: results.message
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    url: path + '/rooms',
+                                    data: {
+                                        ro_id: ro_id,
+                                    },
+                                    success: function(result) {
+                                        for (j in result) {
+                                            if (result[j].ro_id == ro_id) {
+                                                if (ev_people < result[j].ro_peoplemini) {
+                                                    const Toast = Swal.mixin({
+                                                        toast: true,
+                                                        position: 'top-end',
+                                                        showConfirmButton: false,
+                                                        timer: 1500,
                                                     })
-                                                    .then((result) => {
+                                                    Toast.fire({
+                                                        icon: 'warning',
+                                                        title: results.message,
+                                                        text: 'จำนวนคนน้อยกว่าปกติ'
+                                                    }).then((result) => {
                                                         $('#frm_Addroom')[0].reset();
                                                         $("#title")[0].focus();
                                                         location.href = 'room_reserve.php';
                                                     })
 
-                                            }
+                                                } else {
+                                                    const Toast = Swal.mixin({
+                                                        toast: true,
+                                                        position: 'top-end',
+                                                        showConfirmButton: false,
+                                                        timer: 1500,
+                                                    })
+                                                    Toast.fire({
+                                                            icon: 'success',
+                                                            title: results.message
+                                                        })
+                                                        .then((result) => {
+                                                            $('#frm_Addroom')[0].reset();
+                                                            $("#title")[0].focus();
+                                                            location.href = 'room_reserve.php';
+                                                        })
 
+                                                }
+
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
 
-                        } else {
+                            } else {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                })
+                                Toast.fire({
+                                    icon: 'warning',
+                                    title: results.message
+
+                                })
+
+                                $("#title")[0].focus();
+
+                            }
+
+                        },
+                        error: function(result) {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -490,36 +522,20 @@ require_once "../login/check_session.php";
                                 timer: 1500,
                             })
                             Toast.fire({
-                                icon: 'warning',
-                                title: results.message
+                                    icon: 'warning',
+                                    title: 'ไม่สามารถบันทึกข้อมูลได้'
 
-                            })
+                                })
+                                .then((result) => {
 
-                            $("#title")[0].focus();
+                                    $("#title")[0].focus();
+                                })
 
                         }
 
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-                        Toast.fire({
-                                icon: 'warning',
-                                title: 'ไม่สามารถบันทึกข้อมูลได้'
+                    });
+                }
 
-                            })
-                            .then((result) => {
-
-                                $("#title")[0].focus();
-                            })
-
-                    }
-
-                });
 
                 function clear_tools(msg) {
                     $("#frmTools")[0].reset();
@@ -678,7 +694,7 @@ require_once "../login/check_session.php";
                     $("#calendarmodal-endtime").html(endtime);
                     $("#calendarmodal-people").html(people);
                     $("#calendarmodal-name").html(name + ' ' + lastname);
-                   
+
                     // $("#calendarmodal-dephone").html(dephone);
                 },
             });

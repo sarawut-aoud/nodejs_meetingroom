@@ -869,6 +869,7 @@ require_once "../login/check_session.php";
                 var ev_starttime = $('#modal_ev_starttime_h').val();
                 var ev_endtime = $('#modal_ev_endtime_h').val();
 
+
                 $.ajax({
                     type: "PUT",
                     dataType: "JSON",
@@ -920,23 +921,75 @@ require_once "../login/check_session.php";
                 var ev_title = $('#title').val();
                 var ev_starttime = $('#timeStart').val();
                 var ev_endtime = $('#timeEnd').val();
-                var ev_startdate = $('#dateStart').val();
-                var ev_enddate = $('#dateEnd').val();
+                var ev_startdate = $('#modal3_dateStart').val();
+                var ev_enddate = $('#modal3_dateEnd').val();
                 var ro_id = $('#ro_name').val();
                 var ev_people = $('#people').val();
                 var st_id = $('#style').val();
                 var sumnum = $('#sumnum').val();
 
                 var formdata = $('#frm_modalEditRoom').serializeArray();
+                if (ev_enddate < ev_startdate) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    })
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'เลือกเวลาให้ถูกต้อง',
 
-                $.ajax({
-                    type: "PUT",
-                    url: path + "/event_put/updatedata",
-                    dataType: "json",
-                    data: formdata,
+                    }).then((result) => {
+                        $('#modal3_dateEnd').focus();
+                    })
+                } else {
+                    $.ajax({
+                        type: "PUT",
+                        url: path + "/event_put/updatedata",
+                        dataType: "json",
+                        data: formdata,
 
-                    success: function(result) {
-                        if (result.status == 0) {
+                        success: function(result) {
+                            if (result.status == 0) {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                })
+                                Toast.fire({
+                                        icon: 'warning',
+                                        title: result.message
+
+                                    })
+                                    .then((result) => {
+                                        $("#modalEdit").modal("hide");
+                                        location.reload();
+
+                                    })
+                            } else {
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: result.message
+
+                                }).then((result) => {
+                                    $("#modalEdit").modal("hide");
+                                    location.reload();
+                                    $('#frm_modalEditRoom')[0].reset();
+                                    $('#title').focus();
+                                })
+                            }
+
+
+                        },
+                        error: function(result) {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: 'top-end',
@@ -945,54 +998,18 @@ require_once "../login/check_session.php";
                             })
                             Toast.fire({
                                     icon: 'warning',
-                                    title: result.message
+                                    title: 'ไม่สามารถบันทึกข้อมูลได้'
 
                                 })
                                 .then((result) => {
-                                    $("#modalEdit").modal("hide");
                                     location.reload();
 
                                 })
-                        } else {
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                            })
-                            Toast.fire({
-                                icon: 'success',
-                                title: result.message
 
-                            }).then((result) => {
-                                $("#modalEdit").modal("hide");
-                                location.reload();
-                                $('#frm_modalEditRoom')[0].reset();
-                                $('#title').focus();
-                            })
                         }
+                    });
+                }
 
-
-                    },
-                    error: function(result) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-                        Toast.fire({
-                                icon: 'warning',
-                                title: 'ไม่สามารถบันทึกข้อมูลได้'
-
-                            })
-                            .then((result) => {
-                                location.reload();
-
-                            })
-
-                    }
-                });
 
             });
             // modal
